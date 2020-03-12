@@ -3,7 +3,7 @@
 @section('content')
 
 <?php
-$company = Company::first();
+$company = Company::orderBy('id')->first();
 ?>
 
 <div class="page-content-inner" style="background-image: url({{asset('assets/common/img/temp/login/4.jpg')}})">
