@@ -54,7 +54,15 @@
                                     <div id="phone_no_error" style="display:none;"></div>
                                 </div>
                             </div>                            
-                        </div>   
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <input type="text" class="form-control" id="company" value="{{$company->name}}" disabled="">
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">

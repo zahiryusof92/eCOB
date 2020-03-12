@@ -1,18 +1,11 @@
 <?php
 
 class AdminController extends BaseController {
-    /*
-      |--------------------------------------------------------------------------
-      | Default Home Controller
-      |--------------------------------------------------------------------------
-      |
-      | You may wish to use controllers instead of, or in addition to, Closure
-      | based routes. That's great! Here is an example controller method to
-      | get you started. To route to this controller, just add the route:
-      |
-      |
-      |
-     */
+
+    public function __construct() {
+        $locale = Session::get('lang');
+        App::setLocale($locale);
+    }
 
     public function showView($name) {
         if (View::exists($name)) {
@@ -43,7 +36,7 @@ class AdminController extends BaseController {
     public function home() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
@@ -62,7 +55,7 @@ class AdminController extends BaseController {
         $otherss = 0;
 
         $developer = Developer::where('is_deleted', 0)->count();
-        
+
         if (count($file) > 0) {
             foreach ($file as $files) {
                 $strata = Strata::where('file_id', $files->id)->count();
@@ -80,7 +73,7 @@ class AdminController extends BaseController {
                 $threeStars += $threeStar;
                 $twoStars += $twoStar;
                 $oneStars += $oneStar;
-                
+
                 $jmb = ManagementJMB::where('file_id', $files->id)->count();
                 $mc = ManagementMC::where('file_id', $files->id)->count();
                 $agent = ManagementAgent::where('file_id', $files->id)->count();
@@ -115,10 +108,6 @@ class AdminController extends BaseController {
                 'image' => ""
             );
 
-//            print "<pre>";
-//            print_r($viewData);
-//            print "</pre>";
-
             return View::make('page_en.home', $viewData);
         } else {
             $viewData = array(
@@ -148,7 +137,7 @@ class AdminController extends BaseController {
 
     public function getAGMRemainder() {
         $oneyear = strtotime("-1 Year");
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
@@ -193,7 +182,7 @@ class AdminController extends BaseController {
     }
 
     public function getNeverAGM() {
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
@@ -246,7 +235,7 @@ class AdminController extends BaseController {
 
     public function getAGM12Months() {
         $twelveMonths = strtotime("-12 Months");
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
@@ -292,7 +281,7 @@ class AdminController extends BaseController {
 
     public function getAGM15Months() {
         $fifthteenMonths = strtotime("-15 Months");
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
@@ -464,9 +453,11 @@ class AdminController extends BaseController {
         if (Request::ajax()) {
             $description = $data['description'];
             $is_active = $data['is_active'];
+            $seq = $data['seq'];
 
             $fileprefix = new FilePrefix();
             $fileprefix->description = $description;
+            $fileprefix->seq = $seq;
             $fileprefix->is_active = $is_active;
             $success = $fileprefix->save();
 
@@ -516,6 +507,7 @@ class AdminController extends BaseController {
                 }
                 $data_raw = array(
                     $fileprefixs->description,
+                    $fileprefixs->seq,
                     $status,
                     $button
                 );
@@ -651,10 +643,12 @@ class AdminController extends BaseController {
             $id = $data['id'];
             $description = $data['description'];
             $is_active = $data['is_active'];
+            $seq = $data['seq'];
 
             $fileprefix = FilePrefix::find($id);
             $fileprefix->description = $description;
             $fileprefix->is_active = $is_active;
+            $fileprefix->seq = $seq;
             $success = $fileprefix->save();
 
             if ($success) {
@@ -801,6 +795,7 @@ class AdminController extends BaseController {
     public function fileList() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $file = Files::where('is_deleted', 0)->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -809,6 +804,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_list',
                 'user_permission' => $user_permission,
+                'file' => $file,
                 'image' => ""
             );
 
@@ -820,6 +816,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_list',
                 'user_permission' => $user_permission,
+                'file' => $file,
                 'image' => ""
             );
 
@@ -828,7 +825,7 @@ class AdminController extends BaseController {
     }
 
     public function getFileList() {
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $file = Files::where('created_by', Auth::user()->id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
         } else {
             $file = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
@@ -3849,7 +3846,7 @@ class AdminController extends BaseController {
     public function editCompany() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $company = Company::first();
+        $company = Company::find(Auth::user()->company_id);
         $city = City::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
         $country = Country::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
         $state = State::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
@@ -3903,6 +3900,7 @@ class AdminController extends BaseController {
             $country = $data['country'];
             $phone_no = $data['phone_no'];
             $fax_no = $data['fax_no'];
+            $email = $data['email'];
             $image_url = $data['image_url'];
             $nav_image_url = $data['nav_image_url'];
 
@@ -3919,6 +3917,7 @@ class AdminController extends BaseController {
                 $company->country = $country;
                 $company->phone_no = $phone_no;
                 $company->fax_no = $fax_no;
+                $company->email = $email;
                 $company->image_url = $image_url;
                 $company->nav_image_url = $nav_image_url;
                 $success = $company->save();
@@ -5174,6 +5173,246 @@ class AdminController extends BaseController {
         }
     }
 
+    //form
+    public function form() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $formtype = FormType::where('is_active', 1)->where('is_deleted', 0)->get();
+
+        $viewData = array(
+            'title' => trans('form.title'),
+            'panel_nav_active' => 'admin_panel',
+            'main_nav_active' => 'admin_main',
+            'sub_nav_active' => 'form_list',
+            'user_permission' => $user_permission,
+            'formtype' => $formtype,
+            'image' => ""
+        );
+
+        return View::make('page.form.index', $viewData);
+    }
+
+    public function addForm() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $formtype = FormType::where('is_active', 1)->where('is_deleted', 0)->get();
+
+        $viewData = array(
+            'title' => trans('form.title_add'),
+            'panel_nav_active' => 'admin_panel',
+            'main_nav_active' => 'admin_main',
+            'sub_nav_active' => 'form_list',
+            'user_permission' => $user_permission,
+            'formtype' => $formtype,
+            'image' => ""
+        );
+
+        return View::make('page.form.add', $viewData);
+    }
+
+    public function submitForm() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $form = new AdminForm();
+            $form->form_type_id = $data['form_type_id'];
+            $form->bm_name = $data['bm_name'];
+            $form->bi_name = $data['bi_name'];
+            $form->seq = $data['seq'];
+            $form->is_active = $data['is_active'];
+            $success = $form->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'New form has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Form";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function getForm() {
+        $form = AdminForm::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+        if (count($form) > 0) {
+            $data = Array();
+            foreach ($form as $forms) {
+                $formtype = FormType::find($forms->form_type_id);
+
+                $button = "";
+                if ($forms->is_active == 1) {
+                    $status = trans('general.label_active');
+                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveForm(\'' . $forms->id . '\')">' . trans('general.label_inactive') . '</button>&nbsp;';
+                } else {
+                    $status = trans('general.label_inactive');
+                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeForm(\'' . $forms->id . '\')">' . trans('general.label_active') . '</button>&nbsp;';
+                }
+
+                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateForm', $forms->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteForm(\'' . $forms->id . '\')"><i class="fa fa-trash"></i></button>';
+
+                if ($forms->expired_date != "0000-00-00 00:00:00") {
+                    $expired_date = date('d-M-Y', strtotime($forms->expired_date));
+                } else {
+                    $expired_date = "";
+                }
+
+                $data_raw = array(
+                    $formtype->bi_type,
+                    $forms->bi_name,
+                    $forms->bm_name,
+                    $forms->seq,
+                    $status,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function inactiveForm() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $form = AdminForm::find($id);
+            $form->is_active = 0;
+            $updated = $form->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = $form->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Form";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function activeForm() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $form = AdminForm::find($id);
+            $form->is_active = 1;
+            $updated = $form->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = $form->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Form";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteForm() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $form = AdminForm::find($id);
+            $form->is_deleted = 1;
+            $deleted = $form->save();
+            if ($deleted) {
+                # Audit Trail
+                $remarks = $form->id . ' has been deleted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Form";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function updateForm($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $form = AdminForm::find($id);
+        $formtype = FormType::where('is_active', 1)->where('is_deleted', 0)->get();
+
+        $viewData = array(
+            'title' => trans('form.title_edit'),
+            'panel_nav_active' => 'admin_panel',
+            'main_nav_active' => 'admin_main',
+            'sub_nav_active' => 'form_list',
+            'user_permission' => $user_permission,
+            'form' => $form,
+            'formtype' => $formtype,
+            'image' => ""
+        );
+
+        return View::make('page.form.edit', $viewData);
+    }
+
+    public function submitUpdateForm() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $id = $data['id'];
+
+            $form = AdminForm::find($id);
+            $form->bm_name = $data['bm_name'];
+            $form->bi_name = $data['bi_name'];
+            $form->seq = $data['seq'];
+            $form->is_active = $data['is_active'];
+            $success = $form->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = $form->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Form";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
     // --- Master Setup --- //
     //area
     public function area() {
@@ -5706,6 +5945,1379 @@ class AdminController extends BaseController {
             if ($success) {
                 # Audit Trail
                 $remarks = 'City: ' . $city->description . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    //country
+    public function country() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Country Maintenance',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.country', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Pengurusan Bandar',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_my.country', $viewData);
+        }
+    }
+
+    public function addCountry() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Country',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.add_country', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Bandar',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_my.add_country', $viewData);
+        }
+    }
+
+    public function submitCountry() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $is_active = $data['is_active'];
+
+            $country = new Country();
+            $country->name = $data['name'];
+            $country->seq = $data['seq'];
+            $country->is_active = $is_active;
+            $success = $country->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Country: ' . $country->name . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function getCountry() {
+        $country = Country::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+
+        if (count($country) > 0) {
+            $data = Array();
+            foreach ($country as $cities) {
+                $button = "";
+                if (Session::get('lang') == "en") {
+                    if ($cities->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCountry(\'' . $cities->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCountry(\'' . $cities->id . '\')">Active</button>&nbsp;';
+                    }
+                } else {
+                    if ($cities->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCountry(\'' . $cities->id . '\')">Tidak Aktif</button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCountry(\'' . $cities->id . '\')">Aktif</button>&nbsp;';
+                    }
+                }
+                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateCountry', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteCountry(\'' . $cities->id . '\')"><i class="fa fa-trash"></i></button>';
+
+                $data_raw = array(
+                    $cities->name,
+                    $cities->seq,
+                    $status,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function inactiveCountry() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $country = Country::find($id);
+            $country->is_active = 0;
+            $updated = $country->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'Country: ' . $country->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function activeCountry() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $country = Country::find($id);
+            $country->is_active = 1;
+            $updated = $country->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'Country: ' . $country->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteCountry() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $country = Country::find($id);
+            $country->is_deleted = 1;
+            $deleted = $country->save();
+            if ($deleted) {
+                # Audit Trail
+                $remarks = 'Country: ' . $country->id . ' has been deleted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function updateCountry($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $country = Country::find($id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update Country',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'country' => $country,
+                'image' => ""
+            );
+
+            return View::make('page_en.update_country', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Bandar',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'country' => $country,
+                'image' => ""
+            );
+
+            return View::make('page_my.update_country', $viewData);
+        }
+    }
+
+    public function submitUpdateCountry() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $id = $data['id'];
+
+            $country = Country::find($id);
+            $country->name = $data['name'];
+            $country->seq = $data['seq'];
+            $country->is_active = $data['is_active'];
+            $success = $country->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Country: ' . $country->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    //language
+    public function language() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Language Master',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'language_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.language', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Master Language',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'language_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.language', $viewData);
+        }
+    }
+
+    public function addLanguage() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Language',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'language_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.add_language', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Add Language',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'language_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.add_language', $viewData);
+        }
+    }
+
+    public function submitLanguage() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $is_active = $data['is_active'];
+
+            $language = new Language();
+            $language->code = $data['code'];
+            $language->en_gen_desc = $data['en_gen_desc'];
+            $language->en_long_desc = $data['en_long_desc'];
+            $language->en_short_desc = $data['en_short_desc'];
+            $language->bm_gen_desc = $data['bm_gen_desc'];
+            $language->bm_long_desc = $data['bm_long_desc'];
+            $language->bm_short_desc = $data['bm_short_desc'];
+            $language->is_active = $data['is_active'];
+            $success = $language->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Language: ' . $language->code . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function getLanguage() {
+        $language = Language::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+
+        if (count($language) > 0) {
+            $data = Array();
+            foreach ($language as $lang) {
+                $button = "";
+                if (Session::get('lang') == "en") {
+                    if ($lang->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveLanguage(\'' . $lang->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeLanguage(\'' . $lang->id . '\')">Active</button>&nbsp;';
+                    }
+                } else {
+                    if ($lang->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveLanguage(\'' . $lang->id . '\')">Tidak Aktif</button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeLanguage(\'' . $lang->id . '\')">Aktif</button>&nbsp;';
+                    }
+                }
+                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateLanguage', $lang->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteLanguage(\'' . $lang->id . '\')"><i class="fa fa-trash"></i></button>';
+
+                $data_raw = array(
+                    $lang->code,
+                    $lang->en_gen_desc,
+                    $lang->bm_gen_desc,
+                    $status,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function inactiveLanguage() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $language = Language::find($id);
+            $language->is_active = 0;
+            $updated = $language->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'Language: ' . $language->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function activeLanguage() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $language = Language::find($id);
+            $language->is_active = 1;
+            $updated = $language->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'Language: ' . $language->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteLanguage() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $language = Language::find($id);
+            $language->is_deleted = 1;
+            $deleted = $language->save();
+            if ($deleted) {
+                # Audit Trail
+                $remarks = 'Language: ' . $language->id . ' has been deleted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function updateLanguage($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $language = Language::find($id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update Language',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'language_list',
+                'user_permission' => $user_permission,
+                'language' => $language,
+                'image' => ""
+            );
+
+            return View::make('page_en.update_language', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Update language',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'language_list',
+                'user_permission' => $user_permission,
+                'language' => $language,
+                'image' => ""
+            );
+
+            return View::make('page_en.update_language', $viewData);
+        }
+    }
+
+    public function submitUpdateLanguage() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $id = $data['id'];
+
+            $language = Language::find($id);
+            $language->code = $data['code'];
+            $language->en_gen_desc = $data['en_gen_desc'];
+            $language->en_long_desc = $data['en_long_desc'];
+            $language->en_short_desc = $data['en_short_desc'];
+            $language->bm_gen_desc = $data['bm_gen_desc'];
+            $language->bm_long_desc = $data['bm_long_desc'];
+            $language->bm_short_desc = $data['bm_short_desc'];
+            $language->is_active = $data['is_active'];
+            $success = $language->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Language: ' . $language->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    //formtype
+    public function formtype() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Form Type Master',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.formtype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Jenis Form',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_my.formtype', $viewData);
+        }
+    }
+
+    public function addFormType() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add FormType',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.add_formtype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Jenis Form',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_my.add_formtype', $viewData);
+        }
+    }
+
+    public function submitFormType() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $formtype = new FormType();
+            $formtype->bi_type = $data['bi_type'];
+            $formtype->bm_type = $data['bm_type'];
+            $formtype->seq = $data['seq'];
+            $formtype->is_active = $data['is_active'];
+            $success = $formtype->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Form Type: ' . $formtype->name . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function getFormType() {
+        $formtype = FormType::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+
+        if (count($formtype) > 0) {
+            $data = Array();
+            foreach ($formtype as $cities) {
+                $button = "";
+                if (Session::get('lang') == "en") {
+                    if ($cities->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFormtype(\'' . $cities->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFormtype(\'' . $cities->id . '\')">Active</button>&nbsp;';
+                    }
+                } else {
+                    if ($cities->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFormtype(\'' . $cities->id . '\')">Tidak Aktif</button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFormtype(\'' . $cities->id . '\')">Aktif</button>&nbsp;';
+                    }
+                }
+                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateFormtype', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteFormType(\'' . $cities->id . '\')"><i class="fa fa-trash"></i></button>';
+
+                $data_raw = array(
+                    $cities->bi_type,
+                    $cities->bm_type,
+                    $cities->seq,
+                    $status,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function inactiveFormType() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $formtype = FormType::find($id);
+            $formtype->is_active = 0;
+            $updated = $formtype->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'FormType: ' . $formtype->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function activeFormType() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $formtype = FormType::find($id);
+            $formtype->is_active = 1;
+            $updated = $formtype->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'FormType: ' . $formtype->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteFormType() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $formtype = FormType::find($id);
+            $formtype->is_deleted = 1;
+            $deleted = $formtype->save();
+            if ($deleted) {
+                # Audit Trail
+                $remarks = 'FormType: ' . $formtype->id . ' has been deleted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function updateFormType($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $formtype = FormType::find($id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update Form Type',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'formtype' => $formtype,
+                'image' => ""
+            );
+
+            return View::make('page_en.update_formtype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Jenis Form',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'formtype' => $formtype,
+                'image' => ""
+            );
+
+            return View::make('page_my.update_formtype', $viewData);
+        }
+    }
+
+    public function submitUpdateFormType() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $id = $data['id'];
+
+            $formtype = FormType::find($id);
+            $formtype->bi_type = $data['bi_type'];
+            $formtype->bm_type = $data['bm_type'];
+            $formtype->seq = $data['seq'];
+            $formtype->is_active = $data['is_active'];
+            $success = $formtype->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Form Type: ' . $formtype->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+//state
+    public function state() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'State Maintenance',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.state', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Pengurusan Bandar',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_my.state', $viewData);
+        }
+    }
+
+    public function addState() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add State',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.add_state', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Bandar',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_my.add_state', $viewData);
+        }
+    }
+
+    public function submitState() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $is_active = $data['is_active'];
+
+            $state = new State();
+            $state->name = $data['name'];
+            $state->seq = $data['seq'];
+            $state->is_active = $is_active;
+            $success = $state->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'State: ' . $state->name . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function getState() {
+        $state = State::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+
+        if (count($state) > 0) {
+            $data = Array();
+            foreach ($state as $cities) {
+                $button = "";
+                if (Session::get('lang') == "en") {
+                    if ($cities->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $cities->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $cities->id . '\')">Active</button>&nbsp;';
+                    }
+                } else {
+                    if ($cities->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $cities->id . '\')">Tidak Aktif</button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $cities->id . '\')">Aktif</button>&nbsp;';
+                    }
+                }
+                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateState', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteState(\'' . $cities->id . '\')"><i class="fa fa-trash"></i></button>';
+
+                $data_raw = array(
+                    $cities->name,
+                    $cities->seq,
+                    $status,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function inactiveState() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $state = State::find($id);
+            $state->is_active = 0;
+            $updated = $state->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'State: ' . $state->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function activeState() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $state = State::find($id);
+            $state->is_active = 1;
+            $updated = $state->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'State: ' . $state->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteState() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $state = State::find($id);
+            $state->is_deleted = 1;
+            $deleted = $state->save();
+            if ($deleted) {
+                # Audit Trail
+                $remarks = 'State: ' . $state->id . ' has been deleted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function updateState($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $state = State::find($id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update State',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'state' => $state,
+                'image' => ""
+            );
+
+            return View::make('page_en.update_state', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Bandar',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'state' => $state,
+                'image' => ""
+            );
+
+            return View::make('page_my.update_state', $viewData);
+        }
+    }
+
+    public function submitUpdateState() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $id = $data['id'];
+
+            $state = State::find($id);
+            $state->name = $data['name'];
+            $state->seq = $data['seq'];
+            $state->is_active = $data['is_active'];
+            $success = $state->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'State: ' . $state->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    // Document Type
+    public function documenttype() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Document Type Maintenance',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.documenttype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Pengurusan Bandar',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_my.documenttype', $viewData);
+        }
+    }
+
+    public function addDocumenttype() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Document Type',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_en.add_documenttype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Jenis Dokumen',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_my.add_documenttype', $viewData);
+        }
+    }
+
+    public function submitDocumenttype() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $is_active = $data['is_active'];
+
+            $documenttype = new Documenttype();
+            $documenttype->name = $data['name'];
+            $documenttype->seq = $data['seq'];
+            $documenttype->is_active = $is_active;
+            $success = $documenttype->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Document Type: ' . $documenttype->name . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function getDocumenttype() {
+        $documenttype = Documenttype::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+
+        if (count($documenttype) > 0) {
+            $data = Array();
+            foreach ($documenttype as $cities) {
+                $button = "";
+                if (Session::get('lang') == "en") {
+                    if ($cities->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDocumenttype(\'' . $cities->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDocumenttype(\'' . $cities->id . '\')">Active</button>&nbsp;';
+                    }
+                } else {
+                    if ($cities->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDocumenttype(\'' . $cities->id . '\')">Tidak Aktif</button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDocumenttype(\'' . $cities->id . '\')">Aktif</button>&nbsp;';
+                    }
+                }
+                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateDocumenttype', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteDocumenttype(\'' . $cities->id . '\')"><i class="fa fa-trash"></i></button>';
+
+                $data_raw = array(
+                    $cities->name,
+                    $cities->seq,
+                    $status,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function inactiveDocumenttype() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $documenttype = Documenttype::find($id);
+            $documenttype->is_active = 0;
+            $updated = $documenttype->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'Document Type: ' . $documenttype->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function activeDocumenttype() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $documenttype = Documenttype::find($id);
+            $documenttype->is_active = 1;
+            $updated = $documenttype->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'Document Type: ' . $documenttype->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteDocumenttype() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $documenttype = Documenttype::find($id);
+            $documenttype->is_deleted = 1;
+            $deleted = $documenttype->save();
+            if ($deleted) {
+                # Audit Trail
+                $remarks = 'Document Type: ' . $documenttype->id . ' has been deleted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function updateDocumenttype($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $documenttype = Documenttype::find($id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update Document Type',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'documenttype' => $documenttype,
+                'image' => ""
+            );
+
+            return View::make('page_en.update_documenttype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Jenis Dokumen',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'documenttype' => $documenttype,
+                'image' => ""
+            );
+
+            return View::make('page_my.update_documenttype', $viewData);
+        }
+    }
+
+    public function submitUpdateDocumenttype() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $id = $data['id'];
+
+            $documenttype = Documenttype::find($id);
+            $documenttype->name = $data['name'];
+            $documenttype->seq = $data['seq'];
+            $documenttype->is_active = $data['is_active'];
+            $success = $documenttype->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Document Type: ' . $documenttype->id . ' has been updated.';
                 $auditTrail = new AuditTrail();
                 $auditTrail->module = "Master Setup";
                 $auditTrail->remarks = $remarks;
@@ -8685,7 +10297,7 @@ class AdminController extends BaseController {
     public function getFileByLocation() {
         $data = Array();
 
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
@@ -8813,7 +10425,7 @@ class AdminController extends BaseController {
     //rating summary
     public function ratingSummary() {
 
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
@@ -8904,17 +10516,17 @@ class AdminController extends BaseController {
     //management summary
     public function managementSummary() {
 
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $strata = DB::table('files')
                     ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                     ->select('strata.*', 'files.id as file_id')
                     ->where('files.created_by', Auth::user()->id)
                     ->where('files.is_active', 1)
                     ->where('files.status', 1)
-                    ->where('files.is_deleted', 0)                    
+                    ->where('files.is_deleted', 0)
                     ->orderBy('strata.id')
                     ->get();
-            
+
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $strata = DB::table('files')
@@ -8922,10 +10534,10 @@ class AdminController extends BaseController {
                     ->select('strata.*', 'files.id as file_id')
                     ->where('files.is_active', 1)
                     ->where('files.status', 1)
-                    ->where('files.is_deleted', 0)                    
+                    ->where('files.is_deleted', 0)
                     ->orderBy('strata.id')
                     ->get();
-            
+
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         }
 
@@ -8939,13 +10551,13 @@ class AdminController extends BaseController {
         $commercials = 0;
         $commercial_less10s = 0;
         $commercial_more10s = 0;
-        
+
         $developer = Developer::where('is_deleted', 0)->count();
 
         if (count($file) > 0) {
-            foreach ($file as $files) {   
-                
-                
+            foreach ($file as $files) {
+
+
                 $jmb = ManagementJMB::where('file_id', $files->id)->count();
                 $mc = ManagementMC::where('file_id', $files->id)->count();
                 $agent = ManagementAgent::where('file_id', $files->id)->count();
@@ -9020,17 +10632,17 @@ class AdminController extends BaseController {
     //cob file / management
     public function cobFileManagement() {
 
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $strata = DB::table('strata')
                     ->leftJoin('files', 'strata.file_id', '=', 'files.id')
                     ->select('strata.*', 'files.id as file_id')
                     ->where('files.created_by', Auth::user()->id)
                     ->where('files.is_active', 1)
                     ->where('files.status', 1)
-                    ->where('files.is_deleted', 0)                    
+                    ->where('files.is_deleted', 0)
                     ->orderBy('strata.id')
                     ->get();
-            
+
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $strata = DB::table('strata')
@@ -9038,25 +10650,25 @@ class AdminController extends BaseController {
                     ->select('strata.*', 'files.id as file_id')
                     ->where('files.is_active', 1)
                     ->where('files.status', 1)
-                    ->where('files.is_deleted', 0)                    
+                    ->where('files.is_deleted', 0)
                     ->orderBy('strata.id')
                     ->get();
-            
+
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         }
-        
+
         $jmbs = 0;
         $mcs = 0;
         $agents = 0;
         $otherss = 0;
         $residentials = 0;
         $commercials = 0;
-        
+
         $developer = Developer::where('is_deleted', 0)->count();
-        
+
         if (count($file) > 0) {
-            foreach ($file as $files) {                   
-                
+            foreach ($file as $files) {
+
                 $jmb = ManagementJMB::where('file_id', $files->id)->count();
                 $mc = ManagementMC::where('file_id', $files->id)->count();
                 $agent = ManagementAgent::where('file_id', $files->id)->count();
@@ -9071,7 +10683,7 @@ class AdminController extends BaseController {
                 $residentials += $residential;
                 $commercials += $commercial;
             }
-        }        
+        }
 
         $totals = $developer + $jmbs + $mcs + $agents + $otherss;
         if ($totals == 0) {
@@ -9118,6 +10730,495 @@ class AdminController extends BaseController {
             );
 
             return View::make('report_my.cob_file_management', $viewData);
+        }
+    }
+
+    // add finance file list
+    public function addFinanceFileList() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $file_no = Files::where('is_active', 1)->where('is_deleted', 0)->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Finance File List',
+                'panel_nav_active' => 'finance_panel',
+                'main_nav_active' => 'finance_main',
+                'sub_nav_active' => 'add_finance_list',
+                'user_permission' => $user_permission,
+                'image' => "",
+                'file_no' => $file_no
+            );
+
+            return View::make('page_en.add_finance_file', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Add Finance File List',
+                'panel_nav_active' => 'finance_panel',
+                'main_nav_active' => 'finance_main',
+                'sub_nav_active' => 'add_finance_list',
+                'user_permission' => $user_permission,
+                'image' => "",
+                'file_no' => $file_no
+            );
+
+            return View::make('page_en.add_finance_file', $viewData);
+        }
+    }
+
+    public function submitFinanceFile() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $file_id = $data['file_id'];
+            $year = $data['year'];
+            $month = $data['month'];
+            $is_active = $data['is_active'];
+
+            $finance = new Finance();
+            $finance->file_id = $file_id;
+            $finance->month = $month;
+            $finance->year = $year;
+            $finance->is_active = $is_active;
+            $success = $finance->save();
+
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Finance File with id : ' . $finance->id . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB Finance";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    // finance list
+    public function financeList() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $file = Files::where('is_deleted', 0)->get();
+
+        $viewData = array(
+            'title' => 'Finance List',
+            'panel_nav_active' => 'finance_panel',
+            'main_nav_active' => 'finance_main',
+            'sub_nav_active' => 'finance_file_list',
+            'user_permission' => $user_permission,
+            'file' => $file,
+            'image' => ""
+        );
+
+        return View::make('page_en.finance_list', $viewData);
+    }
+
+    public function getFinanceList() {
+        $filelist = Finance::orderBy('id', 'desc')->get();
+
+        if (count($filelist) > 0) {
+            $data = Array();
+            foreach ($filelist as $filelists) {
+                $files = Files::where('id', $filelists->file_id)->first();
+                $strata = Strata::where('file_id', $files->id)->first();
+                if (count($strata) > 0) {
+                    $strata_name = $strata->name;
+                } else {
+                    $strata_name = "";
+                }
+                $button = "";
+                if (Session::get('lang') == "en") {
+                    if ($filelists->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFinanceList(\'' . $filelists->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFinanceList(\'' . $filelists->id . '\')">Active</button>&nbsp;';
+                    }
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceList(\'' . $filelists->id . '\')">Delete <i class="fa fa-trash"></i></button>&nbsp;';
+                } else {
+                    if ($filelists->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFinanceList(\'' . $filelists->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@house', $filelists->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFinanceList(\'' . $filelists->id . '\')">Aktif</button>&nbsp;';
+                    }
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceList(\'' . $filelists->id . '\')">Padam <i class="fa fa-trash"></i></button>&nbsp;';
+                }
+
+                $data_raw = array(
+                    "<a style='text-decoration:underline;' href='" . URL::action('AdminController@editFinanceFileList', $filelists->id) . "'>" . $files->file_no . "</a>",
+                    $strata_name,
+                    $status,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function editFinanceFileList($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $file_no = Files::where('is_active', 1)->where('is_deleted', 0)->get();
+
+        $financeCheckData = FinanceCheck::where('finance_file_id', $id)->first();
+        $financefiledata = Finance::where('id', $id)->first();
+        $financeFileAdmin = FinanceAdmin::where('finance_file_id', $id)->get();
+        $financeFileContract = FinanceContract::where('finance_file_id', $id)->get();
+        $financeFileStaff = FinanceStaff::where('finance_file_id', $id)->get();
+        $financeFileVandalA = FinanceVandal::where('finance_file_id', $id)->where('type', 'maintenancefee')->get();
+        $financeFileVandalB = FinanceVandal::where('finance_file_id', $id)->where('type', 'singkingfund')->get();
+        $financeFileRepairA = FinanceRepair::where('finance_file_id', $id)->where('type', 'maintenancefee')->get();
+        $financeFileRepairB = FinanceRepair::where('finance_file_id', $id)->where('type', 'singkingfund')->get();
+
+        $financeFileUtilityA = FinanceUtility::where('finance_file_id', $id)->where('type', 'bagian_a')->get();
+        $financeFileUtilityB = FinanceUtility::where('finance_file_id', $id)->where('type', 'bagian_b')->get();
+
+        $financeFileIncome = FinanceIncome::where('finance_file_id', $id)->get();
+
+        $viewData = array(
+            'title' => 'Edit Finance File List',
+            'panel_nav_active' => 'finance_panel',
+            'main_nav_active' => 'finance_main',
+            'sub_nav_active' => 'edit_finance_list',
+            'user_permission' => $user_permission,
+            'image' => "",
+            'file_no' => $file_no,
+            'financefiledata' => $financefiledata,
+            'checkdata' => $financeCheckData,
+            'finance_file_id' => $id,
+            'adminFile' => $financeFileAdmin->toArray(),
+            'contractFile' => $financeFileContract->toArray(),
+            'staffFile' => $financeFileStaff->toArray(),
+            'vandala' => $financeFileVandalA->toArray(),
+            'vandalb' => $financeFileVandalB->toArray(),
+            'repaira' => $financeFileRepairA->toArray(),
+            'repairb' => $financeFileRepairB->toArray(),
+            'incomeFile' => $financeFileIncome->toArray(),
+            'utila' => $financeFileUtilityA->toArray(),
+            'utilb' => $financeFileUtilityB->toArray(),
+        );
+
+        return View::make('page_en.edit_finance_file', $viewData);
+    }
+
+    public function updateFinanceFileList() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $file_id = $data['file_id'];
+            $is_active = $data['is_active'];
+
+            $financeSupportId = $data['id'];
+
+            $finance = FinanceSupport::find($financeSupportId);
+            $finance->file_id = $file_id;
+            $finance->date = $data['date'];
+            $finance->name = $data['name'];
+            $finance->amount = $data['amount'];
+            $finance->remark = $data['remark'];
+            $finance->is_active = $is_active;
+            $success = $finance->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Finance Support with id : ' . $finance->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB Finance Support";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function financeSupport() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $file = Files::where('is_deleted', 0)->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Finance Support',
+                'panel_nav_active' => 'finance_panel',
+                'main_nav_active' => 'finance_maiin',
+                'sub_nav_active' => 'finance_support_list',
+                'user_permission' => $user_permission,
+                'file' => $file,
+                'image' => ""
+            );
+
+            return View::make('page_en.finance_support_list', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Finance Support',
+                'panel_nav_active' => 'finance_panel',
+                'main_nav_active' => 'finance_maiin',
+                'sub_nav_active' => 'finance_support_list',
+                'user_permission' => $user_permission,
+                'file' => $file,
+                'image' => ""
+            );
+
+            return View::make('page_en.finance_support_list', $viewData);
+        }
+    }
+
+    public function getFinanceSupportList() {
+        $filelist = FinanceSupport::orderBy('id', 'desc')->get();
+
+        if (count($filelist) > 0) {
+            $data = Array();
+            foreach ($filelist as $filelists) {
+                $files = Files::where('id', $filelists->file_id)->first();
+                $button = "";
+                if (Session::get('lang') == "en") {
+                    if ($filelists->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFinanceList(\'' . $filelists->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFinanceList(\'' . $filelists->id . '\')">Active</button>&nbsp;';
+                    }
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceList(\'' . $filelists->id . '\')">Delete <i class="fa fa-trash"></i></button>&nbsp;';
+                } else {
+                    if ($filelists->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFinanceList(\'' . $filelists->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@house', $filelists->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFinanceList(\'' . $filelists->id . '\')">Aktif</button>&nbsp;';
+                    }
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceList(\'' . $filelists->id . '\')">Padam <i class="fa fa-trash"></i></button>&nbsp;';
+                }
+
+                $data_raw = array(
+                    "<a href='" . URL::action('AdminController@editFinanceSupport', $filelists->id) . "'>" . $files->file_no . "</a>",
+                    date('d/m/Y', strtotime($filelists->date)),
+                    $filelists->name,
+                    number_format($filelists->amount, 2),
+                );
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function addFinanceSupport() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $file_no = Files::where('is_active', 1)->where('is_deleted', 0)->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Finance Support',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'area_list',
+                'user_permission' => $user_permission,
+                'image' => "",
+                'file_no' => $file_no
+            );
+
+            return View::make('page_en.add_finance_support', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Add Finance Support',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'area_list',
+                'user_permission' => $user_permission,
+                'image' => "",
+                'file_no' => $file_no
+            );
+
+            return View::make('page_en.add_finance_support', $viewData);
+        }
+    }
+
+    public function submitFinanceSupport() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $file_id = $data['file_id'];
+            $is_active = $data['is_active'];
+
+            $finance = new FinanceSupport();
+            $finance->file_id = $file_id;
+            $finance->date = $data['date'];
+            $finance->name = $data['name'];
+            $finance->amount = $data['amount'];
+            $finance->remark = $data['remark'];
+            $finance->is_active = $is_active;
+            $success = $finance->save();
+
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Finance Support with id : ' . $finance->id . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB Finance Support";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function editFinanceSupport($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $file_no = Files::where('is_active', 1)->where('is_deleted', 0)->get();
+        $financeSupportData = FinanceSupport::where('id', $id)->first();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Edit Finance Support',
+                'panel_nav_active' => 'finance_panel',
+                'main_nav_active' => 'finance_mail',
+                'sub_nav_active' => 'edit_finance_list',
+                'user_permission' => $user_permission,
+                'image' => "",
+                'file_no' => $file_no,
+                'financesupportdata' => $financeSupportData
+            );
+
+            return View::make('page_en.edit_finance_support', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Finance Support',
+                'panel_nav_active' => 'finance_panel',
+                'main_nav_active' => 'finance_mail',
+                'sub_nav_active' => 'edit_finance_list',
+                'user_permission' => $user_permission,
+                'image' => "",
+                'file_no' => $file_no,
+                'financesupportdata' => $financeSupportData
+            );
+
+            return View::make('page_en.edit_finance_support', $viewData);
+        }
+    }
+
+    public function updateFinanceSupport() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $file_id = $data['file_id'];
+            $is_active = $data['is_active'];
+
+            $financeSupportId = $data['id'];
+
+            $finance = FinanceSupport::find($financeSupportId);
+            $finance->file_id = $file_id;
+            $finance->date = $data['date'];
+            $finance->name = $data['name'];
+            $finance->amount = $data['amount'];
+            $finance->remark = $data['remark'];
+            $finance->is_active = $is_active;
+            $success = $finance->save();
+
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Finance Support with id : ' . $finance->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB Finance Support";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function activeFinanceList() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $files = Finance::find($id);
+            $files->is_active = 1;
+            $updated = $files->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = $files->file_no . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB Finance File Active";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function inactiveFinanceList() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $prefix = Finance::find($id);
+            $prefix->is_active = 0;
+            $updated = $prefix->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'COB Finance File has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB Finance File Inactive";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
         }
     }
 

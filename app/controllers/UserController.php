@@ -162,13 +162,14 @@ class UserController extends BaseController {
             return Redirect::to('/login')->with('login_error', 'Masalah Log Masuk');
         }
     }
-
     //member login end
+
     //edit profile
     public function editProfile() {
 
         $user = User::find(Auth::User()->id);
         $role = Role::find($user->role);
+        $company = Company::find($user->company_id);
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -178,6 +179,7 @@ class UserController extends BaseController {
                 'sub_nav_active' => '',
                 'user' => $user,
                 'role' => $role,
+                'company' => $company,
                 'image' => ""
             );
             return View::make('user_en.edit_profile', $viewData);
@@ -189,6 +191,7 @@ class UserController extends BaseController {
                 'sub_nav_active' => '',
                 'user' => $user,
                 'role' => $role,
+                'company' => $company,
                 'image' => ""
             );
             return View::make('user_my.edit_profile', $viewData);

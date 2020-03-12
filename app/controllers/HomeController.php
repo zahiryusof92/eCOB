@@ -15,7 +15,8 @@ class HomeController extends BaseController {
      */
     
     public function getCompanyName() {
-        $company = Company::first();
+        $company = Company::find(Auth::user()->company_id);
+        
         print $company->name;
     }
 }

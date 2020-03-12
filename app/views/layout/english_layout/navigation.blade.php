@@ -31,6 +31,14 @@ $access_permission21 = 0;
 $access_permission22 = 0;
 $access_permission23 = 0;
 $access_permission24 = 0;
+$access_permission29 = 0;
+$access_permission30 = 0;
+$access_permission31 = 0;
+$access_permission32 = 0;
+$access_permission33 = 0;
+$access_permission34 = 0;
+$access_permission35 = 0;
+$access_permission36 = 0;
 
 
 
@@ -108,9 +116,37 @@ foreach ($user_permission as $permission) {
     if ($permission->submodule_id == 24) {
         $access_permission24 = $permission->access_permission;
     }
+
+    // ecob finance
+    if ($permission->submodule_id == 29) {
+        $access_permission29 = $permission->access_permission;
+    }
+    if ($permission->submodule_id == 30) {
+        $access_permission30 = $permission->access_permission;
+    }
+    if ($permission->submodule_id == 31) {
+        $access_permission31 = $permission->access_permission;
+    }
+    if ($permission->submodule_id == 32) {
+        $access_permission32 = $permission->access_permission;
+    }
+    if ($permission->submodule_id == 33) {
+        $access_permission33 = $permission->access_permission;
+    }
+    if ($permission->submodule_id == 34) {
+        $access_permission34 = $permission->access_permission;
+    }
+
+    if ($permission->submodule_id == 35) {
+        $access_permission35 = $permission->access_permission;
+    }
+
+    if ($permission->submodule_id == 36) {
+        $access_permission36 = $permission->access_permission;
+    }
 }
 
-$company = Company::first();
+$company = Company::find(Auth::user()->company_id);
 if (Auth::user()->role != 1) {
     $pending = Files::where('created_by', Auth::user()->id)->where('status', 0)->where('is_deleted', 0)->count();
 } else {
@@ -167,6 +203,90 @@ if (Auth::user()->role != 1) {
                     </ul>
                 </li>
             <?php } ?>
+            <li class="left-menu-list-submenu" id="agm_panel">
+                <a class="left-menu-link" href="javascript: void(0);">
+                    <i class="left-menu-link-icon fa fa-file"><!-- --></i>
+                    AGM Submission
+                </a>
+                <ul class="left-menu-list list-unstyled" id="agm_main">
+                    <li id="agmdesignsub_list">
+                        <a class="left-menu-link" href="{{URL::action('AgmController@agmDesignSub')}}">
+                            Designation Submission
+                        </a>
+                    </li>
+                    <li id="agmpurchasesub_list">
+                        <a class="left-menu-link" href="{{URL::action('AgmController@agmPurchaseSub')}}">
+                            Purchaser Submission
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="left-menu-list-submenu" id="change_cob_panel">
+                <a class="left-menu-link" href="javascript: void(0);">
+                    <i class="left-menu-link-icon fa fa-file"><!-- --></i>
+                    Change COB
+                </a>
+                <ul class="left-menu-list list-unstyled" id="change_cob_main">
+                    <?php
+                    $cobTypes = [
+                        'mpaj',
+                        'mdhs',
+                        'mdks',
+                        'mps',
+                        'mbpj',
+                        'mpkj',
+                        'mpsj',
+                        'mpk',
+                        'mbsa',
+                        'mpsepang',
+                        'mdkl',
+                        'mdsb'
+                    ];
+                    $jmb = Company::where('is_active', 1)->where('is_deleted', 0)->get();
+                    ?>
+
+                    <?php foreach ($jmb as $cob) { ?>
+                        <li id="{{ $cob->short_name . "_list" }}">
+                            <a class="left-menu-link" href='{{ url("cob/get/{$cob->id}") }}'>{{ strtoupper($cob->short_name) }}</a>
+                        </li>    
+                    <?php } ?>
+                </ul>
+            </li>
+
+
+            @if ($access_permission29 == 1 || $access_permission30 == 1 || $access_permission31 == 1)
+            <li class="left-menu-list-submenu" id="finance_panel">
+                <a class="left-menu-link" href="javascript: void(0);">
+                    <i class="left-menu-link-icon fa fa-file-pdf-o"><!-- --></i>
+                    COB Finance
+                </a>
+                <ul class="left-menu-list list-unstyled" id="finance_main">
+                    @if($access_permission29 == 1)
+                    <li id="add_finance_list">
+                        <a class="left-menu-link" href="{{URL::action('AdminController@addFinanceFileList')}}">
+                            Add Finance File List
+                        </a>
+                    </li>
+                    @endif
+                    @if($access_permission30 == 1)
+                    <li id="finance_file_list">
+                        <a class="left-menu-link" href="{{URL::action('AdminController@financeList')}}">
+                            Finance File List
+                        </a>
+                    </li>
+                    @endif
+                    @if($access_permission31 == 1)
+                    <li id="finance_support_list">
+                        <a class="left-menu-link" href="{{URL::action('AdminController@financeSupport')}}">
+                            Finance Support
+                        </a>
+                    </li>  
+                    @endif
+                </ul>
+            </li>
+            @endif
+
             <?php if ($access_permission4 == 1 || $access_permission5 == 1 || $access_permission6 == 1 || $access_permission7 == 1) { ?>
                 <li class="left-menu-list-submenu" id="admin_panel">
                     <a class="left-menu-link" href="javascript: void(0);">
@@ -200,7 +320,12 @@ if (Auth::user()->role != 1) {
                                 <a class="left-menu-link" href="{{URL::action('AdminController@memo')}}">
                                     Memo Maintenance
                                 </a>
-                            </li>  
+                            </li>
+                            <li id="form_list">
+                                <a class="left-menu-link" href="{{URL::action('AdminController@form')}}">
+                                    Form
+                                </a>
+                            </li>
                         <?php } ?>
                     </ul>
                 </li>
@@ -216,6 +341,19 @@ if (Auth::user()->role != 1) {
                         Master Setup
                     </a>
                     <ul class="left-menu-list list-unstyled" id="master_main">                    
+                        @if($access_permission32 == 1)
+                        <li id="country_list">
+                            <a class="left-menu-link" href="{{URL::action('AdminController@country')}}">
+                                Country
+                            </a>
+                        </li>
+                        @endif
+                        @if($access_permission33 == 1)
+                        <li id="state_list"><a class="left-menu-link" href="{{URL::action('AdminController@state')}}">
+                                State
+                            </a>
+                        </li>
+                        @endif
                         <?php if ($access_permission8 == 1) { ?>
                             <li id="area_list">
                                 <a class="left-menu-link" href="{{URL::action('AdminController@area')}}">
@@ -300,6 +438,27 @@ if (Auth::user()->role != 1) {
                                 </a>
                             </li> 
                         <?php } ?>
+                        @if ($access_permission35 == 1)
+                        <li id="formtype_list">
+                            <a class="left-menu-link" href="{{URL::action('AdminController@formtype')}}">
+                                Form Type
+                            </a>
+                        </li>
+                        @endif
+                        @if($access_permission34 == 1)
+                        <li id="documenttype_list">
+                            <a class="left-menu-link" href="{{URL::action('AdminController@documenttype')}}">
+                                Document Type
+                            </a>
+                        </li>
+                        @endif
+                        @if ($access_permission36 == 1)
+                        <li id="language_list">
+                            <a class="left-menu-link" href="{{URL::action('AdminController@language')}}">
+                                Language
+                            </a>
+                        </li>
+                        @endif
                     </ul>
                 </li>
             <?php } ?>
@@ -345,6 +504,12 @@ if (Auth::user()->role != 1) {
                                 </a>
                             </li>  
                         <?php } ?>
+                        <div class="clearfix"></div>
+                        <li id="lphs_report_strata_form">
+                            <a class="left-menu-link" href="{{URL::action('ReportController@reportStrataProfile')}}">
+                                Laporan Strata Profile
+                            </a>
+                        </li>
                     </ul>
                 </li>
             <?php } ?>
