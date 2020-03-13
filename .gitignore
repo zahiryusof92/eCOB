@@ -9,3 +9,4 @@ Thumbs.db
 /nbproject/private/
 nbproject/project.properties
 app/config/database.php
+nbproject/project.xml

@@ -54,14 +54,14 @@ foreach ($user_permission as $permission) {
                                             <th colspan="5">{{strtoupper($modules->name_en)}}</th>
                                         </tr>
                                         <?php
-                                        $submodule = SubModule::where('module_id', $modules->id)->get();
+                                        $submodule = SubModule::where('module_id', $modules->id)->orderBy('sort_no')->get();
                                         ?>
 
                                         @foreach($submodule as $submodules)
                                         <?php
                                         $permission = AccessGroup::where('role_id', $accessgroup->id)->where('submodule_id', $submodules->id)->get();
                                         ?>
-                                        @if ($modules->id == 4)
+                                        @if ($modules->id == 4 || $modules->id == 6 || $modules->id == 7)
                                         <tr>
                                             <td> - {{$submodules->name_en}}</td>
                                             @if(count($permission)>0)
@@ -81,7 +81,7 @@ foreach ($user_permission as $permission) {
                                             <td style="text-align: center;"></td> 
                                             @endif
                                         </tr>
-                                        @elseif ($submodules->id == 2)
+                                        @elseif ($submodules->id == 2 || $submodules->id == 37)
                                         <tr>
                                             <td> - {{$submodules->name_en}}</td>
                                             @if(count($permission)>0)
@@ -108,7 +108,7 @@ foreach ($user_permission as $permission) {
                                             <td style="text-align: center;"></td>
                                             @endif
                                         </tr>
-                                        @elseif ($submodules->id == 3)
+                                        @elseif ($submodules->id == 3 || $submodules->id == 38)
                                         <tr>
                                             <td> - {{$submodules->name_en}}</td>
                                             @if(count($permission)>0)

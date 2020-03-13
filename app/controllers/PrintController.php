@@ -56,7 +56,7 @@ class PrintController extends BaseController {
     //rating summary
     public function printRatingSummary() {
         
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
@@ -144,7 +144,7 @@ class PrintController extends BaseController {
     //management summary
     public function printManagementSummary() {
         
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $strata = DB::table('strata')
                     ->leftJoin('files', 'strata.file_id', '=', 'files.id')
                     ->select('strata.*', 'files.id as file_id')
@@ -259,7 +259,7 @@ class PrintController extends BaseController {
     //cob file / management
     public function printCobFileManagement() {  
         
-        if (Auth::user()->role != 1) {
+        if (!Auth::user()->getAdmin()) {
             $strata = DB::table('strata')
                     ->leftJoin('files', 'strata.file_id', '=', 'files.id')
                     ->select('strata.*', 'files.id as file_id')

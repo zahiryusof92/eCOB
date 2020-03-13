@@ -404,7 +404,7 @@ class AdminController extends BaseController {
                 'image' => ""
             );
 
-            return View::make('page_en.fileprefix', $viewData);
+            return View::make('cob_en.fileprefix', $viewData);
         } else {
             $viewData = array(
                 'title' => 'Pengurusan Awalan Fail COB',
@@ -433,7 +433,7 @@ class AdminController extends BaseController {
                 'image' => ""
             );
 
-            return View::make('page_en.add_fileprefix', $viewData);
+            return View::make('cob_en.add_fileprefix', $viewData);
         } else {
             $viewData = array(
                 'title' => 'Tambah Awalan Fail COB',
@@ -444,7 +444,7 @@ class AdminController extends BaseController {
                 'image' => ""
             );
 
-            return View::make('page_my.add_fileprefix', $viewData);
+            return View::make('cob_my.add_fileprefix', $viewData);
         }
     }
 
@@ -453,11 +453,11 @@ class AdminController extends BaseController {
         if (Request::ajax()) {
             $description = $data['description'];
             $is_active = $data['is_active'];
-            $seq = $data['seq'];
+            $sort_no = $data['sort_no'];
 
             $fileprefix = new FilePrefix();
             $fileprefix->description = $description;
-            $fileprefix->seq = $seq;
+            $fileprefix->sort_no = $sort_no;
             $fileprefix->is_active = $is_active;
             $success = $fileprefix->save();
 
@@ -507,7 +507,7 @@ class AdminController extends BaseController {
                 }
                 $data_raw = array(
                     $fileprefixs->description,
-                    $fileprefixs->seq,
+                    $fileprefixs->sort_no,
                     $status,
                     $button
                 );
@@ -621,7 +621,7 @@ class AdminController extends BaseController {
                 'image' => ""
             );
 
-            return View::make('page_en.update_fileprefix', $viewData);
+            return View::make('cob_en.update_fileprefix', $viewData);
         } else {
             $viewData = array(
                 'title' => 'Edit Awalan Fail COB',
@@ -633,7 +633,7 @@ class AdminController extends BaseController {
                 'image' => ""
             );
 
-            return View::make('page_my.update_fileprefix', $viewData);
+            return View::make('cob_my.update_fileprefix', $viewData);
         }
     }
 
@@ -643,12 +643,12 @@ class AdminController extends BaseController {
             $id = $data['id'];
             $description = $data['description'];
             $is_active = $data['is_active'];
-            $seq = $data['seq'];
+            $sort_no = $data['sort_no'];
 
             $fileprefix = FilePrefix::find($id);
             $fileprefix->description = $description;
+            $fileprefix->sort_no = $sort_no;
             $fileprefix->is_active = $is_active;
-            $fileprefix->seq = $seq;
             $success = $fileprefix->save();
 
             if ($success) {
@@ -4406,44 +4406,42 @@ class AdminController extends BaseController {
                 //delete the access permission in db before add new
                 $deleted = AccessGroup::where('role_id', $role_id)->delete();
 
-                if ($deleted) {
-                    foreach ($permission_list as $permission_lists) {
-                        $new_permission = new AccessGroup();
+                foreach ($permission_list as $permission_lists) {
+                    $new_permission = new AccessGroup();
 
-                        $new_permission->submodule_id = $permission_lists['module_id'];
-                        $new_permission->role_id = $role->id;
+                    $new_permission->submodule_id = $permission_lists['module_id'];
+                    $new_permission->role_id = $role->id;
 
-                        //default value is 0
-                        $new_permission->access_permission = 0;
-                        $new_permission->insert_permission = 0;
-                        $new_permission->update_permission = 0;
+                    //default value is 0
+                    $new_permission->access_permission = 0;
+                    $new_permission->insert_permission = 0;
+                    $new_permission->update_permission = 0;
 
-                        foreach ($permission_lists['action'] as $actions) {
-                            if ($actions == "access") {
-                                $new_permission->access_permission = 1;
-                            }
-                            if ($actions == "insert") {
-                                $new_permission->insert_permission = 1;
-                            }
-                            if ($actions == "update") {
-                                $new_permission->update_permission = 1;
-                            }
+                    foreach ($permission_lists['action'] as $actions) {
+                        if ($actions == "access") {
+                            $new_permission->access_permission = 1;
                         }
-                        $saved = $new_permission->save();
+                        if ($actions == "insert") {
+                            $new_permission->insert_permission = 1;
+                        }
+                        if ($actions == "update") {
+                            $new_permission->update_permission = 1;
+                        }
                     }
-                    if ($saved) {
-                        # Audit Trail
-                        $remarks = 'Access Permission for ' . $role->name . ' has been updated.';
-                        $auditTrail = new AuditTrail();
-                        $auditTrail->module = "System Administration";
-                        $auditTrail->remarks = $remarks;
-                        $auditTrail->audit_by = Auth::user()->id;
-                        $auditTrail->save();
+                    $saved = $new_permission->save();
+                }
+                if ($saved) {
+                    # Audit Trail
+                    $remarks = 'Access Permission for ' . $role->name . ' has been updated.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "System Administration";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
 
-                        return "true";
-                    } else {
-                        return "false";
-                    }
+                    return "true";
+                } else {
+                    return "false";
                 }
             }
         }

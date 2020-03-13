@@ -31,8 +31,9 @@ foreach ($user_permission as $permission) {
                     <table class="table table-hover nowrap" id="fileprefix" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:70%;">Description</th>
-                                <th style="width:30%;">Status</th>
+                                <th style="width:60%;">Description</th>
+                                <th style="width:10%;">Sort No</th>
+                                <th style="width:20%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
                                 <th style="width:10%;">Action</th>
                                 <?php } ?>

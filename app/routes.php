@@ -206,6 +206,16 @@ Route::post('/deleteForm/{id}', 'AdminController@deleteForm')->before('authMembe
 
 ########################## AGM Submission
 //AGM Design Submission
+Route::get('/AJK','AgmController@AJK')->before('authMember');
+Route::get('/getAJK','AgmController@getAJK')->before('authMember');
+Route::post('/addAJK','AgmController@addAJK')->before('authMember');
+Route::post('/editAJK','AgmController@editAJK')->before('authMember');
+Route::post('/deleteAJK','AgmController@deleteAJK')->before('authMember');
+
+
+/*
+ * RONALDO
+ */
 Route::get('/agmDesignSub','AgmController@agmDesignSub')->before('authMember');
 Route::get('/addAgmDesignSub', 'AgmController@addAgmDesignSub')->before('authMember');
 Route::post('/submitAgmDesignSub', 'AgmController@submitAgmDesignSub')->before('authMember');
