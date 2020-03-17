@@ -231,7 +231,7 @@ if (!Auth::user()->getAdmin()) {
                     </li> 
                     @endif
                     @if ($access_permission36 == 1)
-                    <li id="add_finance_list">
+                    <li id="cob_before_vp_list">
                         <a class="left-menu-link" href="#">
                             COB File List Before VP
                         </a>
@@ -239,21 +239,21 @@ if (!Auth::user()->getAdmin()) {
                     @endif
                     @if ($access_permission37 == 1)
                     <li id="add_finance_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@addFinanceFileList')}}">
+                        <a class="left-menu-link" href="{{URL::action('FinanceController@addFinanceFileList')}}">
                             Add Finance File List
                         </a>
                     </li>
                     @endif
                     @if ($access_permission38 == 1)
                     <li id="finance_file_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@financeList')}}">
+                        <a class="left-menu-link" href="{{URL::action('FinanceController@financeList')}}">
                             Finance File List
                         </a>
                     </li>
                     @endif
                     @if ($access_permission39 == 1)
                     <li id="finance_support_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@financeSupport')}}">
+                        <a class="left-menu-link" href="{{URL::action('FinanceController@financeSupport')}}">
                             Finance Support
                         </a>
                     </li>  
@@ -500,7 +500,7 @@ if (!Auth::user()->getAdmin()) {
                     @endif
                     @if ($access_permission31 == 1)
                     <li id="agmpurchasesub_list">
-                        <a class="left-menu-link" href="{{URL::action('AgmController@agmPurchaseSub')}}">
+                        <a class="left-menu-link" href="{{URL::action('AgmController@purchaser')}}">
                             Purchaser Submission
                         </a>
                     </li>

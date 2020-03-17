@@ -243,5 +243,179 @@ class FileController extends BaseController {
             }
         }
     }
+    
+     public function uploadPurchaserCSVAction() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        $file = Input::file('uploadedCSV');
+
+        if ($file) {
+            $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
+
+            $file_ext = explode(".", $filename);
+            $ext = end($file_ext);
+
+            if (strtolower($ext) == "csv") {
+                if ($file->move('files', $filename)) {
+                    if (($handle = fopen(url('/') . '/files/' . $filename, "r")) !== FALSE) {
+                        while (($data = fgetcsv($handle, 200000, ",")) !== FALSE) {
+                            $file_check = Files::where('file_no', $data[0])->get();
+                            if (count($file_check) > 0) {
+                                array_push($data, "Success");
+                                $csvData[] = $data;
+                            } else {
+                                array_push($data, "Error");
+                                $csvData[] = "";
+                            }
+                        }
+                        fclose($handle);
+                    }
+
+                    if (!empty($csvData)) {
+                        if (Session::get('lang') == "en") {
+                            $viewData = array(
+                                'title' => 'Update COB File',
+                                'panel_nav_active' => 'cob_panel',
+                                'main_nav_active' => 'cob_main',
+                                'sub_nav_active' => 'cob_list',
+                                'user_permission' => $user_permission,
+                                'Uploadmessage' => 'success',
+                                'csvData' => $csvData,
+                                'upload' => "true",
+                                'image' => ""
+                            );
+                            return View::make('agm_en.import_purchaser', $viewData);
+                        } else {
+                            $viewData = array(
+                                'title' => 'Kemaskini COB Fail',
+                                'panel_nav_active' => 'cob_panel',
+                                'main_nav_active' => 'cob_main',
+                                'sub_nav_active' => 'cob_list',
+                                'user_permission' => $user_permission,
+                                'Uploadmessage' => 'success',
+                                'csvData' => $csvData,
+                                'upload' => "true",
+                                'image' => ""
+                            );
+                            return View::make('agm_my.import_purchaser', $viewData);
+                        }
+                    } else {
+                        if (Session::get('lang') == "en") {
+                            $viewData = array(
+                                'title' => 'Update COB File',
+                                'panel_nav_active' => 'cob_panel',
+                                'main_nav_active' => 'cob_main',
+                                'sub_nav_active' => 'cob_list',
+                                'user_permission' => $user_permission,
+                                'Uploadmessage' => 'success',
+                                'csvData' => "No Data",
+                                'upload' => "true",
+                                'image' => ""
+                            );
+                            return View::make('agm_en.import_purchaser', $viewData);
+                        } else {
+                            $viewData = array(
+                                'title' => 'Kemaskini COB Fail',
+                                'panel_nav_active' => 'cob_panel',
+                                'main_nav_active' => 'cob_main',
+                                'sub_nav_active' => 'cob_list',
+                                'user_permission' => $user_permission,
+                                'Uploadmessage' => 'success',
+                                'csvData' => "No Data",
+                                'upload' => "true",
+                                'image' => ""
+                            );
+                            return View::make('agm_my.import_purchaser', $viewData);
+                        }
+                    }
+                } else {
+                    if (Session::get('lang') == "en") {
+                        $viewData = array(
+                            'title' => 'Update COB File',
+                            'panel_nav_active' => 'cob_panel',
+                            'main_nav_active' => 'cob_main',
+                            'sub_nav_active' => 'cob_list',
+                            'user_permission' => $user_permission,
+                            'Uploadmessage' => 'error',
+                            'upload' => "true",
+                            'image' => ""
+                        );
+
+                        return View::make('agm_en.import_purchaser', $viewData);
+                    } else {
+                        $viewData = array(
+                            'title' => 'Kemaskini COB Fail',
+                            'panel_nav_active' => 'cob_panel',
+                            'main_nav_active' => 'cob_main',
+                            'sub_nav_active' => 'cob_list',
+                            'user_permission' => $user_permission,
+                            'Uploadmessage' => 'error',
+                            'upload' => "true",
+                            'image' => ""
+                        );
+
+                        return View::make('agm_my.import_purchaser', $viewData);
+                    }
+                }
+            } else {
+                if (Session::get('lang') == "en") {
+                    $viewData = array(
+                        'title' => 'Update COB File',
+                        'panel_nav_active' => 'cob_panel',
+                        'main_nav_active' => 'cob_main',
+                        'sub_nav_active' => 'cob_list',
+                        'user_permission' => $user_permission,
+                        'Uploadmessage' => 'Please upload CSV file',
+                        'upload' => "true",
+                        'image' => ""
+                    );
+
+                    return View::make('agm_en.import_purchaser', $viewData);
+                } else {
+                    $viewData = array(
+                        'title' => 'Kemaskini COB Fail',
+                        'panel_nav_active' => 'cob_panel',
+                        'main_nav_active' => 'cob_main',
+                        'sub_nav_active' => 'cob_list',
+                        'user_permission' => $user_permission,
+                        'Uploadmessage' => 'Sila muat naik CSV fail',
+                        'upload' => "true",
+                        'image' => ""
+                    );
+
+                    return View::make('agm_my.import_purchaser', $viewData);
+                }
+            }
+        } else {
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => 'Update COB File',
+                    'panel_nav_active' => 'cob_panel',
+                    'main_nav_active' => 'cob_main',
+                    'sub_nav_active' => 'cob_list',
+                    'user_permission' => $user_permission,
+                    'Uploadmessage' => 'Please upload CSV file',
+                    'upload' => "true",
+                    'image' => ""
+                );
+
+                return View::make('agm_en.import_purchaser', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => 'Kemaskini COB Fail',
+                    'panel_nav_active' => 'cob_panel',
+                    'main_nav_active' => 'cob_main',
+                    'sub_nav_active' => 'cob_list',
+                    'user_permission' => $user_permission,
+                    'Uploadmessage' => 'Sila muat naik CSV fail',
+                    'upload' => "true",
+                    'image' => ""
+                );
+
+                return View::make('agm_my.import_purchaser', $viewData);
+            }
+        }
+    }    
 
 }

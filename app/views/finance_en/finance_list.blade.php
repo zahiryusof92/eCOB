@@ -44,33 +44,31 @@ foreach ($user_permission as $permission) {
     var oTable;
     $(document).ready(function () {
         oTable = $('#filelist').DataTable({
-            "sAjaxSource": "{{URL::action('AdminController@getFinanceList')}}",
+            "sAjaxSource": "{{URL::action('FinanceController@getFinanceList')}}",
             "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
-            // "lengthMenu": [[15, 30, 50], [15, 30, 50]],
-            "order": [[ 3, "asc" ]],
-            // "order": [[ 2, "asc" ]],
+            "order": [[3, "asc"]],
             responsive: true
         });
-    }); 
-    
-    $('#year').on('change', function (){
+    });
+
+    $('#year').on('change', function () {
         oTable.columns(1).search(this.value).draw();
     });
-    $('#month').on('change', function (){
+    $('#month').on('change', function () {
         oTable.columns(0).search(this.value).draw();
     });
-    
+
     function inactiveFinanceList(id) {
         $.ajax({
-            url: "{{ URL::action('AdminController@inactiveFinanceList') }}",
+            url: "{{ URL::action('FinanceController@inactiveFinanceList') }}",
             type: "POST",
             data: {
                 id: id
             },
-            success: function(data) {
+            success: function (data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
-                        window.location = "{{URL::action('AdminController@financeList')}}";
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function () {
+                        window.location = "{{URL::action('FinanceController@financeList')}}";
                     });
                 } else {
                     bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
@@ -79,17 +77,17 @@ foreach ($user_permission as $permission) {
         });
     }
 
-    function activeFinanceList (id) {
+    function activeFinanceList(id) {
         $.ajax({
-            url: "{{ URL::action('AdminController@activeFinanceList') }}",
+            url: "{{ URL::action('FinanceController@activeFinanceList') }}",
             type: "POST",
             data: {
                 id: id
             },
-            success: function(data) {
+            success: function (data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
-                        window.location = "{{URL::action('AdminController@financeList')}}";
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function () {
+                        window.location = "{{URL::action('FinanceController@financeList')}}";
                     });
                 } else {
                     bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
@@ -97,20 +95,20 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-    
+
     function deleteFileList(id) {
-        bootbox.confirm("Are you sure want to delete this file?", function(result){
+        bootbox.confirm("Are you sure want to delete this file?", function (result) {
             if (result) {
                 $.ajax({
-                    url: "{{ URL::action('AdminController@deleteFinanceList') }}",
+                    url: "{{ URL::action('FinanceController@deleteFinanceList') }}",
                     type: "POST",
                     data: {
                         id: id
                     },
-                    success: function(data) {
+                    success: function (data) {
                         if (data.trim() == "true") {
-                            bootbox.alert("<span style='color:green;'>Delete successfully!</span>", function() {
-                                window.location = "{{URL::action('AdminController@financeList')}}";
+                            bootbox.alert("<span style='color:green;'>Delete successfully!</span>", function () {
+                                window.location = "{{URL::action('FinanceController@financeList')}}";
                             });
                         } else {
                             bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");

@@ -7,19 +7,20 @@ $insert_permission = 0;
 $update_permission = 0;
 
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 2) {        
+    if ($permission->submodule_id == 2) {
         $access_permission = $permission->access_permission;
         $insert_permission = $permission->insert_permission;
     }
 }
 $strata = Strata::where('file_id', $financefiledata->file_id)->first();
 ?>
+
 <style>
     .detail-title{
         font-weight: bolder;
-
     }
 </style>
+
 <div class="page-content-inner">
     <section class="panel panel-with-borders">
         <div class="panel-heading">
@@ -30,39 +31,40 @@ $strata = Strata::where('file_id', $financefiledata->file_id)->first();
                 <div class="col-lg-12">
                     <table class="table table-bordered">
                         <tbody>
-                          <tr>
-                            <td class="detail-title">Finance Management</td>
-                            <td>{{ $financefiledata->file->file_no }}</td>
-                            <td class="detail-title">Finance ManagementID</td>
-                            <td>{{ $financefiledata->id }}</td>
-                          </tr>
-                          <tr>
-                            <td class="detail-title">Year</td>
-                            <td>{{ $financefiledata->year }}</td>
-                            <td class="detail-title">Month</td>
-                            <td>{{ $financefiledata->month }}</td>
-                          </tr>
-                          <tr>
-                            <td class="detail-title">Strata</td>
-                            <td colspan="3">{{ $strata->name }}</td>
-                          </tr>
-                          
+                            <tr>
+                                <td class="detail-title">Finance Management</td>
+                                <td>{{ $financefiledata->file->file_no }}</td>
+                                <td class="detail-title">Finance ManagementID</td>
+                                <td>{{ $financefiledata->id }}</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-title">Year</td>
+                                <td>{{ $financefiledata->year }}</td>
+                                <td class="detail-title">Month</td>
+                                <td>{{ $financefiledata->month }}</td>
+                            </tr>
+                            <tr>
+                                <td class="detail-title">Strata</td>
+                                <td colspan="3">{{ $strata->name }}</td>
+                            </tr>
                         </tbody>
-                      </table>
+                    </table>
                 </div>
             </div>
+            
+            <hr/>
+
             <div class="row">
                 <div class="col-lg-12">
-
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Check</a>
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Check</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="summary-tab" data-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="false">Summary</a>
+                            <a class="nav-link" id="summary-tab" data-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="false">Summary</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" id="mfreport-tab" data-toggle="tab" href="#mfreport" role="tab" aria-controls="mfreport" aria-selected="false">MF Report</a>
+                            <a class="nav-link" id="mfreport-tab" data-toggle="tab" href="#mfreport" role="tab" aria-controls="mfreport" aria-selected="false">MF Report</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="sfreport-tab" data-toggle="tab" href="#sfreport" role="tab" aria-controls="sfreport" aria-selected="false">SF Report</a>
@@ -88,43 +90,43 @@ $strata = Strata::where('file_id', $financefiledata->file_id)->first();
                         <li class="nav-item">
                             <a class="nav-link" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false">Admin</a>
                         </li>
-                      </ul>
-                      <div class="tab-content" id="myTabContent">
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active in" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            @include('page_en.edit_finance_file.form_check')
+                            @include('finance_en.edit_finance_file.form_check')
                         </div>
                         <div class="tab-pane fade" id="summary" role="tabpanel" aria-labelledby="summary-tab">
-                            @include('page_en.edit_finance_file.form_summary')
+                            @include('finance_en.edit_finance_file.form_summary')
                         </div>
                         <div class="tab-pane fade" id="mfreport" role="tabpanel" aria-labelledby="mfreport-tab">
-                            @include('page_en.edit_finance_file.form_mfreport')
+                            @include('finance_en.edit_finance_file.form_mfreport')
                         </div>
                         <div class="tab-pane fade" id="income" role="tabpanel" aria-labelledby="income-tab">
-                            @include('page_en.edit_finance_file.form_income')
+                            @include('finance_en.edit_finance_file.form_income')
                         </div>
                         <div class="tab-pane fade" id="sfreport" role="tabpanel" aria-labelledby="sfreport-tab">
-                            @include('page_en.edit_finance_file.form_sfreport')
+                            @include('finance_en.edit_finance_file.form_sfreport')
                         </div>
-
                         <div class="tab-pane fade" id="utility" role="tabpanel" aria-labelledby="utility-tab">
-                            @include('page_en.edit_finance_file.form_utility')
+                            @include('finance_en.edit_finance_file.form_utility')
                         </div>
                         <div class="tab-pane fade" id="contractexp" role="tabpanel" aria-labelledby="contractexp-tab">
-                            @include('page_en.edit_finance_file.form_contractexp')
+                            @include('finance_en.edit_finance_file.form_contractexp')
                         </div>
                         <div class="tab-pane fade" id="repair" role="tabpanel" aria-labelledby="repair-tab">
-                            @include('page_en.edit_finance_file.form_repair')
+                            @include('finance_en.edit_finance_file.form_repair')
                         </div>
                         <div class="tab-pane fade" id="vandalisme" role="tabpanel" aria-labelledby="vandalisme-tab">
-                            @include('page_en.edit_finance_file.form_vandalisme')
+                            @include('finance_en.edit_finance_file.form_vandalisme')
                         </div>
                         <div class="tab-pane fade" id="staff" role="tabpanel" aria-labelledby="staff-tab">
-                            @include('page_en.edit_finance_file.form_staff')
+                            @include('finance_en.edit_finance_file.form_staff')
                         </div>
                         <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
-                            @include('page_en.edit_finance_file.form_admin')
+                            @include('finance_en.edit_finance_file.form_admin')
                         </div>
-                </div>                
+                    </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -133,7 +135,7 @@ $strata = Strata::where('file_id', $financefiledata->file_id)->first();
 
 <!-- Page Scripts -->
 <script>
-     $(function(){
+    $(function () {
         $('#date').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
@@ -145,11 +147,11 @@ $strata = Strata::where('file_id', $financefiledata->file_id)->first();
                 down: "fa fa-arrow-down"
             },
             format: 'DD/MM/YYYY',
-        }).on('dp.change', function(){
+        }).on('dp.change', function () {
             let currentDate = $(this).val().split('/');
-            console.log(currentDate);
+//            console.log(currentDate);
             $("#mirror_date").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
-        });        
+        });
     });
 </script>
 

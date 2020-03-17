@@ -8,19 +8,19 @@ $update_permission = 0;
 $month = [
     1 => 'JAN',
     2 => 'FEB',
-    3 => 'MAR', 
-    4 => 'APR', 
+    3 => 'MAR',
+    4 => 'APR',
     5 => 'MAY',
-    6 => 'JUN', 
+    6 => 'JUN',
     7 => 'JUL',
     8 => 'AUG',
     9 => 'SEP',
     10 => 'OCT',
-    11 => 'NOV', 
+    11 => 'NOV',
     12 => 'DEC'
 ];
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 2) {        
+    if ($permission->submodule_id == 2) {
         $access_permission = $permission->access_permission;
         $insert_permission = $permission->insert_permission;
     }
@@ -61,8 +61,8 @@ foreach ($user_permission as $permission) {
                                     <label><span style="color: red;">*</span> Year</label>
                                     <select id="year" class="form-control">
                                         <option value="">Please Select</option>
-                                        @for ($i = 2012; $i <= 2022; $i++)
-                                            <option value="{{ $i }}">{{ $i}}</option>
+                                        @for ($i = 2012; $i <= date('Y'); $i++)
+                                        <option value="{{ $i }}">{{ $i}}</option>
                                         @endfor
                                     </select>
                                     <div id="year_error" style="display:none;"></div>
@@ -74,7 +74,7 @@ foreach ($user_permission as $permission) {
                                     <select id="month" class="form-control">
                                         <option value="">Please Select</option>
                                         @foreach ($month as $k => $v)
-                                            <option value="{{$k}}">{{ $v }}</option>
+                                        <option value="{{$k}}">{{ $v }}</option>
                                         @endforeach
                                     </select>
                                     <div id="month_error" style="display:none;"></div>
@@ -88,9 +88,9 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-actions">
                             <?php if ($insert_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addFinanceFile()">Submit</button>
-                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@addFinanceFileList')}}'">Cancel</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addFinanceFile()">Submit</button>
+                            <?php } ?>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('FinanceController@addFinanceFileList')}}'">Cancel</button>
                         </div>
                     </form>
                 </div>                
@@ -102,22 +102,21 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-    
     function addFinanceFile() {
         $("#loading").css("display", "inline-block");
 
         var file_no = $("#file_id").val(),
-            month = $("#month").val(),
-            year = $("#year").val();
+                month = $("#month").val(),
+                year = $("#year").val();
 
         var error = 0;
-        
+
         if (file_no.trim() == "") {
             $("#file_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File Number</span>');
             $("#file_no_error").css("display", "block");
             error = 1;
         }
-        
+
         if (month.trim() == "") {
             $("#month_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please Enter Month</span>');
             $("#month_error").css("display", "block");
@@ -129,16 +128,16 @@ foreach ($user_permission as $permission) {
             $("#year_error").css("display", "block");
             error = 1;
         }
-        
+
         if (error == 0) {
             $.ajax({
-                url: "{{ URL::action('AdminController@submitFinanceFile') }}",
+                url: "{{ URL::action('FinanceController@submitFinanceFile') }}",
                 type: "POST",
                 data: {
                     file_id: file_no,
                     month: month,
-                    year : year,
-                    is_active : 1
+                    year: year,
+                    is_active: 1
                 },
                 success: function (data) {
                     $("#loading").css("display", "none");
@@ -146,7 +145,7 @@ foreach ($user_permission as $permission) {
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
                         bootbox.alert("<span style='color:green;'>Finance File added successfully!</span>", function () {
-                            window.location = '{{URL::action("AdminController@financeList") }}';
+                            window.location = '{{URL::action("FinanceController@financeList") }}';
                         });
                     } else if (data.trim() == "file_already_exists") {
                         $("#file_already_exists_error").html('<span style="color:red;font-style:italic;font-size:13px;">This file already exist!</span>');
