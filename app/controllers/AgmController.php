@@ -6,7 +6,7 @@ class AgmController extends BaseController {
         if (empty(Session::get('lang'))) {
             Session::put('lang', 'en');
         }
-        
+
         $locale = Session::get('lang');
         App::setLocale($locale);
     }
@@ -1050,6 +1050,604 @@ class AgmController extends BaseController {
                 $remarks = $agmPurchaseSub->id . ' has been updated.';
                 $auditTrail = new AuditTrail();
                 $auditTrail->module = "AGM Purchaser Submission Update";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    /*
+     * Upload Minutes
+     */
+
+    public function uploadMinutes() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+        $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Upload of Minutes',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'designation' => $designation,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('agm_en.upload_minutes', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Upload of Minutes',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'designation' => $designation,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('agm_my.upload_minutes', $viewData);
+        }
+    }
+
+    public function addMinuteDetails() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $file_id = $data['file_id'];
+            $agm_date = $data['agm_date'];
+            $agm = $data['agm'];
+            $egm = $data['egm'];
+            $minit_meeting = $data['minit_meeting'];
+            $jmc_copy = $data['jmc_copy'];
+            $ic_list = $data['ic_list'];
+            $attendance_list = $data['attendance_list'];
+            $audited_financial_report = $data['audited_financial_report'];
+            $audit_report = $data['audit_report'];
+            $audit_start = $data['audit_start'];
+            $audit_end = $data['audit_end'];
+            $audit_report_file_url = $data['audit_report_file_url'];
+            $letter_integrity_url = $data['letter_integrity_url'];
+            $letter_bankruptcy_url = $data['letter_bankruptcy_url'];
+
+            $agm_detail = new MeetingDocument();
+            $agm_detail->file_id = $file_id;
+            $agm_detail->agm_date = $agm_date;
+            $agm_detail->agm = $agm;
+            $agm_detail->egm = $egm;
+            $agm_detail->minit_meeting = $minit_meeting;
+            $agm_detail->jmc_spa = $jmc_copy;
+            $agm_detail->identity_card = $ic_list;
+            $agm_detail->attendance = $attendance_list;
+            $agm_detail->financial_report = $audited_financial_report;
+            $agm_detail->audit_report = $audit_report;
+            $agm_detail->audit_start_date = $audit_start;
+            $agm_detail->audit_end_date = $audit_end;
+            $agm_detail->audit_report_url = $audit_report_file_url;
+            $agm_detail->letter_integrity_url = $letter_integrity_url;
+            $agm_detail->letter_bankruptcy_url = $letter_bankruptcy_url;
+            $success = $agm_detail->save();
+
+            if ($success) {
+                # Audit Trail
+                $file_name = Files::find($agm_detail->file_id);
+                $remarks = 'AGM Details (' . $file_name->file_no . ')' . ' dated ' . date('d/m/Y', strtotime($agm_detail->agm_date)) . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB File";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function editMinuteDetails() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+            $agm_date = $data['agm_date'];
+            $agm = $data['agm'];
+            $egm = $data['egm'];
+            $minit_meeting = $data['minit_meeting'];
+            $jmc_copy = $data['jmc_copy'];
+            $ic_list = $data['ic_list'];
+            $attendance_list = $data['attendance_list'];
+            $audited_financial_report = $data['audited_financial_report'];
+            $audit_report = $data['audit_report'];
+            $audit_start = $data['audit_start'];
+            $audit_end = $data['audit_end'];
+            $audit_report_file_url = $data['audit_report_file_url'];
+            $letter_integrity_url = $data['letter_integrity_url'];
+            $letter_bankruptcy_url = $data['letter_bankruptcy_url'];
+
+
+            $agm_detail = MeetingDocument::find($id);
+            $agm_detail->agm_date = $agm_date;
+            $agm_detail->agm = $agm;
+            $agm_detail->egm = $egm;
+            $agm_detail->minit_meeting = $minit_meeting;
+            $agm_detail->jmc_spa = $jmc_copy;
+            $agm_detail->identity_card = $ic_list;
+            $agm_detail->attendance = $attendance_list;
+            $agm_detail->financial_report = $audited_financial_report;
+            $agm_detail->audit_report = $audit_report;
+            $agm_detail->audit_start_date = $audit_start;
+            $agm_detail->audit_end_date = $audit_end;
+            $agm_detail->audit_report_url = $audit_report_file_url;
+            $agm_detail->letter_integrity_url = $letter_integrity_url;
+            $agm_detail->letter_bankruptcy_url = $letter_bankruptcy_url;
+            $success = $agm_detail->save();
+
+            if ($success) {
+                # Audit Trail
+                $file_name = Files::find($agm_detail->file_id);
+                $remarks = 'AGM Details (' . $file_name->file_no . ')' . ' dated ' . date('d/m/Y', strtotime($agm_detail->agm_date)) . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB File";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function getMinuteDetails() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $result = "";
+            $id = $data['id'];
+
+            $agm = MeetingDocument::find($id);
+
+            if (count($agm) > 0) {
+                $result .= '<form>';
+                if (Session::get('lang') == "en") {
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Anual General Meeting (AGM)</label></div>';
+                    if ($agm->agm == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1" checked> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0"> No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1"> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0" checked> No</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Extraordinary General Meeting (EGM)</label></div>';
+                    if ($agm->egm == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1" checked> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0"> No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1"> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0" checked> No</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Minit Meeting</label></div>';
+                    if ($agm->minit_meeting == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1" checked> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0"> No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1"> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0" checked> No</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">JMC SPA Copy</label></div>';
+                    if ($agm->jmc_spa == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1" checked>Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0">No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1">Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0" checked>No</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Identity Card List</label></div>';
+                    if ($agm->identity_card == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1" checked> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0"> No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1"> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0" checked> No</div>';
+                    }
+                    $result .= '</div>';
+
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Attendance List</label></div>';
+                    if ($agm->attendance == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1" checked> Yes </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0"> No </div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1"> Yes </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0" checked> No </div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Audited Financial Report</label></div>';
+                    if ($agm->financial_report == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1" checked> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0"> No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1"> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0" checked> No</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Financial Audit Report</label></div>';
+                    $result .= '<div class="col-md-6"><input type="text" class="form-control" placeholder="Financial Audit Report" id="audit_report_edit" value=' . "$agm->audit_report" . '></div>';
+                    $result .= '</div>';
+
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_audit_report_file_edit" enctype="multipart/form-data" method="post" action="' . url("uploadAuditReportFileEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">&nbsp;</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_audit_report_file_edit" class="btn btn-xs btn-danger" onclick="clearAuditFileEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="audit_report_file_edit" id="audit_report_file_edit">';
+                    $result .= '<div id="validation-errors_audit_report_file_edit"></div><div id="view_audit_report_file_edit"></div>';
+                    if ($agm->audit_report_url != "") {
+                        $result .= '<div id="report_edit"><a href="' . asset($agm->audit_report_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteAuditReport(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_letter_integrity_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterIntegrityEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Pledge letter of integrity JMC</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_letter_integrity_edit" class="btn btn-xs btn-danger" onclick="clearLetterIntegrityEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="letter_integrity_edit" id="letter_integrity_edit">';
+                    $result .= '<div id="validation-errors_letter_integrity_edit"></div>';
+                    if ($agm->letter_integrity_url != "") {
+                        $result .= '<div id="integrity_edit"><a href="' . asset($agm->letter_integrity_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteLetterIntegrity(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_letter_bankruptcy_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterBankruptcyEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Declaration letter of non-bankruptcy</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_letter_bankruptcy_edit" class="btn btn-xs btn-danger" onclick="clearLetterBankruptcyEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="letter_bankruptcy_edit" id="letter_bankruptcy_edit">';
+                    $result .= '<div id="validation-errors_letter_bankruptcy_edit"></div>';
+                    if ($agm->letter_bankruptcy_url != "") {
+                        $result .= '<div id="bankruptcy_edit"><a href="' . asset($agm->letter_bankruptcy_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteLetterBankruptcy(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
+                } else {
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Mesyuarat Agung Tahunan (AGM)</label></div>';
+                    if ($agm->agm == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1" checked> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0"> Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1"> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0" checked> Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Mesyuarat Agung Luarbiasa (EGM)</label></div>';
+                    if ($agm->egm == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1" checked> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0"> Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1"> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0" checked> Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Minit Mesyuarat</label></div>';
+                    if ($agm->minit_meeting == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1" checked> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0"> Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1"> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0" checked> Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Salinan Perjanjian Jualbeli JMC</label></div>';
+                    if ($agm->jmc_spa == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1" checked>Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0">Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1">Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0" checked>Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Salinan Kad Pengenalan</label></div>';
+                    if ($agm->identity_card == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1" checked> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0"> Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1"> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0" checked> Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Senarai Kehadiran</label></div>';
+                    if ($agm->attendance == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1" checked> Ada </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0"> Tiada </div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1"> Ada </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0" checked> Tiada </div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Laporan Kew Teraudit</label></div>';
+                    if ($agm->financial_report == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1" checked> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0"> Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1"> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0" checked> Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Laporan Kewangan Audit</label></div>';
+                    $result .= '<div class="col-md-6"><input type="text" class="form-control" placeholder="Laporan Kewangan Audit" id="audit_report_edit" value=' . "$agm->audit_report" . '></div>';
+                    $result .= '</div>';
+
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_audit_report_file_edit" enctype="multipart/form-data" method="post" action="' . url("uploadAuditReportFileEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">&nbsp;</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_audit_report_file_edit" class="btn btn-xs btn-danger" onclick="clearAuditFileEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="audit_report_file_edit" id="audit_report_file_edit">';
+                    $result .= '<div id="validation-errors_audit_report_file_edit"></div><div id="view_audit_report_file_edit"></div>';
+                    if ($agm->audit_report_url != "") {
+                        $result .= '<div id="report_edit"><a href="' . asset($agm->audit_report_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteAuditReport(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_letter_integrity_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterIntegrityEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Surat ikrar integriti JMC</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_letter_integrity_edit" class="btn btn-xs btn-danger" onclick="clearLetterIntegrityEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="letter_integrity_edit" id="letter_integrity_edit">';
+                    $result .= '<div id="validation-errors_letter_integrity_edit"></div>';
+                    if ($agm->letter_integrity_url != "") {
+                        $result .= '<div id="integrity_edit"><a href="' . asset($agm->letter_integrity_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteLetterIntegrity(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_letter_bankruptcy_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterBankruptcyEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Surat akuan tidak muflis</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_letter_bankruptcy_edit" class="btn btn-xs btn-danger" onclick="clearLetterBankruptcyEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="letter_bankruptcy_edit" id="letter_bankruptcy_edit">';
+                    $result .= '<div id="validation-errors_letter_bankruptcy_edit"></div>';
+                    if ($agm->letter_bankruptcy_url != "") {
+                        $result .= '<div id="bankruptcy_edit"><a href="' . asset($agm->letter_bankruptcy_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteLetterBankruptcy(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
+                }
+                $result .= '</form>';
+            } else {
+                $result = "No Data Found";
+            }
+            print $result;
+        }
+    }
+
+    public function getMinutes() {
+        $agm_detail = MeetingDocument::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+
+        if (count($agm_detail) > 0) {
+            $data = Array();
+            foreach ($agm_detail as $agm_details) {
+                $button = "";
+                $button .= '<button type="button" class="btn btn-xs btn-success edit_agm" title="Edit" onclick="getAGMDetails(\'' . $agm_details->id . '\')"
+                            data-agm_id="' . $agm_details->id . '" data-agm_date="' . $agm_details->agm_date . '"                          
+                            data-audit_start_date="' . $agm_details->audit_start_date . '" data-audit_end_date="' . $agm_details->audit_end_date . '"
+                            data-audit_report_file_url="' . $agm_details->audit_report_url . '" data-letter_integrity_url="' . $agm_details->letter_integrity_url . '" data-letter_bankruptcy_url="' . $agm_details->letter_bankruptcy_url . '">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            &nbsp;';
+                $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAGMDetails(\'' . $agm_details->id . '\')">
+                                <i class="fa fa-trash""></i>
+                            </button>';
+
+                if ($agm_details->agm_date == "0000-00-00") {
+                    $date_agm = '';
+                } else {
+                    $date_agm = date('d-M-Y', strtotime($agm_details->agm_date));
+                }
+                if ($agm_details->audit_start_date == "0000-00-00") {
+                    $date_audit_start = '';
+                } else {
+                    $date_audit_start = date('d-M-Y', strtotime($agm_details->audit_start_date));
+                }
+                if ($agm_details->audit_end_date == "0000-00-00") {
+                    $date_audit_end = '';
+                } else {
+                    $date_audit_end = date('d-M-Y', strtotime($agm_details->audit_end_date));
+                }
+                if ($agm_details->agm == 0 || $agm_details->agm == "") {
+                    $status1 = '';
+                } else {
+                    $status1 = '<i class="icmn-checkmark4"></i>';
+                }
+                if ($agm_details->egm == 0 || $agm_details->egm == "") {
+                    $status2 = '';
+                } else {
+                    $status2 = '<i class="icmn-checkmark4"></i>';
+                }
+                if ($agm_details->minit_meeting == 0 || $agm_details->minit_meeting == "") {
+                    $status3 = '';
+                } else {
+                    $status3 = '<i class="icmn-checkmark4"></i>';
+                }
+                if ($agm_details->letter_integrity_url == "") {
+                    $status4 = '';
+                } else {
+                    $status4 = '<i class="icmn-checkmark4"></i>';
+                }
+                if ($agm_details->letter_bankruptcy_url == "") {
+                    $status5 = '';
+                } else {
+                    $status5 = '<i class="icmn-checkmark4"></i>';
+                }
+                if ($agm_details->jmc_spa == 0 || $agm_details->jmc_spa == "") {
+                    $status6 = '';
+                } else {
+                    $status6 = '<i class="icmn-checkmark4"></i>';
+                }
+                if ($agm_details->identity_card == 0 || $agm_details->identity_card == "") {
+                    $status7 = '';
+                } else {
+                    $status7 = '<i class="icmn-checkmark4"></i>';
+                }
+                if ($agm_details->attendance == 0 || $agm_details->attendance == "") {
+                    $status8 = '';
+                } else {
+                    $status8 = '<i class="icmn-checkmark4"></i>';
+                }
+                if ($agm_details->financial_report == 0 || $agm_details->financial_report == "") {
+                    $status9 = '';
+                } else {
+                    $status9 = '<i class="icmn-checkmark4"></i>';
+                }
+                if ($agm_details->audit_report_url == "") {
+                    $status10 = '';
+                } else {
+                    $status10 = '<i class="icmn-checkmark4"></i>';
+                }
+
+                if (Session::get('lang') == "en") {
+                    $data_raw = array(
+                        $date_agm,
+                        'Anual General Meeting (AGM)<br/>'
+                        . 'Extraordinary General Meeting (EGM)<br/>'
+                        . 'Minit Meeting<br/>'
+                        . 'Pledge letter of integrity JMC<br>'
+                        . 'Declaration letter of non-bankruptcy',
+                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
+                        'JMC SPA Copy<br/>'
+                        . 'Identity Card List<br/>'
+                        . 'Attendance List',
+                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
+                        'Audited Financial Report<br/>'
+                        . 'Financial Audit Start Date<br/>'
+                        . 'Financial Audit End Date<br/>'
+                        . 'Financial Audit Report',
+                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
+                        $button
+                    );
+                } else {
+                    $data_raw = array(
+                        $date_agm,
+                        'Mesyuarat Agung Tahunan (AGM)<br/>'
+                        . 'Mesyuarat Agung Luarbiasa (EGM)<br/>'
+                        . 'Minit Mesyuarat<br/>'
+                        . 'Surat ikrar integriti JMC<br>'
+                        . 'Surat akuan tidak muflis',
+                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
+                        'Salinan Perjanjian Jualbeli JMC<br/>'
+                        . 'Salinan Kad Pengenalan<br/>'
+                        . 'Senarai Kehadiran',
+                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
+                        'Laporan Kew Teraudit<br/>'
+                        . 'Tarikh Mula Kewangan Audit<br/>'
+                        . 'Tarikh Akhir Kewangan Audit<br/>'
+                        . 'Laporan Kewangan Audit',
+                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
+                        $button
+                    );
+                }
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function deleteMinuteDetails() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $agm_details = MeetingDocument::find($id);
+            $agm_details->is_deleted = 1;
+            $deleted = $agm_details->save();
+
+            if ($deleted) {
+                # Audit Trail
+                $file_name = Files::find($agm_details->file_id);
+                $remarks = 'AGM Details (' . $file_name->file_no . ')' . ' dated ' . date('d/m/Y', strtotime($agm_details->agm_date)) . ' has been deleted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB File";
                 $auditTrail->remarks = $remarks;
                 $auditTrail->audit_by = Auth::user()->id;
                 $auditTrail->save();

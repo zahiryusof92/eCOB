@@ -517,6 +517,14 @@ Route::get('/editFinanceSupport/{id}', 'FinanceController@editFinanceSupport')->
 Route::post('/updateFinanceSupport', 'FinanceController@updateFinanceSupport')->before('authMember');
 Route::post('/deleteFinanceSupport', 'FinanceController@deleteFinanceSupport')->before('authMember');
 
+// upload minutes
+Route::get('/uploadMinutes', 'AgmController@uploadMinutes')->before('authMember');
+Route::post('/addMinuteDetails', 'AgmController@addMinuteDetails')->before('authMember');
+Route::post('/editMinuteDetails', 'AgmController@editMinuteDetails')->before('authMember');
+Route::get('/getMinutes', 'AgmController@getMinutes')->before('authMember');
+Route::post('/getMinuteDetails', 'AgmController@getMinuteDetails')->before('authMember');
+Route::post('/deleteMinuteDetails/{id}', 'AgmController@deleteMinuteDetails')->before('authMember');
+
 
 //invalid route
 Route::get('/{name?}', 'AdminController@showView')->before('authMember');
