@@ -3,8 +3,12 @@
 class UserController extends BaseController {
 
     public function __construct() {
-        Session::forget('lang');
-        Session::put('lang', 'en');
+        if (empty(Session::get('lang'))) {
+            Session::put('lang', 'en');
+        }
+        
+        $locale = Session::get('lang');
+        App::setLocale($locale);
     }
 
     public function changeLanguage($lang) {
