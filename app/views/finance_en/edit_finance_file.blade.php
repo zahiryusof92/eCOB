@@ -15,12 +15,6 @@ foreach ($user_permission as $permission) {
 $strata = Strata::where('file_id', $financefiledata->file_id)->first();
 ?>
 
-<style>
-    .detail-title{
-        font-weight: bolder;
-    }
-</style>
-
 <div class="page-content-inner">
     <section class="panel panel-with-borders">
         <div class="panel-heading">
@@ -32,19 +26,19 @@ $strata = Strata::where('file_id', $financefiledata->file_id)->first();
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <td class="detail-title">Finance Management</td>
+                                <td>Finance Management</td>
                                 <td>{{ $financefiledata->file->file_no }}</td>
-                                <td class="detail-title">Finance ManagementID</td>
+                                <td>Finance ManagementID</td>
                                 <td>{{ $financefiledata->id }}</td>
                             </tr>
                             <tr>
-                                <td class="detail-title">Year</td>
+                                <td>Year</td>
                                 <td>{{ $financefiledata->year }}</td>
-                                <td class="detail-title">Month</td>
+                                <td>Month</td>
                                 <td>{{ $financefiledata->month }}</td>
                             </tr>
                             <tr>
-                                <td class="detail-title">Strata</td>
+                                <td>Strata</td>
                                 <td colspan="3">{{ $strata->name }}</td>
                             </tr>
                         </tbody>

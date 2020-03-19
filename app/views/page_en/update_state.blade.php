@@ -81,7 +81,7 @@ foreach ($user_permission as $permission) {
         $("#loading").css("display", "inline-block");
 
         var name = $("#name").val(),
-            seq = $("#seq").val()
+            seq = $("#seq").val(),
             is_active = $("#is_active").val();
 
         var error = 0;

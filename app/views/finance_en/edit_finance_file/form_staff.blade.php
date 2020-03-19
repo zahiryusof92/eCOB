@@ -129,7 +129,15 @@ $prefix = 'staff_';
             },
             success: function (response) {
                 if (response.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Finance Staff Data added successfully!</span>");
+                    $.notify({
+                        message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                    }, {
+                        type: 'success',
+                        placement: {
+                            align: "center"
+                        }
+                    });
+                    location.reload();
                 } else {
                     bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                 }

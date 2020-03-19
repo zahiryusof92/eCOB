@@ -518,12 +518,14 @@ Route::post('/updateFinanceSupport', 'FinanceController@updateFinanceSupport')->
 Route::post('/deleteFinanceSupport', 'FinanceController@deleteFinanceSupport')->before('authMember');
 
 // upload minutes
-Route::get('/uploadMinutes', 'AgmController@uploadMinutes')->before('authMember');
-Route::post('/addMinuteDetails', 'AgmController@addMinuteDetails')->before('authMember');
-Route::post('/editMinuteDetails', 'AgmController@editMinuteDetails')->before('authMember');
+Route::get('/minutes', 'AgmController@minutes')->before('authMember');
 Route::get('/getMinutes', 'AgmController@getMinutes')->before('authMember');
+Route::get('/addMinutes', 'AgmController@addMinutes')->before('authMember');
+Route::post('/submitAddMinutes', 'AgmController@submitAddMinutes')->before('authMember');
+Route::get('/editMinutes/{id}', 'AgmController@editMinutes')->before('authMember');
+Route::post('/submitEditMinutes', 'AgmController@submitEditMinutes')->before('authMember');
 Route::post('/getMinuteDetails', 'AgmController@getMinuteDetails')->before('authMember');
-Route::post('/deleteMinuteDetails/{id}', 'AgmController@deleteMinuteDetails')->before('authMember');
+Route::post('/deleteMinutes/{id}', 'AgmController@deleteMinutes')->before('authMember');
 
 
 //invalid route

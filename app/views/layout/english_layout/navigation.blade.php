@@ -507,7 +507,7 @@ if (!Auth::user()->getAdmin()) {
                     @endif
                     @if ($access_permission32 == 1)
                     <li id="agmminutesub_list">
-                        <a class="left-menu-link" href="{{URL::action('AgmController@uploadMinutes')}}">
+                        <a class="left-menu-link" href="{{URL::action('AgmController@minutes')}}">
                             Upload of Minutes
                         </a>
                     </li>

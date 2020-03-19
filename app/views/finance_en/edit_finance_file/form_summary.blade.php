@@ -15,29 +15,30 @@ $tableField = [
     'kos_pekerja' => 'Kos Pekerja',
     'pentadbiran' => 'Pentadbiran Termasuk telefon, internet, alat tulis pejabat, petty cash, sewaan mesin fotokopi, fi audit, caj bank dan lain-lain',
     'fi_ejen_pengurusan' => 'Fi Ejen Pengurusan',
-    'lain_lain' => '',
+    'lain_lain' => 'Lain-Lain-sekiranya ada Termasuk sila senaraikan',
 ];
 ?>
+
 <div class="tab-content padding-vertical-20">
     <div class="tab-pane active" id="buyer_tab" role="tabpanel">
         <div class="row">
             <div class="col-lg-12">
-                <!-- Buyer Form -->
+                <h6>Summary</h6>
                 <form id="summaryForm">  
                     <div class="row">
-                        <table class="table table-bordered">
+                        <table class="table table-sm">
                             <tbody>
                                 <?php $no = 1; ?>
                                 @foreach ($tableField as $key => $val)
                                 <tr>
-                                    <td width="1%" class="text-center">{{$no++}}</td>
-                                    <td>{{ $val }}</td>
-                                    <td><input type="text" name="{{$prefix.$key}}" class="form-control" value="0"></td>
+                                    <td width="5%" class="text-center">{{$no++}}</td>
+                                    <td width="85%" >{{ $val }}</td>
+                                    <td width="10%" ><input type="number" class="form-control" id="{{$prefix.$key}}" value="0.00" disabled=""></td>
                                 </tr>
                                 @endforeach
                                 <tr>
                                     <td colspan="2" class="text-right">Jumlah Pembelanjaan</td>
-                                    <td><input type="text" name="{{$prefix.'jumlah_pembelanjaan'}}" class="form-control" value="0"></td>
+                                    <td><input type="number" class="form-control" id="{{$prefix.'jumlah_pembelanjaan'}}" value="0.00" disabled=""></td>
                                 </tr>
                             </tbody>
                         </table>    
@@ -52,6 +53,3 @@ $tableField = [
         </div>
     </div>
 </div>
-
-<script>
-</script>

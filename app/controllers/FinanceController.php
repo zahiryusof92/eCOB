@@ -59,7 +59,6 @@ class FinanceController extends BaseController {
             $finance->is_active = $is_active;
             $success = $finance->save();
 
-
             if ($success) {
                 # Audit Trail
                 $remarks = 'Finance File with id : ' . $finance->id . ' has been inserted.';

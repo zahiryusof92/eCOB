@@ -119,6 +119,7 @@
     function editPurchaser() {
         $("#loading").css("display", "inline-block");
         $("#submit_button").attr("disabled", "disabled");
+        $("#cancel_button").attr("disabled", "disabled");
 
         var file_id = $("#file_id").val(),
                 unit_no = $("#unit_no").val(),
@@ -186,6 +187,7 @@
         } else {
             $("#loading").css("display", "none");
             $("#submit_button").removeAttr("disabled");
+            $("#cancel_button").removeAttr("disabled");
         }
     }
 

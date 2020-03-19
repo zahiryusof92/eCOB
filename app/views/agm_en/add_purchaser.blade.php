@@ -119,6 +119,7 @@
     function addPurchaser() {
         $("#loading").css("display", "inline-block");
         $("#submit_button").attr("disabled", "disabled");
+        $("#cancel_button").attr("disabled", "disabled");
         $("#file_id_error").css("display", "none");
         $("#unit_no_error").css("display", "none");
         $("#owner_name_error").css("display", "none");
@@ -193,6 +194,7 @@
         } else {
             $("#loading").css("display", "none");
             $("#submit_button").removeAttr("disabled");
+            $("#cancel_button").removeAttr("disabled");
         }
     }
 

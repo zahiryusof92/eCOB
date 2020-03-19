@@ -1065,11 +1065,10 @@ class AgmController extends BaseController {
      * Upload Minutes
      */
 
-    public function uploadMinutes() {
+    public function minutes() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
-        $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -1078,12 +1077,11 @@ class AgmController extends BaseController {
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmminutesub_list',
                 'user_permission' => $user_permission,
-                'designation' => $designation,
                 'files' => $files,
                 'image' => ""
             );
 
-            return View::make('agm_en.upload_minutes', $viewData);
+            return View::make('agm_en.minutes', $viewData);
         } else {
             $viewData = array(
                 'title' => 'Upload of Minutes',
@@ -1091,16 +1089,183 @@ class AgmController extends BaseController {
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmminutesub_list',
                 'user_permission' => $user_permission,
-                'designation' => $designation,
                 'files' => $files,
                 'image' => ""
             );
 
-            return View::make('agm_my.upload_minutes', $viewData);
+            return View::make('agm_my.minutes', $viewData);
         }
     }
 
-    public function addMinuteDetails() {
+    public function getMinutes() {
+        $agm_detail = MeetingDocument::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+
+        if (count($agm_detail) > 0) {
+            $data = Array();
+            foreach ($agm_detail as $agm_details) {
+                $button = "";
+                $button .= '<button type="button" class="btn btn-xs btn-success edit_agm" title="Edit" onclick="window.location=\'' . URL::action('AgmController@editMinutes', $agm_details->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;&nbsp;';
+                $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAGMDetails(\'' . $agm_details->id . '\')"><i class="fa fa-trash""></i></button>';
+
+                if ($agm_details->agm_date == "0000-00-00") {
+                    $date_agm = '';
+                } else {
+                    $date_agm = date('d-M-Y', strtotime($agm_details->agm_date));
+                }
+                if ($agm_details->audit_start_date == "0000-00-00") {
+                    $date_audit_start = '';
+                } else {
+                    $date_audit_start = date('d-M-Y', strtotime($agm_details->audit_start_date));
+                }
+                if ($agm_details->audit_end_date == "0000-00-00") {
+                    $date_audit_end = '';
+                } else {
+                    $date_audit_end = date('d-M-Y', strtotime($agm_details->audit_end_date));
+                }
+                if ($agm_details->agm == 0 || $agm_details->agm == "") {
+                    $status1 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status1 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->egm == 0 || $agm_details->egm == "") {
+                    $status2 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status2 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->minit_meeting == 0 || $agm_details->minit_meeting == "") {
+                    $status3 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status3 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->letter_integrity_url == "") {
+                    $status4 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status4 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->letter_bankruptcy_url == "") {
+                    $status5 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status5 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->jmc_spa == 0 || $agm_details->jmc_spa == "") {
+                    $status6 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status6 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->identity_card == 0 || $agm_details->identity_card == "") {
+                    $status7 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status7 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->attendance == 0 || $agm_details->attendance == "") {
+                    $status8 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status8 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->financial_report == 0 || $agm_details->financial_report == "") {
+                    $status9 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status9 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->audit_report_url == "") {
+                    $status10 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status10 = '<i class="icmn-checkmark"></i>';
+                }
+
+                if (Session::get('lang') == "en") {
+                    $data_raw = array(
+                        $date_agm,
+                        'Anual General Meeting (AGM)<br/>'
+                        . 'Extraordinary General Meeting (EGM)<br/>'
+                        . 'Minit Meeting<br/>'
+                        . 'Pledge letter of integrity JMC<br>'
+                        . 'Declaration letter of non-bankruptcy',
+                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
+                        'JMC SPA Copy<br/>'
+                        . 'Identity Card List<br/>'
+                        . 'Attendance List',
+                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
+                        'Audited Financial Report<br/>'
+                        . 'Financial Audit Start Date<br/>'
+                        . 'Financial Audit End Date<br/>'
+                        . 'Financial Audit Report',
+                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
+                        $button
+                    );
+                } else {
+                    $data_raw = array(
+                        $date_agm,
+                        'Mesyuarat Agung Tahunan (AGM)<br/>'
+                        . 'Mesyuarat Agung Luarbiasa (EGM)<br/>'
+                        . 'Minit Mesyuarat<br/>'
+                        . 'Surat ikrar integriti JMC<br>'
+                        . 'Surat akuan tidak muflis',
+                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
+                        'Salinan Perjanjian Jualbeli JMC<br/>'
+                        . 'Salinan Kad Pengenalan<br/>'
+                        . 'Senarai Kehadiran',
+                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
+                        'Laporan Kew Teraudit<br/>'
+                        . 'Tarikh Mula Kewangan Audit<br/>'
+                        . 'Tarikh Akhir Kewangan Audit<br/>'
+                        . 'Laporan Kewangan Audit',
+                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
+                        $button
+                    );
+                }
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function addMinutes() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Minutes',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('agm_en.add_minutes', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Upload of Minutes',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('agm_my.add_minutes', $viewData);
+        }
+    }
+
+    public function submitAddMinutes() {
         $data = Input::all();
         if (Request::ajax()) {
 
@@ -1116,9 +1281,7 @@ class AgmController extends BaseController {
             $audit_report = $data['audit_report'];
             $audit_start = $data['audit_start'];
             $audit_end = $data['audit_end'];
-            $audit_report_file_url = $data['audit_report_file_url'];
-            $letter_integrity_url = $data['letter_integrity_url'];
-            $letter_bankruptcy_url = $data['letter_bankruptcy_url'];
+            $remarks = $data['remarks'];
 
             $agm_detail = new MeetingDocument();
             $agm_detail->file_id = $file_id;
@@ -1133,9 +1296,7 @@ class AgmController extends BaseController {
             $agm_detail->audit_report = $audit_report;
             $agm_detail->audit_start_date = $audit_start;
             $agm_detail->audit_end_date = $audit_end;
-            $agm_detail->audit_report_url = $audit_report_file_url;
-            $agm_detail->letter_integrity_url = $letter_integrity_url;
-            $agm_detail->letter_bankruptcy_url = $letter_bankruptcy_url;
+            $agm_detail->remarks = $remarks;
             $success = $agm_detail->save();
 
             if ($success) {
@@ -1155,11 +1316,49 @@ class AgmController extends BaseController {
         }
     }
 
-    public function editMinuteDetails() {
+    public function editMinutes($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $meeting_doc = MeetingDocument::find($id);
+        if ($meeting_doc) {
+            $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => 'Add Minutes',
+                    'panel_nav_active' => 'agm_panel',
+                    'main_nav_active' => 'agm_main',
+                    'sub_nav_active' => 'agmminutesub_list',
+                    'user_permission' => $user_permission,
+                    'meeting_doc' => $meeting_doc,
+                    'files' => $files,
+                    'image' => ""
+                );
+
+                return View::make('agm_en.edit_minutes', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => 'Upload of Minutes',
+                    'panel_nav_active' => 'agm_panel',
+                    'main_nav_active' => 'agm_main',
+                    'sub_nav_active' => 'agmminutesub_list',
+                    'user_permission' => $user_permission,
+                    'meeting_doc' => $meeting_doc,
+                    'files' => $files,
+                    'image' => ""
+                );
+
+                return View::make('agm_my.edit_minutes', $viewData);
+            }
+        }
+    }
+
+    public function submitEditMinutes() {
         $data = Input::all();
         if (Request::ajax()) {
 
             $id = $data['id'];
+            $file_id = $data['file_id'];
             $agm_date = $data['agm_date'];
             $agm = $data['agm'];
             $egm = $data['egm'];
@@ -1171,39 +1370,39 @@ class AgmController extends BaseController {
             $audit_report = $data['audit_report'];
             $audit_start = $data['audit_start'];
             $audit_end = $data['audit_end'];
-            $audit_report_file_url = $data['audit_report_file_url'];
-            $letter_integrity_url = $data['letter_integrity_url'];
-            $letter_bankruptcy_url = $data['letter_bankruptcy_url'];
-
+            $remarks = $data['remarks'];
 
             $agm_detail = MeetingDocument::find($id);
-            $agm_detail->agm_date = $agm_date;
-            $agm_detail->agm = $agm;
-            $agm_detail->egm = $egm;
-            $agm_detail->minit_meeting = $minit_meeting;
-            $agm_detail->jmc_spa = $jmc_copy;
-            $agm_detail->identity_card = $ic_list;
-            $agm_detail->attendance = $attendance_list;
-            $agm_detail->financial_report = $audited_financial_report;
-            $agm_detail->audit_report = $audit_report;
-            $agm_detail->audit_start_date = $audit_start;
-            $agm_detail->audit_end_date = $audit_end;
-            $agm_detail->audit_report_url = $audit_report_file_url;
-            $agm_detail->letter_integrity_url = $letter_integrity_url;
-            $agm_detail->letter_bankruptcy_url = $letter_bankruptcy_url;
-            $success = $agm_detail->save();
+            if ($agm_detail) {
+                $agm_detail->file_id = $file_id;
+                $agm_detail->agm_date = $agm_date;
+                $agm_detail->agm = $agm;
+                $agm_detail->egm = $egm;
+                $agm_detail->minit_meeting = $minit_meeting;
+                $agm_detail->jmc_spa = $jmc_copy;
+                $agm_detail->identity_card = $ic_list;
+                $agm_detail->attendance = $attendance_list;
+                $agm_detail->financial_report = $audited_financial_report;
+                $agm_detail->audit_report = $audit_report;
+                $agm_detail->audit_start_date = $audit_start;
+                $agm_detail->audit_end_date = $audit_end;
+                $agm_detail->remarks = $remarks;
+                $success = $agm_detail->save();
 
-            if ($success) {
-                # Audit Trail
-                $file_name = Files::find($agm_detail->file_id);
-                $remarks = 'AGM Details (' . $file_name->file_no . ')' . ' dated ' . date('d/m/Y', strtotime($agm_detail->agm_date)) . ' has been updated.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "COB File";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
+                if ($success) {
+                    # Audit Trail
+                    $file_name = Files::find($agm_detail->file_id);
+                    $remarks = 'AGM Details (' . $file_name->file_no . ')' . ' dated ' . date('d/m/Y', strtotime($agm_detail->agm_date)) . ' has been inserted.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB File";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
 
-                print "true";
+                    print "true";
+                } else {
+                    print "false";
+                }
             } else {
                 print "false";
             }
@@ -1485,150 +1684,6 @@ class AgmController extends BaseController {
                 $result = "No Data Found";
             }
             print $result;
-        }
-    }
-
-    public function getMinutes() {
-        $agm_detail = MeetingDocument::where('is_deleted', 0)->orderBy('id', 'desc')->get();
-
-        if (count($agm_detail) > 0) {
-            $data = Array();
-            foreach ($agm_detail as $agm_details) {
-                $button = "";
-                $button .= '<button type="button" class="btn btn-xs btn-success edit_agm" title="Edit" onclick="getAGMDetails(\'' . $agm_details->id . '\')"
-                            data-agm_id="' . $agm_details->id . '" data-agm_date="' . $agm_details->agm_date . '"                          
-                            data-audit_start_date="' . $agm_details->audit_start_date . '" data-audit_end_date="' . $agm_details->audit_end_date . '"
-                            data-audit_report_file_url="' . $agm_details->audit_report_url . '" data-letter_integrity_url="' . $agm_details->letter_integrity_url . '" data-letter_bankruptcy_url="' . $agm_details->letter_bankruptcy_url . '">
-                                <i class="fa fa-pencil"></i>
-                            </button>
-                            &nbsp;';
-                $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAGMDetails(\'' . $agm_details->id . '\')">
-                                <i class="fa fa-trash""></i>
-                            </button>';
-
-                if ($agm_details->agm_date == "0000-00-00") {
-                    $date_agm = '';
-                } else {
-                    $date_agm = date('d-M-Y', strtotime($agm_details->agm_date));
-                }
-                if ($agm_details->audit_start_date == "0000-00-00") {
-                    $date_audit_start = '';
-                } else {
-                    $date_audit_start = date('d-M-Y', strtotime($agm_details->audit_start_date));
-                }
-                if ($agm_details->audit_end_date == "0000-00-00") {
-                    $date_audit_end = '';
-                } else {
-                    $date_audit_end = date('d-M-Y', strtotime($agm_details->audit_end_date));
-                }
-                if ($agm_details->agm == 0 || $agm_details->agm == "") {
-                    $status1 = '';
-                } else {
-                    $status1 = '<i class="icmn-checkmark4"></i>';
-                }
-                if ($agm_details->egm == 0 || $agm_details->egm == "") {
-                    $status2 = '';
-                } else {
-                    $status2 = '<i class="icmn-checkmark4"></i>';
-                }
-                if ($agm_details->minit_meeting == 0 || $agm_details->minit_meeting == "") {
-                    $status3 = '';
-                } else {
-                    $status3 = '<i class="icmn-checkmark4"></i>';
-                }
-                if ($agm_details->letter_integrity_url == "") {
-                    $status4 = '';
-                } else {
-                    $status4 = '<i class="icmn-checkmark4"></i>';
-                }
-                if ($agm_details->letter_bankruptcy_url == "") {
-                    $status5 = '';
-                } else {
-                    $status5 = '<i class="icmn-checkmark4"></i>';
-                }
-                if ($agm_details->jmc_spa == 0 || $agm_details->jmc_spa == "") {
-                    $status6 = '';
-                } else {
-                    $status6 = '<i class="icmn-checkmark4"></i>';
-                }
-                if ($agm_details->identity_card == 0 || $agm_details->identity_card == "") {
-                    $status7 = '';
-                } else {
-                    $status7 = '<i class="icmn-checkmark4"></i>';
-                }
-                if ($agm_details->attendance == 0 || $agm_details->attendance == "") {
-                    $status8 = '';
-                } else {
-                    $status8 = '<i class="icmn-checkmark4"></i>';
-                }
-                if ($agm_details->financial_report == 0 || $agm_details->financial_report == "") {
-                    $status9 = '';
-                } else {
-                    $status9 = '<i class="icmn-checkmark4"></i>';
-                }
-                if ($agm_details->audit_report_url == "") {
-                    $status10 = '';
-                } else {
-                    $status10 = '<i class="icmn-checkmark4"></i>';
-                }
-
-                if (Session::get('lang') == "en") {
-                    $data_raw = array(
-                        $date_agm,
-                        'Anual General Meeting (AGM)<br/>'
-                        . 'Extraordinary General Meeting (EGM)<br/>'
-                        . 'Minit Meeting<br/>'
-                        . 'Pledge letter of integrity JMC<br>'
-                        . 'Declaration letter of non-bankruptcy',
-                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
-                        'JMC SPA Copy<br/>'
-                        . 'Identity Card List<br/>'
-                        . 'Attendance List',
-                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
-                        'Audited Financial Report<br/>'
-                        . 'Financial Audit Start Date<br/>'
-                        . 'Financial Audit End Date<br/>'
-                        . 'Financial Audit Report',
-                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
-                        $button
-                    );
-                } else {
-                    $data_raw = array(
-                        $date_agm,
-                        'Mesyuarat Agung Tahunan (AGM)<br/>'
-                        . 'Mesyuarat Agung Luarbiasa (EGM)<br/>'
-                        . 'Minit Mesyuarat<br/>'
-                        . 'Surat ikrar integriti JMC<br>'
-                        . 'Surat akuan tidak muflis',
-                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
-                        'Salinan Perjanjian Jualbeli JMC<br/>'
-                        . 'Salinan Kad Pengenalan<br/>'
-                        . 'Senarai Kehadiran',
-                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
-                        'Laporan Kew Teraudit<br/>'
-                        . 'Tarikh Mula Kewangan Audit<br/>'
-                        . 'Tarikh Akhir Kewangan Audit<br/>'
-                        . 'Laporan Kewangan Audit',
-                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
-                        $button
-                    );
-                }
-
-                array_push($data, $data_raw);
-            }
-            $output_raw = array(
-                "aaData" => $data
-            );
-
-            $output = json_encode($output_raw);
-            return $output;
-        } else {
-            $output_raw = array(
-                "aaData" => []
-            );
-
-            $output = json_encode($output_raw);
-            return $output;
         }
     }
 

@@ -1,5 +1,15 @@
 <?php
 $prefix = 'mfr_';
+$tableField = [
+    'utiliti' => 'UTILITI (BAHAGIAN A SAHAJA)',
+    'penyenggaraan' => 'PENYENGGARAAN',
+    'perbelanjaan1' => 'PEMBAIKAN/PENGGANTIAN/PEMBELIAN/NAIKTARAF/PEMBAHARUAN',
+    'perbelanjaan2' => 'PEMBAIKAN/PENGGANTIAN/PEMBELIAN (VANDALISME)',
+    'pekerja' => 'PEKERJA',
+    'pentadbiran' => 'PENTADBIRAN',
+    'jumlah' => 'JUMLAH TELAH BAYAR [B]'
+];
+
 
 $mfreport = FinanceReportMf::where('finance_file_id', $finance_file_id)->first();
 if (!is_null($mfreport)) {
@@ -21,7 +31,10 @@ $mfr_total_amount = 0;
     <div class="tab-pane active" id="buyer_tab" role="tabpanel">
         <div class="row">
             <div class="col-lg-12">
-                <form id="formFinanceMfReport" method="POST">
+
+                <h6>1. LAPORAN RINGKAS PENCAPAIAN KUTIPAN CAJ PENYENGGARAAN (MAINTENANCE FEE)</h6>
+
+                <form id="formFinanceMfReport" class="form-horizontal" method="POST">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -30,47 +43,62 @@ $mfr_total_amount = 0;
                         </div>
                     </div>                    
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>JUMLAH UNIT</label>
-                                <input name="mfr_unit" class="form-control" type="text" value="{{ $mf_unit }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>MAINTENANCE FEE SEBULAN (PER UNIT)</label>
-                                <input name="mfr_maintenance_fee_sebulan" class="form-control" type="text" value="{{ $mf_sebulan }}">
-                            </div>
-                        </div>
+                        <table class="table table-sm">
+                            <tbody>
+                                <tr>
+                                    <td width="30%">
+                                        <span style="color: red;">*</span> MAINTENANCE FEE SEBULAN (PER UNIT)
+                                    </td>
+                                    <td width="20%">
+                                        <input name="mfr_maintenance_fee_sebulan" class="form-control" type="text" value="{{ $mf_sebulan }}">
+                                    </td>
+                                    <td width="5%">&nbsp;</td>
+                                    <td width="25%">
+                                        <span style="color: red;">*</span> JUMLAH UNIT
+                                    </td>
+                                    <td width="20%">
+                                        <input name="mfr_unit" class="form-control" type="text" value="{{ $mf_unit }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        JUMLAH DIKUTIP -TUNGGAKAN + SEMASA+ADVANCED [A]
+                                    </td>
+                                    <td>
+                                        <input name="mfr_tunggakan" class="form-control" type="text" value="0">
+                                    </td>
+                                    <td>&nbsp;</td>
+                                    <td>
+                                        <span style="color: red;">*</span> JUMLAH SERVICE FEE SEPATUT DIKUTIP SEMASA
+                                    </td>
+                                    <td>
+                                        <input name="mfr_semasa" class="form-control" type="text" value="{{ $mf_semasa }}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>
+                                        <span style="color: red;">*</span> JUMLAH SERVICE FEE BERJAYA DIKUTIP SEMASA
+                                    </td>
+                                    <td>
+                                        <input name="maintenance_fee_semasa_total" class="form-control" type="text" value="{{ $mf_semasa + $mf_sebulan }}" disabled="">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>JUMLAH DIKUTIP -TUNGGAKAN + SEMASA+ADVANCED [A]</label>
-                                <input name="mfr_tunggakan" class="form-control" type="text" value="0">
-                            </div>
-                        </div>
+                    <hr>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>JUMLAH SERVICE FEE SEPATUT DIKUTIP SEMASA</label>
-                                <input name="mfr_semasa" class="form-control" type="text" value="{{ $mf_semasa }}" disabled>
-                            </div>
-                        </div>
-
-                        <div class="col-md-offset-6 col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>JUMLAH SERVICE FEE BERJAYA DIKUTIP SEMASA</label>
-                                <input name="maintenance_fee_semasa_total" class="form-control" type="text" value="{{ $mf_semasa + $mf_sebulan }}">
-                            </div>
-                        </div>
-
-                        <hr>
+                    <div class="row">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>JUMLAH PERBELANJAAN</th>
-                                    <th>PERKARA</th>
-                                    <th>JUMLAH (RM)</th>
+                                    <th width="30%">JUMLAH PERBELANJAAN</th>
+                                    <th width="50%">PERKARA</th>
+                                    <th width="20%">JUMLAH (RM)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -99,43 +127,44 @@ $mfr_total_amount = 0;
                                 </tr>
                             </tbody>
                         </table>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>NO AKAUN</label>
-                                <input name="mf_no_akaun" class="form-control" type="text" value="{{ $mf_no_akaun }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>BAKI BANK (AWAL)</label>
-                                <input name="mf_baki_bank_awal" class="form-control" type="text" value="{{ $mf_baki_bank_awal }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>NAMA BANK</label>
-                                <input name="mf_nama_bank" class="form-control" type="text" value="{{ $mf_nama_bank }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>BAKI BANK (AKHIR)</label>
-                                <input name="mf_baki_bank_akhir" class="form-control" type="text" value="{{ $mf_baki_bank_akhir }}">
-                            </div>
-                        </div>
-
-                    </div>                                                
-                    <div class="form-actions">
-                        <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
-                        <?php if ($insert_permission == 1) { ?>
-                            <input type="submit" value="Submit" class="btn btn-primary">
-                        <?php } ?>
                     </div>
-                </form>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><span style="color: red;">*</span>NO AKAUN</label>
+                            <input name="mf_no_akaun" class="form-control" type="text" value="{{ $mf_no_akaun }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><span style="color: red;">*</span>BAKI BANK (AWAL)</label>
+                            <input name="mf_baki_bank_awal" class="form-control" type="text" value="{{ $mf_baki_bank_awal }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><span style="color: red;">*</span>NAMA BANK</label>
+                            <input name="mf_nama_bank" class="form-control" type="text" value="{{ $mf_nama_bank }}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><span style="color: red;">*</span>BAKI BANK (AKHIR)</label>
+                            <input name="mf_baki_bank_akhir" class="form-control" type="text" value="{{ $mf_baki_bank_akhir }}">
+                        </div>
+                    </div>
+
+            </div>                                                
+            <div class="form-actions">
+                <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
+                <?php if ($insert_permission == 1) { ?>
+                    <input type="submit" value="Submit" class="btn btn-primary">
+                <?php } ?>
             </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 
 <script>
@@ -162,7 +191,15 @@ $mfr_total_amount = 0;
             },
             success: function (response) {
                 if (response.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Finance Support SF added successfully!</span>");
+                    $.notify({
+                        message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                    }, {
+                        type: 'success',
+                        placement: {
+                            align: "center"
+                        }
+                    });
+                    location.reload();
                 } else {
                     bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                 }

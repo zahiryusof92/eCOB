@@ -19,7 +19,8 @@ if (($checkdata)) {
     <div class="tab-pane active" id="buyer_tab" role="tabpanel">
         <div class="row">
             <div class="col-lg-12">
-                <form id="financeCheckForm">
+                <h6>Check</h6>
+                <form id="financeCheckForm">                    
                     <div class="form-group row">
                         <div class="col-md-12">                            
                             <label style="color: red; font-style: italic;">* Mandatory Fields</label>
@@ -138,9 +139,15 @@ if (($checkdata)) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>Finance File updated successfully!</span>", function () {
-                            location.reload();
-                        });                       
+                        $.notify({
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                        }, {
+                            type: 'success',
+                            placement: {
+                                align: "center"
+                            }
+                        });
+                        location.reload();                   
                     } else if (data.trim() == "file_already_exists") {
                         $("#file_already_exists_error").html('<span style="color:red;font-style:italic;font-size:13px;">This file already exist!</span>');
                         $("#file_already_exists_error").css("display", "block");
