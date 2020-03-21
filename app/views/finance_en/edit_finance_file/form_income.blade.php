@@ -9,7 +9,7 @@ $prefix = 'income_';
 
         <form id="financeFileIncome">                 
             <div class="row">
-                <table class="table table-sm" id="dynamic_form_income">
+                <table class="table table-sm" id="dynamic_form_income" style="font-size: 12px;">
                     <thead>
                         <tr>
                             <th width="5%">&nbsp;</th>
@@ -27,7 +27,6 @@ $prefix = 'income_';
                         $total_tunggakan = 0;
                         $total_semasa = 0;
                         $total_hadapan = 0;
-                        $total_income = 0;
                         $total_all = 0;
                         ?>
 
@@ -36,16 +35,16 @@ $prefix = 'income_';
                         $total_tunggakan += $incomeFiles['tunggakan'];
                         $total_semasa += $incomeFiles['semasa'];
                         $total_hadapan += $incomeFiles['hadapan'];
-                        $total_income += $incomeFiles['tunggakan'] + $incomeFiles['semasa'] + $incomeFiles['hadapan'];
+                        $total_income = $incomeFiles['tunggakan'] + $incomeFiles['semasa'] + $incomeFiles['hadapan'];
                         $total_all += $total_income;
                         ?>
                         <tr id="income_row{{ ++$count }}">
                             <td class="text-center padding-table">{{ $count }}</td>
-                            <td><input type="text" name="{{ $prefix }}name[]" class="form-control" value="{{ $incomeFiles['name'] }}" readonly=""></td>
-                            <td><input type="text" name="{{ $prefix }}tunggakan[]" class="form-control text-right numeric-only" value="{{ number_format($incomeFiles['tunggakan'], 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix }}semasa[]" class="form-control text-right numeric-only" value="{{ number_format($incomeFiles['semasa'], 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix }}hadapan[]" class="form-control text-right numeric-only" value="{{ number_format($incomeFiles['hadapan'], 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix }}total_all[]" class="form-control text-right numeric-only" value="{{ number_format($total_income, 2) }}" readonly=""></td>
+                            <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $incomeFiles['name'] }}" readonly=""></td>
+                            <td><input type="text" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($incomeFiles['tunggakan'], 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($incomeFiles['semasa'], 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($incomeFiles['hadapan'], 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}total_all[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($total_income, 2) }}" readonly=""></td>
                             <td>&nbsp;</td> 
                         </tr>
                         @endforeach
@@ -53,20 +52,20 @@ $prefix = 'income_';
                         <tr id="income_row{{ ++$count }}">
                             <td class="text-center padding-table">{{ $count }}</td>
                             <td><input type="text" name="{{ $prefix }}name[]" class="form-control" value=""></td>
-                            <td><input type="text" name="{{ $prefix }}tunggakan[]" class="form-control text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix }}semasa[]" class="form-control text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix }}hadapan[]" class="form-control text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix }}total_all[]" class="form-control text-right numeric-only" value="{{ number_format(0, 2) }}" readonly=""></td>
-                            <td class="padding-table"><a href="javascript:void(0);" onclick="addRow()" class="btn btn-primary btn-xs" id="plus5">Add More</a></td>
+                            <td><input type="text" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}total_all[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}" readonly=""></td>
+                            <td class="padding-table"><a href="javascript:void(0);" onclick="addRowIncome()" class="btn btn-primary btn-xs" id="plus5">Add More</a></td>
                         </tr>
 
                         <tr>
                             <td>&nbsp;</td>
                             <td class="padding-form">JUMLAH</td>
-                            <td><input type="text" class="form-control text-right" value="{{ number_format($total_tunggakan, 2) }}" readonly=""></td>
-                            <td><input type="text" class="form-control text-right" value="{{ number_format($total_semasa, 2) }}" readonly=""></td>
-                            <td><input type="text" class="form-control text-right" value="{{ number_format($total_hadapan, 2) }}" readonly=""></td>
-                            <td><input type="text" class="form-control text-right" value="{{ number_format($total_all, 2) }}" readonly=""></td>
+                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_tunggakan, 2) }}" readonly=""></td>
+                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_semasa, 2) }}" readonly=""></td>
+                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_hadapan, 2) }}" readonly=""></td>
+                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_all, 2) }}" readonly=""></td>
                             <td>&nbsp;</td>                          
                         </tr>
                     </tbody>
@@ -84,20 +83,16 @@ $prefix = 'income_';
 </div>
 
 <script type="text/javascript">
-    function addRow() {
-        var rowno = $("#dynamic_form_income tr").length;
-        rowno = rowno - 1;
-        $("#dynamic_form_income tr:last").prev().after("<tr id='income_row" + rowno + "'><td class='text-center padding-table'>" + rowno + "</td><td><input type='text' name='{{ $prefix }}name[]' class='form-control' value=''></td><td><input type='text' name='{{ $prefix }}tunggakan[]' class='form-control text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}semasa[]' class='form-control text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}hadapan[]' class='form-control text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}total_all[]' class='form-control text-right numeric-only' value='{{ number_format(0, 2) }}' readonly=''></td><td class='padding-table'><a href='javascript:void(0);' onclick=deleteRow('income_row" + rowno + "') class='btn btn-danger btn-xs'>Remove</a></td></tr>");
+    function addRowIncome() {
+        var rowIncomeNo = $("#dynamic_form_income tr").length;
+        rowIncomeNo = rowIncomeNo - 1;
+        $("#dynamic_form_income tr:last").prev().after("<tr id='income_row" + rowIncomeNo + "'><td class='text-center padding-table'>" + rowIncomeNo + "</td><td><input type='text' name='{{ $prefix }}name[]' class='form-control form-control-sm' value=''></td><td><input type='text' name='{{ $prefix }}tunggakan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}semasa[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}hadapan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}total_all[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}' readonly=''></td><td class='padding-table'><a href='javascript:void(0);' onclick=deleteRowIncome('income_row" + rowIncomeNo + "') class='btn btn-danger btn-xs'>Remove</a></td></tr>");
     }
 
-    function deleteRow(rowno) {
-        $('#' + rowno).remove();
+    function deleteRowIncome(rowIncomeNo) {
+        $('#' + rowIncomeNo).remove();
     }
-</script>
-
-
-
-<script>
+    
     $("#financeFileIncome").submit(function (e) {
         e.preventDefault();
         $.ajax({
@@ -108,7 +103,6 @@ $prefix = 'income_';
                 $(".submit_button").html('Loading').prop('disabled', true);
             },
             complete: function () {
-// Hide image container
                 $(".submit_button").html('Submit').prop('disabled', false);
             },
             success: function (response) {

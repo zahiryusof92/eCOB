@@ -309,7 +309,7 @@ class FinanceController extends BaseController {
                     ];
 
                     foreach ($tableFieldVandalismeMF as $count => $name) {
-                        $vandalismeMF = new FinanceRepair();
+                        $vandalismeMF = new FinanceVandal();
                         $vandalismeMF->finance_file_id = $finance->id;
                         $vandalismeMF->type = 'MF';
                         $vandalismeMF->name = $name;
@@ -337,7 +337,7 @@ class FinanceController extends BaseController {
                     ];
 
                     foreach ($tableFieldVandalismeSF as $count => $name) {
-                        $vandalismeSF = new FinanceRepair();
+                        $vandalismeSF = new FinanceVandal();
                         $vandalismeSF->finance_file_id = $finance->id;
                         $vandalismeSF->type = 'SF';
                         $vandalismeSF->name = $name;

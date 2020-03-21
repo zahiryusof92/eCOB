@@ -4,73 +4,82 @@ $prefix = 'contract_';
 
 <div class="row">
     <div class="col-lg-12">
-        <form id="financeFileContract">                     
+
+        <h6>4.2 LAPORAN PERBELANJAAN PENYENGGARAAN</h6>
+
+        <form id="financeFileContract">
             <div class="row">
-                <div class="col-md-6">
-                    <p>4.2 LAPORAN PERBELANJAAN PENYENGGARAAN</p>
-                </div>
-            </div>
-            <div class="row">
-                <table class="table table-bordered">
+                <table class="table table-sm" id="dynamic_form_contract" style="font-size: 12px;">
                     <thead>
-                    <th>
-                    <td>PERKARA</td>
-                    <td width="10%">TUNGGAKAN BULAN-BULAN TERDAHULU A</td>
-                    <td width="10%">BULAN SEMASA B</td>
-                    <td width="10%">BULAN HADAPAN C</td>
-                    <td width="10%">JUMLAH A+B+C</td>
-                    <td width="10%">BAKI BAYARAN MASIH TERTUNGGAK (BELUM BAYAR)</td>
-                    </th>
+                        <tr>
+                            <th width="5%">&nbsp;</th>
+                            <th width="40%" style="text-align: center;">PERKARA</th>                            
+                            <th width="10%" style="text-align: center;">TUNGGAKAN BULAN-BULAN TERDAHULU<br/>A</th>
+                            <th width="10%" style="text-align: center;">BULAN SEMASA<br/>B</th>
+                            <th width="10%" style="text-align: center;">BULAN HADAPAN<br/>C</th>
+                            <th width="10%" style="text-align: center;">JUMLAH<br/>A + B + C</th>
+                            <th width="10%" style="text-align: center;">JUMLAH<br/>BAKI BAYARAN MASIH TERTUNGGAK<br/>(BELUM BAYAR)</th>
+                            <td width="5%" style="text-align: center;">&nbsp;</td>
+                        </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $t_name = '';
-                        $t_tunggakan_a = 0;
-                        $t_bulan_semasa_b = 0;
-                        $t_bulan_hadapan_c = 0;
-                        $t_tertunggak = 0;
-                        $t_jumlahAbc = 0;
+                        $count = 0;
+                        $total_tunggakan = 0;
+                        $total_semasa = 0;
+                        $total_hadapan = 0;
+                        $total_tertunggak = 0;
+                        $total_all = 0;
                         ?>
-                    <input type="hidden" name="finance_file_id" value="{{$finance_file_id}}">
-                    @for ($i = 0; $i < 25; $i++)
-                    <?php
-                    $name = (isset($contractFile[$i]['name'])) ? $contractFile[$i]['name'] : '';
-                    $tunggakan_a = (isset($contractFile[$i]['tunggakan_a'])) ? $contractFile[$i]['tunggakan_a'] : 0;
-                    $bulan_semasa_b = (isset($contractFile[$i]['bulan_semasa_b'])) ? $contractFile[$i]['bulan_semasa_b'] : 0;
-                    $bulan_hadapan_c = (isset($contractFile[$i]['bulan_hadapan_c'])) ? $contractFile[$i]['bulan_hadapan_c'] : 0;
-                    $jumlahAbc = $tunggakan_a + $bulan_semasa_b + $bulan_hadapan_c;
-                    $tertunggak = (isset($contractFile[$i]['tertunggak'])) ? $contractFile[$i]['tertunggak'] : 0;
 
-                    $t_tunggakan_a += $tunggakan_a;
-                    $t_bulan_semasa_b += $bulan_semasa_b;
-                    $t_bulan_hadapan_c += $bulan_hadapan_c;
-                    $t_tertunggak += $tertunggak;
-                    $t_jumlahAbc += $jumlahAbc;
-                    ?>
-                    <tr>
-                        <td width="1%" class="text-center">{{$i+1}}</td>
-                        <td><input type="text" name="{{$prefix.'name[]'}}" class="form-control" value="{{ $name }}"></td>
-                        <td><input type="text" name="{{$prefix.'tunggakan_a[]'}}" class="form-control numeric-only" value="{{ $tunggakan_a }}"></td>
-                        <td><input type="text" name="{{$prefix.'bulan_semasa_b[]'}}" class="form-control numeric-only" value="{{ $bulan_semasa_b }}"></td>
-                        <td><input type="text" name="{{$prefix.'bulan_hadapan_c[]'}}" class="form-control numeric-only" value="{{ $bulan_hadapan_c }}"></td>
-                        <td><input type="text" name="{{$prefix.'jumlah_abc[]'}}" class="form-control numeric-only" value="{{$jumlahAbc}}" disabled='true'></td>
-                        <td><input type="text" name="{{$prefix.'tertunggak[]'}}" class="form-control numeric-only" value="{{ $tertunggak  }}"></td>
-                    </tr>
-                    @endfor
-                    <tr>
-                        <td colspan="2">JUMLAH</td>
-                        <td><input type="text" class="form-control" value="{{ number_format($t_tunggakan_a) }}"disabled></td>
-                        <td><input type="text" class="form-control" value="{{ number_format($t_bulan_semasa_b) }}"disabled></td>
-                        <td><input type="text" class="form-control" value="{{ number_format($t_bulan_hadapan_c) }}"disabled></td>
-                        <td><input type="text" class="form-control" value="{{ number_format($t_jumlahAbc) }}"disabled></td>
-                        <td><input type="text" class="form-control" value="{{ number_format($t_tertunggak) }}"disabled></td>
-                    </tr>
+                        @foreach ($contractFile as $contractFiles)
+                        <?php
+                        $total_tunggakan += $contractFiles['tunggakan'];
+                        $total_semasa += $contractFiles['semasa'];
+                        $total_hadapan += $contractFiles['hadapan'];
+                        $total_tertunggak += $contractFiles['tertunggak'];
+                        $total_income = $contractFiles['tunggakan'] + $contractFiles['semasa'] + $contractFiles['hadapan'];
+                        $total_all += $total_income;
+                        ?>
+                        <tr id="contract_row{{ ++$count }}">
+                            <td class="text-center padding-table">{{ $count }}</td>
+                            <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $contractFiles['name'] }}" readonly=""></td>
+                            <td><input type="text" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($contractFiles['tunggakan'], 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($contractFiles['semasa'], 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($contractFiles['hadapan'], 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}total_all[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($total_income, 2) }}" readonly=""></td>
+                            <td><input type="text" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($contractFiles['tertunggak'], 2) }}"></td>
+                        </tr>
+                        @endforeach
+
+                        <tr id="contract_row{{ ++$count }}">
+                            <td class="text-center padding-table">{{ $count }}</td>
+                            <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td>
+                            <td><input type="text" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}total_all[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}" readonly=""></td>
+                            <td><input type="text" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
+                            <td class="padding-table"><a href="javascript:void(0);" onclick="addRowContract()" class="btn btn-primary btn-xs">Add More</a></td>
+                        </tr>
+
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td class="padding-form">JUMLAH</td>
+                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_tunggakan, 2) }}" readonly=""></td>
+                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_semasa, 2) }}" readonly=""></td>
+                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_hadapan, 2) }}" readonly=""></td>
+                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_all, 2) }}" readonly=""></td>
+                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_tertunggak, 2) }}" readonly=""></td>
+                            <td>&nbsp;</td>
+                        </tr>
                     </tbody>
                 </table>    
             </div>                                                
             <div class="form-actions">
                 <?php if ($insert_permission == 1) { ?>
-                    <input type="submit" value="Submit" class="btn btn-primary" id="btnSubmitContract">
+                    <input type="hidden" name="finance_file_id" value="{{$finance_file_id}}">
+                    <input type="submit" value="Submit" class="btn btn-primary submit_button">
                 <?php } ?>
             </div>
         </form>
@@ -78,12 +87,15 @@ $prefix = 'contract_';
 </div>
 
 <script>
-    $(".numeric-only").on('keypress', function (e) {
-        var keyCode = e.which ? e.which : e.keyCode;
-        if (!(keyCode >= 48 && keyCode <= 57)) {
-            return false;
-        }
-    });
+    function addRowContract() {
+        var rowContractNo = $("#dynamic_form_contract tr").length;
+        rowContractNo = rowContractNo - 1;
+        $("#dynamic_form_contract tr:last").prev().after("<tr id='contract_row" + rowContractNo + "'><td class='text-center padding-table'>" + rowContractNo + "</td><td><input type='text' name='{{ $prefix }}name[]' class='form-control form-control-sm' value=''></td><td><input type='text' name='{{ $prefix }}tunggakan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}semasa[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}hadapan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}total_all[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}' readonly=''></td><td><input type='text' name='{{ $prefix }}tertunggak[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td class='padding-table'><a href='javascript:void(0);' onclick=deleteRowContract('contract_row" + rowContractNo + "') class='btn btn-danger btn-xs'>Remove</a></td></tr>");
+    }
+
+    function deleteRowContract(rowContractNo) {
+        $('#' + rowContractNo).remove();
+    }
 
     $("#financeFileContract").submit(function (e) {
         e.preventDefault();
@@ -93,11 +105,11 @@ $prefix = 'contract_';
             url: "{{ URL::action('FinanceController@updateFinanceFileContract') }}",
             data: $(this).serialize(),
             beforeSend: function () {
-                $("#btnSubmitFileContract").html('Loading').prop('disabled', true);
+                $(".submit_button").html('Loading').prop('disabled', true);
             },
             complete: function (data) {
                 // Hide image container
-                $("#btnSubmitFileContract").html('Submit').prop('disabled', false);
+                $(".submit_button").html('Submit').prop('disabled', false);
             },
             success: function (response) {
                 if (response.trim() == "true") {

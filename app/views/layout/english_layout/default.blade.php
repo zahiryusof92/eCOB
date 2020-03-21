@@ -11,7 +11,7 @@
         <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="{{asset('assets/common/img/favicon.114x114.png')}}">
         <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="{{asset('assets/common/img/favicon.144x144.png')}}">
         <link rel="icon" type="image/png" href="{{asset('assets/common/img/favicon.png')}}">	
-        <link href="favicon.ico" rel="shortcut icon">
+        <link href="{{ asset('assets/common/img/favicon.ico') }}" rel="shortcut icon">
 
         <!-- Vendors Styles -->
         <!-- v1.0.0 -->
@@ -92,7 +92,7 @@
         <!-- Highcharts -->
         <script src="{{ asset('assets/highcharts/highcharts.js')}}"></script>
         <script src="{{ asset('assets/highcharts/modules/exporting.js')}}"></script>
-        
+
         <!-- Dynamic Form -->
         <script src="{{ asset('assets/common/js/dynamic-form.js')}}"></script>
 
@@ -114,9 +114,16 @@
         <!-- END CONTENT -->	
 
         <div class="main-backdrop"><!-- --></div>
-        
+
         <script>
             $(document).ready(function () {
+                $(".numeric-only").on('keypress', function (e) {
+                    var keyCode = e.which ? e.which : e.keyCode;
+                    if (!(keyCode >= 48 && keyCode <= 57)) {
+                        return false;
+                    }
+                });
+
                 $('.select2').select2();
             });
         </script>

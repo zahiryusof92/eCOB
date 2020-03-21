@@ -148,13 +148,6 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-    $(".numeric-only").on('keypress', function (e) {
-        var keyCode = e.which ? e.which : e.keyCode;
-        if (!(keyCode >= 48 && keyCode <= 57)) {
-            return false;
-        }
-    });
-
     $(function () {
         $('#date').datetimepicker({
             widgetPositioning: {

@@ -11,7 +11,7 @@
 	<link rel="apple-touch-icon" type="image/png" sizes="114x114" href="{{asset('assets/common/img/favicon.114x114.png')}}">
 	<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="{{asset('assets/common/img/favicon.144x144.png')}}">
 	<link rel="icon" type="image/png" href="{{asset('assets/common/img/favicon.png')}}">	
-        <link href="favicon.ico" rel="shortcut icon">
+        <link href="{{ asset('assets/common/img/favicon.ico') }}" rel="shortcut icon">
         
         <!-- Vendors Styles -->
         <!-- v1.0.0 -->

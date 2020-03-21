@@ -160,13 +160,6 @@ $sfr_total_amount = 0;
         let tunggakan = $("#formFinanceSfReport [name=sfr_kutipan]").val();
     });
 
-    $(".numeric-only").on('keypress', function (e) {
-        var keyCode = e.which ? e.which : e.keyCode;
-        if (!(keyCode >= 48 && keyCode <= 57)) {
-            return false;
-        }
-    });
-
     $("#formFinanceSfReport").submit(function (e) {
         e.preventDefault();
 
