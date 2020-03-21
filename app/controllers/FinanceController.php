@@ -1,12 +1,12 @@
 <?php
 
 class FinanceController extends BaseController {
-    
+
     public function __construct() {
         if (empty(Session::get('lang'))) {
             Session::put('lang', 'en');
         }
-        
+
         $locale = Session::get('lang');
         App::setLocale($locale);
     }
@@ -15,7 +15,7 @@ class FinanceController extends BaseController {
     public function addFinanceFileList() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $file_no = Files::where('is_active', 1)->where('is_deleted', 0)->get();
+        $file_no = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -52,25 +52,376 @@ class FinanceController extends BaseController {
             $month = $data['month'];
             $is_active = $data['is_active'];
 
-            $finance = new Finance();
-            $finance->file_id = $file_id;
-            $finance->month = $month;
-            $finance->year = $year;
-            $finance->is_active = $is_active;
-            $success = $finance->save();
+            $check_exist = Finance::where('file_id', $file_id)->where('year', $year)->where('month', $month)->count();
+            if ($check_exist <= 0) {
+                $finance = new Finance();
+                $finance->file_id = $file_id;
+                $finance->month = $month;
+                $finance->year = $year;
+                $finance->is_active = $is_active;
+                $success = $finance->save();
 
-            if ($success) {
-                # Audit Trail
-                $remarks = 'Finance File with id : ' . $finance->id . ' has been inserted.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "COB Finance";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
+                if ($success) {
+                    /*
+                     * create MF Report
+                     */
+                    $reportMF = new FinanceReportMf();
+                    $reportMF->finance_file_id = $finance->id;
+                    $createMF = $reportMF->save();
 
-                print "true";
+                    if ($createMF) {
+                        $tableFieldMF = [
+                            'UTILITI (BAHAGIAN A SAHAJA)',
+                            'PENYENGGARAAN',
+                            'PEMBAIKAN/PENGGANTIAN/PEMBELIAN/NAIKTARAF/PEMBAHARUAN',
+                            'PEMBAIKAN/PENGGANTIAN/PEMBELIAN (VANDALISME)',
+                            'PEKERJA',
+                            'PENTADBIRAN'
+                        ];
+
+                        foreach ($tableFieldMF as $count => $name) {
+                            $reportMF = new FinanceReportPerbelanjaan();
+                            $reportMF->type = 'MF';
+                            $reportMF->finance_file_id = $finance->id;
+                            $reportMF->name = $name;
+                            $reportMF->amount = 0;
+                            $reportMF->sort_no = ++$count;
+                            $reportMF->save();
+                        }
+                    }
+
+                    /*
+                     * create SF Report
+                     */
+                    $reportSF = new FinanceReportSf();
+                    $reportSF->finance_file_id = $finance->id;
+                    $createSF = $reportSF->save();
+
+                    if ($createSF) {
+                        $tableFieldSF = [
+                            'PEMBAIKAN/PENGGANTIAN/PEMBELIAN/NAIKTARAF/PEMBAHARUAN',
+                            'PEMBAIKAN/PENGGANTIAN/PEMBELIAN (VANDALISME)'
+                        ];
+
+                        foreach ($tableFieldSF as $count => $name) {
+                            $reportSF = new FinanceReportPerbelanjaan();
+                            $reportSF->type = 'SF';
+                            $reportSF->finance_file_id = $finance->id;
+                            $reportSF->name = $name;
+                            $reportSF->amount = 0;
+                            $reportSF->sort_no = ++$count;
+                            $reportSF->save();
+                        }
+                    }
+
+                    /*
+                     * create Income
+                     */
+                    $tableFieldIncome = [
+                        'MAINTENANCE FEE',
+                        'SINKING FUND',
+                        'INSURAN BANGUNAN',
+                        'CUKAI TANAH',
+                        'PELEKAT KENDERAAN',
+                        'KAD AKSES',
+                        'SEWAAN TLK',
+                        'SEWAAN KEDAI',
+                        'SEWAAN HARTA BERSAMA',
+                        'DENDA UNDANG-UNDANG KECIL',
+                        'DENDA LEWAT BAYAR MAINTENANCE FEE @ SINKING FUND',
+                        'BIL METER AIR PEMILIK-PEMILIK(DI BAWAH AKAUN METER PUKAL SAHAJA)',
+                    ];
+
+                    foreach ($tableFieldIncome as $count => $name) {
+                        $income = new FinanceIncome();
+                        $income->finance_file_id = $finance->id;
+                        $income->name = $name;
+                        $income->tunggakan = 0;
+                        $income->semasa = 0;
+                        $income->hadapan = 0;
+                        $income->sort_no = ++$count;
+                        $income->save();
+                    }
+
+                    /*
+                     * create Utility A
+                     */
+                    $tableFieldUtilityA = [
+                        'BIL AIR METER PUKAL',
+                        'BIL ELEKTRIK HARTA BERSAMA',
+                    ];
+
+                    foreach ($tableFieldUtilityA as $count => $name) {
+                        $utilityA = new FinanceUtility();
+                        $utilityA->finance_file_id = $finance->id;
+                        $utilityA->type = 'BHG_A';
+                        $utilityA->name = $name;
+                        $utilityA->tunggakan = 0;
+                        $utilityA->semasa = 0;
+                        $utilityA->hadapan = 0;
+                        $utilityA->tertunggak = 0;
+                        $utilityA->sort_no = ++$count;
+                        $utilityA->save();
+                    }
+
+                    /*
+                     * create Utility B
+                     */
+                    $tableFieldUtilityB = [
+                        'BIL METER AIR PEMILIK-PEMILIK (DI BAWAH AKAUN METER PUKAL SAHAJA)',
+                        'BIL CUKAI TANAH',
+                    ];
+
+                    foreach ($tableFieldUtilityB as $count => $name) {
+                        $utilityB = new FinanceUtility();
+                        $utilityB->finance_file_id = $finance->id;
+                        $utilityB->type = 'BHG_B';
+                        $utilityB->name = $name;
+                        $utilityB->tunggakan = 0;
+                        $utilityB->semasa = 0;
+                        $utilityB->hadapan = 0;
+                        $utilityB->tertunggak = 0;
+                        $utilityB->sort_no = ++$count;
+                        $utilityB->save();
+                    }
+
+                    /*
+                     * create Contract
+                     */
+                    $tableFieldContract = [
+                        'FI FIRMA KOMPETEN LIF',
+                        'PEMBERSIHAN (KONTRAK)',
+                        'KESELAMATAN',
+                        'INSURANS',
+                        'JURUTERA ELEKTRIK',
+                        'CUCI TANGKI AIR',
+                        'UJI PENGGERA KEBAKARAN',
+                        'CUCI KOLAM RENANG',
+                        'SEDUT PEMBETUNG',
+                        'POTONG RUMPUT/LANSKAP',
+                        'SISTEM KAD AKSES',
+                        'SISTEM CCTV',
+                        'UJI PERALATAN/ALAT PEMADAM KEBAKARAN',
+                        'KUTIPAN SAMPAH PUKAL',
+                        'KAWALAN SERANGGA',
+                    ];
+
+                    foreach ($tableFieldContract as $count => $name) {
+                        $contract = new FinanceContract();
+                        $contract->finance_file_id = $finance->id;
+                        $contract->name = $name;
+                        $contract->tunggakan = 0;
+                        $contract->semasa = 0;
+                        $contract->hadapan = 0;
+                        $contract->tertunggak = 0;
+                        $contract->sort_no = ++$count;
+                        $contract->save();
+                    }
+
+                    /*
+                     * create Repair MF
+                     */
+                    $tableFieldRepairMF = [
+                        'LIF',
+                        'TANGKI AIR',
+                        'BUMBUNG',
+                        'GUTTER',
+                        'RAIN WATER DOWN PIPE',
+                        'PEMBENTUNG',
+                        'PERPAIPAN',
+                        'WAYAR BUMI',
+                        'PENDAWAIAN ELEKTRIK',
+                        'TANGGA/HANDRAIL',
+                        'JALAN',
+                        'PAGAR',
+                        'LONGKANG',
+                        'SUBSTATION TNB',
+                        'ALAT PEMADAM KEBAKARAN',
+                        'SISTEM KAD AKSES',
+                        'CCTV',
+                        'PELEKAT KENDERAAN',
+                        'GENSET',
+                    ];
+
+                    foreach ($tableFieldRepairMF as $count => $name) {
+                        $repairMF = new FinanceRepair();
+                        $repairMF->finance_file_id = $finance->id;
+                        $repairMF->type = 'MF';
+                        $repairMF->name = $name;
+                        $repairMF->tunggakan = 0;
+                        $repairMF->semasa = 0;
+                        $repairMF->hadapan = 0;
+                        $repairMF->tertunggak = 0;
+                        $repairMF->sort_no = ++$count;
+                        $repairMF->save();
+                    }
+
+                    /*
+                     * create Repair SF
+                     */
+                    $tableFieldRepairSF = [
+                        'LIF',
+                        'TANGKI AIR',
+                        'BUMBUNG',
+                        'GUTTER',
+                        'RAIN WATER DOWN PIPE',
+                        'PEMBENTUNG',
+                        'PERPAIPAN',
+                        'WAYAR BUMI',
+                        'PENDAWAIAN ELEKTRIK',
+                        'TANGGA/HANDRAIL',
+                        'JALAN',
+                        'PAGAR',
+                        'LONGKANG',
+                        'SUBSTATION TNB',
+                        'ALAT PEMADAM KEBAKARAN',
+                        'SISTEM KAD AKSES',
+                        'CCTV',
+                        'GENSET',
+                    ];
+
+                    foreach ($tableFieldRepairSF as $count => $name) {
+                        $repairSF = new FinanceRepair();
+                        $repairSF->finance_file_id = $finance->id;
+                        $repairSF->type = 'SF';
+                        $repairSF->name = $name;
+                        $repairSF->tunggakan = 0;
+                        $repairSF->semasa = 0;
+                        $repairSF->hadapan = 0;
+                        $repairSF->tertunggak = 0;
+                        $repairSF->sort_no = ++$count;
+                        $repairSF->save();
+                    }
+
+                    /*
+                     * create Vandalisme MF
+                     */
+                    $tableFieldVandalismeMF = [
+                        'LIF',
+                        'WAYAR BUMI',
+                        'PENDAWAIAN ELEKTRIK',
+                        'PAGAR',
+                        'SUBSTATION TNB',
+                        'PERALATAN/ALAT PEMADAM KEBAKARAN',
+                        'SISTEM KAD AKSES',
+                        'CCTV',
+                        'GENSET',
+                    ];
+
+                    foreach ($tableFieldVandalismeMF as $count => $name) {
+                        $vandalismeMF = new FinanceRepair();
+                        $vandalismeMF->finance_file_id = $finance->id;
+                        $vandalismeMF->type = 'MF';
+                        $vandalismeMF->name = $name;
+                        $vandalismeMF->tunggakan = 0;
+                        $vandalismeMF->semasa = 0;
+                        $vandalismeMF->hadapan = 0;
+                        $vandalismeMF->tertunggak = 0;
+                        $vandalismeMF->sort_no = ++$count;
+                        $vandalismeMF->save();
+                    }
+
+                    /*
+                     * create Vandalisme SF
+                     */
+                    $tableFieldVandalismeSF = [
+                        'LIF',
+                        'WAYAR BUMI',
+                        'PENDAWAIAN ELEKTRIK',
+                        'PAGAR',
+                        'SUBSTATION TNB',
+                        'PERALATAN/ALAT PEMADAM KEBAKARAN',
+                        'SISTEM KAD AKSES',
+                        'CCTV',
+                        'GENSET',
+                    ];
+
+                    foreach ($tableFieldVandalismeSF as $count => $name) {
+                        $vandalismeSF = new FinanceRepair();
+                        $vandalismeSF->finance_file_id = $finance->id;
+                        $vandalismeSF->type = 'SF';
+                        $vandalismeSF->name = $name;
+                        $vandalismeSF->tunggakan = 0;
+                        $vandalismeSF->semasa = 0;
+                        $vandalismeSF->hadapan = 0;
+                        $vandalismeSF->tertunggak = 0;
+                        $vandalismeSF->sort_no = ++$count;
+                        $vandalismeSF->save();
+                    }
+
+                    /*
+                     * create Staff
+                     */
+                    $tableFieldStaff = [
+                        'PENGAWAL KESELAMATAN',
+                        'PEMBERSIHAN',
+                        'RENCAM',
+                        'KERANI',
+                        'JURUTEKNIK',
+                        'PENYELIA',
+                    ];
+
+                    foreach ($tableFieldStaff as $count => $name) {
+                        $staff = new FinanceStaff();
+                        $staff->finance_file_id = $finance->id;
+                        $staff->name = $name;
+                        $staff->gaji_per_orang = 0;
+                        $staff->bil_pekerja = 0;
+                        $staff->tunggakan = 0;
+                        $staff->semasa = 0;
+                        $staff->hadapan = 0;
+                        $staff->tertunggak = 0;
+                        $staff->sort_no = ++$count;
+                        $staff->save();
+                    }
+
+                    /*
+                     * create Admin
+                     */
+                    $tableFieldAdmin = [
+                        'TELEFON & INTERNET',
+                        'PERALATAN',
+                        'ALAT TULIS PEJABAT',
+                        'PETTY CASH',
+                        'SEWAAN MESIN FOTOKOPI',
+                        'PERKHIDMATAN SISTEM UBS @ LAIN-LAIN SISTEM',
+                        'PERKHIDMATAN AKAUN',
+                        'PERKHIDMATAN AUDIT',
+                        'CAJ PERUNDANGAN',
+                        'CAJ PENGHANTARAN & KUTIPAN',
+                        'CAJ BANK',
+                        'FI EJEN PENGURUSAN',
+                        'PERBELANJAAN MESYUARAT',
+                        'ELAUN JMB/MC',
+                        'LAIN-LAIN TUNTUTAN JMB/MC',
+                    ];
+
+                    foreach ($tableFieldAdmin as $count => $name) {
+                        $admin = new FinanceAdmin();
+                        $admin->finance_file_id = $finance->id;
+                        $admin->name = $name;
+                        $admin->tunggakan = 0;
+                        $admin->semasa = 0;
+                        $admin->hadapan = 0;
+                        $admin->tertunggak = 0;
+                        $admin->sort_no = ++$count;
+                        $admin->save();
+                    }
+
+                    # Audit Trail
+                    $remarks = 'Finance File with id : ' . $finance->id . ' has been created.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB Finance";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    print "true";
+                } else {
+                    print "false";
+                }
             } else {
-                print "false";
+                print "file_already_exists";
             }
         }
     }
@@ -109,18 +460,11 @@ class FinanceController extends BaseController {
     }
 
     public function getFinanceList() {
-        $filelist = Finance::orderBy('id', 'desc')->get();
+        $filelist = Finance::where('is_deleted', 0)->orderBy('id', 'desc')->get();
 
         if (count($filelist) > 0) {
             $data = Array();
             foreach ($filelist as $filelists) {
-                $files = Files::where('id', $filelists->file_id)->first();
-                $strata = Strata::where('file_id', $files->id)->first();
-                if (count($strata) > 0) {
-                    $strata_name = $strata->name;
-                } else {
-                    $strata_name = "";
-                }
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($filelists->is_active == 1) {
@@ -144,8 +488,8 @@ class FinanceController extends BaseController {
                 }
 
                 $data_raw = array(
-                    "<a style='text-decoration:underline;' href='" . URL::action('FinanceController@editFinanceFileList', $filelists->id) . "'>" . $files->file_no . "</a>",
-                    $strata_name,
+                    "<a style='text-decoration:underline;' href='" . URL::action('FinanceController@editFinanceFileList', $filelists->id) . "'>" . $filelists->file->file_no . " " . $filelists->year . "-" . strtoupper($filelists->monthName()) . "</a>",
+                    $filelists->file->strata->strataName(),
                     $status,
                     $button
                 );
@@ -168,6 +512,37 @@ class FinanceController extends BaseController {
         }
     }
 
+    public function deleteFinanceList() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $finance = Finance::find($id);
+            if ($finance) {
+                $finance->is_active = 0;
+                $finance->is_deleted = 1;
+                $deleted = $finance->save();
+
+                if ($deleted) {
+                    # Audit Trail
+                    $remarks = 'Finance File with id : ' . $finance->id . ' has been deleted.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB Finance";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    print "true";
+                } else {
+                    print "false";
+                }
+            } else {
+                print "false";
+            }
+        }
+    }
+
     public function editFinanceFileList($id) {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
@@ -175,18 +550,25 @@ class FinanceController extends BaseController {
 
         $financeCheckData = FinanceCheck::where('finance_file_id', $id)->first();
         $financefiledata = Finance::where('id', $id)->first();
-        $financeFileAdmin = FinanceAdmin::where('finance_file_id', $id)->get();
-        $financeFileContract = FinanceContract::where('finance_file_id', $id)->get();
-        $financeFileStaff = FinanceStaff::where('finance_file_id', $id)->get();
-        $financeFileVandalA = FinanceVandal::where('finance_file_id', $id)->where('type', 'maintenancefee')->get();
-        $financeFileVandalB = FinanceVandal::where('finance_file_id', $id)->where('type', 'singkingfund')->get();
-        $financeFileRepairA = FinanceRepair::where('finance_file_id', $id)->where('type', 'maintenancefee')->get();
-        $financeFileRepairB = FinanceRepair::where('finance_file_id', $id)->where('type', 'singkingfund')->get();
+        $financeFileAdmin = FinanceAdmin::where('finance_file_id', $id)->orderBy('sort_no', 'asc')->get();
+        $financeFileContract = FinanceContract::where('finance_file_id', $id)->orderBy('sort_no', 'asc')->get();
+        $financeFileStaff = FinanceStaff::where('finance_file_id', $id)->orderBy('sort_no', 'asc')->get();
+        $financeFileVandalA = FinanceVandal::where('finance_file_id', $id)->where('type', 'MF')->orderBy('sort_no', 'asc')->get();
+        $financeFileVandalB = FinanceVandal::where('finance_file_id', $id)->where('type', 'SF')->orderBy('sort_no', 'asc')->get();
+        
+        $financeFileRepairA = FinanceRepair::where('finance_file_id', $id)->where('type', 'MF')->orderBy('sort_no', 'asc')->get();
+        $financeFileRepairB = FinanceRepair::where('finance_file_id', $id)->where('type', 'SF')->orderBy('sort_no', 'asc')->get();
 
-        $financeFileUtilityA = FinanceUtility::where('finance_file_id', $id)->where('type', 'bagian_a')->get();
-        $financeFileUtilityB = FinanceUtility::where('finance_file_id', $id)->where('type', 'bagian_b')->get();
+        $financeFileUtilityA = FinanceUtility::where('finance_file_id', $id)->where('type', 'BHG_A')->orderBy('sort_no', 'asc')->get();
+        $financeFileUtilityB = FinanceUtility::where('finance_file_id', $id)->where('type', 'BHG_B')->orderBy('sort_no', 'asc')->get();
 
-        $financeFileIncome = FinanceIncome::where('finance_file_id', $id)->get();
+        $financeFileIncome = FinanceIncome::where('finance_file_id', $id)->orderBy('sort_no', 'asc')->get();
+
+        $mfreport = FinanceReportMf::where('finance_file_id', $id)->first();
+        $reportMF = FinanceReportPerbelanjaan::where('finance_file_id', $id)->where('type', 'MF')->orderBy('sort_no', 'asc')->get();
+
+        $sfreport = FinanceReportSf::where('finance_file_id', $id)->first();
+        $reportSF = FinanceReportPerbelanjaan::where('finance_file_id', $id)->where('type', 'SF')->orderBy('sort_no', 'asc')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -210,6 +592,10 @@ class FinanceController extends BaseController {
                 'incomeFile' => $financeFileIncome->toArray(),
                 'utila' => $financeFileUtilityA->toArray(),
                 'utilb' => $financeFileUtilityB->toArray(),
+                'mfreport' => $mfreport->toArray(),
+                'reportMF' => $reportMF->toArray(),
+                'sfreport' => $sfreport->toArray(),
+                'reportSF' => $reportSF->toArray(),
             );
 
             return View::make('finance_en.edit_finance_file', $viewData);
@@ -235,6 +621,10 @@ class FinanceController extends BaseController {
                 'incomeFile' => $financeFileIncome->toArray(),
                 'utila' => $financeFileUtilityA->toArray(),
                 'utilb' => $financeFileUtilityB->toArray(),
+                'mfreport' => $mfreport->toArray(),
+                'reportMF' => $reportMF->toArray(),
+                'sfreport' => $sfreport->toArray(),
+                'reportSF' => $reportSF->toArray(),
             );
 
             return View::make('finance_en.edit_finance_file', $viewData);
@@ -380,11 +770,11 @@ class FinanceController extends BaseController {
             $financeadmin = new FinanceAdmin;
             $financeadmin->finance_file_id = $id;
             $financeadmin->name = $data['admin_name'][$i];
-            $financeadmin->tunggakan_a = $data['admin_tunggakan_a'][$i];
-            $financeadmin->bulan_semasa_b = $data['admin_bulan_semasa_b'][$i];
-            $financeadmin->bulan_hadapan_c = $data['admin_bulan_hadapan_c'][$i];
+            $financeadmin->tunggakan = $data['admin_tunggakan'][$i];
+            $financeadmin->semasa = $data['admin_semasa'][$i];
+            $financeadmin->hadapan = $data['admin_hadapan'][$i];
             $financeadmin->tertunggak = $data['admin_tertunggak'][$i];
-            $financeadmin->order = $i;
+            $financeadmin->sort_no = $i;
             $financeadmin->save();
         }
 
@@ -401,22 +791,20 @@ class FinanceController extends BaseController {
 
         FinanceIncome::where('finance_file_id', $id)->delete();
 
-        for ($i = 0; $i < 16; $i++) {
-            $financeadmin = new FinanceIncome;
-            $financeadmin->finance_file_id = $id;
-            $financeadmin->name = $data['income_name'][$i];
-            $financeadmin->tunggakan_b = $data['income_tunggakan_b'][$i];
-            $financeadmin->semasa_a = $data['income_semasa_a'][$i];
-            $financeadmin->advanced_d = $data['income_advanced_d'][$i];
-            $financeadmin->order = $i;
-            $financeadmin->save();
+        for ($i = 0; $i < count($data); $i++) {
+            if (!empty($data['income_name'][$i])) {
+                $financeadmin = new FinanceIncome;
+                $financeadmin->finance_file_id = $id;
+                $financeadmin->name = $data['income_name'][$i];
+                $financeadmin->tunggakan = $data['income_tunggakan'][$i];
+                $financeadmin->semasa = $data['income_semasa'][$i];
+                $financeadmin->hadapan = $data['income_hadapan'][$i];
+                $financeadmin->sort_no = $i;
+                $financeadmin->save();
+            }
         }
 
-        if ($financeadmin) {
-            echo 'true';
-        } else {
-            echo 'false';
-        }
+        return 'true';
     }
 
     public function updateFinanceFileUtility() {
@@ -442,11 +830,11 @@ class FinanceController extends BaseController {
                 } else {
                     $financeadmin->type = 'bagian_b';
                 }
-                $financeadmin->tunggakan_a = $data[$p . 'tunggakan_a'][$i];
+                $financeadmin->tunggakan = $data[$p . 'tunggakan'][$i];
                 $financeadmin->semasa_b = $data[$p . 'semasa_b'][$i];
                 $financeadmin->hadapan_c = $data[$p . 'hadapan_c'][$i];
                 $financeadmin->tertunggak = $data[$p . 'tertunggak'][$i];
-                $financeadmin->order = $i;
+                $financeadmin->sort_no = $i;
                 $financeadmin->save();
             }
         }
@@ -482,7 +870,7 @@ class FinanceController extends BaseController {
             $frp->finance_file_id = $id;
             $frp->name = $data['sf_name'][$i];
             $frp->amount = $data['sf_amount'][$i];
-            $frp->order = $i;
+            $frp->sort_no = $i;
             $frp->save();
         }
 
@@ -497,7 +885,7 @@ class FinanceController extends BaseController {
         $data = Input::all();
         $id = $data['finance_file_id'];
 
-        FinanceReportPerbelanjaan::where('finance_file_id', $id)->where('type' . 'mf')->delete();
+        FinanceReportPerbelanjaan::where('finance_file_id', $id)->where('type', 'MF')->delete();
         FinanceReportMf::where('finance_file_id', $id)->delete();
 
         $financeReportSf = new FinanceReportMf;
@@ -511,13 +899,13 @@ class FinanceController extends BaseController {
         $financeReportSf->baki_bank_akhir = $data['mf_baki_bank_akhir'];
         $financeReportSf->save();
 
-        for ($i = 0; $i < 6; $i++) {
+        for ($i = 0; $i < count($data['mf_name']); $i++) {
             $frp = new FinanceReportPerbelanjaan;
-            $frp->type = 'mf';
+            $frp->type = 'MF';
             $frp->finance_file_id = $id;
             $frp->name = $data['mf_name'][$i];
             $frp->amount = $data['mf_amount'][$i];
-            $frp->order = $i;
+            $frp->sort_no = $i;
             $frp->save();
         }
 
@@ -551,11 +939,11 @@ class FinanceController extends BaseController {
                 } else {
                     $financeadmin->type = 'singkingfund';
                 }
-                $financeadmin->tunggakan_a = $data[$p . 'tunggakan_a'][$i];
-                $financeadmin->bulan_semasa_b = $data[$p . 'bulan_semasa_b'][$i];
-                $financeadmin->bulan_hadapan_c = $data[$p . 'bulan_hadapan_c'][$i];
+                $financeadmin->tunggakan = $data[$p . 'tunggakan'][$i];
+                $financeadmin->semasa = $data[$p . 'semasa'][$i];
+                $financeadmin->hadapan = $data[$p . 'hadapan'][$i];
                 $financeadmin->tertunggak = $data[$p . 'tertunggak'][$i];
-                $financeadmin->order = $i;
+                $financeadmin->sort_no = $i;
                 $financeadmin->save();
             }
         }
@@ -590,11 +978,11 @@ class FinanceController extends BaseController {
                 } else {
                     $financeadmin->type = 'singkingfund';
                 }
-                $financeadmin->tunggakan_a = $data[$p . 'tunggakan_a'][$i];
-                $financeadmin->bulan_semasa_b = $data[$p . 'bulan_semasa_b'][$i];
-                $financeadmin->bulan_hadapan_c = $data[$p . 'bulan_hadapan_c'][$i];
+                $financeadmin->tunggakan = $data[$p . 'tunggakan'][$i];
+                $financeadmin->semasa = $data[$p . 'semasa'][$i];
+                $financeadmin->hadapan = $data[$p . 'hadapan'][$i];
                 $financeadmin->tertunggak = $data[$p . 'tertunggak'][$i];
-                $financeadmin->order = $i;
+                $financeadmin->sort_no = $i;
                 $financeadmin->save();
             }
         }
@@ -617,11 +1005,11 @@ class FinanceController extends BaseController {
             $financeadmin = new FinanceContract;
             $financeadmin->finance_file_id = $id;
             $financeadmin->name = $data[$prefix . 'name'][$i];
-            $financeadmin->tunggakan_a = $data[$prefix . 'tunggakan_a'][$i];
-            $financeadmin->bulan_semasa_b = $data[$prefix . 'bulan_semasa_b'][$i];
-            $financeadmin->bulan_hadapan_c = $data[$prefix . 'bulan_hadapan_c'][$i];
+            $financeadmin->tunggakan = $data[$prefix . 'tunggakan'][$i];
+            $financeadmin->semasa = $data[$prefix . 'semasa'][$i];
+            $financeadmin->hadapan = $data[$prefix . 'hadapan'][$i];
             $financeadmin->tertunggak = $data[$prefix . 'tertunggak'][$i];
-            $financeadmin->order = $i;
+            $financeadmin->sort_no = $i;
             $financeadmin->save();
         }
 
@@ -648,7 +1036,7 @@ class FinanceController extends BaseController {
             $financestaff->bulan_semasa_d = $data['staff_bulan_semasa_d'][$i];
             $financestaff->bulan_hadapan_e = $data['staff_bulan_hadapan_e'][$i];
             $financestaff->tertunggak = $data['staff_tertunggak'][$i];
-            $financestaff->order = $i;
+            $financestaff->sort_no = $i;
             $financestaff->save();
         }
 

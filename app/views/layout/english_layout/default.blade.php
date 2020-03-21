@@ -92,6 +92,9 @@
         <!-- Highcharts -->
         <script src="{{ asset('assets/highcharts/highcharts.js')}}"></script>
         <script src="{{ asset('assets/highcharts/modules/exporting.js')}}"></script>
+        
+        <!-- Dynamic Form -->
+        <script src="{{ asset('assets/common/js/dynamic-form.js')}}"></script>
 
     </head>
 
@@ -111,5 +114,11 @@
         <!-- END CONTENT -->	
 
         <div class="main-backdrop"><!-- --></div>
+        
+        <script>
+            $(document).ready(function () {
+                $('.select2').select2();
+            });
+        </script>
     </body>
 </html>

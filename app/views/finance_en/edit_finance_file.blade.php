@@ -10,10 +10,20 @@ foreach ($user_permission as $permission) {
     if ($permission->submodule_id == 2) {
         $access_permission = $permission->access_permission;
         $insert_permission = $permission->insert_permission;
+        $delete_permission = $permission->delete_permission;
     }
 }
-$strata = Strata::where('file_id', $financefiledata->file_id)->first();
 ?>
+
+<style>
+    .padding-form {
+        padding-left: 20px !important;
+        padding-top: 15px !important;
+    }
+    .padding-table {
+        padding-top: 15px !important;
+    }
+</style>
 
 <div class="page-content-inner">
     <section class="panel panel-with-borders">
@@ -39,17 +49,26 @@ $strata = Strata::where('file_id', $financefiledata->file_id)->first();
                             </tr>
                             <tr>
                                 <td>Strata</td>
-                                <td colspan="3">{{ $strata->name }}</td>
+                                <td colspan="3">{{ $financefiledata->file->strata->strataName() }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            
+
             <hr/>
 
             <div class="row">
                 <div class="col-lg-12">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                            </div>
+                        </div>
+                    </div>
+
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Check</a>
@@ -85,7 +104,7 @@ $strata = Strata::where('file_id', $financefiledata->file_id)->first();
                             <a class="nav-link" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false">Admin</a>
                         </li>
                     </ul>
-                    <div class="tab-content" id="myTabContent">
+                    <div class="tab-content padding-vertical-20" id="myTabContent">
                         <div class="tab-pane fade show active in" id="home" role="tabpanel" aria-labelledby="home-tab">
                             @include('finance_en.edit_finance_file.form_check')
                         </div>
@@ -129,6 +148,13 @@ $strata = Strata::where('file_id', $financefiledata->file_id)->first();
 
 <!-- Page Scripts -->
 <script>
+    $(".numeric-only").on('keypress', function (e) {
+        var keyCode = e.which ? e.which : e.keyCode;
+        if (!(keyCode >= 48 && keyCode <= 57)) {
+            return false;
+        }
+    });
+
     $(function () {
         $('#date').datetimepicker({
             widgetPositioning: {

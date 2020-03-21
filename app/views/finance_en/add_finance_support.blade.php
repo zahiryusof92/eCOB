@@ -181,6 +181,7 @@ foreach ($user_permission as $permission) {
                     $("#loading").css("display", "none");
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
+                    
                     if (data.trim() == "true") {
                         bootbox.alert("<span style='color:green;'>Finance File added successfully!</span>", function () {
                             window.location = '{{URL::action("FinanceController@financeSupport") }}';

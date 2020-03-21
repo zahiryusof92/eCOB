@@ -15,83 +15,83 @@
         
         <!-- Vendors Styles -->
         <!-- v1.0.0 -->
-        {{HTML::style("assets/vendors/bootstrap/dist/css/bootstrap.min.css")}}
-        {{HTML::style("assets/vendors/jscrollpane/style/jquery.jscrollpane.css")}}
-        {{HTML::style("assets/vendors/ladda/dist/ladda-themeless.min.css")}}
-        {{HTML::style("assets/vendors/select2/dist/css/select2.min.css")}}  
-        {{HTML::style("assets/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css")}}
-        {{HTML::style("assets/vendors/fullcalendar/dist/fullcalendar.min.css")}}
-        {{HTML::style("assets/vendors/cleanhtmlaudioplayer/src/player.css")}}
-        {{HTML::style("assets/vendors/cleanhtmlvideoplayer/src/player.css")}}
-        {{HTML::style("assets/vendors/bootstrap-sweetalert/dist/sweetalert.css")}}
-        {{HTML::style("assets/vendors/summernote/dist/summernote.css")}}
-        {{HTML::style("assets/vendors/owl.carousel/dist/assets/owl.carousel.min.css")}}
-        {{HTML::style("assets/vendors/ionrangeslider/css/ion.rangeSlider.css")}}
-        {{HTML::style("assets/vendors/datatables/media/css/dataTables.bootstrap4.min.css")}}
-        {{HTML::style("assets/vendors/c3/c3.min.css")}}
-        {{HTML::style("assets/vendors/chartist/dist/chartist.min.css")}}
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/jscrollpane/style/jquery.jscrollpane.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/ladda/dist/ladda-themeless.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/select2/dist/css/select2.min.css')}}">  
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/fullcalendar/dist/fullcalendar.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/cleanhtmlaudioplayer/src/player.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/cleanhtmlvideoplayer/src/player.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/bootstrap-sweetalert/dist/sweetalert.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/summernote/dist/summernote.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/owl.carousel/dist/assets/owl.carousel.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/ionrangeslider/css/ion.rangeSlider.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/media/css/dataTables.bootstrap4.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/c3/c3.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/chartist/dist/chartist.min.css')}}">
 
         <!-- Clean UI Styles -->
-        {{HTML::style("assets/common/css/source/main.css")}}
-        {{HTML::style("assets/common/css/source/materialize/materialize.css")}} 
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/common/css/source/main.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/common/css/source/materialize/materialize.css')}}"> 
         
         <!--Rating Star-->
-        {{HTML::style("assets/common/css/source/ratingstar/rating.css")}}
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/common/css/source/ratingstar/rating.css')}}">
 
         <!-- Vendors Scripts -->
         <!-- v1.0.0 -->
-        {{HTML::script("assets/vendors/jquery/jquery.min.js")}}
-        {{HTML::script("assets/vendors/tether/dist/js/tether.min.js")}}
-        {{HTML::script("assets/vendors/bootstrap/dist/js/bootstrap.min.js")}}
-        {{HTML::script("assets/vendors/jquery-mousewheel/jquery.mousewheel.min.js")}}
-        {{HTML::script("assets/vendors/jscrollpane/script/jquery.jscrollpane.min.js")}}
-        {{HTML::script("assets/vendors/spin.js/spin.js")}}
-        {{HTML::script("assets/vendors/ladda/dist/ladda.min.js")}}
-        {{HTML::script("assets/vendors/select2/dist/js/select2.full.min.js")}}
-        {{HTML::script("assets/vendors/html5-form-validation/dist/jquery.validation.min.js")}}
-        {{HTML::script("assets/vendors/jquery-typeahead/dist/jquery.typeahead.min.js")}}
-        {{HTML::script("assets/vendors/jquery-mask-plugin/dist/jquery.mask.min.js")}}
-        {{HTML::script("assets/vendors/autosize/dist/autosize.min.js")}}
-        {{HTML::script("assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js")}}
-        {{HTML::script("assets/vendors/moment/min/moment.min.js")}}
-        {{HTML::script("assets/vendors/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js")}}
-        {{HTML::script("assets/vendors/fullcalendar/dist/fullcalendar.min.js")}}
-        {{HTML::script("assets/vendors/cleanhtmlaudioplayer/src/jquery.cleanaudioplayer.js")}}
-        {{HTML::script("assets/vendors/cleanhtmlvideoplayer/src/jquery.cleanvideoplayer.js")}}
-        {{HTML::script("assets/vendors/bootstrap-sweetalert/dist/sweetalert.min.js")}}
-        {{HTML::script("assets/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js")}}
-        {{HTML::script("assets/vendors/summernote/dist/summernote.min.js")}}
-        {{HTML::script("assets/vendors/owl.carousel/dist/owl.carousel.min.js")}}
-        {{HTML::script("assets/vendors/ionrangeslider/js/ion.rangeSlider.min.js")}}
-        {{HTML::script("assets/vendors/nestable/jquery.nestable.js")}}
-        {{HTML::script("assets/vendors/datatables/media/js/jquery.dataTables.min.js")}}
-        {{HTML::script("assets/vendors/datatables/media/js/dataTables.bootstrap4.min.js")}}
-        {{HTML::script("assets/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js")}}
-        {{HTML::script("assets/vendors/datatables-responsive/js/dataTables.responsive.js")}}
-        {{HTML::script("assets/vendors/editable-table/mindmup-editabletable.js")}}
-        {{HTML::script("assets/vendors/d3/d3.min.js")}}
-        {{HTML::script("assets/vendors/c3/c3.min.js")}}
-        {{HTML::script("assets/vendors/chartist/dist/chartist.min.js")}}
-        {{HTML::script("assets/vendors/peity/jquery.peity.min.js")}}
+        <script src="{{ asset('assets/vendors/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/vendors/tether/dist/js/tether.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/jquery-mousewheel/jquery.mousewheel.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/jscrollpane/script/jquery.jscrollpane.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/spin.js/spin.js')}}"></script>
+        <script src="{{ asset('assets/vendors/ladda/dist/ladda.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/select2/dist/js/select2.full.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/html5-form-validation/dist/jquery.validation.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/jquery-typeahead/dist/jquery.typeahead.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/jquery-mask-plugin/dist/jquery.mask.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/autosize/dist/autosize.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/bootstrap-show-password/bootstrap-show-password.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/moment/min/moment.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/fullcalendar/dist/fullcalendar.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/cleanhtmlaudioplayer/src/jquery.cleanaudioplayer.js')}}"></script>
+        <script src="{{ asset('assets/vendors/cleanhtmlvideoplayer/src/jquery.cleanvideoplayer.js')}}"></script>
+        <script src="{{ asset('assets/vendors/bootstrap-sweetalert/dist/sweetalert.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/summernote/dist/summernote.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/owl.carousel/dist/owl.carousel.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/ionrangeslider/js/ion.rangeSlider.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/nestable/jquery.nestable.js')}}"></script>
+        <script src="{{ asset('assets/vendors/datatables/media/js/jquery.dataTables.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/datatables/media/js/dataTables.bootstrap4.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/datatables-fixedcolumns/js/dataTables.fixedColumns.js')}}"></script>
+        <script src="{{ asset('assets/vendors/datatables-responsive/js/dataTables.responsive.js')}}"></script>
+        <script src="{{ asset('assets/vendors/editable-table/mindmup-editabletable.js')}}"></script>
+        <script src="{{ asset('assets/vendors/d3/d3.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/c3/c3.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/chartist/dist/chartist.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/peity/jquery.peity.min.js')}}"></script>
         <!-- v1.0.1 -->
-        {{HTML::script("assets/vendors/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js")}}
+        <script src="{{ asset('assets/vendors/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js')}}"></script>
         <!-- v1.1.1 -->
-        {{HTML::script("assets/vendors/gsap/src/minified/TweenMax.min.js")}}
-        {{HTML::script("assets/vendors/hackertyper/hackertyper.js")}}
-        {{HTML::script("assets/vendors/jquery-countTo/jquery.countTo.js")}}
+        <script src="{{ asset('assets/vendors/gsap/src/minified/TweenMax.min.js')}}"></script>
+        <script src="{{ asset('assets/vendors/hackertyper/hackertyper.js')}}"></script>
+        <script src="{{ asset('assets/vendors/jquery-countTo/jquery.countTo.js')}}"></script>
 
         <!-- Clean UI Scripts -->
-        {{HTML::script("assets/common/js/common.js")}}
-        {{HTML::script("assets/common/js/demo.temp.js")}}
+        <script src="{{ asset('assets/common/js/common.js')}}"></script>
+        <script src="{{ asset('assets/common/js/demo.temp.js')}}"></script>
         
         <!-- Bootbox Scripts -->
-        {{HTML::script("assets/common/js/bootbox/bootbox.min.js")}}
+        <script src="{{ asset('assets/common/js/bootbox/bootbox.min.js')}}"></script>
         
-        {{HTML::script("assets/common/js/jQueryForm/form.js")}} 
+        <script src="{{ asset('assets/common/js/jQueryForm/form.js')}}"></script>   
         
         <!-- Highcharts -->
-        {{HTML::script("assets/highcharts/highcharts.js")}}
-        {{HTML::script("assets/highcharts/modules/exporting.js")}}
+        <script src="{{ asset('assets/highcharts/highcharts.js')}}"></script>
+        <script src="{{ asset('assets/highcharts/modules/exporting.js')}}"></script>
         
     </head>
     
@@ -111,5 +111,11 @@
         <!-- END CONTENT -->	
 
         <div class="main-backdrop"><!-- --></div>
+        
+        <script>
+            $(document).ready(function () {
+                $('.select2').select2();
+            });
+        </script>
     </body>
 </html>

@@ -2,106 +2,114 @@
 $prefix = 'income_';
 ?>
 
-<div class="tab-content padding-vertical-20">
-    <div class="tab-pane active" id="buyer_tab" role="tabpanel">
-        <div class="row">
-            <div class="col-lg-12">
-                <form id="financeFileIncome">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label style="color: red; font-style: italic;">* Mandatory Fields</label>
-                            </div>
-                        </div>
-                    </div>   
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p>3. LAPORAN PENDAPATAN</p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <table class="table table-bordered">
-                            <thead>
-                            <th>
-                            <td>PENDAPATAN</td>
-                            <td width="10%">TUNGGAKAN B</td>
-                            <td width="10%">SEMASA A</td>
-                            <td width="10%">ADVANCED C</td>
-                            <td width="10%">JUMLAH A+B+C</td>
-                            </th>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $total_a = 0;
-                                $total_b = 0;
-                                $total_c = 0;
-                                $total_d = 0;
-                                ?>
-                            <input type="hidden" name="finance_file_id" value="{{$finance_file_id}}">
-                            @for ($i = 0; $i < 16; $i++)
-                            <?php
-                            $income_name = (isset($incomeFile[$i]['name'])) ? $incomeFile[$i]['name'] : '';
-                            $income_tunggakan_b = (isset($incomeFile[$i]['tunggakan_b'])) ? $incomeFile[$i]['tunggakan_b'] : 0;
-                            $income_semasa_a = (isset($incomeFile[$i]['income_semasa_a'])) ? $incomeFile[$i]['income_semasa_a'] : 0;
-                            $income_advanced_d = (isset($incomeFile[$i]['income_advanced_d'])) ? $incomeFile[$i]['income_advanced_d'] : 0;
-                            $income_jumlahAbc = $income_tunggakan_b + $income_semasa_a + $income_advanced_d;
+<div class="row">
+    <div class="col-lg-12">
 
-                            $total_a += $income_tunggakan_b;
-                            $total_b += $income_semasa_a;
-                            $total_c += $income_advanced_d;
-                            $total_d += $income_jumlahAbc;
-                            ?>
-                            <tr>
-                                <td width="1%" class="text-center">{{$i+1}}</td>
-                                <td><input type="text" name="{{$prefix.'name[]'}}" class="form-control" value="{{ $income_name }}"></td>
-                                <td><input type="text" name="{{$prefix.'tunggakan_b[]'}}" class="form-control numeric-only" value="{{ $income_tunggakan_b }}"></td>
-                                <td><input type="text" name="{{$prefix.'semasa_a[]'}}" class="form-control numeric-only" value="{{ $income_semasa_a }}"></td>
-                                <td><input type="text" name="{{$prefix.'advanced_d[]'}}" class="form-control numeric-only" value="{{ $income_advanced_d }}"></td>
-                                <td><input type="text" name="{{$prefix.'jumlah_abc[]'}}" class="form-control numeric-only" value="{{$income_jumlahAbc}}" disabled='true'></td>
-                            </tr>
-                            @endfor
-                            <tr>
-                                <td colspan="2">JUMLAH</td>
-                                <td><input type="text" class="form-control" value="{{ number_format($total_a) }}"disabled></td>
-                                <td><input type="text" class="form-control" value="{{ number_format($total_b) }}"disabled></td>
-                                <td><input type="text" class="form-control" value="{{ number_format($total_c) }}"disabled></td>
-                                <td><input type="text" class="form-control" value="{{ number_format($total_d) }}"disabled></td>
-                            </tr>
-                            </tbody>
-                        </table>    
-                    </div>                                                
-                    <div class="form-actions">
-                        <?php if ($insert_permission == 1) { ?>
-                            <input type="submit" value="Submit" class="btn btn-primary" id="btnSubmitFileIncome">
-                        <?php } ?>
-                    </div>
-                </form>
+        <h6>3. LAPORAN PENDAPATAN</h6>
+
+        <form id="financeFileIncome">                 
+            <div class="row">
+                <table class="table table-sm" id="dynamic_form_income">
+                    <thead>
+                        <tr>
+                            <th width="5%">&nbsp;</th>
+                            <th width="50%" style="text-align: center;">PENDAPATAN</th>
+                            <th width="10%" style="text-align: center;">TUNGGAKAN<br/>B</th>
+                            <th width="10%" style="text-align: center;">SEMASA<br/>A</th>
+                            <th width="10%" style="text-align: center;">ADVANCED<br/>C</th>
+                            <th width="10%" style="text-align: center;">JUMLAH<br/>A + B + C</th>
+                            <td width="5%" style="text-align: center;">&nbsp;</td> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $count = 0;
+                        $total_tunggakan = 0;
+                        $total_semasa = 0;
+                        $total_hadapan = 0;
+                        $total_income = 0;
+                        $total_all = 0;
+                        ?>
+
+                        @foreach ($incomeFile as $incomeFiles)
+                        <?php
+                        $total_tunggakan += $incomeFiles['tunggakan'];
+                        $total_semasa += $incomeFiles['semasa'];
+                        $total_hadapan += $incomeFiles['hadapan'];
+                        $total_income += $incomeFiles['tunggakan'] + $incomeFiles['semasa'] + $incomeFiles['hadapan'];
+                        $total_all += $total_income;
+                        ?>
+                        <tr id="income_row{{ ++$count }}">
+                            <td class="text-center padding-table">{{ $count }}</td>
+                            <td><input type="text" name="{{ $prefix }}name[]" class="form-control" value="{{ $incomeFiles['name'] }}" readonly=""></td>
+                            <td><input type="text" name="{{ $prefix }}tunggakan[]" class="form-control text-right numeric-only" value="{{ number_format($incomeFiles['tunggakan'], 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}semasa[]" class="form-control text-right numeric-only" value="{{ number_format($incomeFiles['semasa'], 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}hadapan[]" class="form-control text-right numeric-only" value="{{ number_format($incomeFiles['hadapan'], 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}total_all[]" class="form-control text-right numeric-only" value="{{ number_format($total_income, 2) }}" readonly=""></td>
+                            <td>&nbsp;</td> 
+                        </tr>
+                        @endforeach
+
+                        <tr id="income_row{{ ++$count }}">
+                            <td class="text-center padding-table">{{ $count }}</td>
+                            <td><input type="text" name="{{ $prefix }}name[]" class="form-control" value=""></td>
+                            <td><input type="text" name="{{ $prefix }}tunggakan[]" class="form-control text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}semasa[]" class="form-control text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}hadapan[]" class="form-control text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
+                            <td><input type="text" name="{{ $prefix }}total_all[]" class="form-control text-right numeric-only" value="{{ number_format(0, 2) }}" readonly=""></td>
+                            <td class="padding-table"><a href="javascript:void(0);" onclick="addRow()" class="btn btn-primary btn-xs" id="plus5">Add More</a></td>
+                        </tr>
+
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td class="padding-form">JUMLAH</td>
+                            <td><input type="text" class="form-control text-right" value="{{ number_format($total_tunggakan, 2) }}" readonly=""></td>
+                            <td><input type="text" class="form-control text-right" value="{{ number_format($total_semasa, 2) }}" readonly=""></td>
+                            <td><input type="text" class="form-control text-right" value="{{ number_format($total_hadapan, 2) }}" readonly=""></td>
+                            <td><input type="text" class="form-control text-right" value="{{ number_format($total_all, 2) }}" readonly=""></td>
+                            <td>&nbsp;</td>                          
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
+
+            <div class="form-actions">
+                <?php if ($insert_permission == 1) { ?>
+                    <input type="hidden" name="finance_file_id" value="{{$finance_file_id}}">
+                    <input type="submit" value="Submit" class="btn btn-primary submit_button">
+                <?php } ?>
+            </div>
+        </form>
     </div>
 </div>
 
-<script>
-    $(".numeric-only").on('keypress', function (e) {
-        var keyCode = e.which ? e.which : e.keyCode;
-        if (!(keyCode >= 48 && keyCode <= 57)) {
-            return false;
-        }
-    });
+<script type="text/javascript">
+    function addRow() {
+        var rowno = $("#dynamic_form_income tr").length;
+        rowno = rowno - 1;
+        $("#dynamic_form_income tr:last").prev().after("<tr id='income_row" + rowno + "'><td class='text-center padding-table'>" + rowno + "</td><td><input type='text' name='{{ $prefix }}name[]' class='form-control' value=''></td><td><input type='text' name='{{ $prefix }}tunggakan[]' class='form-control text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}semasa[]' class='form-control text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}hadapan[]' class='form-control text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}total_all[]' class='form-control text-right numeric-only' value='{{ number_format(0, 2) }}' readonly=''></td><td class='padding-table'><a href='javascript:void(0);' onclick=deleteRow('income_row" + rowno + "') class='btn btn-danger btn-xs'>Remove</a></td></tr>");
+    }
 
+    function deleteRow(rowno) {
+        $('#' + rowno).remove();
+    }
+</script>
+
+
+
+<script>
     $("#financeFileIncome").submit(function (e) {
         e.preventDefault();
-
         $.ajax({
             method: "POST",
             url: "{{ URL::action('FinanceController@updateFinanceFileIncome') }}",
             data: $(this).serialize(),
             beforeSend: function () {
-                $("#btnSubmitFileIncome").html('Loading').prop('disabled', true);
+                $(".submit_button").html('Loading').prop('disabled', true);
             },
-            complete: function (data) {
-                // Hide image container
-                $("#btnSubmitFileIncome").html('Submit').prop('disabled', false);
+            complete: function () {
+// Hide image container
+                $(".submit_button").html('Submit').prop('disabled', false);
             },
             success: function (response) {
                 if (response.trim() == "true") {
@@ -117,8 +125,7 @@ $prefix = 'income_';
                 } else {
                     bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                 }
-                console.log(response);
             }
         });
-    })
+    });
 </script>

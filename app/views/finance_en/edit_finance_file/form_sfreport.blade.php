@@ -1,10 +1,6 @@
 <?php
 $prefix = 'sfr_';
 
-$sfreport = FinanceReportSf::where('finance_file_id', $finance_file_id)->first();
-if (!is_null($sfreport)) {
-    $sfreport->toArray();
-}
 $sf_sebulan = (isset($sfreport['sinkingfund_sebulan'])) ? $sfreport['sinkingfund_sebulan'] : 0;
 $sf_unit = (isset($sfreport['unit'])) ? $sfreport['unit'] : 0;
 $sf_semasa = (isset($sfreport['sinkingfund_semasa'])) ? $sfreport['sinkingfund_semasa'] : '';
@@ -13,135 +9,157 @@ $sf_nama_bank = (isset($sfreport['nama_bank'])) ? $sfreport['nama_bank'] : '';
 $sf_baki_bank_akhir = (isset($sfreport['baki_bank_akhir'])) ? $sfreport['baki_bank_akhir'] : '';
 $sf_baki_bank_awal = (isset($sfreport['baki_bank_awal'])) ? $sfreport['baki_bank_awal'] : '';
 
-$report = FinanceReportPerbelanjaan::where('finance_file_id', $finance_file_id)->where('type', 'sf')->orderBy('order', 'asc')->get()->toArray();
 $sfr_total_amount = 0;
 ?>
 
-<div class="tab-content padding-vertical-20">
-    <div class="tab-pane active" id="buyer_tab" role="tabpanel">
-        <div class="row">
-            <div class="col-lg-12">
-                <form id="formFinanceSfReport" method="POST">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label style="color: red; font-style: italic;">* Mandatory Fields</label>
-                            </div>
-                        </div>
-                    </div>                    
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>JUMLAH UNIT</label>
-                                <input name="sfr_unit" class="form-control" type="text" value="{{ $sf_unit }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>SINKING FUND SEBULAN (PER UNIT)</label>
-                                <input name="sfr_sinkingfund_sebulan" class="form-control" type="text" value="{{ $sf_sebulan }}">
-                            </div>
-                        </div>
+<div class="row">
+    <div class="col-lg-12">
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>JUMLAH DIKUTIP -TUNGGAKAN + SEMASA+ADVANCED [A]</label>
-                                <input name="sfr_tunggakan" class="form-control" type="text" value="0">
-                            </div>
-                        </div>
+        <h6>2. LAPORAN RINGKAS PENCAPAIAN KUTIPAN KUMPULAN WANG PENJELAS (SINGKING FUND)</h6>
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>JUMLAH SINKING FUND SEPATUT DIKUTIP SEMASA</label>
-                                <input name="sfr_semasa" class="form-control" type="text" value="{{ $sf_semasa }}">
-                            </div>
-                        </div>
-
-                        <div class="col-md-offset-6 col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>JUMLAH SERVICE FEE BERJAYA DIKUTIP SEMASA</label>
-                                <input name="sinkingfund_semasa_total" class="form-control" type="text" value="{{ $sf_semasa + $sf_sebulan }}" disabled>
-                            </div>
-                        </div>
-
-                        <hr>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>JUMLAH PERBELANJAAN</th>
-                                    <th>PERKARA</th>
-                                    <th>JUMLAH (RM)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @for($i=0 ; $i < 6 ; $i++)
-                                <?php
-                                $sfr_name = (isset($report[$i]['name'])) ? $report[$i]['name'] : '';
-                                $sfr_amount = (isset($report[$i]['amount'])) ? $report[$i]['amount'] : 0;
-
-                                $sfr_total_amount += $sfr_amount;
-                                ?>
-                                <tr>
-                                    <td></td>
-                                    <td><input type="text" name="sf_name[]" class="form-control" value="{{ $sfr_name }}"></td>
-                                    <td><input type="text" name="sf_amount[]" class="form-control" value="{{ $sfr_amount }}"></td>
-                                </tr>
-                                @endfor
-
-                                <tr>
-                                    <td colspan="2" class="text-right">JUMLAH TELAT BAYAR [B]</td>
-                                    <td><input type="text" name="mfr_telat_total" class="form-control" value="{{ $sfr_total_amount }}" disabled></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" class="text-right">LEBIHAN / KURANGAN PENDAPATAN (A) - (B)</td>
-                                    <td><input type="text" name="mfr_telat_total" class="form-control" value="0"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>NO AKAUN</label>
-                                <input name="sf_no_akaun" class="form-control" type="text" value="{{ $sf_no_akaun }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>BAKI BANK (AWAL)</label>
-                                <input name="sf_baki_bank_awal" class="form-control" type="text" value="{{ $sf_baki_bank_awal }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>NAMA BANK</label>
-                                <input name="sf_nama_bank" class="form-control" type="text" value="{{ $sf_nama_bank }}">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label><span style="color: red;">*</span>BAKI BANK (AKHIR)</label>
-                                <input name="sf_baki_bank_akhir" class="form-control" type="text" value="{{ $sf_baki_bank_akhir }}">
-                            </div>
-                        </div>
-
-                    </div>                                                
-                    <div class="form-actions">
-                        <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
-                        <?php if ($insert_permission == 1) { ?>
-                            <input type="submit" value="Submit" class="btn btn-primary">
-                        <?php } ?>
-                    </div>
-                </form>
+        <form id="formFinanceSfReport" class="form-horizontal" method="POST">                                
+            <div class="row">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td width="20%">
+                                <span style="color: red;">*</span>SINKING FUND SEBULAN (PER UNIT)
+                            </td>
+                            <td width="30%">
+                                <input name="{{ $prefix }}sinkingfund_sebulan" class="form-control" type="text" value="{{ number_format($sf_sebulan, 2) }}">
+                            </td>
+                            <td width="5%">&nbsp;</td>
+                            <td width="25%">
+                                <span style="color: red;">*</span> JUMLAH UNIT
+                            </td>
+                            <td width="20%">
+                                <input name="{{ $prefix }}unit" class="form-control" type="text" value="{{ $sf_unit }}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                JUMLAH DIKUTIP (TUNGGAKAN + SEMASA + ADVANCED [A])
+                            </td>
+                            <td>
+                                <input name="{{ $prefix }}kutipan" class="form-control" type="text" value="0.00">
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                <span style="color: red;">*</span>JUMLAH SINKING FUND SEPATUT DIKUTIP SEMASA
+                            </td>
+                            <td>
+                                <input name="{{ $prefix }}semasa" class="form-control" type="text" value="{{ number_format($sf_semasa, 2) }}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>
+                                JUMLAH SERVICE FEE BERJAYA DIKUTIP SEMASA
+                            </td>
+                            <td>
+                                <input name="sinkingfund_semasa_total" class="form-control" type="text" value="{{ number_format($sf_semasa + $sf_sebulan, 2) }}" readonly="">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
+
+            <hr>
+
+            <div class="row">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th width="20%" style="text-align: center">JUMLAH PERBELANJAAN</th>
+                            <th width="60%" style="text-align: center">PERKARA</th>
+                            <th width="20%" style="text-align: center">JUMLAH (RM)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @for($i=0 ; $i < count($reportSF) ; $i++)
+                        <?php
+                        $sfr_name = (isset($reportSF[$i]['name'])) ? $reportSF[$i]['name'] : '';
+                        $sfr_amount = (isset($reportSF[$i]['amount'])) ? $reportSF[$i]['amount'] : 0;
+
+                        $sfr_total_amount += $sfr_amount;
+                        ?>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td><input type="text" name="sf_name[]" class="form-control" value="{{ $sfr_name }}" readonly=""></td>
+                            <td><input type="text" name="sf_amount[]" class="form-control" value="{{ number_format($sfr_amount, 2) }}" readonly=""></td>
+                        </tr>
+                        @endfor
+
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td class="padding-form">JUMLAH TELAH BAYAR [B]</td>
+                            <td><input type="text" name="{{ $prefix }}bayar_total" class="form-control" value="{{ number_format($sfr_total_amount, 2) }}" readonly=""></td>
+                        </tr>
+
+                        <tr>
+                            <td class="padding-table" colspan="2">LEBIHAN / KURANGAN PENDAPATAN (A) - (B)</td>
+                            <td><input type="text" name="{{ $prefix }}lebihan_kurangan" class="form-control" value="0.00" readonly=""></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr/>
+
+            <div class="row">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <td width="20%">
+                                <span style="color: red;">*</span> NO AKAUN
+                            </td>
+                            <td width="30%">
+                                <input name="sf_no_akaun" class="form-control" type="text" value="{{ $sf_no_akaun }}">
+                            </td>
+                            <td width="5%">&nbsp;</td>
+                            <td width="25%">  
+                                <span style="color: red;">*</span> BAKI BANK (AWAL)
+                            </td>
+                            <td width="20%">  
+                                <input name="sf_baki_bank_awal" class="form-control" type="text" value="{{ $sf_baki_bank_awal }}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span style="color: red;">*</span> NAMA BANK
+                            </td>
+                            <td>
+                                <input name="sf_nama_bank" class="form-control" type="text" value="{{ $sf_nama_bank }}">
+                            </td>
+                            <td>&nbsp;</td>
+                            <td>
+                                <span style="color: red;">*</span> BAKI BANK (AKHIR)
+                            </td>
+                            <td>
+                                <input name="sf_baki_bank_akhir" class="form-control" type="text" value="{{ $sf_baki_bank_akhir }}">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>                                                
+            <div class="form-actions">
+                <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
+                <?php if ($insert_permission == 1) { ?>
+                    <input type="submit" value="Submit" class="btn btn-primary submit_button">
+                <?php } ?>
+            </div>
+        </form>
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
-        let tunggakan = $("#formFinanceSfReport [name=sfr_tunggakan]").val();
+        let tunggakan = $("#formFinanceSfReport [name=sfr_kutipan]").val();
     });
+
     $(".numeric-only").on('keypress', function (e) {
         var keyCode = e.which ? e.which : e.keyCode;
         if (!(keyCode >= 48 && keyCode <= 57)) {
@@ -157,11 +175,11 @@ $sfr_total_amount = 0;
             url: "{{ URL::action('FinanceController@updateFinanceFileReportSf') }}",
             data: $(this).serialize(),
             beforeSend: function () {
-                $("#btnSubmitFileAdmin").html('Loading').prop('disabled', true);
+                $(".submit_button").html('Loading').prop('disabled', true);
             },
-            complete: function (data) {
+            complete: function () {
                 // Hide image container
-                $("#btnSubmitFileAdmin").html('Submit').prop('disabled', false);
+                $(".submit_button").html('Submit').prop('disabled', false);
             },
             success: function (response) {
                 if (response.trim() == "true") {
@@ -177,8 +195,7 @@ $sfr_total_amount = 0;
                 } else {
                     bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                 }
-                console.log(response);
             }
         });
-    })
+    });
 </script>

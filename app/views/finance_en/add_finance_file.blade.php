@@ -6,18 +6,18 @@
 $insert_permission = 0;
 $update_permission = 0;
 $month = [
-    1 => 'JAN',
-    2 => 'FEB',
-    3 => 'MAR',
-    4 => 'APR',
+    1 => 'JANUARY',
+    2 => 'FEBRUARY',
+    3 => 'MARCH',
+    4 => 'APRIL',
     5 => 'MAY',
     6 => 'JUN',
-    7 => 'JUL',
-    8 => 'AUG',
-    9 => 'SEP',
-    10 => 'OCT',
-    11 => 'NOV',
-    12 => 'DEC'
+    7 => 'JULY',
+    8 => 'AUGUST',
+    9 => 'SEPTEMBER',
+    10 => 'OCTOBER',
+    11 => 'NOVEMBER',
+    12 => 'DECEMBER'
 ];
 foreach ($user_permission as $permission) {
     if ($permission->submodule_id == 2) {
@@ -44,10 +44,10 @@ foreach ($user_permission as $permission) {
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> File Number</label>
-                                    <select id="file_id" class="form-control">
+                                    <label><span style="color: red;">*</span> File No</label>
+                                    <select id="file_id" class="form-control select2">
                                         <option value="">Please Select</option>
                                         @foreach ($file_no as $files)
                                         <option value="{{$files->id}}">{{$files->file_no}}</option>
@@ -56,10 +56,10 @@ foreach ($user_permission as $permission) {
                                     <div id="file_no_error" style="display:none;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> Year</label>
-                                    <select id="year" class="form-control">
+                                    <select id="year" class="form-control select2">
                                         <option value="">Please Select</option>
                                         @for ($i = 2012; $i <= date('Y'); $i++)
                                         <option value="{{ $i }}">{{ $i}}</option>
@@ -68,10 +68,10 @@ foreach ($user_permission as $permission) {
                                     <div id="year_error" style="display:none;"></div>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> Month</label>
-                                    <select id="month" class="form-control">
+                                    <select id="month" class="form-control select2">
                                         <option value="">Please Select</option>
                                         @foreach ($month as $k => $v)
                                         <option value="{{$k}}">{{ $v }}</option>
@@ -87,7 +87,7 @@ foreach ($user_permission as $permission) {
                             </div>
                         </div>
                         <div class="form-actions">
-                            <?php if ($insert_permission == 1) { ?>
+                            <?php if ($insert_permission) { ?>
                                 <button type="button" class="btn btn-primary" id="submit_button" onclick="addFinanceFile()">Submit</button>
                             <?php } ?>
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('FinanceController@addFinanceFileList')}}'">Cancel</button>
@@ -104,6 +104,12 @@ foreach ($user_permission as $permission) {
 <script>
     function addFinanceFile() {
         $("#loading").css("display", "inline-block");
+        $("#submit_button").attr("disabled", "disabled");
+        $("#cancel_button").attr("disabled", "disabled");
+        $("#file_no_error").css("display", "none");
+        $("#month_error").css("display", "none");
+        $("#year_error").css("display", "none");
+        $("#file_already_exists_error").css("display", "none");
 
         var file_no = $("#file_id").val(),
                 month = $("#month").val(),
@@ -112,7 +118,7 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (file_no.trim() == "") {
-            $("#file_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File Number</span>');
+            $("#file_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File No</span>');
             $("#file_no_error").css("display", "block");
             error = 1;
         }
@@ -143,6 +149,7 @@ foreach ($user_permission as $permission) {
                     $("#loading").css("display", "none");
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
+
                     if (data.trim() == "true") {
                         bootbox.alert("<span style='color:green;'>Finance File added successfully!</span>", function () {
                             window.location = '{{URL::action("FinanceController@financeList") }}';
@@ -155,6 +162,10 @@ foreach ($user_permission as $permission) {
                     }
                 }
             });
+        } else {
+            $("#loading").css("display", "none");
+            $("#submit_button").removeAttr("disabled");
+            $("#cancel_button").removeAttr("disabled");
         }
     }
 </script>

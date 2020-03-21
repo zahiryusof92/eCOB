@@ -23,8 +23,8 @@ foreach ($user_permission as $permission) {
                     <table class="table table-hover nowrap" id="filelist" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:30%;">Finance Management</th>
-                                <th style="width:10%;">Strata</th>
+                                <th style="width:50%;">Finance Management</th>
+                                <th style="width:30%;">Strata</th>
                                 <th style="width:10%;">Status</th>
                                 <th style="width:10%;">Action</th>
                             </tr>
@@ -46,7 +46,7 @@ foreach ($user_permission as $permission) {
         oTable = $('#filelist').DataTable({
             "sAjaxSource": "{{URL::action('FinanceController@getFinanceList')}}",
             "lengthMenu": [[15, 30, 50, -1], [15, 30, 50, "All"]],
-            "order": [[3, "asc"]],
+            "order": [[0, "asc"]],
             responsive: true
         });
     });
@@ -96,7 +96,7 @@ foreach ($user_permission as $permission) {
         });
     }
 
-    function deleteFileList(id) {
+    function deleteFinanceList(id) {
         bootbox.confirm("Are you sure want to delete this file?", function (result) {
             if (result) {
                 $.ajax({
