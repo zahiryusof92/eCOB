@@ -24,19 +24,20 @@ $tableField = [
         <h6>Summary</h6>
         <form id="summaryForm">  
             <div class="row">
-                <table class="table table-sm">
+                <table class="table table-sm" style="font-size: 12px;">
                     <tbody>
                         <?php $no = 1; ?>
                         @foreach ($tableField as $key => $val)
                         <tr>
-                            <td width="5%" class="text-center">{{$no++}}</td>
-                            <td width="85%" >{{ $val }}</td>
-                            <td width="10%" ><input type="number" class="form-control" id="{{$prefix.$key}}" value="0.00" disabled=""></td>
+                            <td width="5%" class="padding-table text-center">{{$no++}}</td>
+                            <td width="85%" class="padding-table">{{ $val }}</td>
+                            <td width="10%"><input type="number" class="form-control form-control-sm" id="{{$prefix.$key}}" value="0.00" disabled=""></td>
                         </tr>
                         @endforeach
                         <tr>
-                            <td colspan="2" class="text-right">Jumlah Pembelanjaan</td>
-                            <td><input type="number" class="form-control" id="{{$prefix.'jumlah_pembelanjaan'}}" value="0.00" disabled=""></td>
+                            <td>&nbsp;</td>
+                            <th class="padding-table">JUMLAH PERBELANJAAN</th>
+                            <th><input type="number" class="form-control form-control-sm" id="{{$prefix.'jumlah_pembelanjaan'}}" value="0.00" disabled=""></th>
                         </tr>
                     </tbody>
                 </table>    

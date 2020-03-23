@@ -1,6 +1,7 @@
 <?php
 $prefix = 'util_';
 $prefix2 = 'utilb_';
+$prefix3 = 'utilab_';
 ?>
 
 <div class="row">
@@ -46,26 +47,26 @@ $prefix2 = 'utilb_';
                         $total_income = $utilas['tunggakan'] + $utilas['semasa'] + $utilas['hadapan'];
                         $total_all += $total_income;
                         ?>
-                        <tr id="income_row{{ ++$count }}">
-                            <td class="text-center padding-table">{{ $count }}</td>
+                        <tr id="util_row{{ ++$count }}">
+                            <td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="{{ $utilas['is_custom'] }}">{{ $count }}</td>
                             <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $utilas['name'] }}" readonly=""></td>
-                            <td><input type="text" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($utilas['tunggakan'], 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($utilas['semasa'], 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($utilas['hadapan'], 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix }}total_all[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($total_income, 2) }}" readonly=""></td>
-                            <td><input type="text" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($utilas['tertunggak'], 2) }}"></td>
+                            <td><input type="text" oninput="calculateUtilityA('{{ $count }}')" id="{{ $prefix . 'tunggakan_' . $count }}" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilas['tunggakan'] }}"></td>
+                            <td><input type="text" oninput="calculateUtilityA('{{ $count }}')" id="{{ $prefix . 'semasa_' . $count }}" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilas['semasa'] }}"></td>
+                            <td><input type="text" oninput="calculateUtilityA('{{ $count }}')" id="{{ $prefix . 'hadapan_' . $count }}" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilas['hadapan'] }}"></td>
+                            <td><input type="text" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
+                            <td><input type="text" oninput="calculateUtilityATotal()" id="{{ $prefix . 'tertunggak_' . $count }}" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilas['tertunggak'] }}"></td>
                             <td>&nbsp;</td>
                         </tr>
                         @endforeach
-                        
+
                         <tr>
                             <td>&nbsp;</td>
-                            <td class="padding-form">JUMLAH BAHAGIAN A</td>
-                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_tunggakan, 2) }}" readonly=""></td>
-                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_semasa, 2) }}" readonly=""></td>
-                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_hadapan, 2) }}" readonly=""></td>
-                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_all, 2) }}" readonly=""></td>
-                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($total_tertunggak, 2) }}" readonly=""></td>
+                            <th class="padding-form">JUMLAH BAHAGIAN A</th>
+                            <th><input type="text" id="{{ $prefix . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $total_tunggakan }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $total_semasa }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $total_hadapan }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $total_all }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix . 'total_tertunggak' }}" class="form-control form-control-sm text-right" value="{{ $total_tertunggak }}" readonly=""></th>
                             <td>&nbsp;</td>
                         </tr>
 
@@ -93,47 +94,40 @@ $prefix2 = 'utilb_';
                         $totalb_all += $totalb_income;
                         ?>
                         <tr id="utility_row{{ ++$countb }}">
-                            <td class="text-center padding-table">{{ $countb }}</td>
+                            <td class="text-center padding-table"><input type="hidden" name="{{ $prefix2 }}is_custom[]" value="{{ $utilbs['is_custom'] }}">{{ $countb }}</td>
                             <td><input type="text" name="{{ $prefix2 }}name[]" class="form-control form-control-sm" value="{{ $utilbs['name'] }}" readonly=""></td>
-                            <td><input type="text" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($utilbs['tunggakan'], 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($utilbs['semasa'], 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($utilbs['hadapan'], 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix2 }}total_all[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($totalb_income, 2) }}" readonly=""></td>
-                            <td><input type="text" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format($utilbs['tertunggak'], 2) }}"></td>
+                            <td><input type="text" oninput="calculateUtilityB('{{ $countb }}')" id="{{ $prefix2 . 'tunggakan_' . $countb }}" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilbs['tunggakan'] }}"></td>
+                            <td><input type="text" oninput="calculateUtilityB('{{ $countb }}')" id="{{ $prefix2 . 'semasa_' . $countb }}" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilbs['semasa'] }}"></td>
+                            <td><input type="text" oninput="calculateUtilityB('{{ $countb }}')" id="{{ $prefix2 . 'hadapan_' . $countb }}" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilbs['hadapan'] }}"></td>
+                            <td><input type="text" id="{{ $prefix2 . 'total_income_' . $countb }}" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $totalb_income }}" readonly=""></td>
+                            <td><input type="text" oninput="calculateUtilityBTotal('{{ $countb }}')" id="{{ $prefix2 . 'tertunggak_' . $countb }}" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilbs['tertunggak'] }}"></td>
                             <td>&nbsp;</td>
                         </tr>
                         @endforeach
-                        
-                        <tr id="utility_row{{ ++$countb }}">
-                            <td class="text-center padding-table">{{ $countb }}</td>
-                            <td><input type="text" name="{{ $prefix2 }}name[]" class="form-control form-control-sm" value=""></td>
-                            <td><input type="text" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
-                            <td><input type="text" name="{{ $prefix2 }}total_all[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}" readonly=""></td>
-                            <td><input type="text" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ number_format(0, 2) }}"></td>
-                            <td class="padding-table"><a href="javascript:void(0);" onclick="addRowUtility()" class="btn btn-primary btn-xs">Add More</a></td>
+
+                        <tr>
+                            <td class="padding-table text-right" colspan="8"><a href="javascript:void(0);" onclick="addRowUtility()" class="btn btn-primary btn-xs">Add More</a></td>
                         </tr>
-                        
+
                         <tr>
                             <td>&nbsp;</td>
-                            <td class="padding-form">JUMLAH BAHAGIAN B</td>
-                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($totalb_tunggakan, 2) }}" readonly=""></td>
-                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($totalb_semasa, 2) }}" readonly=""></td>
-                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($totalb_hadapan, 2) }}" readonly=""></td>
-                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($totalb_income, 2) }}" readonly=""></td>
-                            <td><input type="text" class="form-control form-control-sm text-right" value="{{ number_format($totalb_tertunggak, 2) }}" readonly=""></td>
+                            <th class="padding-form">JUMLAH BAHAGIAN B</th>
+                            <th><input type="text" id="{{ $prefix2 . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $totalb_tunggakan }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix2 . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $totalb_semasa }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix2 . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $totalb_hadapan }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix2 . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $totalb_income }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix2 . 'total_tertunggak' }}" class="form-control form-control-sm text-right" value="{{ $totalb_tertunggak }}" readonly=""></th>
                             <td>&nbsp;</td>
                         </tr>
 
                         <tr>
                             <td>&nbsp;</td>
-                            <td class="padding-form">JUMLAH BAHAGIAN A + BAHAGIAN B</td>
-                            <td><input type="text"  class="form-control form-control-sm text-right" value="{{ number_format($total_tunggakan + $totalb_tunggakan, 2) }}" readonly=""></td>
-                            <td><input type="text"  class="form-control form-control-sm text-right" value="{{ number_format($total_semasa + $totalb_semasa, 2) }}" readonly=""></td>
-                            <td><input type="text"  class="form-control form-control-sm text-right" value="{{ number_format($total_hadapan + $totalb_hadapan, 2) }}" readonly=""></td>
-                            <td><input type="text"  class="form-control form-control-sm text-right" value="{{ number_format($total_income + $totalb_income, 2) }}" readonly=""></td>
-                            <td><input type="text"  class="form-control form-control-sm text-right" value="{{ number_format($total_tertunggak + $totalb_tertunggak, 2) }}" readonly=""></td>
+                            <th class="padding-form">JUMLAH BAHAGIAN A + BAHAGIAN B</th>
+                            <th><input type="text" id="{{ $prefix3 . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $total_tunggakan + $totalb_tunggakan }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix3 . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $total_semasa + $totalb_semasa }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix3 . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $total_hadapan + $totalb_hadapan }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix3 . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $total_income + $totalb_income }}" readonly=""></th>
+                            <th><input type="text" id="{{ $prefix3 . 'total_tertunggak' }}" class="form-control form-control-sm text-right" value="{{ $total_tertunggak + $totalb_tertunggak }}" readonly=""></th>
                             <td>&nbsp;</td>
                         </tr>
                     </tbody>
@@ -150,16 +144,185 @@ $prefix2 = 'utilb_';
 </div>
 
 <script type="text/javascript">
+    calculateUtilityATotal();
+    calculateUtilityBTotal();
+    calculateUtilityABTotal();
+
+    function calculateUtilityA(id) {
+        var util_sum_tunggakan = 0;
+        var util_sum_semasa = 0;
+        var util_sum_hadapan = 0;
+        var util_sum_total_income = 0;
+
+        var util_tunggakan = document.getElementById("{{ $prefix }}tunggakan_" + id);
+        util_sum_tunggakan += parseFloat(util_tunggakan.value);
+
+        var util_semasa = document.getElementById("{{ $prefix }}semasa_" + id);
+        util_sum_semasa += parseFloat(util_semasa.value);
+
+        var util_hadapan = document.getElementById("{{ $prefix }}hadapan_" + id);
+        util_sum_hadapan += parseFloat(util_hadapan.value);
+
+        util_sum_total_income += parseFloat(util_sum_tunggakan) + parseFloat(util_sum_semasa) + parseFloat(util_sum_hadapan);
+        $('#util_total_income_' + id).val(parseFloat(util_sum_total_income).toFixed(2)); // UPDATE JUMLAH A + B + C
+
+        calculateUtilityATotal();
+        calculateUtilityABTotal();
+    }
+
+    function calculateUtilityB(id) {
+        var utilb_sum_tunggakan = 0;
+        var utilb_sum_semasa = 0;
+        var utilb_sum_hadapan = 0;
+        var utilb_sum_total_income = 0;
+
+        var utilb_tunggakan = document.getElementById("{{ $prefix2 }}tunggakan_" + id);
+        utilb_sum_tunggakan += parseFloat(utilb_tunggakan.value);
+
+        var utilb_semasa = document.getElementById("{{ $prefix2 }}semasa_" + id);
+        utilb_sum_semasa += parseFloat(utilb_semasa.value);
+
+        var utilb_hadapan = document.getElementById("{{ $prefix2 }}hadapan_" + id);
+        utilb_sum_hadapan += parseFloat(utilb_hadapan.value);
+
+        utilb_sum_total_income += parseFloat(utilb_sum_tunggakan) + parseFloat(utilb_sum_semasa) + parseFloat(utilb_sum_hadapan);
+        $('#utilb_total_income_' + id).val(parseFloat(utilb_sum_total_income).toFixed(2)); // UPDATE JUMLAH A + B + C
+
+        calculateUtilityBTotal();
+        calculateUtilityABTotal();
+    }
+
+    function calculateUtilityATotal() {
+        var util_total_tunggakan = document.getElementsByName("{{ $prefix }}tunggakan[]");
+        var util_sum_total_tunggakan = 0;
+        for (var i = 0; i < util_total_tunggakan.length; i++) {
+            util_sum_total_tunggakan += parseFloat(util_total_tunggakan[i].value);
+            $('#' + util_total_tunggakan[i].id).val(parseFloat(util_total_tunggakan[i].value).toFixed(2));
+        }
+        $('#util_total_tunggakan').val(parseFloat(util_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
+
+        var util_total_semasa = document.getElementsByName("{{ $prefix }}semasa[]");
+        var util_sum_total_semasa = 0;
+        for (var i = 0; i < util_total_semasa.length; i++) {
+            util_sum_total_semasa += parseFloat(util_total_semasa[i].value);
+            $('#' + util_total_semasa[i].id).val(parseFloat(util_total_semasa[i].value).toFixed(2));
+        }
+        $('#util_total_semasa').val(parseFloat(util_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
+
+        var util_total_hadapan = document.getElementsByName("{{ $prefix }}hadapan[]");
+        var util_sum_total_hadapan = 0;
+        for (var i = 0; i < util_total_hadapan.length; i++) {
+            util_sum_total_hadapan += parseFloat(util_total_hadapan[i].value);
+            $('#' + util_total_hadapan[i].id).val(parseFloat(util_total_hadapan[i].value).toFixed(2));
+        }
+        $('#util_total_hadapan').val(parseFloat(util_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
+
+        var util_total_tertunggak = document.getElementsByName("{{ $prefix }}tertunggak[]");
+        var util_sum_total_tertunggak = 0;
+        for (var i = 0; i < util_total_tertunggak.length; i++) {
+            util_sum_total_tertunggak += parseFloat(util_total_tertunggak[i].value);
+            $('#' + util_total_hadapan[i].id).val(parseFloat(util_total_hadapan[i].value).toFixed(2));
+        }
+        $('#util_total_tertunggak').val(parseFloat(util_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
+
+        var util_total_income = document.getElementsByName("{{ $prefix }}total_income[]");
+        for (var i = 0; i < util_total_income.length; i++) {
+            $('#' + util_total_income[i].id).val(parseFloat(util_total_income[i].value).toFixed(2));
+        }
+
+        var util_sum_total_all = parseFloat(util_sum_total_tunggakan) + parseFloat(util_sum_total_semasa) + parseFloat(util_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
+        $('#util_total_all').val(parseFloat(util_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
+        
+        calculateUtilityABTotal();
+    }
+
+    function calculateUtilityBTotal() {
+        var utilb_total_tunggakan = document.getElementsByName("{{ $prefix2 }}tunggakan[]");
+        var utilb_sum_total_tunggakan = 0;
+        for (var i = 0; i < utilb_total_tunggakan.length; i++) {
+            utilb_sum_total_tunggakan += parseFloat(utilb_total_tunggakan[i].value);
+            $('#' + utilb_total_tunggakan[i].id).val(parseFloat(utilb_total_tunggakan[i].value).toFixed(2));
+        }
+        $('#utilb_total_tunggakan').val(parseFloat(utilb_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
+
+        var utilb_total_semasa = document.getElementsByName("{{ $prefix2 }}semasa[]");
+        var utilb_sum_total_semasa = 0;
+        for (var i = 0; i < utilb_total_semasa.length; i++) {
+            utilb_sum_total_semasa += parseFloat(utilb_total_semasa[i].value);
+            $('#' + utilb_total_semasa[i].id).val(parseFloat(utilb_total_semasa[i].value).toFixed(2));
+        }
+        $('#utilb_total_semasa').val(parseFloat(utilb_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
+
+        var utilb_total_hadapan = document.getElementsByName("{{ $prefix2 }}hadapan[]");
+        var utilb_sum_total_hadapan = 0;
+        for (var i = 0; i < utilb_total_hadapan.length; i++) {
+            utilb_sum_total_hadapan += parseFloat(utilb_total_hadapan[i].value);
+            $('#' + utilb_total_hadapan[i].id).val(parseFloat(utilb_total_hadapan[i].value).toFixed(2));
+        }
+        $('#utilb_total_hadapan').val(parseFloat(utilb_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
+
+        var utilb_total_tertunggak = document.getElementsByName("{{ $prefix2 }}tertunggak[]");
+        var utilb_sum_total_tertunggak = 0;
+        for (var i = 0; i < utilb_total_tertunggak.length; i++) {
+            utilb_sum_total_tertunggak += parseFloat(utilb_total_tertunggak[i].value);
+            $('#' + utilb_total_hadapan[i].id).val(parseFloat(utilb_total_hadapan[i].value).toFixed(2));
+        }
+        $('#utilb_total_tertunggak').val(parseFloat(utilb_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
+
+        var utilb_total_income = document.getElementsByName("{{ $prefix2 }}total_income[]");
+        for (var i = 0; i < utilb_total_income.length; i++) {
+            $('#' + utilb_total_income[i].id).val(parseFloat(utilb_total_income[i].value).toFixed(2));
+        }
+
+        var utilb_sum_total_all = parseFloat(utilb_sum_total_tunggakan) + parseFloat(utilb_sum_total_semasa) + parseFloat(utilb_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
+        $('#utilb_total_all').val(parseFloat(utilb_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
+        
+        calculateUtilityABTotal();
+    }
+
+    function calculateUtilityABTotal() {
+        var utilab_sum_total_tunggakan = 0;
+        utilab_sum_total_tunggakan += parseFloat(util_total_tunggakan.value) + parseFloat(utilb_total_tunggakan.value);
+        $('#utilab_total_tunggakan').val(parseFloat(utilab_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
+
+        var utilab_sum_total_semasa = 0;
+        utilab_sum_total_semasa += parseFloat(util_total_semasa.value) + parseFloat(utilb_total_semasa.value);
+        $('#utilab_total_semasa').val(parseFloat(utilab_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
+
+        var utilab_sum_total_hadapan = 0;
+        utilab_sum_total_hadapan += parseFloat(util_total_hadapan.value) + parseFloat(utilb_total_hadapan.value);
+        $('#utilab_total_hadapan').val(parseFloat(utilab_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
+
+        var utilab_sum_total_all = 0;
+        var util_total_income = document.getElementById("{{ $prefix }}total_all");
+        var utilb_total_income = document.getElementById("{{ $prefix2 }}total_all");
+        utilab_sum_total_all += parseFloat(util_total_income.value) + parseFloat(utilb_total_income.value);
+        $('#utilab_total_all').val(parseFloat(utilab_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
+
+        var utilab_sum_total_tertunggak = 0;
+        var util_total_tertunggak = document.getElementById("{{ $prefix }}total_tertunggak");
+        var utilb_total_tertunggak = document.getElementById("{{ $prefix2 }}total_tertunggak");
+        utilab_sum_total_tertunggak += parseFloat(util_total_tertunggak.value) + parseFloat(utilb_total_tertunggak.value);
+        $('#utilab_total_tertunggak').val(parseFloat(utilab_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH SEMUA TERTUNGGAK
+    }
+
     function addRowUtility() {
-        var rowUtilityNo = $("#dynamic_form_utility tr").length;        
-        rowUtilityNo = rowUtilityNo - 7;
-        $("#dynamic_form_utility tr:last").prev().prev().after("<tr id='utility_row" + rowUtilityNo + "'><td class='text-center padding-table'>" + rowUtilityNo + "</td><td><input type='text' name='{{ $prefix2 }}name[]' class='form-control form-control-sm' value=''></td><td><input type='text' name='{{ $prefix2 }}tunggakan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix2 }}semasa[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix2 }}hadapan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix2 }}total_all[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}' readonly=''></td><td><input type='text' name='{{ $prefix2 }}tertunggak[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td class='padding-table'><a href='javascript:void(0);' onclick=deleteRowUtility('utility_row" + rowUtilityNo + "') class='btn btn-danger btn-xs'>Remove</a></td></tr>");
+        var rowUtilityNo = $("#dynamic_form_utility tr").length;
+        rowUtilityNo = rowUtilityNo - 8;
+
+        $("#dynamic_form_utility tr:last").prev().prev().after('');
+
+        $("#dynamic_form_utility tr:last").prev().prev().prev().prev().after("<tr id='utility_row" + rowUtilityNo + "'><td class='text-center padding-table'>" + rowUtilityNo + "</td><td><input type='text' name='{{ $prefix2 }}name[]' class='form-control form-control-sm' value=''></td><td><input type='text' name='{{ $prefix2 }}tunggakan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix2 }}semasa[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix2 }}hadapan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix2 }}total_all[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}' readonly=''></td><td><input type='text' name='{{ $prefix2 }}tertunggak[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td class='padding-table'><a href='javascript:void(0);' onclick=deleteRowUtility('utility_row" + rowUtilityNo + "') class='btn btn-danger btn-xs'>Remove</a></td></tr>");
+
+        calculateUtilityBTotal();
     }
 
     function deleteRowUtility(rowUtilityNo) {
         $('#' + rowUtilityNo).remove();
+
+        calculateUtilityBTotal();
     }
-    
+
     $("#formFinanceUtility").submit(function (e) {
         e.preventDefault();
 

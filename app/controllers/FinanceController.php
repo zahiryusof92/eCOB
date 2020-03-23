@@ -791,7 +791,7 @@ class FinanceController extends BaseController {
 
         FinanceIncome::where('finance_file_id', $id)->delete();
 
-        for ($i = 0; $i < count($data); $i++) {
+        for ($i = 0; $i < count($data['income_name']); $i++) {
             if (!empty($data['income_name'][$i])) {
                 $financeadmin = new FinanceIncome;
                 $financeadmin->finance_file_id = $id;
@@ -800,6 +800,7 @@ class FinanceController extends BaseController {
                 $financeadmin->semasa = $data['income_semasa'][$i];
                 $financeadmin->hadapan = $data['income_hadapan'][$i];
                 $financeadmin->sort_no = $i;
+                $financeadmin->is_custom = $data['income_is_custom'][$i];
                 $financeadmin->save();
             }
         }

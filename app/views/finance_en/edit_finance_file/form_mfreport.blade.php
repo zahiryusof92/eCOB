@@ -19,21 +19,21 @@ $mfr_total_amount = 0;
 
         <form id="formFinanceMfReport" class="form-horizontal" method="POST">                   
             <div class="row">
-                <table class="table table-sm">
+                <table class="table table-sm" style="font-size: 12px;">
                     <tbody>
                         <tr>
                             <td width="20%">
                                 <span style="color: red;">*</span> MAINTENANCE FEE SEBULAN (PER UNIT)
                             </td>
                             <td width="30%">
-                                <input name="{{ $prefix }}maintenance_fee_sebulan" class="form-control" type="text" value="{{ number_format($mf_sebulan, 2) }}">
+                                <input name="{{ $prefix }}maintenance_fee_sebulan" class="form-control form-control-sm" type="text" value="{{ number_format($mf_sebulan, 2) }}">
                             </td>
                             <td width="5%">&nbsp;</td>
                             <td width="25%">
                                 <span style="color: red;">*</span> JUMLAH UNIT
                             </td>
                             <td width="20%">
-                                <input name="{{ $prefix }}unit" class="form-control" type="text" value="{{ $mf_unit }}">
+                                <input name="{{ $prefix }}unit" class="form-control form-control-sm" type="text" value="{{ $mf_unit }}">
                             </td>
                         </tr>
                         <tr>
@@ -41,26 +41,26 @@ $mfr_total_amount = 0;
                                 JUMLAH DIKUTIP (TUNGGAKAN + SEMASA + ADVANCED [A])
                             </td>
                             <td>
-                                <input name="{{ $prefix }}kutipan" class="form-control" type="text" value="0.00">
+                                <input name="{{ $prefix }}kutipan" class="form-control form-control-sm" type="text" value="0.00">
                             </td>
                             <td>&nbsp;</td>
                             <td>
                                 <span style="color: red;">*</span> JUMLAH SERVICE FEE SEPATUT DIKUTIP SEMASA
                             </td>
                             <td>
-                                <input name="{{ $prefix }}semasa" class="form-control" type="text" value="{{ number_format($mf_semasa, 2) }}">
+                                <input name="{{ $prefix }}semasa" class="form-control form-control-sm" type="text" value="{{ number_format($mf_semasa, 2) }}">
                             </td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
-                            <td>
+                            <th>
                                 JUMLAH SERVICE FEE BERJAYA DIKUTIP SEMASA
-                            </td>
-                            <td>
-                                <input name="maintenance_fee_semasa_total" class="form-control" type="text" value="{{ number_format($mf_semasa + $mf_sebulan, 2) }}" readonly="">
-                            </td>
+                            </th>
+                            <th>
+                                <input name="maintenance_fee_semasa_total" class="form-control form-control-sm" type="text" value="{{ number_format($mf_semasa + $mf_sebulan, 2) }}" readonly="">
+                            </th>
                         </tr>
                     </tbody>
                 </table>
@@ -69,7 +69,7 @@ $mfr_total_amount = 0;
             <hr>
 
             <div class="row">
-                <table class="table table-sm">
+                <table class="table table-sm" style="font-size: 12px;">
                     <thead>
                         <tr>
                             <th width="20%" style="text-align: center">JUMLAH PERBELANJAAN</th>
@@ -88,20 +88,20 @@ $mfr_total_amount = 0;
                         ?>
                         <tr>
                             <td>&nbsp;</td>
-                            <td><input type="text" name="mf_name[]" class="form-control" value="{{ $mfr_name }}" readonly=""></td>
-                            <td><input type="text" name="mf_amount[]" class="form-control" value="{{ number_format($mfr_amount, 2) }}" readonly=""></td>
+                            <td><input type="text" name="mf_name[]" class="form-control form-control-sm" value="{{ $mfr_name }}" readonly=""></td>
+                            <td><input type="text" name="mf_amount[]" class="form-control form-control-sm" value="{{ number_format($mfr_amount, 2) }}" readonly=""></td>
                         </tr>
                         @endfor
 
                         <tr>
                             <td>&nbsp;</td>
                             <td class="padding-form">JUMLAH TELAH BAYAR [B]</td>
-                            <td><input type="text" name="{{ $prefix }}bayar_total" class="form-control" value="{{ number_format($mfr_total_amount, 2) }}" readonly=""></td>
+                            <td><input type="text" name="{{ $prefix }}bayar_total" class="form-control form-control-sm" value="{{ number_format($mfr_total_amount, 2) }}" readonly=""></td>
                         </tr>
 
                         <tr>
                             <td class="padding-table" colspan="2">LEBIHAN / KURANGAN PENDAPATAN (A) - (B)</td>
-                            <td><input type="text" name="{{ $prefix }}lebihan_kurangan" class="form-control" value="0.00" readonly=""></td>
+                            <td><input type="text" name="{{ $prefix }}lebihan_kurangan" class="form-control form-control-sm" value="0.00" readonly=""></td>
                         </tr>
                     </tbody>
                 </table>
@@ -110,21 +110,21 @@ $mfr_total_amount = 0;
             <hr/>
 
             <div class="row">
-                <table class="table table-sm">
+                <table class="table table-sm" style="font-size: 12px;">
                     <tbody>
                         <tr>
                             <td width="20%">
                                 <span style="color: red;">*</span> NO AKAUN
                             </td>
                             <td width="30%">
-                                <input name="mf_no_akaun" class="form-control" type="text" value="{{ $mf_no_akaun }}">
+                                <input name="mf_no_akaun" class="form-control form-control-sm" type="text" value="{{ $mf_no_akaun }}">
                             </td>
                             <td width="5%">&nbsp;</td>
                             <td width="25%">  
                                 <span style="color: red;">*</span> BAKI BANK (AWAL)
                             </td>
                             <td width="20%">  
-                                <input name="mf_baki_bank_awal" class="form-control" type="text" value="{{ $mf_baki_bank_awal }}">
+                                <input name="mf_baki_bank_awal" class="form-control form-control-sm" type="text" value="{{ $mf_baki_bank_awal }}">
                             </td>
                         </tr>
                         <tr>
@@ -132,14 +132,14 @@ $mfr_total_amount = 0;
                                 <span style="color: red;">*</span> NAMA BANK
                             </td>
                             <td>
-                                <input name="mf_nama_bank" class="form-control" type="text" value="{{ $mf_nama_bank }}">
+                                <input name="mf_nama_bank" class="form-control form-control-sm" type="text" value="{{ $mf_nama_bank }}">
                             </td>
                             <td>&nbsp;</td>
                             <td>
                                 <span style="color: red;">*</span> BAKI BANK (AKHIR)
                             </td>
                             <td>
-                                <input name="mf_baki_bank_akhir" class="form-control" type="text" value="{{ $mf_baki_bank_akhir }}">
+                                <input name="mf_baki_bank_akhir" class="form-control form-control-sm" type="text" value="{{ $mf_baki_bank_akhir }}">
                             </td>
                         </tr>
                     </tbody>

@@ -22,25 +22,25 @@ if (($checkdata)) {
             <div class="form-group row">
                 <div class="col-md-6">                            
                     <label><span style="color: red;">*</span> Date</label>
-                    <input id="date" class="form-control" type="text" placeholder="Date" value="{{ ($date) ? date('d/m/Y', strtotime($date)) : '' }}">
+                    <input id="date" class="form-control form-control-sm" type="text" placeholder="Date" value="{{ ($date) ? date('d/m/Y', strtotime($date)) : '' }}">
                     <input type="hidden" name="date" id="mirror_date" value="{{ $date }}">
                     <div id="date_err" style="display:none;"></div>
                 </div>
                 <div class="col-md-6">
                     <label><span style="color: red;">*</span> Name</label>
-                    <input name="name" id="name" class="form-control" type="text" placeholder="Name" value="{{ $name }}">
+                    <input name="name" id="name" class="form-control form-control-sm" type="text" placeholder="Name" value="{{ $name }}">
                     <div id="name_err" style="display:none;"></div>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-md-6">
                     <label><span style="color: red;">*</span> Position</label>
-                    <input name="position" id="position" class="form-control" type="text" placeholder="Position" value="{{ $position }}">
+                    <input name="position" id="position" class="form-control form-control-sm" type="text" placeholder="Position" value="{{ $position }}">
                     <div id="position_err" style="display:none;"></div>
                 </div>
                 <div class="col-md-6">
                     <label><span style="color: red;">*</span> Status</label>
-                    <select name="status" id="status" class="form-control">
+                    <select name="status" id="status" class="form-control form-control-sm">
                         <option value="">Please Select</option>
                         <option value="1" <?php if ($status === 1) echo 'selected' ?>>Active</option>
                         <option value="0" <?php if ($status === 0) echo 'selected' ?>>Inactive</option>
@@ -51,7 +51,7 @@ if (($checkdata)) {
             <div class="form-group row">
                 <div class="col-md-12">
                     <label>Remarks</label>
-                    <textarea name="remarks" id="remarks" rows="5" class="form-control" placeholder="Remarks">{{$remarks}}</textarea>
+                    <textarea name="remarks" id="remarks" rows="5" class="form-control form-control-sm" placeholder="Remarks">{{$remarks}}</textarea>
                 </div>
             </div>                                                
             <div class="form-actions">
