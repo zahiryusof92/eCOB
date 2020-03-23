@@ -101,7 +101,11 @@ $prefix3 = 'utilab_';
                             <td><input type="text" oninput="calculateUtilityB('{{ $countb }}')" id="{{ $prefix2 . 'hadapan_' . $countb }}" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilbs['hadapan'] }}"></td>
                             <td><input type="text" id="{{ $prefix2 . 'total_income_' . $countb }}" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $totalb_income }}" readonly=""></td>
                             <td><input type="text" oninput="calculateUtilityBTotal('{{ $countb }}')" id="{{ $prefix2 . 'tertunggak_' . $countb }}" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilbs['tertunggak'] }}"></td>
+                            @if ($utilbs['is_custom'])
+                            <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowUtility('utility_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
+                            @else
                             <td>&nbsp;</td>
+                            @endif
                         </tr>
                         @endforeach
 
@@ -232,7 +236,7 @@ $prefix3 = 'utilab_';
 
         var util_sum_total_all = parseFloat(util_sum_total_tunggakan) + parseFloat(util_sum_total_semasa) + parseFloat(util_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
         $('#util_total_all').val(parseFloat(util_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
-        
+
         calculateUtilityABTotal();
     }
 
@@ -276,7 +280,7 @@ $prefix3 = 'utilab_';
 
         var utilb_sum_total_all = parseFloat(utilb_sum_total_tunggakan) + parseFloat(utilb_sum_total_semasa) + parseFloat(utilb_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
         $('#utilb_total_all').val(parseFloat(utilb_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
-        
+
         calculateUtilityABTotal();
     }
 

@@ -46,7 +46,7 @@ $prefix = 'income_';
                             <td><input type="text" oninput="calculateIncome('{{ $count }}')" id="{{ $prefix . 'hadapan_' . $count }}" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $incomeFiles['hadapan'] }}"></td>
                             <td><input type="text" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
                             @if ($incomeFiles['is_custom'])
-                            <td class="padding-table"><a href="javascript:void(0);" onclick="deleteRowIncome('income_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
+                            <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowIncome('income_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                             @else
                             <td>&nbsp;</td>
                             @endif
