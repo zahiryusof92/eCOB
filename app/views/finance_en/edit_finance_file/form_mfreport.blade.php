@@ -1,13 +1,13 @@
 <?php
 $prefix = 'mfr_';
 
-$mf_sebulan = (isset($mfreport['maintenance_fee_sebulan'])) ? $mfreport['maintenance_fee_sebulan'] : 0;
-$mf_unit = (isset($mfreport['unit'])) ? $mfreport['unit'] : 0;
-$mf_semasa = (isset($mfreport['servicefee_semasa'])) ? $mfreport['servicefee_semasa'] : 0;
-$mf_no_akaun = (isset($mfreport['no_akaun'])) ? $mfreport['no_akaun'] : '';
-$mf_nama_bank = (isset($mfreport['nama_bank'])) ? $mfreport['nama_bank'] : '';
-$mf_baki_bank_akhir = (isset($mfreport['baki_bank_akhir'])) ? $mfreport['baki_bank_akhir'] : '';
-$mf_baki_bank_awal = (isset($mfreport['baki_bank_awal'])) ? $mfreport['baki_bank_awal'] : '';
+$mfr_sebulan = (isset($mfreport['fee_sebulan'])) ? $mfreport['fee_sebulan'] : 0;
+$mfr_unit = (isset($mfreport['unit'])) ? $mfreport['unit'] : 0;
+$mfr_semasa = (isset($mfreport['fee_semasa'])) ? $mfreport['fee_semasa'] : 0;
+$mfr_no_akaun = (isset($mfreport['no_akaun'])) ? $mfreport['no_akaun'] : '';
+$mfr_nama_bank = (isset($mfreport['nama_bank'])) ? $mfreport['nama_bank'] : '';
+$mfr_baki_bank_akhir = (isset($mfreport['baki_bank_akhir'])) ? $mfreport['baki_bank_akhir'] : '';
+$mfr_baki_bank_awal = (isset($mfreport['baki_bank_awal'])) ? $mfreport['baki_bank_awal'] : '';
 
 $mfr_total_amount = 0;
 ?>
@@ -26,14 +26,14 @@ $mfr_total_amount = 0;
                                 <span style="color: red;">*</span> MAINTENANCE FEE SEBULAN (PER UNIT)
                             </td>
                             <td width="30%">
-                                <input name="{{ $prefix }}maintenance_fee_sebulan" class="form-control form-control-sm" type="text" value="{{ number_format($mf_sebulan, 2) }}">
+                                <input name="{{ $prefix }}fee_sebulan" class="form-control form-control-sm" type="text" value="{{ number_format($mfr_sebulan, 2) }}">
                             </td>
                             <td width="5%">&nbsp;</td>
                             <td width="25%">
                                 <span style="color: red;">*</span> JUMLAH UNIT
                             </td>
                             <td width="20%">
-                                <input name="{{ $prefix }}unit" class="form-control form-control-sm" type="text" value="{{ $mf_unit }}">
+                                <input name="{{ $prefix }}unit" class="form-control form-control-sm" type="text" value="{{ $mfr_unit }}">
                             </td>
                         </tr>
                         <tr>
@@ -48,7 +48,7 @@ $mfr_total_amount = 0;
                                 <span style="color: red;">*</span> JUMLAH SERVICE FEE SEPATUT DIKUTIP SEMASA
                             </td>
                             <td>
-                                <input name="{{ $prefix }}semasa" class="form-control form-control-sm" type="text" value="{{ number_format($mf_semasa, 2) }}">
+                                <input name="{{ $prefix }}fee_semasa" class="form-control form-control-sm" type="text" value="{{ number_format($mfr_semasa, 2) }}">
                             </td>
                         </tr>
                         <tr>
@@ -59,7 +59,7 @@ $mfr_total_amount = 0;
                                 JUMLAH SERVICE FEE BERJAYA DIKUTIP SEMASA
                             </th>
                             <th>
-                                <input name="maintenance_fee_semasa_total" class="form-control form-control-sm" type="text" value="{{ number_format($mf_semasa + $mf_sebulan, 2) }}" readonly="">
+                                <input name="{{ $prefix }}semasa_total" class="form-control form-control-sm" type="text" value="{{ number_format($mfr_semasa + $mfr_sebulan, 2) }}" readonly="">
                             </th>
                         </tr>
                     </tbody>
@@ -88,8 +88,8 @@ $mfr_total_amount = 0;
                         ?>
                         <tr>
                             <td>&nbsp;</td>
-                            <td><input type="text" name="mf_name[]" class="form-control form-control-sm" value="{{ $mfr_name }}" readonly=""></td>
-                            <td><input type="text" name="mf_amount[]" class="form-control form-control-sm" value="{{ number_format($mfr_amount, 2) }}" readonly=""></td>
+                            <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $mfr_name }}" readonly=""></td>
+                            <td><input type="text" name="{{ $prefix }}amount[]" class="form-control form-control-sm" value="{{ number_format($mfr_amount, 2) }}" readonly=""></td>
                         </tr>
                         @endfor
 
@@ -117,14 +117,14 @@ $mfr_total_amount = 0;
                                 <span style="color: red;">*</span> NO AKAUN
                             </td>
                             <td width="30%">
-                                <input name="mf_no_akaun" class="form-control form-control-sm" type="text" value="{{ $mf_no_akaun }}">
+                                <input name="{{ $prefix }}no_akaun" class="form-control form-control-sm" type="text" value="{{ $mfr_no_akaun }}">
                             </td>
                             <td width="5%">&nbsp;</td>
                             <td width="25%">  
                                 <span style="color: red;">*</span> BAKI BANK (AWAL)
                             </td>
                             <td width="20%">  
-                                <input name="mf_baki_bank_awal" class="form-control form-control-sm" type="text" value="{{ $mf_baki_bank_awal }}">
+                                <input name="{{ $prefix }}baki_bank_awal" class="form-control form-control-sm" type="text" value="{{ $mfr_baki_bank_awal }}">
                             </td>
                         </tr>
                         <tr>
@@ -132,22 +132,22 @@ $mfr_total_amount = 0;
                                 <span style="color: red;">*</span> NAMA BANK
                             </td>
                             <td>
-                                <input name="mf_nama_bank" class="form-control form-control-sm" type="text" value="{{ $mf_nama_bank }}">
+                                <input name="{{ $prefix }}nama_bank" class="form-control form-control-sm" type="text" value="{{ $mfr_nama_bank }}">
                             </td>
                             <td>&nbsp;</td>
                             <td>
                                 <span style="color: red;">*</span> BAKI BANK (AKHIR)
                             </td>
                             <td>
-                                <input name="mf_baki_bank_akhir" class="form-control form-control-sm" type="text" value="{{ $mf_baki_bank_akhir }}">
+                                <input name="{{ $prefix }}baki_bank_akhir" class="form-control form-control-sm" type="text" value="{{ $mfr_baki_bank_akhir }}">
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>                                        
-            <div class="form-actions">
-                <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
+            <div class="form-actions">                
                 <?php if ($insert_permission == 1) { ?>
+                    <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
                     <input type="submit" value="Submit" class="btn btn-primary submit_button">
                 <?php } ?>
             </div>
