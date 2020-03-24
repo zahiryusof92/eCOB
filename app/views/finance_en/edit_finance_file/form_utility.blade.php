@@ -102,7 +102,7 @@ $prefix3 = 'utilab_';
                             <td><input type="text" id="{{ $prefix2 . 'total_income_' . $countb }}" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $totalb_income }}" readonly=""></td>
                             <td><input type="text" oninput="calculateUtilityBTotal('{{ $countb }}')" id="{{ $prefix2 . 'tertunggak_' . $countb }}" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilbs['tertunggak'] }}"></td>
                             @if ($utilbs['is_custom'])
-                            <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowUtility('utility_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
+                            <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowUtility('utility_row<?php echo $countb ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                             @else
                             <td>&nbsp;</td>
                             @endif
@@ -168,7 +168,7 @@ $prefix3 = 'utilab_';
         util_sum_hadapan += parseFloat(util_hadapan.value);
 
         util_sum_total_income += parseFloat(util_sum_tunggakan) + parseFloat(util_sum_semasa) + parseFloat(util_sum_hadapan);
-        $('#util_total_income_' + id).val(parseFloat(util_sum_total_income).toFixed(2)); // UPDATE JUMLAH A + B + C
+        $('#{{ $prefix }}total_income_' + id).val(parseFloat(util_sum_total_income).toFixed(2)); // UPDATE JUMLAH A + B + C
 
         calculateUtilityATotal();
         calculateUtilityABTotal();
@@ -190,7 +190,7 @@ $prefix3 = 'utilab_';
         utilb_sum_hadapan += parseFloat(utilb_hadapan.value);
 
         utilb_sum_total_income += parseFloat(utilb_sum_tunggakan) + parseFloat(utilb_sum_semasa) + parseFloat(utilb_sum_hadapan);
-        $('#utilb_total_income_' + id).val(parseFloat(utilb_sum_total_income).toFixed(2)); // UPDATE JUMLAH A + B + C
+        $('#{{ $prefix2 }}total_income_' + id).val(parseFloat(utilb_sum_total_income).toFixed(2)); // UPDATE JUMLAH A + B + C
 
         calculateUtilityBTotal();
         calculateUtilityABTotal();
@@ -203,7 +203,7 @@ $prefix3 = 'utilab_';
             util_sum_total_tunggakan += parseFloat(util_total_tunggakan[i].value);
             $('#' + util_total_tunggakan[i].id).val(parseFloat(util_total_tunggakan[i].value).toFixed(2));
         }
-        $('#util_total_tunggakan').val(parseFloat(util_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
+        $('#{{ $prefix }}total_tunggakan').val(parseFloat(util_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
 
         var util_total_semasa = document.getElementsByName("{{ $prefix }}semasa[]");
         var util_sum_total_semasa = 0;
@@ -211,7 +211,7 @@ $prefix3 = 'utilab_';
             util_sum_total_semasa += parseFloat(util_total_semasa[i].value);
             $('#' + util_total_semasa[i].id).val(parseFloat(util_total_semasa[i].value).toFixed(2));
         }
-        $('#util_total_semasa').val(parseFloat(util_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
+        $('#{{ $prefix }}total_semasa').val(parseFloat(util_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
 
         var util_total_hadapan = document.getElementsByName("{{ $prefix }}hadapan[]");
         var util_sum_total_hadapan = 0;
@@ -219,7 +219,7 @@ $prefix3 = 'utilab_';
             util_sum_total_hadapan += parseFloat(util_total_hadapan[i].value);
             $('#' + util_total_hadapan[i].id).val(parseFloat(util_total_hadapan[i].value).toFixed(2));
         }
-        $('#util_total_hadapan').val(parseFloat(util_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
+        $('#{{ $prefix }}total_hadapan').val(parseFloat(util_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
 
         var util_total_tertunggak = document.getElementsByName("{{ $prefix }}tertunggak[]");
         var util_sum_total_tertunggak = 0;
@@ -227,7 +227,7 @@ $prefix3 = 'utilab_';
             util_sum_total_tertunggak += parseFloat(util_total_tertunggak[i].value);
             $('#' + util_total_hadapan[i].id).val(parseFloat(util_total_hadapan[i].value).toFixed(2));
         }
-        $('#util_total_tertunggak').val(parseFloat(util_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
+        $('#{{ $prefix }}total_tertunggak').val(parseFloat(util_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
 
         var util_total_income = document.getElementsByName("{{ $prefix }}total_income[]");
         for (var i = 0; i < util_total_income.length; i++) {
@@ -235,7 +235,7 @@ $prefix3 = 'utilab_';
         }
 
         var util_sum_total_all = parseFloat(util_sum_total_tunggakan) + parseFloat(util_sum_total_semasa) + parseFloat(util_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
-        $('#util_total_all').val(parseFloat(util_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
+        $('#{{ $prefix }}total_all').val(parseFloat(util_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
 
         calculateUtilityABTotal();
     }
@@ -247,7 +247,7 @@ $prefix3 = 'utilab_';
             utilb_sum_total_tunggakan += parseFloat(utilb_total_tunggakan[i].value);
             $('#' + utilb_total_tunggakan[i].id).val(parseFloat(utilb_total_tunggakan[i].value).toFixed(2));
         }
-        $('#utilb_total_tunggakan').val(parseFloat(utilb_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
+        $('#{{ $prefix2 }}total_tunggakan').val(parseFloat(utilb_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
 
         var utilb_total_semasa = document.getElementsByName("{{ $prefix2 }}semasa[]");
         var utilb_sum_total_semasa = 0;
@@ -255,7 +255,7 @@ $prefix3 = 'utilab_';
             utilb_sum_total_semasa += parseFloat(utilb_total_semasa[i].value);
             $('#' + utilb_total_semasa[i].id).val(parseFloat(utilb_total_semasa[i].value).toFixed(2));
         }
-        $('#utilb_total_semasa').val(parseFloat(utilb_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
+        $('#{{ $prefix2 }}total_semasa').val(parseFloat(utilb_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
 
         var utilb_total_hadapan = document.getElementsByName("{{ $prefix2 }}hadapan[]");
         var utilb_sum_total_hadapan = 0;
@@ -263,15 +263,15 @@ $prefix3 = 'utilab_';
             utilb_sum_total_hadapan += parseFloat(utilb_total_hadapan[i].value);
             $('#' + utilb_total_hadapan[i].id).val(parseFloat(utilb_total_hadapan[i].value).toFixed(2));
         }
-        $('#utilb_total_hadapan').val(parseFloat(utilb_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
+        $('#{{ $prefix2 }}total_hadapan').val(parseFloat(utilb_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
 
         var utilb_total_tertunggak = document.getElementsByName("{{ $prefix2 }}tertunggak[]");
         var utilb_sum_total_tertunggak = 0;
         for (var i = 0; i < utilb_total_tertunggak.length; i++) {
             utilb_sum_total_tertunggak += parseFloat(utilb_total_tertunggak[i].value);
-            $('#' + utilb_total_hadapan[i].id).val(parseFloat(utilb_total_hadapan[i].value).toFixed(2));
+            $('#' + utilb_total_tertunggak[i].id).val(parseFloat(utilb_total_tertunggak[i].value).toFixed(2));
         }
-        $('#utilb_total_tertunggak').val(parseFloat(utilb_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
+        $('#{{ $prefix2 }}total_tertunggak').val(parseFloat(utilb_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
 
         var utilb_total_income = document.getElementsByName("{{ $prefix2 }}total_income[]");
         for (var i = 0; i < utilb_total_income.length; i++) {
@@ -279,7 +279,7 @@ $prefix3 = 'utilab_';
         }
 
         var utilb_sum_total_all = parseFloat(utilb_sum_total_tunggakan) + parseFloat(utilb_sum_total_semasa) + parseFloat(utilb_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
-        $('#utilb_total_all').val(parseFloat(utilb_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
+        $('#{{ $prefix2 }}total_all').val(parseFloat(utilb_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
 
         calculateUtilityABTotal();
     }
@@ -287,36 +287,33 @@ $prefix3 = 'utilab_';
     function calculateUtilityABTotal() {
         var utilab_sum_total_tunggakan = 0;
         utilab_sum_total_tunggakan += parseFloat(util_total_tunggakan.value) + parseFloat(utilb_total_tunggakan.value);
-        $('#utilab_total_tunggakan').val(parseFloat(utilab_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
+        $('#{{ $prefix3 }}total_tunggakan').val(parseFloat(utilab_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
 
         var utilab_sum_total_semasa = 0;
         utilab_sum_total_semasa += parseFloat(util_total_semasa.value) + parseFloat(utilb_total_semasa.value);
-        $('#utilab_total_semasa').val(parseFloat(utilab_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
+        $('#{{ $prefix3 }}total_semasa').val(parseFloat(utilab_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
 
         var utilab_sum_total_hadapan = 0;
         utilab_sum_total_hadapan += parseFloat(util_total_hadapan.value) + parseFloat(utilb_total_hadapan.value);
-        $('#utilab_total_hadapan').val(parseFloat(utilab_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
+        $('#{{ $prefix3 }}total_hadapan').val(parseFloat(utilab_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
 
         var utilab_sum_total_all = 0;
         var util_total_income = document.getElementById("{{ $prefix }}total_all");
         var utilb_total_income = document.getElementById("{{ $prefix2 }}total_all");
         utilab_sum_total_all += parseFloat(util_total_income.value) + parseFloat(utilb_total_income.value);
-        $('#utilab_total_all').val(parseFloat(utilab_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
+        $('#{{ $prefix3 }}total_all').val(parseFloat(utilab_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
 
         var utilab_sum_total_tertunggak = 0;
         var util_total_tertunggak = document.getElementById("{{ $prefix }}total_tertunggak");
         var utilb_total_tertunggak = document.getElementById("{{ $prefix2 }}total_tertunggak");
         utilab_sum_total_tertunggak += parseFloat(util_total_tertunggak.value) + parseFloat(utilb_total_tertunggak.value);
-        $('#utilab_total_tertunggak').val(parseFloat(utilab_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH SEMUA TERTUNGGAK
+        $('#{{ $prefix3 }}total_tertunggak').val(parseFloat(utilab_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH SEMUA TERTUNGGAK
     }
 
     function addRowUtility() {
         var rowUtilityNo = $("#dynamic_form_utility tr").length;
         rowUtilityNo = rowUtilityNo - 8;
-
-        $("#dynamic_form_utility tr:last").prev().prev().after('');
-
-        $("#dynamic_form_utility tr:last").prev().prev().prev().prev().after("<tr id='utility_row" + rowUtilityNo + "'><td class='text-center padding-table'>" + rowUtilityNo + "</td><td><input type='text' name='{{ $prefix2 }}name[]' class='form-control form-control-sm' value=''></td><td><input type='text' name='{{ $prefix2 }}tunggakan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix2 }}semasa[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix2 }}hadapan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix2 }}total_all[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}' readonly=''></td><td><input type='text' name='{{ $prefix2 }}tertunggak[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td class='padding-table'><a href='javascript:void(0);' onclick=deleteRowUtility('utility_row" + rowUtilityNo + "') class='btn btn-danger btn-xs'>Remove</a></td></tr>");
+        $("#dynamic_form_utility tr:last").prev().prev().prev().after('<tr id="utility_row' + rowUtilityNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix2 }}is_custom[]" value="1">' + rowUtilityNo + '</td><td><input type="text" name="{{ $prefix2 }}name[]" class="form-control form-control-sm" value=""></td><td><input type="text" oninput="calculateUtilityB(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}tunggakan_' + rowUtilityNo + '" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateUtilityB(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}semasa_' + rowUtilityNo + '" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateUtilityB(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}hadapan_' + rowUtilityNo + '" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" id="{{ $prefix2 }}total_income_' + rowUtilityNo + '" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="text" oninput="calculateUtilityBTotal(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}tertunggak_' + rowUtilityNo + '" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowUtility(\'utility_row' + rowUtilityNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
 
         calculateUtilityBTotal();
     }

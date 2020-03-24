@@ -84,7 +84,7 @@ $prefix = 'contract_';
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
     calculateContractTotal();
 
     function calculateContract(id) {
@@ -103,7 +103,7 @@ $prefix = 'contract_';
         contract_sum_hadapan += parseFloat(contract_hadapan.value);
 
         contract_sum_total_income += parseFloat(contract_sum_tunggakan) + parseFloat(contract_sum_semasa) + parseFloat(contract_sum_hadapan);
-        $('#contract_total_income_' + id).val(parseFloat(contract_sum_total_income).toFixed(2)); // UPDATE JUMLAH A + B + C
+        $('#{{ $prefix }}total_income_' + id).val(parseFloat(contract_sum_total_income).toFixed(2)); // UPDATE JUMLAH A + B + C
 
         calculateContractTotal();
     }
@@ -115,7 +115,7 @@ $prefix = 'contract_';
             contract_sum_total_tunggakan += parseFloat(contract_total_tunggakan[i].value);
             $('#' + contract_total_tunggakan[i].id).val(parseFloat(contract_total_tunggakan[i].value).toFixed(2));
         }
-        $('#contract_total_tunggakan').val(parseFloat(contract_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
+        $('#{{ $prefix }}total_tunggakan').val(parseFloat(contract_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
 
         var contract_total_semasa = document.getElementsByName("{{ $prefix }}semasa[]");
         var contract_sum_total_semasa = 0;
@@ -123,7 +123,7 @@ $prefix = 'contract_';
             contract_sum_total_semasa += parseFloat(contract_total_semasa[i].value);
             $('#' + contract_total_semasa[i].id).val(parseFloat(contract_total_semasa[i].value).toFixed(2));
         }
-        $('#contract_total_semasa').val(parseFloat(contract_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
+        $('#{{ $prefix }}total_semasa').val(parseFloat(contract_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
 
         var contract_total_hadapan = document.getElementsByName("{{ $prefix }}hadapan[]");
         var contract_sum_total_hadapan = 0;
@@ -131,33 +131,37 @@ $prefix = 'contract_';
             contract_sum_total_hadapan += parseFloat(contract_total_hadapan[i].value);
             $('#' + contract_total_hadapan[i].id).val(parseFloat(contract_total_hadapan[i].value).toFixed(2));
         }
-        $('#contract_total_hadapan').val(parseFloat(contract_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
+        $('#{{ $prefix }}total_hadapan').val(parseFloat(contract_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
 
         var contract_total_income = document.getElementsByName("{{ $prefix }}total_income[]");
         for (var i = 0; i < contract_total_income.length; i++) {
             $('#' + contract_total_income[i].id).val(parseFloat(contract_total_income[i].value).toFixed(2));
         }
-        
+
         var contract_total_tertunggak = document.getElementsByName("{{ $prefix }}tertunggak[]");
         var contract_sum_total_tertunggak = 0;
         for (var i = 0; i < contract_total_tertunggak.length; i++) {
             contract_sum_total_tertunggak += parseFloat(contract_total_tertunggak[i].value);
-            $('#' + contract_total_hadapan[i].id).val(parseFloat(contract_total_hadapan[i].value).toFixed(2));
+            $('#' + contract_total_tertunggak[i].id).val(parseFloat(contract_total_tertunggak[i].value).toFixed(2));
         }
-        $('#contract_total_tertunggak').val(parseFloat(contract_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
+        $('#{{ $prefix }}total_tertunggak').val(parseFloat(contract_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
 
         var contract_sum_total_all = parseFloat(contract_sum_total_tunggakan) + parseFloat(contract_sum_total_semasa) + parseFloat(contract_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
-        $('#contract_total_all').val(parseFloat(contract_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
+        $('#{{ $prefix }}total_all').val(parseFloat(contract_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
     }
 
     function addRowContract() {
         var rowContractNo = $("#dynamic_form_contract tr").length;
         rowContractNo = rowContractNo - 2;
-        $("#dynamic_form_contract tr:last").prev().prev().after("<tr id='contract_row" + rowContractNo + "'><td class='text-center padding-table'>" + rowContractNo + "</td><td><input type='text' name='{{ $prefix }}name[]' class='form-control form-control-sm' value=''></td><td><input type='text' name='{{ $prefix }}tunggakan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}semasa[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}hadapan[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td><input type='text' name='{{ $prefix }}total_all[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}' readonly=''></td><td><input type='text' name='{{ $prefix }}tertunggak[]' class='form-control form-control-sm text-right numeric-only' value='{{ number_format(0, 2) }}'></td><td class='padding-table'><a href='javascript:void(0);' onclick=deleteRowContract('contract_row" + rowContractNo + "') class='btn btn-danger btn-xs'>Remove</a></td></tr>");
+        $("#dynamic_form_contract tr:last").prev().prev().after('<tr id="contract_row' + rowContractNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowContractNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="text" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}tunggakan_' + rowContractNo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}semasa_' + rowContractNo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}hadapan_' + rowContractNo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" id="{{ $prefix }}total_income_' + rowContractNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="text" oninput="calculateContractTotal(\'' + rowContractNo + '\')" id="{{ $prefix }}tertunggak_' + rowContractNo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowContract(\'contract_row' + rowContractNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
+    
+        calculateContractTotal();
     }
 
     function deleteRowContract(rowContractNo) {
         $('#' + rowContractNo).remove();
+        
+        calculateContractTotal();
     }
 
     $("#financeFileContract").submit(function (e) {

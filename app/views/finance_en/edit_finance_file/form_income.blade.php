@@ -99,7 +99,7 @@ $prefix = 'income_';
         income_sum_hadapan += parseFloat(income_hadapan.value);
 
         income_sum_total_income += parseFloat(income_sum_tunggakan) + parseFloat(income_sum_semasa) + parseFloat(income_sum_hadapan);
-        $('#income_total_income_' + id).val(parseFloat(income_sum_total_income).toFixed(2)); // UPDATE JUMLAH A + B + C
+        $('#{{ $prefix }}total_income_' + id).val(parseFloat(income_sum_total_income).toFixed(2)); // UPDATE JUMLAH A + B + C
 
         calculateIncomeTotal();
     }
@@ -111,7 +111,7 @@ $prefix = 'income_';
             income_sum_total_tunggakan += parseFloat(income_total_tunggakan[i].value);
             $('#' + income_total_tunggakan[i].id).val(parseFloat(income_total_tunggakan[i].value).toFixed(2));
         }
-        $('#income_total_tunggakan').val(parseFloat(income_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
+        $('#{{ $prefix }}total_tunggakan').val(parseFloat(income_sum_total_tunggakan).toFixed(2)); // UPDATE JUMLAH SEMUA A
 
         var income_total_semasa = document.getElementsByName("{{ $prefix }}semasa[]");
         var income_sum_total_semasa = 0;
@@ -119,7 +119,7 @@ $prefix = 'income_';
             income_sum_total_semasa += parseFloat(income_total_semasa[i].value);
             $('#' + income_total_semasa[i].id).val(parseFloat(income_total_semasa[i].value).toFixed(2));
         }
-        $('#income_total_semasa').val(parseFloat(income_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
+        $('#{{ $prefix }}total_semasa').val(parseFloat(income_sum_total_semasa).toFixed(2)); // UPDATE JUMLAH SEMUA B
 
         var income_total_hadapan = document.getElementsByName("{{ $prefix }}hadapan[]");
         var income_sum_total_hadapan = 0;
@@ -127,7 +127,7 @@ $prefix = 'income_';
             income_sum_total_hadapan += parseFloat(income_total_hadapan[i].value);
             $('#' + income_total_hadapan[i].id).val(parseFloat(income_total_hadapan[i].value).toFixed(2));
         }
-        $('#income_total_hadapan').val(parseFloat(income_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
+        $('#{{ $prefix }}total_hadapan').val(parseFloat(income_sum_total_hadapan).toFixed(2)); // UPDATE JUMLAH SEMUA C
 
         var income_total_income = document.getElementsByName("{{ $prefix }}total_income[]");
         for (var i = 0; i < income_total_income.length; i++) {
@@ -135,7 +135,7 @@ $prefix = 'income_';
         }
 
         var income_sum_total_all = parseFloat(income_sum_total_tunggakan) + parseFloat(income_sum_total_semasa) + parseFloat(income_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
-        $('#income_total_all').val(parseFloat(income_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
+        $('#{{ $prefix }}total_all').val(parseFloat(income_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
 
     }
 
