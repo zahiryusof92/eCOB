@@ -93,6 +93,9 @@
         <script src="{{ asset('assets/highcharts/highcharts.js')}}"></script>
         <script src="{{ asset('assets/highcharts/modules/exporting.js')}}"></script>
         
+        <!-- Dynamic Form -->
+        <script src="{{ asset('assets/common/js/dynamic-form.js')}}"></script>
+
     </head>
     
     <body id="" class="theme-default">
@@ -114,6 +117,13 @@
         
         <script>
             $(document).ready(function () {
+                $(".numeric-only").on('keypress', function (e) {
+                    var keyCode = e.which ? e.which : e.keyCode;
+                    if (!(keyCode >= 48 && keyCode <= 57)) {
+                        return false;
+                    }
+                });
+
                 $('.select2').select2();
             });
         </script>

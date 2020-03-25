@@ -6,7 +6,7 @@
 $update_permission = 0;
 
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 12) {
+    if ($permission->submodule_id == 14) {
         $update_permission = $permission->update_permission;
     }
 }

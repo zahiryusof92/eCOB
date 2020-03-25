@@ -3,10 +3,12 @@
 @section('content')
 
 <?php
+$insert_permission = 0;
 $update_permission = 0;
 
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 3) {
+    if ($permission->submodule_id == 31) {
+        $insert_permission = $permission->insert_permission;
         $update_permission = $permission->update_permission;
     }
 }
@@ -20,7 +22,7 @@ foreach ($user_permission as $permission) {
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <?php if ($update_permission == 1) { ?>
+                    <?php if ($insert_permission == 1) { ?>
                         <button onclick="window.location = '{{ URL::action('AgmController@addPurchaser') }}'" type="button" class="btn btn-primary">
                             Add Purchaser
                         </button>

@@ -6,7 +6,7 @@
 $insert_permission = 0;
 
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 10) {
+    if ($permission->submodule_id == 12) {
         $insert_permission = $permission->insert_permission;
     }
 }

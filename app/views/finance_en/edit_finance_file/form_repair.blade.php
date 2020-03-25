@@ -45,11 +45,11 @@ $prefix2 = 'repair_singkingfund_';
                         <tr id="repaira_row{{ ++$count }}">
                             <td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="{{ $repairas['is_custom'] }}">{{ $count }}</td>
                             <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $repairas['name'] }}" readonly=""></td>
-                            <td><input type="text" oninput="calculateRepairA('{{ $count }}')" id="{{ $prefix . 'tunggakan_' . $count }}" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairas['tunggakan'] }}"></td>
-                            <td><input type="text" oninput="calculateRepairA('{{ $count }}')" id="{{ $prefix . 'semasa_' . $count }}" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairas['semasa'] }}"></td>
-                            <td><input type="text" oninput="calculateRepairA('{{ $count }}')" id="{{ $prefix . 'hadapan_' . $count }}" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairas['hadapan'] }}"></td>
-                            <td><input type="text" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
-                            <td><input type="text" oninput="calculateRepairATotal('{{ $count }}')" id="{{ $prefix . 'tertunggak_' . $count }}" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairas['tertunggak'] }}"></td>
+                            <td><input type="number" step="any" oninput="calculateRepairA('{{ $count }}')" id="{{ $prefix . 'tunggakan_' . $count }}" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairas['tunggakan'] }}"></td>
+                            <td><input type="number" step="any" oninput="calculateRepairA('{{ $count }}')" id="{{ $prefix . 'semasa_' . $count }}" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairas['semasa'] }}"></td>
+                            <td><input type="number" step="any" oninput="calculateRepairA('{{ $count }}')" id="{{ $prefix . 'hadapan_' . $count }}" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairas['hadapan'] }}"></td>
+                            <td><input type="number" step="any" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
+                            <td><input type="number" step="any" oninput="calculateRepairATotal('{{ $count }}')" id="{{ $prefix . 'tertunggak_' . $count }}" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairas['tertunggak'] }}"></td>
                             @if ($repairas['is_custom'])
                             <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowRepairA('repaira_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                             @else
@@ -65,11 +65,11 @@ $prefix2 = 'repair_singkingfund_';
                         <tr>
                             <td>&nbsp;</td>
                             <th class="padding-form">JUMLAH</th>
-                            <th><input type="text" id="{{ $prefix . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $total_tunggakan }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $total_semasa }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $total_hadapan }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $total_all }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix . 'total_tertunggak' }}" class="form-control form-control-sm text-right" value="{{ $total_tertunggak }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $total_tunggakan }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $total_semasa }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $total_hadapan }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $total_all }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_tertunggak' }}" class="form-control form-control-sm text-right" value="{{ $total_tertunggak }}" readonly=""></th>
                             <td>&nbsp;</td>
                         </tr>
                     </tbody>
@@ -101,7 +101,6 @@ $prefix2 = 'repair_singkingfund_';
                         $totalb_semasa = 0;
                         $totalb_hadapan = 0;
                         $totalb_tertunggak = 0;
-                        $totalb_income = 0;
                         $totalb_all = 0;
                         ?>
 
@@ -111,17 +110,17 @@ $prefix2 = 'repair_singkingfund_';
                         $totalb_semasa += $repairbs['semasa'];
                         $totalb_hadapan += $repairbs['hadapan'];
                         $totalb_tertunggak += $repairbs['tertunggak'];
-                        $totalb_income += $repairbs['tunggakan'] + $repairbs['semasa'] + $repairbs['hadapan'];
+                        $totalb_income = $repairbs['tunggakan'] + $repairbs['semasa'] + $repairbs['hadapan'];
                         $totalb_all += $totalb_income;
                         ?>
                         <tr id="repairb_row{{ ++$countb }}">
                             <td class="text-center padding-table"><input type="hidden" name="{{ $prefix2 }}is_custom[]" value="{{ $repairbs['is_custom'] }}">{{ $countb }}</td>
                             <td><input type="text" name="{{ $prefix2 }}name[]" class="form-control form-control-sm" value="{{ $repairbs['name'] }}" readonly=""></td>
-                            <td><input type="text" oninput="calculateRepairB('{{ $countb }}')" id="{{ $prefix2 . 'tunggakan_' . $countb }}" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairbs['tunggakan'] }}"></td>
-                            <td><input type="text" oninput="calculateRepairB('{{ $countb }}')" id="{{ $prefix2 . 'semasa_' . $countb }}" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairbs['semasa'] }}"></td>
-                            <td><input type="text" oninput="calculateRepairB('{{ $countb }}')" id="{{ $prefix2 . 'hadapan_' . $countb }}" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairbs['hadapan'] }}"></td>
-                            <td><input type="text" id="{{ $prefix2 . 'total_income_' . $countb }}" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $totalb_income }}" readonly=""></td>
-                            <td><input type="text" oninput="calculateRepairBTotal('{{ $countb }}')" id="{{ $prefix2 . 'tertunggak_' . $countb }}" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairbs['tertunggak'] }}"></td>
+                            <td><input type="number" step="any" oninput="calculateRepairB('{{ $countb }}')" id="{{ $prefix2 . 'tunggakan_' . $countb }}" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairbs['tunggakan'] }}"></td>
+                            <td><input type="number" step="any" oninput="calculateRepairB('{{ $countb }}')" id="{{ $prefix2 . 'semasa_' . $countb }}" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairbs['semasa'] }}"></td>
+                            <td><input type="number" step="any" oninput="calculateRepairB('{{ $countb }}')" id="{{ $prefix2 . 'hadapan_' . $countb }}" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairbs['hadapan'] }}"></td>
+                            <td><input type="number" step="any" id="{{ $prefix2 . 'total_income_' . $countb }}" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $totalb_income }}" readonly=""></td>
+                            <td><input type="number" step="any" oninput="calculateRepairBTotal('{{ $countb }}')" id="{{ $prefix2 . 'tertunggak_' . $countb }}" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $repairbs['tertunggak'] }}"></td>
                             @if ($repairbs['is_custom'])
                             <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowRepairB('repaira_row<?php echo $countb ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                             @else
@@ -137,30 +136,32 @@ $prefix2 = 'repair_singkingfund_';
                         <tr>
                             <td>&nbsp;</td>
                             <th class="padding-form">JUMLAH</th>
-                            <th><input type="text" id="{{ $prefix2 . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $totalb_tunggakan }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix2 . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $totalb_semasa }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix2 . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $totalb_hadapan }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix2 . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $totalb_income }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix2 . 'total_tertunggak' }}" class="form-control form-control-sm text-right" value="{{ $totalb_tertunggak }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix2 . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $totalb_tunggakan }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix2 . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $totalb_semasa }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix2 . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $totalb_hadapan }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix2 . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $totalb_income }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix2 . 'total_tertunggak' }}" class="form-control form-control-sm text-right" value="{{ $totalb_tertunggak }}" readonly=""></th>
                             <td>&nbsp;</td>
                         </tr>
                     </tbody>
                 </table>   
             </div>
-
-            <div class="form-actions">
-                <?php if ($insert_permission == 1) { ?>
-                    <input type="hidden" name="finance_file_id" value="{{$finance_file_id}}">
+            <?php if ($insert_permission == 1) { ?>
+                <div class="form-actions">                
+                    <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
                     <input type="submit" value="Submit" class="btn btn-primary submit_button">
-                <?php } ?>
-            </div>
+                    <img class="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
+                </div>
+            <?php } ?>
         </form>
     </div>
 </div>
 
-<script>
-    calculateRepairATotal();
-    calculateRepairBTotal();
+<script type="text/javascript">
+    $(document).ready(function () {
+        calculateRepairATotal();
+        calculateRepairBTotal();
+    });
 
     function calculateRepairA(id) {
         var repaira_sum_tunggakan = 0;
@@ -291,7 +292,7 @@ $prefix2 = 'repair_singkingfund_';
     function addRowRepairA() {
         var rowRepairANo = $("#dynamic_form_repair_a tr").length;
         rowRepairANo = rowRepairANo - 2;
-        $("#dynamic_form_repair_a tr:last").prev().prev().after('<tr id="repaira_row' + rowRepairANo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowRepairANo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="text" oninput="calculateRepairA(\'' + rowRepairANo + '\')" id="{{ $prefix }}tunggakan_' + rowRepairANo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateRepairA(\'' + rowRepairANo + '\')" id="{{ $prefix }}semasa_' + rowRepairANo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateRepairA(\'' + rowRepairANo + '\')" id="{{ $prefix }}hadapan_' + rowRepairANo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" id="{{ $prefix }}total_income_' + rowRepairANo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="text" oninput="calculateRepairATotal(\'' + rowRepairANo + '\')" id="{{ $prefix }}tertunggak_' + rowRepairANo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowRepairA(\'repaira_row' + rowRepairANo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
+        $("#dynamic_form_repair_a tr:last").prev().prev().after('<tr id="repaira_row' + rowRepairANo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowRepairANo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateRepairA(\'' + rowRepairANo + '\')" id="{{ $prefix }}tunggakan_' + rowRepairANo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateRepairA(\'' + rowRepairANo + '\')" id="{{ $prefix }}semasa_' + rowRepairANo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateRepairA(\'' + rowRepairANo + '\')" id="{{ $prefix }}hadapan_' + rowRepairANo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowRepairANo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateRepairATotal(\'' + rowRepairANo + '\')" id="{{ $prefix }}tertunggak_' + rowRepairANo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowRepairA(\'repaira_row' + rowRepairANo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
 
         calculateRepairATotal();
     }
@@ -305,7 +306,7 @@ $prefix2 = 'repair_singkingfund_';
     function addRowRepairB() {
         var rowRepairBNo = $("#dynamic_form_repair_b tr").length;
         rowRepairBNo = rowRepairBNo - 2;
-        $("#dynamic_form_repair_b tr:last").prev().prev().after('<tr id="repairb_row' + rowRepairBNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix2 }}is_custom[]" value="1">' + rowRepairBNo + '</td><td><input type="text" name="{{ $prefix2 }}name[]" class="form-control form-control-sm" value=""></td><td><input type="text" oninput="calculateRepairB(\'' + rowRepairBNo + '\')" id="{{ $prefix2 }}tunggakan_' + rowRepairBNo + '" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateRepairB(\'' + rowRepairBNo + '\')" id="{{ $prefix2 }}semasa_' + rowRepairBNo + '" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateRepairB(\'' + rowRepairBNo + '\')" id="{{ $prefix2 }}hadapan_' + rowRepairBNo + '" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" id="{{ $prefix2 }}total_income_' + rowRepairBNo + '" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="text" oninput="calculateRepairBTotal(\'' + rowRepairBNo + '\')" id="{{ $prefix2 }}tertunggak_' + rowRepairBNo + '" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowRepairB(\'repairb_row' + rowRepairBNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
+        $("#dynamic_form_repair_b tr:last").prev().prev().after('<tr id="repairb_row' + rowRepairBNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix2 }}is_custom[]" value="1">' + rowRepairBNo + '</td><td><input type="text" name="{{ $prefix2 }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateRepairB(\'' + rowRepairBNo + '\')" id="{{ $prefix2 }}tunggakan_' + rowRepairBNo + '" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateRepairB(\'' + rowRepairBNo + '\')" id="{{ $prefix2 }}semasa_' + rowRepairBNo + '" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateRepairB(\'' + rowRepairBNo + '\')" id="{{ $prefix2 }}hadapan_' + rowRepairBNo + '" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix2 }}total_income_' + rowRepairBNo + '" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateRepairBTotal(\'' + rowRepairBNo + '\')" id="{{ $prefix2 }}tertunggak_' + rowRepairBNo + '" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowRepairB(\'repairb_row' + rowRepairBNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
 
         calculateRepairBTotal();
     }
@@ -319,32 +320,38 @@ $prefix2 = 'repair_singkingfund_';
     $("#financeRepairForm").submit(function (e) {
         e.preventDefault();
 
-        $.ajax({
-            method: "POST",
-            url: "{{ URL::action('FinanceController@updateFinanceFileRepair') }}",
-            data: $(this).serialize(),
-            beforeSend: function () {
-                $(".submit_button").html('Loading').prop('disabled', true);
-            },
-            complete: function (data) {
-                // Hide image container
-                $(".submit_button").html('Submit').prop('disabled', false);
-            },
-            success: function (response) {
-                if (response.trim() == "true") {
-                    $.notify({
-                        message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
-                    }, {
-                        type: 'success',
-                        placement: {
-                            align: "center"
-                        }
-                    });
-                    location.reload();
-                } else {
-                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+        $(".loading").css("display", "inline-block");
+        $(".submit_button").attr("disabled", "disabled");
+
+        var error = 0;
+
+        if (error == 0) {
+            $.ajax({
+                method: "POST",
+                url: "{{ URL::action('FinanceController@updateFinanceFileRepair') }}",
+                data: $(this).serialize(),
+                success: function (response) {
+                    $(".loading").css("display", "none");
+                    $(".submit_button").removeAttr("disabled");
+
+                    if (response.trim() == "true") {
+                        $.notify({
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                        }, {
+                            type: 'success',
+                            placement: {
+                                align: "center"
+                            }
+                        });
+                        location = '{{URL::action("FinanceController@editFinanceFileList", [$finance_file_id, "repair"]) }}';
+                    } else {
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            $(".loading").css("display", "none");
+            $(".submit_button").removeAttr("disabled");
+        }
     });
 </script>

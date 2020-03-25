@@ -37,6 +37,7 @@ class AgmController extends BaseController {
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdesignsub_list',
                 'user_permission' => $user_permission,
+                'files' => $files,
                 'designation' => $designation,
                 'image' => ''
             );
@@ -311,6 +312,8 @@ class AgmController extends BaseController {
     }
 
     public function addPurchaser() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
 
         if (Session::get('lang') == "en") {
@@ -319,6 +322,7 @@ class AgmController extends BaseController {
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmpurchasesub_list',
+                'user_permission' => $user_permission,
                 'files' => $files,
                 'image' => ''
             );
@@ -330,6 +334,7 @@ class AgmController extends BaseController {
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmpurchasesub_list',
+                'user_permission' => $user_permission,
                 'files' => $files,
                 'image' => ''
             );

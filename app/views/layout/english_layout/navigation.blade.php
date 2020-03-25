@@ -555,7 +555,7 @@ if (!Auth::user()->getAdmin()) {
 
                     @foreach ($jmb as $cob)
                     <li id="{{ $cob->short_name . "_list" }}">
-                        <a class="left-menu-link" href='{{ url("cob/get/{$cob->id}") }}'>{{ strtoupper($cob->short_name) }}</a>
+                        <a class="left-menu-link" href='#'>{{ strtoupper($cob->short_name) }}</a>
                     </li>    
                     @endforeach
                     @endif

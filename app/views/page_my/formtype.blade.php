@@ -7,7 +7,7 @@ $insert_permission = 0;
 $update_permission = 0;
 
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 35) {
+    if ($permission->submodule_id == 22) {
         $insert_permission = $permission->insert_permission;
         $update_permission = $permission->update_permission;
     }
@@ -57,7 +57,7 @@ foreach ($user_permission as $permission) {
         oTable = $('#formtype').DataTable({
             "sAjaxSource": "{{URL::action('AdminController@getFormtype')}}",
             "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            "order": [[ 0, "asc" ]],
+            "order": [[ 2, "asc" ]],
             responsive: true
         });
     });    

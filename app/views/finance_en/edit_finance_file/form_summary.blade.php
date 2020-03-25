@@ -31,21 +31,16 @@ $tableField = [
                         <tr>
                             <td width="5%" class="padding-table text-center">{{$no++}}</td>
                             <td width="85%" class="padding-table">{{ $val }}</td>
-                            <td width="10%"><input type="number" class="form-control form-control-sm" id="{{$prefix.$key}}" value="0.00" disabled=""></td>
+                            <td width="10%"><input type="number" step="any" class="form-control form-control-sm text-right" id="{{$prefix.$key}}" value="0.00" readonly=""></td>
                         </tr>
                         @endforeach
                         <tr>
                             <td>&nbsp;</td>
                             <th class="padding-table">JUMLAH PERBELANJAAN</th>
-                            <th><input type="number" class="form-control form-control-sm" id="{{$prefix.'jumlah_pembelanjaan'}}" value="0.00" disabled=""></th>
+                            <th><input type="number" step="any" class="form-control form-control-sm text-right" id="{{$prefix.'jumlah_pembelanjaan'}}" value="0.00" readonly=""></th>
                         </tr>
                     </tbody>
                 </table>    
-            </div>                                                
-            <div class="form-actions">
-                <?php if ($insert_permission == 1) { ?>
-                    <input type="submit" value="Submit" class="btn btn-primary">
-                <?php } ?>
             </div>
         </form>
     </div>

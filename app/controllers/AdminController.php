@@ -419,7 +419,7 @@ class AdminController extends BaseController {
                 'image' => ""
             );
 
-            return View::make('page_my.fileprefix', $viewData);
+            return View::make('cob_my.fileprefix', $viewData);
         }
     }
 

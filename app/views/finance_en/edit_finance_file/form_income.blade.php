@@ -41,10 +41,10 @@ $prefix = 'income_';
                         <tr id="income_row{{ ++$count }}">
                             <td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="{{ $incomeFiles['is_custom'] }}">{{ $count }}</td>
                             <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $incomeFiles['name'] }}" readonly=""></td>
-                            <td><input type="text" oninput="calculateIncome('{{ $count }}')" id="{{ $prefix . 'tunggakan_' . $count }}" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only income_tunggakan" value="{{ $incomeFiles['tunggakan'] }}"></td>
-                            <td><input type="text" oninput="calculateIncome('{{ $count }}')" id="{{ $prefix . 'semasa_' . $count }}" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $incomeFiles['semasa'] }}"></td>
-                            <td><input type="text" oninput="calculateIncome('{{ $count }}')" id="{{ $prefix . 'hadapan_' . $count }}" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $incomeFiles['hadapan'] }}"></td>
-                            <td><input type="text" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
+                            <td><input type="number" step="any" oninput="calculateIncome('{{ $count }}')" id="{{ $prefix . 'tunggakan_' . $count }}" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only income_tunggakan" value="{{ $incomeFiles['tunggakan'] }}"></td>
+                            <td><input type="number" step="any" oninput="calculateIncome('{{ $count }}')" id="{{ $prefix . 'semasa_' . $count }}" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $incomeFiles['semasa'] }}"></td>
+                            <td><input type="number" step="any" oninput="calculateIncome('{{ $count }}')" id="{{ $prefix . 'hadapan_' . $count }}" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $incomeFiles['hadapan'] }}"></td>
+                            <td><input type="number" step="any" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
                             @if ($incomeFiles['is_custom'])
                             <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowIncome('income_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                             @else
@@ -60,28 +60,30 @@ $prefix = 'income_';
                         <tr>
                             <td>&nbsp;</td>
                             <th class="padding-form">JUMLAH</th>
-                            <th><input type="text" id="{{ $prefix . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $total_tunggakan }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $total_semasa }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $total_hadapan }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $total_all }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $total_tunggakan }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $total_semasa }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $total_hadapan }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $total_all }}" readonly=""></th>
                             <td>&nbsp;</td>                          
                         </tr>
                     </tbody>
                 </table>
             </div>
-
-            <div class="form-actions">
-                <?php if ($insert_permission == 1) { ?>
-                    <input type="hidden" name="finance_file_id" value="{{$finance_file_id}}">
+            <?php if ($insert_permission == 1) { ?>
+                <div class="form-actions">                
+                    <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
                     <input type="submit" value="Submit" class="btn btn-primary submit_button">
-                <?php } ?>
-            </div>
+                    <img class="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
+                </div>
+            <?php } ?>
         </form>
     </div>
 </div>
 
 <script type="text/javascript">
-    calculateIncomeTotal();
+    $(document).ready(function () {
+        calculateIncomeTotal();
+    });
 
     function calculateIncome(id) {
         var income_sum_tunggakan = 0;
@@ -102,6 +104,8 @@ $prefix = 'income_';
         $('#{{ $prefix }}total_income_' + id).val(parseFloat(income_sum_total_income).toFixed(2)); // UPDATE JUMLAH A + B + C
 
         calculateIncomeTotal();
+        calculateMFR();
+        calculateSFR();
     }
 
     function calculateIncomeTotal() {
@@ -136,13 +140,12 @@ $prefix = 'income_';
 
         var income_sum_total_all = parseFloat(income_sum_total_tunggakan) + parseFloat(income_sum_total_semasa) + parseFloat(income_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
         $('#{{ $prefix }}total_all').val(parseFloat(income_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
-
     }
 
     function addRowIncome() {
         var rowIncomeNo = $("#dynamic_form_income tr").length;
         rowIncomeNo = rowIncomeNo - 2;
-        $("#dynamic_form_income tr:last").prev().prev().after('<tr id="income_row' + rowIncomeNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowIncomeNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="text" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}tunggakan_' + rowIncomeNo + '"  name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}semasa_' + rowIncomeNo + '"  name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}hadapan_' + rowIncomeNo + '"  name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" id="{{ $prefix }}total_income_' + rowIncomeNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td class="padding-table"><a href="javascript:void(0);" onclick="deleteRowIncome(\'income_row' + rowIncomeNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
+        $("#dynamic_form_income tr:last").prev().prev().after('<tr id="income_row' + rowIncomeNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowIncomeNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}tunggakan_' + rowIncomeNo + '"  name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}semasa_' + rowIncomeNo + '"  name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}hadapan_' + rowIncomeNo + '"  name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowIncomeNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td class="padding-table"><a href="javascript:void(0);" onclick="deleteRowIncome(\'income_row' + rowIncomeNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
 
         calculateIncomeTotal();
     }
@@ -155,31 +158,39 @@ $prefix = 'income_';
 
     $("#financeFileIncome").submit(function (e) {
         e.preventDefault();
-        $.ajax({
-            method: "POST",
-            url: "{{ URL::action('FinanceController@updateFinanceFileIncome') }}",
-            data: $(this).serialize(),
-            beforeSend: function () {
-                $(".submit_button").html('Loading').prop('disabled', true);
-            },
-            complete: function () {
-                $(".submit_button").html('Submit').prop('disabled', false);
-            },
-            success: function (response) {
-                if (response.trim() == "true") {
-                    $.notify({
-                        message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
-                    }, {
-                        type: 'success',
-                        placement: {
-                            align: "center"
-                        }
-                    });
-                    location.reload();
-                } else {
-                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+
+        $(".loading").css("display", "inline-block");
+        $(".submit_button").attr("disabled", "disabled");
+
+        var error = 0;
+
+        if (error == 0) {
+            $.ajax({
+                method: "POST",
+                url: "{{ URL::action('FinanceController@updateFinanceFileIncome') }}",
+                data: $(this).serialize(),
+                success: function (response) {
+                    $(".loading").css("display", "none");
+                    $(".submit_button").removeAttr("disabled");
+
+                    if (response.trim() == "true") {
+                        $.notify({
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                        }, {
+                            type: 'success',
+                            placement: {
+                                align: "center"
+                            }
+                        });
+                        location = '{{URL::action("FinanceController@editFinanceFileList", [$finance_file_id, "income"]) }}';
+                    } else {
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            $(".loading").css("display", "none");
+            $(".submit_button").removeAttr("disabled");
+        }
     });
 </script>

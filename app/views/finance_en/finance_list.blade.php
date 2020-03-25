@@ -6,7 +6,7 @@
 $update_permission = 0;
 
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 3) {
+    if ($permission->submodule_id == 38) {
         $update_permission = $permission->update_permission;
     }
 }
@@ -23,10 +23,12 @@ foreach ($user_permission as $permission) {
                     <table class="table table-hover nowrap" id="filelist" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:50%;">Finance Management</th>
-                                <th style="width:30%;">Strata</th>
+                                <th style="width:40%;">Finance Management</th>
+                                <th style="width:40%;">Strata</th>
                                 <th style="width:10%;">Status</th>
+                                @if ($update_permission == 1)
                                 <th style="width:10%;">Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>

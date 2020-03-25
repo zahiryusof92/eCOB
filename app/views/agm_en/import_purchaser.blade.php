@@ -3,11 +3,11 @@
 @section('content')
 
 <?php
-$update_permission = 0;
+$insert_permission = 0;
 
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 3) {
-        $update_permission = $permission->update_permission;
+    if ($permission->submodule_id == 31) {
+        $insert_permission = $permission->insert_permission;
     }
 }
 ?>
@@ -35,7 +35,7 @@ foreach ($user_permission as $permission) {
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <?php if ($update_permission == 1) { ?>
+                                <?php if ($insert_permission == 1) { ?>
                                     <button type="submit" class="btn btn-primary" id="upload_button">
                                         Upload
                                     </button>
@@ -87,7 +87,7 @@ foreach ($user_permission as $permission) {
                             </tbody>
                         </table>
                     </div>
-                    <?php if ($update_permission == 1) { ?>
+                    <?php if ($insert_permission == 1) { ?>
                         <br/>
                         <button id="submit_buyer_button" type="button" class="btn btn-primary" onclick="submitUploadPurchaser()">Submit</button>
                         <img id="loading" src="{{ asset('assets/common/img/input-spinner.gif') }}" style="display:none;"/>

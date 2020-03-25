@@ -5,26 +5,28 @@
 <?php
 $insert_permission = 0;
 $update_permission = 0;
-$month = [
-    1 => 'JANUARY',
-    2 => 'FEBRUARY',
-    3 => 'MARCH',
-    4 => 'APRIL',
-    5 => 'MAY',
-    6 => 'JUN',
-    7 => 'JULY',
-    8 => 'AUGUST',
-    9 => 'SEPTEMBER',
-    10 => 'OCTOBER',
-    11 => 'NOVEMBER',
-    12 => 'DECEMBER'
-];
+
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 2) {
+    if ($permission->submodule_id == 37) {
         $access_permission = $permission->access_permission;
         $insert_permission = $permission->insert_permission;
     }
 }
+
+$month = [
+    1 => 'JAN',
+    2 => 'FEB',
+    3 => 'MAR',
+    4 => 'APR',
+    5 => 'MAY',
+    6 => 'JUN',
+    7 => 'JUL',
+    8 => 'AUG',
+    9 => 'SEP',
+    10 => 'OCT',
+    11 => 'NOV',
+    12 => 'DEC'
+];
 ?>
 
 <div class="page-content-inner">
@@ -50,7 +52,7 @@ foreach ($user_permission as $permission) {
                                     <select id="file_id" class="form-control select2">
                                         <option value="">Please Select</option>
                                         @foreach ($file_no as $files)
-                                        <option value="{{$files->id}}">{{$files->file_no}}</option>
+                                        <option value="{{ $files->id }}">{{ $files->file_no }}</option>
                                         @endforeach                                    
                                     </select>
                                     <div id="file_no_error" style="display:none;"></div>
@@ -73,8 +75,8 @@ foreach ($user_permission as $permission) {
                                     <label><span style="color: red;">*</span> Month</label>
                                     <select id="month" class="form-control select2">
                                         <option value="">Please Select</option>
-                                        @foreach ($month as $k => $v)
-                                        <option value="{{$k}}">{{ $v }}</option>
+                                        @foreach ($month as $value => $months)
+                                        <option value="{{ $value }}">{{ $months }}</option>
                                         @endforeach
                                     </select>
                                     <div id="month_error" style="display:none;"></div>
@@ -88,7 +90,7 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-actions">
                             <?php if ($insert_permission) { ?>
-                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addFinanceFile()">Submit</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="submitAddFinanceFile()">Submit</button>
                             <?php } ?>
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('FinanceController@addFinanceFileList')}}'">Cancel</button>
                             <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
@@ -103,7 +105,7 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-    function addFinanceFile() {
+    function submitAddFinanceFile() {
         $("#loading").css("display", "inline-block");
         $("#submit_button").attr("disabled", "disabled");
         $("#cancel_button").attr("disabled", "disabled");
@@ -138,13 +140,12 @@ foreach ($user_permission as $permission) {
 
         if (error == 0) {
             $.ajax({
-                url: "{{ URL::action('FinanceController@submitFinanceFile') }}",
+                url: "{{ URL::action('FinanceController@submitAddFinanceFile') }}",
                 type: "POST",
                 data: {
                     file_id: file_no,
                     month: month,
-                    year: year,
-                    is_active: 1
+                    year: year
                 },
                 success: function (data) {
                     $("#loading").css("display", "none");

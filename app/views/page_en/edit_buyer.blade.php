@@ -123,15 +123,15 @@
     function editBuyer() {
         $("#submit_button").attr("disabled", "disabled");
 
-        var unit_no = $("#unit_no").val(), 
-                unit_share = $("#unit_share").val(), 
-                owner_name = $("#owner_name").val(), 
+        var unit_no = $("#unit_no").val(),
+                unit_share = $("#unit_share").val(),
+                owner_name = $("#owner_name").val(),
                 ic_company_no = $("#ic_company_no").val(),
                 address = $("#address").val(),
                 phone_no = $("#phone_no").val();
 
         var error = 0;
-        
+
         if (unit_no.trim() == "") {
             $("#unit_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Unit Number</span>');
             $("#unit_no_error").css("display", "block");
@@ -147,7 +147,7 @@
 //            $("#ic_company_no_error").css("display", "block");
 //            error = 1;
 //        }
-        
+
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@submitEditBuyer') }}",
@@ -169,13 +169,13 @@
                     if (data.trim() == "true") {
                         $.notify({
                             message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>'
-                        },{
+                        }, {
                             type: 'success',
                             placement: {
                                 align: "center"
                             }
                         });
-                            location = '{{URL::action("AdminController@buyer", $files->id) }}';
+                        location = '{{URL::action("AdminController@buyer", $files->id) }}';
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
@@ -183,7 +183,7 @@
             });
         }
     }
-    
+
     function IsEmail(email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);

@@ -44,11 +44,11 @@ $prefix = 'contract_';
                         <tr id="contract_row{{ ++$count }}">
                             <td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="{{ $contractFiles['is_custom'] }}">{{ $count }}</td>
                             <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $contractFiles['name'] }}" readonly=""></td>
-                            <td><input type="text" oninput="calculateContract('{{ $count }}')" id="{{ $prefix . 'tunggakan_' . $count }}" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $contractFiles['tunggakan'] }}"></td>
-                            <td><input type="text" oninput="calculateContract('{{ $count }}')" id="{{ $prefix . 'semasa_' . $count }}" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $contractFiles['semasa'] }}"></td>
-                            <td><input type="text" oninput="calculateContract('{{ $count }}')" id="{{ $prefix . 'hadapan_' . $count }}" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $contractFiles['hadapan'] }}"></td>
-                            <td><input type="text" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
-                            <td><input type="text" oninput="calculateContractTotal('{{ $count }}')" id="{{ $prefix . 'tertunggak_' . $count }}" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $contractFiles['tertunggak'] }}"></td>
+                            <td><input type="number" step="any" oninput="calculateContract('{{ $count }}')" id="{{ $prefix . 'tunggakan_' . $count }}" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $contractFiles['tunggakan'] }}"></td>
+                            <td><input type="number" step="any" oninput="calculateContract('{{ $count }}')" id="{{ $prefix . 'semasa_' . $count }}" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $contractFiles['semasa'] }}"></td>
+                            <td><input type="number" step="any" oninput="calculateContract('{{ $count }}')" id="{{ $prefix . 'hadapan_' . $count }}" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $contractFiles['hadapan'] }}"></td>
+                            <td><input type="number" step="any" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
+                            <td><input type="number" step="any" oninput="calculateContractTotal('{{ $count }}')" id="{{ $prefix . 'tertunggak_' . $count }}" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $contractFiles['tertunggak'] }}"></td>
                             @if ($contractFiles['is_custom'])
                             <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowContract('contract_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                             @else
@@ -64,28 +64,31 @@ $prefix = 'contract_';
                         <tr>
                             <td>&nbsp;</td>
                             <th class="padding-form">JUMLAH</th>
-                            <th><input type="text" id="{{ $prefix . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $total_tunggakan }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $total_semasa }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $total_hadapan }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $total_all }}" readonly=""></th>
-                            <th><input type="text" id="{{ $prefix . 'total_tertunggak' }}" class="form-control form-control-sm text-right" value="{{ $total_tertunggak }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $total_tunggakan }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $total_semasa }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $total_hadapan }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $total_all }}" readonly=""></th>
+                            <th><input type="number" step="any" id="{{ $prefix . 'total_tertunggak' }}" class="form-control form-control-sm text-right" value="{{ $total_tertunggak }}" readonly=""></th>
                             <td>&nbsp;</td>
                         </tr>
                     </tbody>
                 </table>    
-            </div>                                                
-            <div class="form-actions">
-                <?php if ($insert_permission == 1) { ?>
-                    <input type="hidden" name="finance_file_id" value="{{$finance_file_id}}">
+            </div>  
+            <?php if ($insert_permission == 1) { ?>
+                <div class="form-actions">                
+                    <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
                     <input type="submit" value="Submit" class="btn btn-primary submit_button">
-                <?php } ?>
-            </div>
+                    <img class="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
+                </div>
+            <?php } ?>
         </form>
     </div>
 </div>
 
 <script type="text/javascript">
-    calculateContractTotal();
+    $(document).ready(function () {
+        calculateContractTotal();
+    });
 
     function calculateContract(id) {
         var contract_sum_tunggakan = 0;
@@ -153,47 +156,52 @@ $prefix = 'contract_';
     function addRowContract() {
         var rowContractNo = $("#dynamic_form_contract tr").length;
         rowContractNo = rowContractNo - 2;
-        $("#dynamic_form_contract tr:last").prev().prev().after('<tr id="contract_row' + rowContractNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowContractNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="text" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}tunggakan_' + rowContractNo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}semasa_' + rowContractNo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}hadapan_' + rowContractNo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="text" id="{{ $prefix }}total_income_' + rowContractNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="text" oninput="calculateContractTotal(\'' + rowContractNo + '\')" id="{{ $prefix }}tertunggak_' + rowContractNo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowContract(\'contract_row' + rowContractNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
-    
+        $("#dynamic_form_contract tr:last").prev().prev().after('<tr id="contract_row' + rowContractNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowContractNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}tunggakan_' + rowContractNo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}semasa_' + rowContractNo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}hadapan_' + rowContractNo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowContractNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateContractTotal(\'' + rowContractNo + '\')" id="{{ $prefix }}tertunggak_' + rowContractNo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowContract(\'contract_row' + rowContractNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
+
         calculateContractTotal();
     }
 
     function deleteRowContract(rowContractNo) {
         $('#' + rowContractNo).remove();
-        
+
         calculateContractTotal();
     }
 
     $("#financeFileContract").submit(function (e) {
         e.preventDefault();
 
-        $.ajax({
-            method: "POST",
-            url: "{{ URL::action('FinanceController@updateFinanceFileContract') }}",
-            data: $(this).serialize(),
-            beforeSend: function () {
-                $(".submit_button").html('Loading').prop('disabled', true);
-            },
-            complete: function (data) {
-                // Hide image container
-                $(".submit_button").html('Submit').prop('disabled', false);
-            },
-            success: function (response) {
-                if (response.trim() == "true") {
-                    $.notify({
-                        message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
-                    }, {
-                        type: 'success',
-                        placement: {
-                            align: "center"
-                        }
-                    });
-                    location.reload();
-                } else {
-                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+        $(".loading").css("display", "inline-block");
+        $(".submit_button").attr("disabled", "disabled");
+
+        var error = 0;
+
+        if (error == 0) {
+            $.ajax({
+                method: "POST",
+                url: "{{ URL::action('FinanceController@updateFinanceFileContract') }}",
+                data: $(this).serialize(),
+                success: function (response) {
+                    $(".loading").css("display", "none");
+                    $(".submit_button").removeAttr("disabled");
+
+                    if (response.trim() == "true") {
+                        $.notify({
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                        }, {
+                            type: 'success',
+                            placement: {
+                                align: "center"
+                            }
+                        });
+                        location = '{{URL::action("FinanceController@editFinanceFileList", [$finance_file_id, "contractexp"]) }}';
+                    } else {
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                    }
                 }
-                console.log(response);
-            }
-        });
-    })
+            });
+        } else {
+            $(".loading").css("display", "none");
+            $(".submit_button").removeAttr("disabled");
+        }
+    });
 </script>

@@ -493,8 +493,8 @@ Route::post('/activeFinanceList', 'FinanceController@activeFinanceList')->before
 Route::post('/deleteFinanceList', 'FinanceController@deleteFinanceList')->before('authMember');
 
 Route::get('/addFinanceFileList', 'FinanceController@addFinanceFileList')->before('authMember');
-Route::post('/submitFinanceFile', 'FinanceController@submitFinanceFile')->before('authMember');
-Route::get('/editFinanceFileList/{id}', 'FinanceController@editFinanceFileList')->before('authMember');
+Route::post('/submitAddFinanceFile', 'FinanceController@submitAddFinanceFile')->before('authMember');
+Route::get('/editFinanceFileList/{id}/{tab}/', 'FinanceController@editFinanceFileList')->before('authMember');
 Route::post('/updateFinanceFileList', 'FinanceController@updateFinanceFileList')->before('authMember');
 
 Route::post('/updateFinanceCheck', 'FinanceController@updateFinanceCheck')->before('authMember');

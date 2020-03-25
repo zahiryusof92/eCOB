@@ -2,6 +2,16 @@
 
 @section('content')
 
+<?php
+$insert_permission = 0;
+
+foreach ($user_permission as $permission) {
+    if ($permission->submodule_id == 32) {
+        $insert_permission = $permission->insert_permission;
+    }
+}
+?>
+
 <div class="page-content-inner">
     <section class="panel panel-with-borders">
         <div class="panel-heading">
@@ -165,7 +175,9 @@
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addMinutes()">Submit</button>
+                            <?php if ($insert_permission == 1) { ?>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addMinutes()">Submit</button>
+                            <?php } ?>
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AgmController@minutes')}}'">Cancel</button>
                             <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
