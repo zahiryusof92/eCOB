@@ -6,7 +6,11 @@ class UserController extends BaseController {
         if (empty(Session::get('lang'))) {
             Session::put('lang', 'en');
         }
-        
+
+        if (empty(Session::get('admin_cob'))) {
+            Session::put('admin_cob', '');
+        }
+
         $locale = Session::get('lang');
         App::setLocale($locale);
     }
@@ -14,6 +18,19 @@ class UserController extends BaseController {
     public function changeLanguage($lang) {
         Session::forget('lang');
         Session::put('lang', $lang);
+
+        return Redirect::back();
+    }
+
+    public function changeCOB($id) {
+        Session::forget('admin_cob');
+
+        $cob = Company::find($id);
+        if ($cob) {
+            if ($cob->id != 1) {
+                Session::put('admin_cob', $id);
+            }
+        }
 
         return Redirect::back();
     }
@@ -166,8 +183,8 @@ class UserController extends BaseController {
             return Redirect::to('/login')->with('login_error', 'Masalah Log Masuk');
         }
     }
-    //member login end
 
+    //member login end
     //edit profile
     public function editProfile() {
 

@@ -188,7 +188,11 @@ $company = Company::find(Auth::user()->company_id);
 if (!Auth::user()->getAdmin()) {
     $pending = Files::where('created_by', Auth::user()->id)->where('status', 0)->where('is_deleted', 0)->count();
 } else {
-    $pending = Files::where('status', 0)->where('is_deleted', 0)->count();
+    if (empty(Session::get('admin_cob'))) {
+        $pending = Files::where('status', 0)->where('is_deleted', 0)->count();
+    } else {
+        $pending = Files::where('company_id', Session::get('admin_cob'))->where('status', 0)->where('is_deleted', 0)->count();
+    }
 }
 ?>
 <!-- BEGIN SIDE NAVIGATION -->
@@ -573,7 +577,7 @@ if (!Auth::user()->getAdmin()) {
 
                     @foreach ($jmb as $cob)
                     <li id="{{ $cob->short_name . "_list" }}">
-                        <a class="left-menu-link" href='#'>{{ strtoupper($cob->short_name) }}</a>
+                        <a class="left-menu-link" href='{{ URL::action('UserController@changeCOB', $cob->id) }}'>{{ strtoupper($cob->short_name) }}</a>
                     </li>    
                     @endforeach
                     @endif

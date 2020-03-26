@@ -460,6 +460,7 @@ class AdminController extends BaseController {
             $sort_no = $data['sort_no'];
 
             $fileprefix = new FilePrefix();
+            $fileprefix->company_id = Auth::user()->company_id;
             $fileprefix->description = $description;
             $fileprefix->sort_no = $sort_no;
             $fileprefix->is_active = $is_active;
@@ -830,9 +831,13 @@ class AdminController extends BaseController {
 
     public function getFileList() {
         if (!Auth::user()->getAdmin()) {
-            $file = Files::where('created_by', Auth::user()->id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            $file = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
         } else {
-            $file = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            if (empty(Session::get('admin_cob'))) {
+                $file = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }            
         }
 
         if (count($file) > 0) {

@@ -11,6 +11,9 @@
   |
  */
 
+//change COB
+Route::get('/changeCOB/{id}', 'UserController@changeCOB');
+
 //change language
 Route::get('/changeLanguage/{lang}', 'UserController@changeLanguage');
 
