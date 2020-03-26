@@ -39,6 +39,15 @@ foreach ($user_permission as $permission) {
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label><span style="color: red; font-style: italic;">* </span>Short Name</label>
+                                    <input type="text" class="form-control" placeholder="Short Name" id="short_name" value="{{$company->short_name}}">
+                                    <div id="short_name_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><span style="color: red; font-style: italic;">* </span>ROC / ROB No.</label>
@@ -337,6 +346,7 @@ foreach ($user_permission as $permission) {
         $("#loading").css("display", "inline-block");
 
         var name = $("#name").val(),
+                short_name = $("#short_name").val(),
                 rob_roc_no = $("#rob_roc_no").val(),
                 address1 = $("#address1").val(),
                 address2 = $("#address2").val(),
@@ -356,6 +366,11 @@ foreach ($user_permission as $permission) {
         if (name.trim() == "") {
             $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Name</span>');
             $("#name_error").css("display", "block");
+            error = 1;
+        }
+        if (short_name.trim() == "") {
+            $("#short_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Short Name</span>');
+            $("#short_name_error").css("display", "block");
             error = 1;
         }
         if (rob_roc_no.trim() == "") {
@@ -400,6 +415,7 @@ foreach ($user_permission as $permission) {
                 type: "POST",
                 data: {
                     name: name,
+                    short_name: short_name,
                     rob_roc_no: rob_roc_no,
                     address1: address1,
                     address2: address2,
@@ -422,7 +438,7 @@ foreach ($user_permission as $permission) {
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
                         bootbox.alert("<span style='color:green;'>Organization Profile updated successfully!</span>", function () {
-                            location.reload();
+                            window.location = '{{URL::action("AdminController@company") }}';
                         }); 
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");

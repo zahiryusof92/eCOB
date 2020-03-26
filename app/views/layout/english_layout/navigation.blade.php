@@ -42,6 +42,8 @@ $access_permission36 = 0;
 $access_permission37 = 0;
 $access_permission38 = 0;
 $access_permission39 = 0;
+$access_permission40 = 0;
+$access_permission41 = 0;
 
 $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
@@ -172,6 +174,13 @@ if ($user_permission) {
         /*
          * End Finance
          */
+        
+        if ($permission->submodule_id == 40) {
+            $access_permission40 = $permission->access_permission;
+        }
+        if ($permission->submodule_id == 41) {
+            $access_permission41 = $permission->access_permission;
+        }
     }
 }
 
@@ -271,8 +280,8 @@ if (!Auth::user()->getAdmin()) {
                 <ul class="left-menu-list list-unstyled" id="admin_main">
                     @if ($access_permission4 == 1)
                     <li id="profile_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@editCompany')}}">
-                            Edit Organization Profile
+                        <a class="left-menu-link" href="{{URL::action('AdminController@company')}}">
+                            Organization Profile
                         </a>
                     </li>
                     @endif
@@ -296,6 +305,15 @@ if (!Auth::user()->getAdmin()) {
                             Memo Maintenance
                         </a>
                     </li>
+                    @endif
+                    @if ($access_permission40 == 1)
+                    <li id="rating_list">
+                        <a class="left-menu-link" href="#">
+                            Rating
+                        </a>
+                    </li>
+                    @endif
+                    @if ($access_permission41 == 1)
                     <li id="form_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@form')}}">
                             Form
@@ -531,8 +549,8 @@ if (!Auth::user()->getAdmin()) {
                 </a>
                 <ul class="left-menu-list list-unstyled" id="form_main">
                     @if ($access_permission34 == 1)
-                    <li id="agmpurchasesub_list">
-                        <a class="left-menu-link" href="#">
+                    <li id="form_download_list">
+                        <a class="left-menu-link" href="{{ URL::action('AdminController@formDownload') }}">
                             Form Download
                         </a>
                     </li>

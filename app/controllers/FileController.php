@@ -1,72 +1,82 @@
 <?php
 
 class FileController extends BaseController {
-    
+
     public function __construct() {
         if (empty(Session::get('lang'))) {
             Session::put('lang', 'en');
         }
-        
+
         $locale = Session::get('lang');
         App::setLocale($locale);
     }
-    
+
+    public function uploadFormFile() {
+        $file = Input::file('form_file');
+        if ($file) {
+            $destinationPath = 'uploads/form_files';
+            $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
+            Input::file('form_file')->move($destinationPath, $filename);
+            return Response::json(['success' => true, 'file' => $destinationPath . "/" . $filename, 'filename' => $filename]);
+        }
+    }
+
     public function uploadStrataFile() {
         $file = Input::file('strata_file');
         $destinationPath = 'uploads/strata_files';
         $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
         Input::file('strata_file')->move($destinationPath, $filename);
         return Response::json(['success' => true, 'file' => $destinationPath . "/" . $filename, 'filename' => $filename]);
-    }  
-    
+    }
+
     public function uploadAuditReportFile() {
         $file = Input::file('audit_report_file');
         $destinationPath = 'uploads/audit_report_files';
         $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
         Input::file('audit_report_file')->move($destinationPath, $filename);
         return Response::json(['success' => true, 'file' => $destinationPath . "/" . $filename, 'filename' => $filename]);
-    }  
-    
+    }
+
     public function uploadLetterIntegrity() {
         $file = Input::file('letter_integrity');
         $destinationPath = 'uploads/letter_integrity_files';
         $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
         Input::file('letter_integrity')->move($destinationPath, $filename);
         return Response::json(['success' => true, 'file' => $destinationPath . "/" . $filename, 'filename' => $filename]);
-    }  
-    
+    }
+
     public function uploadLetterBankruptcy() {
         $file = Input::file('letter_bankruptcy');
         $destinationPath = 'uploads/letter_bankruptcy_files';
         $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
         Input::file('letter_bankruptcy')->move($destinationPath, $filename);
         return Response::json(['success' => true, 'file' => $destinationPath . "/" . $filename, 'filename' => $filename]);
-    }  
-    
+    }
+
     public function uploadAuditReportFileEdit() {
         $file = Input::file('audit_report_file_edit');
         $destinationPath = 'uploads/audit_report_files';
         $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
         Input::file('audit_report_file_edit')->move($destinationPath, $filename);
         return Response::json(['success' => true, 'file' => $destinationPath . "/" . $filename, 'filename' => $filename]);
-    }  
-    
+    }
+
     public function uploadLetterIntegrityEdit() {
         $file = Input::file('letter_integrity_edit');
         $destinationPath = 'uploads/letter_integrity_files';
         $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
         Input::file('letter_integrity_edit')->move($destinationPath, $filename);
         return Response::json(['success' => true, 'file' => $destinationPath . "/" . $filename, 'filename' => $filename]);
-    }  
-    
+    }
+
     public function uploadLetterBankruptcyEdit() {
         $file = Input::file('letter_bankruptcy_edit');
         $destinationPath = 'uploads/letter_bankruptcy_files';
         $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
         Input::file('letter_bankruptcy_edit')->move($destinationPath, $filename);
         return Response::json(['success' => true, 'file' => $destinationPath . "/" . $filename, 'filename' => $filename]);
-    }  
-    
+    }
+
     public function uploadBuyerCSVAction($id) {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
@@ -252,8 +262,8 @@ class FileController extends BaseController {
             }
         }
     }
-    
-     public function uploadPurchaserCSVAction() {
+
+    public function uploadPurchaserCSVAction() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
@@ -425,6 +435,6 @@ class FileController extends BaseController {
                 return View::make('agm_my.import_purchaser', $viewData);
             }
         }
-    }    
+    }
 
 }

@@ -54,7 +54,7 @@ $mfr_total_income += $mfreport['fee_sebulan'] + $mfreport['fee_semasa'];
                                 JUMLAH SERVICE FEE BERJAYA DIKUTIP SEMASA
                             </th>
                             <th>
-                                <input type="number" step="any" name="{{ $prefix }}total_income" class="form-control form-control-sm text-right" value="{{ $mfr_total_income }}" readonly="">
+                                <input type="text" name="{{ $prefix }}total_income" class="form-control form-control-sm text-right" value="{{ number_format($mfr_total_income, 2) }}" readonly="">
                             </th>
                         </tr>
                     </tbody>
@@ -139,7 +139,7 @@ $mfr_total_income += $mfreport['fee_sebulan'] + $mfreport['fee_semasa'];
                     </tbody>
                 </table>
             </div>                                        
-            <?php if ($insert_permission == 1) { ?>
+            <?php if ($update_permission == 1) { ?>
                 <div class="form-actions">                
                     <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
                     <input type="submit" value="Submit" class="btn btn-primary submit_button">

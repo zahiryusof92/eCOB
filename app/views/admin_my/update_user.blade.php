@@ -45,21 +45,7 @@ foreach ($user_permission as $permission) {
                                     <div id="name_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>Akses Kumpulan</label>
-                                    <select id="role" class="form-control">
-                                        <option value="">Sila pilih</option>
-                                        @foreach ($role as $roles)
-                                        <option value="{{$roles->id}}" {{($user->role == $roles->id ? " selected" : "")}}>{{$roles->name}}</option>
-                                        @endforeach
-                                    </select>
-                                    <div id="role_error" style="display:none;"></div>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                       
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -77,7 +63,35 @@ foreach ($user_permission as $permission) {
                                     <div id="phone_no_error" style="display:none;"></div>
                                 </div>
                             </div>                            
-                        </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><span style="color: red; font-style: italic;">* </span>Akses Kumpulan</label>
+                                    <select id="role" class="form-control">
+                                        <option value="">Sila pilih</option>
+                                        @foreach ($role as $roles)
+                                        <option value="{{$roles->id}}" {{($user->role == $roles->id ? " selected" : "")}}>{{$roles->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div id="role_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span style="color: red;">*</span> Company</label>
+                                    <select id="company" class="form-control">
+                                        <option value="">Please Select</option>
+                                        @foreach ($company as $companies)
+                                        <option value="{{$companies->id}}" {{ $user->company_id == $companies->id ? 'selected' : '' }}>{{$companies->name}} - {{$companies->short_name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div id="company_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -101,7 +115,7 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-actions">
                             <?php if ($update_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="updateUser()">Simpan</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="updateUser()">Simpan</button>
                             <?php } ?>
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@user')}}'">Batal</button>
                         </div>
@@ -120,15 +134,16 @@ foreach ($user_permission as $permission) {
     function updateUser() {
         $("#loading").css("display", "inline-block");
 
-        var name = $("#name").val(), 
+        var name = $("#name").val(),
                 role = $("#role").val(),
+                company = $("#company").val(),
                 email = $("#email").val(),
                 phone_no = $("#phone_no").val(),
                 remarks = $("#remarks").val(),
                 is_active = $("#is_active").val();
 
-        var error = 0;        
-       
+        var error = 0;
+
         if (name.trim() == "") {
             $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Nama Penuh</span>');
             $("#name_error").css("display", "block");
@@ -144,6 +159,11 @@ foreach ($user_permission as $permission) {
             $("#role_error").css("display", "block");
             error = 1;
         }
+        if (company.trim() == "") {
+            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Company</span>');
+            $("#company_error").css("display", "block");
+            error = 1;
+        }
         if (is_active.trim() == "") {
             $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila pilih Status</span>');
             $("#is_active_error").css("display", "block");
@@ -157,6 +177,7 @@ foreach ($user_permission as $permission) {
                 data: {
                     name: name,
                     role: role,
+                    company: company,
                     email: email,
                     phone_no: phone_no,
                     remarks: remarks,
@@ -178,7 +199,7 @@ foreach ($user_permission as $permission) {
             });
         }
     }
-    
+
     function IsEmail(email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);

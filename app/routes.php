@@ -148,9 +148,17 @@ Route::get('/approval/{id}', 'AdminController@fileApproval')->before('authMember
 Route::post('/submitApproval', 'AdminController@submitFileApproval')->before('authMember');
 
 // --- Administration --- //
-//edit company
-Route::get('/editCompany', 'AdminController@editCompany')->before('authMember');
+//company
+
+Route::get('/company', 'AdminController@company')->before('authMember');
+Route::get('/getCompany', 'AdminController@getCompany')->before('authMember');
+Route::get('/addCompany', 'AdminController@addCompany')->before('authMember');
+Route::post('/submitAddCompany', 'AdminController@submitAddCompany')->before('authMember');
+Route::get('/editCompany/{id}', 'AdminController@editCompany')->before('authMember');
 Route::post('/submitEditCompany', 'AdminController@submitEditCompany')->before('authMember');
+Route::post('/activeCompany', 'AdminController@activeCompany')->before('authMember');
+Route::post('/inactiveCompany', 'AdminController@inactiveCompany')->before('authMember');
+Route::post('/deleteCompany', 'AdminController@deleteCompany')->before('authMember');
 
 //upload logo
 Route::post('/logoImage', 'ImageController@logoImage');
@@ -195,14 +203,16 @@ Route::post('/deleteMemo/{id}', 'AdminController@deleteMemo')->before('authMembe
 
 //form
 Route::get('/form', 'AdminController@form')->before('authMember');
-Route::get('/addForm', 'AdminController@addForm')->before('authMember');
-Route::post('/submitForm', 'AdminController@submitForm')->before('authMember');
 Route::get('/getForm', 'AdminController@getForm')->before('authMember');
 Route::post('/activeForm', 'AdminController@activeForm')->before('authMember');
 Route::post('/inactiveForm', 'AdminController@inactiveForm')->before('authMember');
+Route::get('/addForm', 'AdminController@addForm')->before('authMember');
+Route::post('/submitAddForm', 'AdminController@submitAddForm')->before('authMember');
 Route::get('/updateForm/{id}', 'AdminController@updateForm')->before('authMember');
 Route::post('/submitUpdateForm', 'AdminController@submitUpdateForm')->before('authMember');
 Route::post('/deleteForm/{id}', 'AdminController@deleteForm')->before('authMember');
+Route::post('/deleteFormFile', 'AdminController@deleteFormFile');
+Route::post('/uploadFormFile', 'FileController@uploadFormFile');
 
 ########################## AGM Submission
 //AGM Design Submission
@@ -527,6 +537,9 @@ Route::post('/submitEditMinutes', 'AgmController@submitEditMinutes')->before('au
 Route::post('/getMinuteDetails', 'AgmController@getMinuteDetails')->before('authMember');
 Route::post('/deleteMinutes/{id}', 'AgmController@deleteMinutes')->before('authMember');
 
+//form download
+Route::get('/formDownload', 'AdminController@formDownload')->before('authMember');
+Route::get('/getForm', 'AdminController@getForm')->before('authMember');
 
 //invalid route
 Route::get('/{name?}', 'AdminController@showView')->before('authMember');

@@ -88,17 +88,6 @@ foreach ($user_permission as $permission) {
                                                     <input type="checkbox" class="update" name="update[]" value="{{$submodules->id}}" />
                                                 </td>
                                             </tr>
-                                            @elseif ($submodules->id == 4)
-                                            <tr>
-                                                <td> - {{$submodules->name_en}}</td>
-                                                <td style="text-align: center;">
-                                                    <input type="checkbox" class="access" name="access[]" value="{{$submodules->id}}" />
-                                                </td>
-                                                <td style="text-align: center;"></td>
-                                                <td style="text-align: center;">
-                                                    <input type="checkbox" class="update" name="update[]" value="{{$submodules->id}}" />
-                                                </td>
-                                            </tr>
                                             @else
                                             <tr>
                                                 <td> - {{$submodules->name_en}}</td>

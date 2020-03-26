@@ -7,7 +7,7 @@ $insert_permission = 0;
 $update_permission = 0;
 
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 35) {
+    if ($permission->submodule_id == 4) {
         $insert_permission = $permission->insert_permission;
         $update_permission = $permission->update_permission;
     }
@@ -23,22 +23,22 @@ foreach ($user_permission as $permission) {
             <div class="row">
                 <div class="col-lg-12">
                     <?php if ($insert_permission == 1) { ?>
-                    <button onclick="window.location = '{{ URL::action('AdminController@addForm') }}'" type="button" class="btn btn-primary">
-                        {{ trans('general.label_create') }}
-                    </button>
-                    <br/><br/>
-                    <?php } ?>
-                    <table class="table table-hover nowrap" id="form" width="100%">
+                        <button onclick="window.location = '{{ URL::action('AdminController@addCompany') }}'" type="button" class="btn btn-primary">
+                            Add Company
+                        </button>
+                        <br/><br/>
+                    <?php } ?> 
+
+                    <table class="table table-hover nowrap" id="company" width="100%">
                         <thead>
                             <tr>
-                                <th>{{ trans('form.table.form_type') }}</th>
-                                <th style="width:70%;">{{ trans('form.table.bi_name') }}</th>
-                                <th style="width:70%;">{{ trans('form.table.bm_name') }}</th>
-                                <th style="width:20%;">{{ trans('form.table.seq') }}</th>
-                                <th style="width:20%;">{{ trans('form.table.status') }}</th>
+                                <th style="width:40%;">Name</th>
+                                <th style="width:20%;">Short Name</th>
+                                <th style="width:20%;">Email</th>
+                                <th style="width:10%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
-                                <th style="width:10%;">{{ trans('general.label_action') }}</th>
-                                <?php } ?>
+                                    <th style="width:10%;">Action</th>
+                                    <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,25 +55,31 @@ foreach ($user_permission as $permission) {
 <script>
     var oTable;
     $(document).ready(function () {
-        oTable = $('#form').DataTable({
-            "sAjaxSource": "{{URL::action('AdminController@getForm')}}",
+        oTable = $('#company').DataTable({
+            "sAjaxSource": "{{URL::action('AdminController@getCompany')}}",
             "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            "order": [[ 0, "asc" ]],
-            responsive: true
+            "order": [[0, "asc"]],
+            responsive: true,
+            "aoColumnDefs": [
+                {
+                    "bSortable": false,
+                    "aTargets": [-1]
+                }
+            ]
         });
-    });    
-    
-    function inactiveForm(id) {
+    });
+
+    function inactiveCompany(id) {
         $.ajax({
-            url: "{{ URL::action('AdminController@inactiveForm') }}",
+            url: "{{ URL::action('AdminController@inactiveCompany') }}",
             type: "POST",
             data: {
                 id: id
             },
-            success: function(data) {
+            success: function (data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
-                        window.location = "{{URL::action('AdminController@form')}}";
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function () {
+                        window.location = "{{URL::action('AdminController@company')}}";
                     });
                 } else {
                     bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
@@ -82,17 +88,17 @@ foreach ($user_permission as $permission) {
         });
     }
 
-    function activeForm(id) {
+    function activeCompany(id) {
         $.ajax({
-            url: "{{ URL::action('AdminController@activeForm') }}",
+            url: "{{ URL::action('AdminController@activeCompany') }}",
             type: "POST",
             data: {
                 id: id
             },
-            success: function(data) {
+            success: function (data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
-                        window.location = "{{URL::action('AdminController@form')}}";
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function () {
+                        window.location = "{{URL::action('AdminController@company')}}";
                     });
                 } else {
                     bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
@@ -100,26 +106,25 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-    
-    function deleteForm (id) {
+
+    function deleteCompany(id) {
         swal({
             title: "Are you sure?",
             text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
             closeOnConfirm: true
-        },
-        function(){
+        }, function () {
             $.ajax({
-                url: "{{ URL::action('AdminController@deleteForm') }}",
+                url: "{{ URL::action('AdminController@deleteCompany') }}",
                 type: "POST",
                 data: {
                     id: id
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data.trim() == "true") {
                         swal({
                             title: "Deleted!",

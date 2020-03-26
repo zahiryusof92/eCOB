@@ -73,7 +73,6 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-
     function addFilePrefix() {
         $("#loading").css("display", "inline-block");
         $("#description_error").css("display", "none");

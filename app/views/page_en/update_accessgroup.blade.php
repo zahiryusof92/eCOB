@@ -135,33 +135,6 @@ foreach ($user_permission as $permission) {
                                             </td>
                                             @endif
                                         </tr>
-                                        @elseif ($submodules->id == 4)
-                                        <tr>
-                                            <td> - {{$submodules->name_en}}</td>
-                                            @if (count($permission) > 0)
-                                            @foreach($permission as $permissions)
-                                            <td style="text-align: center;">
-                                                <input type="checkbox" class="access" name="access[]" value="{{$submodules->id}}"
-                                                       {{($permissions->submodule_id == $submodules->id && $permissions->access_permission == 1 ? " checked" : "")}}/>
-                                            </td>
-                                            @endforeach
-                                            <td style="text-align: center;"></td>
-                                            @foreach($permission as $permissions)
-                                            <td style="text-align: center;">
-                                                <input type="checkbox" class="update" name="update[]" value="{{$submodules->id}}"
-                                                       {{($permissions->submodule_id == $submodules->id && $permissions->update_permission == 1 ? " checked" : "")}}/>
-                                            </td>
-                                            @endforeach
-                                            @else
-                                            <td style="text-align: center;">
-                                                <input type="checkbox" class="access" name="access[]" value="{{$submodules->id}}" />
-                                            </td>
-                                            <td style="text-align: center;"></td>
-                                            <td style="text-align: center;">
-                                                <input type="checkbox" class="update" name="update[]" value="{{$submodules->id}}" />
-                                            </td>
-                                            @endif
-                                        </tr>
                                         @else
                                         <tr>
                                             <td> - {{$submodules->name_en}}</td>

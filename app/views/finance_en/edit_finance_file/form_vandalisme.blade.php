@@ -146,7 +146,7 @@ $prefix2 = 'singkingfund_';
                     </tbody>
                 </table>   
             </div>
-            <?php if ($insert_permission == 1) { ?>
+            <?php if ($update_permission == 1) { ?>
                 <div class="form-actions">                
                     <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
                     <input type="submit" value="Submit" class="btn btn-primary submit_button">

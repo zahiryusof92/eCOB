@@ -4,11 +4,9 @@
 
 <?php
 $insert_permission = 0;
-$update_permission = 0;
 
 foreach ($user_permission as $permission) {
     if ($permission->submodule_id == 37) {
-        $access_permission = $permission->access_permission;
         $insert_permission = $permission->insert_permission;
     }
 }
