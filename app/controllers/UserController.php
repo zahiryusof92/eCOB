@@ -37,6 +37,7 @@ class UserController extends BaseController {
 
     //register
     public function register() {
+        $company = Company::where('is_main', 0)->where('is_active', 1)->where('is_deleted', 0)->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -44,6 +45,7 @@ class UserController extends BaseController {
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
+                'cob' => $company
             );
 
             return View::make('user_en.register', $viewData);
@@ -53,6 +55,7 @@ class UserController extends BaseController {
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
+                'cob' => $company
             );
 
             return View::make('user_my.register', $viewData);
@@ -68,6 +71,7 @@ class UserController extends BaseController {
             $name = $data['name'];
             $email = $data['email'];
             $phone_no = $data['phone_no'];
+            $company = $data['company'];
 
             $check_username = User::where('username', $username)->count();
 
@@ -81,6 +85,7 @@ class UserController extends BaseController {
                 $user->remarks = "";
                 $user->role = 2;
                 $user->status = 0;
+                $user->company_id = $company;
                 $user->is_active = 0;
                 $user->is_deleted = 0;
                 $success = $user->save();

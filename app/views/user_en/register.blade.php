@@ -46,24 +46,24 @@ $company = Company::orderBy('id')->first();
                 <form>
                     <div class="form-group">
                         <label style="color: red; font-style: italic;">* Mandatory Fields</label>
-                </div>
-                <div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <input type="text" class="form-control" placeholder="Username *" id="username">
                         <div id="username_error" style="display:none;"></div>
                         <div id="username_in_use" style="display:none"></div>
-                </div>
-                <div class="form-group">                        
+                    </div>
+                    <div class="form-group">                        
                         <input type="password" class="form-control" placeholder="Password *" id="password">
                         <div id="password_error" style="display:none;"></div>
-                </div>
-                <div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <input type="password" class="form-control" placeholder="Confirm Password *" id="retype_password">
                         <div id="retype_password_error" style="display:none;"></div>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Full Name *" id="name">
                         <div id="name_error" style="display:none;"></div>
-                </div>
+                    </div>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="E-mail *" id="email">
                         <div id="email_error" style="display:none;"></div>
@@ -72,9 +72,18 @@ $company = Company::orderBy('id')->first();
                         <input type="text" class="form-control" placeholder="Phone No. *" id="phone_no">
                         <div id="phone_no_error" style="display:none;"></div>
                     </div>
-                <div class="form-actions text-center">
+                    <div class="form-group">
+                        <select id="company" class="form-control">
+                            <option value="">Please Select COB *</option>
+                            @foreach ($cob as $cobs)
+                            <option value="{{ $cobs->id }}">{{ $cobs->name }} - {{ $cobs->short_name }}</option>
+                            @endforeach
+                        </select>
+                        <div id="company_error" style="display:none;"></div>
+                    </div>
+                    <div class="form-actions text-center">
                         <button type="button" class="btn btn-primary width-150" id="submit_button" onclick="register()">Register</button>
-                </div>
+                    </div>
                     <a href="{{URL::action('UserController@login')}}">Log In</a>
                 </form>
             </div>
@@ -125,7 +134,7 @@ $company = Company::orderBy('id')->first();
 
         $(window).on('resize', function () {
             changeImgPositon();
-        });       
+        });
     });
 
     function register() {
@@ -137,13 +146,15 @@ $company = Company::orderBy('id')->first();
         $("#name_error").css("display", "none");
         $("#email_error").css("display", "none");
         $("#phone_no_error").css("display", "none");
+        $("#company_error").css("display", "none");
 
         var username = $("#username").val(),
                 password = $("#password").val(),
                 retype_password = $("#retype_password").val(),
                 name = $("#name").val(),
                 email = $("#email").val(),
-                phone_no = $("#phone_no").val();
+                phone_no = $("#phone_no").val(),
+                company = $("#company").val();
 
         var error = 0;
 
@@ -183,6 +194,11 @@ $company = Company::orderBy('id')->first();
             $("#phone_no_error").css("display", "block");
             error = 1;
         }
+        if (company.trim() === "") {
+            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select COB</span>');
+            $("#company_error").css("display", "block");
+            error = 1;
+        }
 
         if (error === 0) {
             $.ajax({
@@ -193,7 +209,8 @@ $company = Company::orderBy('id')->first();
                     password: password,
                     name: name,
                     email: email,
-                    phone_no: phone_no
+                    phone_no: phone_no,
+                    company: company
                 },
                 success: function (data) {
                     $("#loading").css("display", "none");

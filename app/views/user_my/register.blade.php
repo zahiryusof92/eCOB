@@ -3,7 +3,7 @@
 @section('content')
 
 <?php
-$company = Company::first();
+$company = Company::orderBy('id')->first();
 ?>
 
 <div class="page-content-inner" style="background-image: url({{asset('assets/common/img/temp/login/4.jpg')}})">
@@ -72,6 +72,15 @@ $company = Company::first();
                         <input type="text" class="form-control" placeholder="No. Telefon *" id="phone_no">
                         <div id="phone_no_error" style="display:none;"></div>
                     </div>
+                    <div class="form-group">
+                        <select id="company" class="form-control">
+                            <option value="">Please Select COB *</option>
+                            @foreach ($cob as $cobs)
+                            <option value="{{ $cobs->id }}">{{ $cobs->name }} - {{ $cobs->short_name }}</option>
+                            @endforeach
+                        </select>
+                        <div id="company_error" style="display:none;"></div>
+                    </div>
                     <div class="form-actions text-center">
                         <button type="button" class="btn btn-primary width-150" id="submit_button" onclick="register()">Daftar</button>
                     </div>
@@ -137,13 +146,15 @@ $company = Company::first();
         $("#name_error").css("display", "none");
         $("#email_error").css("display", "none");
         $("#phone_no_error").css("display", "none");
+        $("#company_error").css("display", "none");
 
         var username = $("#username").val(),
                 password = $("#password").val(),
                 retype_password = $("#retype_password").val(),
                 name = $("#name").val(),
                 email = $("#email").val(),
-                phone_no = $("#phone_no").val();
+                phone_no = $("#phone_no").val(),
+                company = $("#company").val();
 
         var error = 0;
 
@@ -183,6 +194,11 @@ $company = Company::first();
             $("#phone_no_error").css("display", "block");
             error = 1;
         }
+        if (company.trim() === "") {
+            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select COB</span>');
+            $("#company_error").css("display", "block");
+            error = 1;
+        }
 
         if (error === 0) {
             $.ajax({
@@ -193,7 +209,8 @@ $company = Company::first();
                     password: password,
                     name: name,
                     email: email,
-                    phone_no: phone_no
+                    phone_no: phone_no,
+                    company: company
                 },
                 success: function (data) {
                     $("#loading").css("display", "none");
