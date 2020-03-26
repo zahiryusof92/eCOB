@@ -1,6 +1,6 @@
 <!-- BEGIN TOP NAVIGATION -->
 <?php
-$company = Company::first();
+$company = Company::find(Auth::user()->company_id);
 ?>
 
 <nav class="top-menu">
