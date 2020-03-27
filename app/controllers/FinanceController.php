@@ -53,7 +53,7 @@ class FinanceController extends BaseController {
 
             $file = Files::find($file_id);
             if ($file) {
-                $check_exist = Finance::where('file_id', $file_id)->where('year', $year)->where('month', $month)->count();
+                $check_exist = Finance::where('file_id', $file_id)->where('year', $year)->where('month', $month)->where('is_deleted', 0)->count();
                 if ($check_exist <= 0) {
                     $finance = new Finance();
                     $finance->file_id = $file->id;
@@ -97,7 +97,7 @@ class FinanceController extends BaseController {
                                     $reportMF->type = 'MF';
                                     $reportMF->finance_file_id = $finance->id;
                                     $reportMF->name = $name;
-                                    $reportMF->key = $key;
+                                    $reportMF->report_key = $key;
                                     $reportMF->amount = 0;
                                     $reportMF->sort_no = $count;
                                     $reportMF->save();
@@ -126,7 +126,7 @@ class FinanceController extends BaseController {
                                     $reportSF->type = 'SF';
                                     $reportSF->finance_file_id = $finance->id;
                                     $reportSF->name = $name;
-                                    $reportMF->key = $key;
+                                    $reportMF->report_key = $key;
                                     $reportSF->amount = 0;
                                     $reportSF->sort_no = ++$count;
                                     $reportSF->save();

@@ -1,10 +1,5 @@
 <?php
 $prefix = 'mfr_';
-
-$mfr_total_income = 0;
-$mfr_total_amount = 0;
-
-$mfr_total_income += $mfreport['fee_sebulan'] + $mfreport['fee_semasa'];
 ?>
 
 <div class="row">
@@ -17,18 +12,18 @@ $mfr_total_income += $mfreport['fee_sebulan'] + $mfreport['fee_semasa'];
                 <table class="table table-sm" style="font-size: 12px;">
                     <tbody>
                         <tr>
-                            <td class="padding-table" width="30%">
+                            <td class="padding-table" width="25%">
                                 <span style="color: red;">*</span> MAINTENANCE FEE SEBULAN (PER UNIT)
                             </td>
-                            <td width="15%">
-                                <input type="number" step="any" name="{{ $prefix }}fee_sebulan" class="form-control form-control-sm text-right" value="{{ $mfreport['fee_sebulan'] }}">
+                            <td width="30%">
+                                <input type="text" name="{{ $prefix }}fee_sebulan" class="form-control form-control-sm" value="{{ $mfreport['fee_sebulan'] }}">
                             </td>
                             <td width="5%">&nbsp;</td>
-                            <td class="padding-table" width="35%">
+                            <td class="padding-table" width="25%">
                                 <span style="color: red;">*</span> JUMLAH UNIT
                             </td>
                             <td width="15%">
-                                <input type="number" step="any" name="{{ $prefix }}unit" class="form-control form-control-sm text-right" value="{{ $mfreport['unit'] }}">
+                                <input type="text" name="{{ $prefix }}unit" class="form-control form-control-sm" value="{{ $mfreport['unit'] }}">
                             </td>
                         </tr>
                         <tr>
@@ -54,7 +49,7 @@ $mfr_total_income += $mfreport['fee_sebulan'] + $mfreport['fee_semasa'];
                                 JUMLAH SERVICE FEE BERJAYA DIKUTIP SEMASA
                             </th>
                             <th>
-                                <input type="text" name="{{ $prefix }}total_income" class="form-control form-control-sm text-right" value="{{ number_format($mfr_total_income, 2) }}" readonly="">
+                                <input type="number" step="any" id="{{ $prefix }}total_income" name="{{ $prefix }}total_income" class="form-control form-control-sm text-right" value="0.00" readonly="">
                             </th>
                         </tr>
                     </tbody>
@@ -75,9 +70,6 @@ $mfr_total_income += $mfreport['fee_sebulan'] + $mfreport['fee_semasa'];
                     <tbody>
 
                         @for($i=0 ; $i < count($reportMF) ; $i++)
-                        <?php
-                        $mfr_total_amount += $reportMF[$i]['amount'];
-                        ?>
                         <tr>
                             <td><input type="hidden" name="{{ $prefix }}report_key[]" value="{{ $reportMF[$i]['report_key'] }}">&nbsp;</td>
                             <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $reportMF[$i]['name'] }}" readonly=""></td>
@@ -88,7 +80,7 @@ $mfr_total_income += $mfreport['fee_sebulan'] + $mfreport['fee_semasa'];
                         <tr>
                             <td>&nbsp;</td>
                             <td class="padding-form">JUMLAH TELAH BAYAR [B]</td>
-                            <td><input type="number" step="any" id="{{ $prefix }}bayar_total" name="{{ $prefix }}bayar_total" class="form-control form-control-sm text-right" value="{{ $mfr_total_amount }}" readonly=""></td>
+                            <td><input type="number" step="any" id="{{ $prefix }}bayar_total" name="{{ $prefix }}bayar_total" class="form-control form-control-sm text-right" value="0.00" readonly=""></td>
                         </tr>
 
                         <tr>
@@ -158,6 +150,9 @@ $mfr_total_income += $mfreport['fee_sebulan'] + $mfreport['fee_semasa'];
     function calculateMFR() {
         var mfr_kutipan = $("#financeFileIncome [id=income_total_income_1]").val();
         $('#{{ $prefix }}kutipan').val(parseFloat(mfr_kutipan).toFixed(2));
+        
+        var mfr_total_income = $("#financeFileIncome [id=income_semasa_1]").val();
+        $('#{{ $prefix }}total_income').val(parseFloat(mfr_total_income).toFixed(2));
 
         var mfr_utility = $("#formFinanceUtility [id=util_total_all]").val();
         $('#{{ $prefix }}utility').val(parseFloat(mfr_utility).toFixed(2));

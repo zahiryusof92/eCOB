@@ -2,10 +2,6 @@
 $prefix = 'sfr_';
 
 $count = 0;
-$sfr_total_income = 0;
-$sfr_total_amount = 0;
-
-$sfr_total_income += $sfreport['fee_sebulan'] + $sfreport['fee_semasa'];
 ?>
 
 <div class="row">
@@ -18,18 +14,18 @@ $sfr_total_income += $sfreport['fee_sebulan'] + $sfreport['fee_semasa'];
                 <table class="table table-sm" style="font-size: 12px;">
                     <tbody>
                         <tr>
-                            <td class="padding-table" width="30%">
+                            <td class="padding-table" width="25%">
                                 <span style="color: red;">*</span>SINKING FUND SEBULAN (PER UNIT)
                             </td>
-                            <td width="15%">
-                                <input type="number" step="any" name="{{ $prefix }}fee_sebulan" class="form-control form-control-sm text-right" value="{{ $sfreport['fee_sebulan'] }}">
+                            <td width="30%">
+                                <input type="text" name="{{ $prefix }}fee_sebulan" class="form-control form-control-sm" value="{{ $sfreport['fee_sebulan'] }}">
                             </td>
                             <td width="5%">&nbsp;</td>
-                            <td class="padding-table" width="35%">
+                            <td class="padding-table" width="25%">
                                 <span style="color: red;">*</span> JUMLAH UNIT
                             </td>
                             <td width="15%">
-                                <input type="number" step="any" name="{{ $prefix }}unit" class="form-control form-control-sm text-right" value="{{ $sfreport['unit'] }}">
+                                <input type="text" name="{{ $prefix }}unit" class="form-control form-control-sm" value="{{ $sfreport['unit'] }}">
                             </td>
                         </tr>
                         <tr>
@@ -52,10 +48,10 @@ $sfr_total_income += $sfreport['fee_sebulan'] + $sfreport['fee_semasa'];
                             <td>&nbsp;</td>
                             <td>&nbsp;</td>
                             <th class="padding-table">
-                                JUMLAH SERVICE FEE BERJAYA DIKUTIP SEMASA
+                                JUMLAH SINKING FUND BERJAYA DIKUTIP SEMASA
                             </th>
                             <th>
-                                <input type="text" name="{{ $prefix }}total_income" class="form-control form-control-sm text-right" value="{{ number_format($sfr_total_income, 2) }}" readonly="">
+                                <input type="number" step="any" id="{{ $prefix }}total_income" name="{{ $prefix }}total_income" class="form-control form-control-sm text-right" value="0.00" readonly="">
                             </th>
                         </tr>
                     </tbody>
@@ -76,9 +72,6 @@ $sfr_total_income += $sfreport['fee_sebulan'] + $sfreport['fee_semasa'];
                     <tbody>
 
                         @foreach ($reportSF as $reportSFs)
-                        <?php                        
-                        $sfr_total_amount += $reportSFs['amount'];
-                        ?>
                         <tr id="sfr_row{{ ++$count }}">
                             <td><input type="hidden" name="{{ $prefix }}is_custom[]" value="{{ $reportSFs['is_custom'] }}"><input type="hidden" name="{{ $prefix }}report_key[]" value="{{ $reportSFs['report_key'] }}">&nbsp;</td>
                             <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $reportSFs['name'] }}" readonly=""></td>
@@ -98,7 +91,7 @@ $sfr_total_income += $sfreport['fee_sebulan'] + $sfreport['fee_semasa'];
                         <tr>
                             <td>&nbsp;</td>
                             <td class="padding-form">JUMLAH TELAH BAYAR [B]</td>
-                            <td><input type="number" step="any" id="{{ $prefix }}bayar_total" name="{{ $prefix }}bayar_total" class="form-control form-control-sm text-right" value="{{ $sfr_total_amount }}" readonly=""></td>
+                            <td><input type="number" step="any" id="{{ $prefix }}bayar_total" name="{{ $prefix }}bayar_total" class="form-control form-control-sm text-right" value="0.00" readonly=""></td>
                         </tr>
 
                         <tr>
@@ -168,6 +161,9 @@ $sfr_total_income += $sfreport['fee_sebulan'] + $sfreport['fee_semasa'];
     function calculateSFR() {
         var sfr_kutipan = $("#financeFileIncome [id=income_total_income_2]").val();
         $('#{{ $prefix }}kutipan').val(parseFloat(sfr_kutipan).toFixed(2));
+
+        var sfr_total_income = $("#financeFileIncome [id=income_semasa_2]").val();
+        $('#{{ $prefix }}total_income').val(parseFloat(sfr_total_income).toFixed(2));
 
         var sfr_repair = $("#financeRepairForm [id=repair_singkingfund_total_all]").val();
         $('#{{ $prefix }}repair').val(parseFloat(sfr_repair).toFixed(2));
