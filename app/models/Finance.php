@@ -63,4 +63,7 @@ class Finance extends Eloquent {
         }
     }
 
+    public function company() {
+        return $this->belongsTo('Company', 'company_id');
+    }
 }

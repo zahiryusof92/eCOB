@@ -96,7 +96,7 @@ foreach ($user_permission as $permission) {
                                     <select id="company" class="form-control">
                                         <option value="">Please Select</option>
                                         @foreach ($company as $companies)
-                                        <option value="{{$companies->id}}">{{$companies->name}} - {{$companies->short_name}}</option>
+                                        <option value="{{$companies->id}}">{{$companies->name}} ({{$companies->short_name}})</option>
                                         @endforeach
                                     </select>
                                     <div id="company_error" style="display:none;"></div>

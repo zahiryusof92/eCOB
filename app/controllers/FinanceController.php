@@ -16,6 +16,20 @@ class FinanceController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $file_no = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year')->get();
+        $month = [
+            1 => 'JAN',
+            2 => 'FEB',
+            3 => 'MAR',
+            4 => 'APR',
+            5 => 'MAY',
+            6 => 'JUN',
+            7 => 'JUL',
+            8 => 'AUG',
+            9 => 'SEP',
+            10 => 'OCT',
+            11 => 'NOV',
+            12 => 'DEC'
+        ];
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -25,7 +39,8 @@ class FinanceController extends BaseController {
                 'sub_nav_active' => 'add_finance_list',
                 'user_permission' => $user_permission,
                 'image' => "",
-                'file_no' => $file_no
+                'file_no' => $file_no,
+                'month' => $month
             );
 
             return View::make('finance_en.add_finance_file', $viewData);
@@ -37,7 +52,8 @@ class FinanceController extends BaseController {
                 'sub_nav_active' => 'add_finance_list',
                 'user_permission' => $user_permission,
                 'image' => "",
-                'file_no' => $file_no
+                'file_no' => $file_no,
+                'month' => $month
             );
 
             return View::make('finance_en.add_finance_file', $viewData);
@@ -455,7 +471,27 @@ class FinanceController extends BaseController {
     public function financeList() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        if (empty(Session::get('admin_cob'))) {
+            $cob = Company::where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+        } else {
+            $cob = Company::where('id', Session::get('admin_cob'))->get();
+        }
         $file = Files::where('is_deleted', 0)->get();
+        $month = [
+            1 => 'JAN',
+            2 => 'FEB',
+            3 => 'MAR',
+            4 => 'APR',
+            5 => 'MAY',
+            6 => 'JUN',
+            7 => 'JUL',
+            8 => 'AUG',
+            9 => 'SEP',
+            10 => 'OCT',
+            11 => 'NOV',
+            12 => 'DEC'
+        ];
+
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -464,6 +500,8 @@ class FinanceController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_file_list',
                 'user_permission' => $user_permission,
+                'cob' => $cob,
+                'month' => $month,
                 'file' => $file,
                 'image' => ""
             );
@@ -476,6 +514,8 @@ class FinanceController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_file_list',
                 'user_permission' => $user_permission,
+                'cob' => $cob,
+                'month' => $month,
                 'file' => $file,
                 'image' => ""
             );
@@ -523,6 +563,9 @@ class FinanceController extends BaseController {
                 $data_raw = array(
                     "<a style='text-decoration:underline;' href='" . URL::action('FinanceController@editFinanceFileList', [$filelists->id, 'home']) . "'>" . $filelists->file->file_no . " " . $filelists->year . "-" . strtoupper($filelists->monthName()) . "</a>",
                     $filelists->file->strata->strataName(),
+                    $filelists->company->short_name,
+                    strtoupper($filelists->monthName()),
+                    $filelists->year,
                     $status,
                     $button
                 );

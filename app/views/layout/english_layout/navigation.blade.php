@@ -215,6 +215,13 @@ if (!Auth::user()->getAdmin()) {
         </div>
         <ul class="left-menu-list left-menu-list-root list-unstyled">
 
+            <li class="left-menu-list-link hidden-md-up">
+                <a class="left-menu-link" href="{{ URL::action('AdminController@home') }}">
+                    <i class="left-menu-link-icon fa fa-home"><!-- --></i>
+                    Home
+                </a>
+            </li>
+
             @if ($access_permission1 == 1 || $access_permission2 == 1 || $access_permission3 == 1 || $access_permission36 == 1 || $access_permission37 == 1 || $access_permission38 == 1 || $access_permission39 == 1)
             <li class="left-menu-list-submenu" id="cob_panel">
                 <a class="left-menu-link" href="javascript: void(0);">
@@ -584,6 +591,7 @@ if (!Auth::user()->getAdmin()) {
                 </ul>
             </li>
             @endif
+        </ul>
 
     </div>
 </nav>

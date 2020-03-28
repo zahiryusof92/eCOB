@@ -800,6 +800,12 @@ class AdminController extends BaseController {
     public function fileList() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        if (empty(Session::get('admin_cob'))) {
+            $cob = Company::where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+        } else {
+            $cob = Company::where('id', Session::get('admin_cob'))->get();
+        }
+        
         $file = Files::where('is_deleted', 0)->get();
 
         if (Session::get('lang') == "en") {
@@ -809,6 +815,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_list',
                 'user_permission' => $user_permission,
+                'cob' => $cob,
                 'file' => $file,
                 'image' => ""
             );
@@ -821,6 +828,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_list',
                 'user_permission' => $user_permission,
+                'cob' => $cob,
                 'file' => $file,
                 'image' => ""
             );
@@ -837,7 +845,7 @@ class AdminController extends BaseController {
                 $file = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
             } else {
                 $file = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
-            }            
+            }
         }
 
         if (count($file) > 0) {
@@ -898,8 +906,9 @@ class AdminController extends BaseController {
 
                 $data_raw = array(
                     "<a style='text-decoration:underline;' href='" . URL::action('AdminController@house', $files->id) . "'>" . $files->file_no . "</a>",
-                    $files->year,
                     $strata_name,
+                    $files->company->short_name,
+                    $files->year,
                     $is_active,
                     $status,
                     $button

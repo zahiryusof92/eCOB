@@ -15,7 +15,18 @@ class AgmController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+        $cob = Company::where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
         $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
+        
+        if (!Auth::user()->getAdmin()) {
+            $file_no = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $file_no = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $file_no = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }
+        }
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -25,7 +36,9 @@ class AgmController extends BaseController {
                 'sub_nav_active' => 'agmdesignsub_list',
                 'user_permission' => $user_permission,
                 'files' => $files,
+                'cob' => $cob,
                 'designation' => $designation,
+                'file_no' => $file_no,
                 'image' => ''
             );
 
@@ -38,7 +51,9 @@ class AgmController extends BaseController {
                 'sub_nav_active' => 'agmdesignsub_list',
                 'user_permission' => $user_permission,
                 'files' => $files,
+                'cob' => $cob,
                 'designation' => $designation,
+                'file_no' => $file_no,
                 'image' => ''
             );
 
@@ -67,9 +82,11 @@ class AgmController extends BaseController {
 
 
                 $data_raw = array(
+                    $ajk_details->files->file_no,
                     $designation->description,
                     $ajk_details->name,
                     $ajk_details->phone_no,
+                    $ajk_details->files->company->short_name,                    
                     $ajk_details->year,
                     $button
                 );
