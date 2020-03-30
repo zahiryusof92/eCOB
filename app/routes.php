@@ -204,6 +204,17 @@ Route::get('/updateMemo/{id}', 'AdminController@updateMemo')->before('authMember
 Route::post('/submitUpdateMemo', 'AdminController@submitUpdateMemo')->before('authMember');
 Route::post('/deleteMemo/{id}', 'AdminController@deleteMemo')->before('authMember');
 
+//rating
+Route::get('/rating', 'AdminController@rating')->before('authMember');
+Route::get('/getRating', 'AdminController@getRating')->before('authMember');
+Route::post('/activeRating', 'AdminController@activeRating')->before('authMember');
+Route::post('/inactiveRating', 'AdminController@inactiveRating')->before('authMember');
+Route::get('/addRating', 'AdminController@addRating')->before('authMember');
+Route::post('/submitAddRating', 'AdminController@submitAddRating')->before('authMember');
+Route::get('/updateRating/{id}', 'AdminController@updateRating')->before('authMember');
+Route::post('/submitUpdateRating', 'AdminController@submitUpdateRating')->before('authMember');
+Route::post('/deleteRating/{id}', 'AdminController@deleteRating')->before('authMember');
+
 //form
 Route::get('/form', 'AdminController@form')->before('authMember');
 Route::get('/getForm', 'AdminController@getForm')->before('authMember');
@@ -221,8 +232,10 @@ Route::post('/uploadFormFile', 'FileController@uploadFormFile');
 //AGM Design Submission
 Route::get('/AJK', 'AgmController@AJK')->before('authMember');
 Route::get('/getAJK', 'AgmController@getAJK')->before('authMember');
-Route::post('/addAJK', 'AgmController@addAJK')->before('authMember');
-Route::post('/editAJK', 'AgmController@editAJK')->before('authMember');
+Route::get('/addAJK', 'AgmController@addAJK')->before('authMember');
+Route::post('/submitAddAJK', 'AgmController@submitAddAJK')->before('authMember');
+Route::get('/editAJK/{id}', 'AgmController@editAJK')->before('authMember');
+Route::post('/submitEditAJK', 'AgmController@submitEditAJK')->before('authMember');
 Route::post('/deleteAJK', 'AgmController@deleteAJK')->before('authMember');
 
 //Purchaser Submission
@@ -237,6 +250,28 @@ Route::get('/importPurchaser', 'AgmController@importPurchaser')->before('authMem
 Route::post('/uploadPurchaserCSVAction', 'FileController@uploadPurchaserCSVAction')->before('authMember');
 Route::post('/submitUploadPurchaser', 'AgmController@submitUploadPurchaser')->before('authMember');
 
+// upload minutes
+Route::get('/minutes', 'AgmController@minutes')->before('authMember');
+Route::get('/getMinutes', 'AgmController@getMinutes')->before('authMember');
+Route::get('/addMinutes', 'AgmController@addMinutes')->before('authMember');
+Route::post('/submitAddMinutes', 'AgmController@submitAddMinutes')->before('authMember');
+Route::get('/editMinutes/{id}', 'AgmController@editMinutes')->before('authMember');
+Route::post('/submitEditMinutes', 'AgmController@submitEditMinutes')->before('authMember');
+Route::post('/getMinuteDetails', 'AgmController@getMinuteDetails')->before('authMember');
+Route::post('/deleteMinutes/{id}', 'AgmController@deleteMinutes')->before('authMember');
+
+//document
+Route::get('/document', 'AgmController@document')->before('authMember');
+Route::get('/getDocument', 'AgmController@getDocument')->before('authMember');
+Route::post('/activeDocument', 'AgmController@activeDocument')->before('authMember');
+Route::post('/inactiveDocument', 'AgmController@inactiveDocument')->before('authMember');
+Route::get('/addDocument', 'AgmController@addDocument')->before('authMember');
+Route::post('/submitAddDocument', 'AgmController@submitAddDocument')->before('authMember');
+Route::get('/updateDocument/{id}', 'AgmController@updateDocument')->before('authMember');
+Route::post('/submitUpdateDocument', 'AgmController@submitUpdateDocument')->before('authMember');
+Route::post('/deleteDocument/{id}', 'AgmController@deleteDocument')->before('authMember');
+Route::post('/deleteDocumentFile', 'AgmController@deleteDocumentFile');
+Route::post('/uploadDocumentFile', 'FileController@uploadDocumentFile');
 
 /*
  * RONALDO
@@ -458,7 +493,7 @@ Route::post('/deleteUnitMeasure/{id}', 'AdminController@deleteUnitMeasure')->bef
 // --- Reporting --- //
 //audit trail
 Route::get('/reporting/auditTrail', 'AdminController@auditTrail')->before('authMember');
-Route::get('/getAuditTrail', 'AdminController@getAuditTrail')->before('authMember');
+Route::post('/getAuditTrail', 'AdminController@getAuditTrail')->before('authMember');
 
 //file by location
 Route::get('/reporting/fileByLocation', 'AdminController@fileByLocation')->before('authMember');
@@ -507,8 +542,9 @@ Route::post('/deleteFinanceList', 'FinanceController@deleteFinanceList')->before
 
 Route::get('/addFinanceFileList', 'FinanceController@addFinanceFileList')->before('authMember');
 Route::post('/submitAddFinanceFile', 'FinanceController@submitAddFinanceFile')->before('authMember');
-Route::get('/editFinanceFileList/{id}/{tab}/', 'FinanceController@editFinanceFileList')->before('authMember');
+Route::get('/editFinanceFileList/{id}', 'FinanceController@editFinanceFileList')->before('authMember');
 Route::post('/updateFinanceFileList', 'FinanceController@updateFinanceFileList')->before('authMember');
+Route::post('/updateFinanceFile', 'FinanceController@updateFinanceFile')->before('authMember');
 
 Route::post('/updateFinanceCheck', 'FinanceController@updateFinanceCheck')->before('authMember');
 Route::post('/updateFinanceFileAdmin', 'FinanceController@updateFinanceFileAdmin')->before('authMember');
@@ -529,16 +565,6 @@ Route::post('/submitFinanceSupport', 'FinanceController@submitFinanceSupport')->
 Route::get('/editFinanceSupport/{id}', 'FinanceController@editFinanceSupport')->before('authMember');
 Route::post('/updateFinanceSupport', 'FinanceController@updateFinanceSupport')->before('authMember');
 Route::post('/deleteFinanceSupport', 'FinanceController@deleteFinanceSupport')->before('authMember');
-
-// upload minutes
-Route::get('/minutes', 'AgmController@minutes')->before('authMember');
-Route::get('/getMinutes', 'AgmController@getMinutes')->before('authMember');
-Route::get('/addMinutes', 'AgmController@addMinutes')->before('authMember');
-Route::post('/submitAddMinutes', 'AgmController@submitAddMinutes')->before('authMember');
-Route::get('/editMinutes/{id}', 'AgmController@editMinutes')->before('authMember');
-Route::post('/submitEditMinutes', 'AgmController@submitEditMinutes')->before('authMember');
-Route::post('/getMinuteDetails', 'AgmController@getMinuteDetails')->before('authMember');
-Route::post('/deleteMinutes/{id}', 'AgmController@deleteMinutes')->before('authMember');
 
 //form download
 Route::get('/formDownload', 'AdminController@formDownload')->before('authMember');

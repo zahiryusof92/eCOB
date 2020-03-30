@@ -319,7 +319,7 @@ if (!Auth::user()->getAdmin()) {
                     @endif
                     @if ($access_permission40 == 1)
                     <li id="rating_list">
-                        <a class="left-menu-link" href="#">
+                        <a class="left-menu-link" href="{{URL::action('AdminController@rating')}}">
                             Rating
                         </a>
                     </li>

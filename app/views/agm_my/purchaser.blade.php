@@ -39,7 +39,7 @@ foreach ($user_permission as $permission) {
                         <br/><br/>
                     <?php } ?>
                     <div class="table-responsive">
-                        <table class="table table-hover nowrap" id="purchaser" style="font-size: 13px;">
+                        <table class="table table-hover nowrap" id="purchaser" width="100%">
                             <thead>
                                 <tr>
                                     <!--<th style="width:5%;">No</th>-->
@@ -69,7 +69,13 @@ foreach ($user_permission as $permission) {
         $('#purchaser').DataTable({
             "sAjaxSource": "{{URL::action('AgmController@getPurchaser')}}",
             "order": [[0, "asc"]],
-            "responsive": false
+            "responsive": false,
+            "aoColumnDefs": [
+                {
+                    "bSortable": false,
+                    "aTargets": [-1]
+                }
+            ]
         });
     });
     

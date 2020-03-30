@@ -284,15 +284,9 @@ foreach ($user_permission as $permission) {
                     $("#cancel_button").removeAttr("disabled");
 
                     if (data.trim() == "true") {
-                        $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully updated</p>',
-                        }, {
-                            type: 'success',
-                            placement: {
-                                align: "center"
-                            }
+                        bootbox.alert("<span style='color:green;'>Minutes added successfully!</span>", function () {
+                            window.location = '{{URL::action("AgmController@minutes") }}';
                         });
-                        location = '{{ URL::action("AgmController@minutes") }}';
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }

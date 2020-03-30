@@ -248,9 +248,9 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Date (VP)</label>
+                                                        <label>Vacant Possession Date</label>
                                                         <label class="input-group datepicker-only-init">
-                                                            <input type="text" class="form-control" placeholder="Date" id="strata_date" value="{{$strata->date}}"/>
+                                                            <input type="text" class="form-control" placeholder="Vacant Possession Date" id="strata_date" value="{{$strata->date}}"/>
                                                             <span class="input-group-addon">
                                                                 <i class="icmn-calendar"></i>
                                                             </span>
@@ -296,6 +296,31 @@ foreach ($user_permission as $permission) {
                                                             @endforeach
                                                         </select>
                                                         <div id="starta_perimeter_error" style="display:none;"></div>                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Total Share Unit</label>
+                                                        <input type="text" class="form-control" placeholder="Total Share Unit" id="strata_total_share_unit" value="{{$strata->total_share_unit}}">                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>CCC No.</label>
+                                                        <input type="text" class="form-control" placeholder="CCC No" id="strata_ccc_no" value="{{$strata->ccc_no}}">                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Date CCC</label>
+                                                        <label class="input-group datepicker-only-init">
+                                                            <input type="text" class="form-control" placeholder="Date CCC" id="strata_ccc_date" value="{{$strata->ccc_date}}"/>
+                                                            <span class="input-group-addon">
+                                                                <i class="icmn-calendar"></i>
+                                                            </span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -754,7 +779,7 @@ foreach ($user_permission as $permission) {
     }
 
     $(function () {
-        $('#strata_date').datetimepicker({
+        $('#strata_date, #ccc_date').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -812,6 +837,9 @@ foreach ($user_permission as $permission) {
                 strata_perimeter = $("#strata_perimeter").val(),
                 strata_area = $("#strata_area").val(),
                 strata_file_url = $("#strata_file_url").val(),
+                strata_total_share_unit = $("#strata_total_share_unit").val(),
+                strata_ccc_no = $("#strata_ccc_no").val(),
+                strata_ccc_date = $("#strata_ccc_date").val(),
                 //residential
                 residential_unit_no = $("#residential_unit_no").val(),
                 residential_maintenance_fee = $("#residential_maintenance_fee").val(),
@@ -904,6 +932,9 @@ foreach ($user_permission as $permission) {
                     strata_category: strata_category,
                     strata_perimeter: strata_perimeter,
                     strata_area: strata_area,
+                    strata_total_share_unit: strata_total_share_unit,
+                    strata_ccc_no: strata_ccc_no,
+                    strata_ccc_date: strata_ccc_date,
                     is_residential: is_residential,
                     is_commercial: is_commercial,
                     strata_file_url: strata_file_url,

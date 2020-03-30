@@ -14,17 +14,16 @@ class AgmController extends BaseController {
     public function AJK() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
-        $cob = Company::where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
-        $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
-        
         if (!Auth::user()->getAdmin()) {
-            $file_no = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            $cob = Company::where('id', Auth::user()->company_id)->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $file_no = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $cob = Company::where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
             } else {
-                $file_no = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $cob = Company::where('id', Session::get('admin_cob'))->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
             }
         }
 
@@ -37,8 +36,6 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'cob' => $cob,
-                'designation' => $designation,
-                'file_no' => $file_no,
                 'image' => ''
             );
 
@@ -52,8 +49,6 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'cob' => $cob,
-                'designation' => $designation,
-                'file_no' => $file_no,
                 'image' => ''
             );
 
@@ -70,23 +65,19 @@ class AgmController extends BaseController {
                 $designation = Designation::find($ajk_details->designation);
 
                 $button = "";
-                $button .= '<button type="button" class="btn btn-xs btn-success edit_ajk" title="Edit" data-toggle="modal" data-target="#edit_ajk_details"
-                            data-ajk_id="' . $ajk_details->id . '" data-file_id="' . $ajk_details->file_id . '" data-designation="' . $ajk_details->designation . '" data-name="' . $ajk_details->name . '" data-phone_no="' . $ajk_details->phone_no . '" data-year="' . $ajk_details->year . '">
+                $button .= '<button type="button" class="btn btn-xs btn-success edit_ajk" title="Edit"  onclick="window.location=\'' . URL::action('AgmController@editAJK', $ajk_details->id) . '\'">
                                 <i class="fa fa-pencil"></i>
-                            </button>
-                            &nbsp;';
+                            </button>&nbsp;';
                 $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAJKDetails(\'' . $ajk_details->id . '\')">
                                 <i class="fa fa-trash"></i>
-                            </button>
-                            &nbsp';
-
+                            </button>&nbsp';
 
                 $data_raw = array(
+                    $ajk_details->files->company->short_name,
                     $ajk_details->files->file_no,
                     $designation->description,
                     $ajk_details->name,
                     $ajk_details->phone_no,
-                    $ajk_details->files->company->short_name,                    
                     $ajk_details->year,
                     $button
                 );
@@ -110,6 +101,50 @@ class AgmController extends BaseController {
     }
 
     public function addAJK() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
+
+        if (!Auth::user()->getAdmin()) {
+            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }
+        }
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Designation',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdesignsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'designation' => $designation,
+                'image' => ''
+            );
+
+            return View::make('agm_en.add_ajk', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Maklumat AJK',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdesignsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'designation' => $designation,
+                'image' => ''
+            );
+
+            return View::make('agm_my.add_ajk', $viewData);
+        }
+    }
+
+    public function submitAddAJK() {
         $data = Input::all();
         if (Request::ajax()) {
 
@@ -118,6 +153,7 @@ class AgmController extends BaseController {
             $name = $data['ajk_name'];
             $phone_no = $data['ajk_phone_no'];
             $year = $data['ajk_year'];
+            $remarks = $data['remarks'];
 
             $ajk_detail = new AJKDetails();
             $ajk_detail->file_id = $file_id;
@@ -125,6 +161,7 @@ class AgmController extends BaseController {
             $ajk_detail->name = $name;
             $ajk_detail->phone_no = $phone_no;
             $ajk_detail->year = $year;
+            $ajk_detail->remarks = $remarks;
             $success = $ajk_detail->save();
 
             if ($success) {
@@ -144,34 +181,89 @@ class AgmController extends BaseController {
         }
     }
 
-    public function editAJK() {
+    public function editAJK($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
+
+        if (!Auth::user()->getAdmin()) {
+            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }
+        }
+        $ajk_details = AJKDetails::find($id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Designation',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdesignsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'designation' => $designation,
+                'ajk_details' => $ajk_details,
+                'image' => ''
+            );
+
+            return View::make('agm_en.edit_ajk', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Maklumat AJK',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdesignsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'designation' => $designation,
+                'ajk_details' => $ajk_details,
+                'image' => ''
+            );
+
+            return View::make('agm_my.edit_ajk', $viewData);
+        }
+    }
+
+    public function submitEditAJK() {
         $data = Input::all();
         if (Request::ajax()) {
 
-            $id = $data['ajk_id_edit'];
-            $designation = $data['ajk_designation'];
-            $name = $data['ajk_name'];
-            $phone_no = $data['ajk_phone_no'];
-            $year = $data['ajk_year'];
+            $id = $data['id'];
+            $file_id = $data['file_id'];
+            $designation = $data['designation'];
+            $name = $data['name'];
+            $phone_no = $data['phone_no'];
+            $year = $data['year'];
+            $remarks = $data['remarks'];
 
             $ajk_detail = AJKDetails::find($id);
-            $ajk_detail->designation = $designation;
-            $ajk_detail->name = $name;
-            $ajk_detail->phone_no = $phone_no;
-            $ajk_detail->year = $year;
-            $success = $ajk_detail->save();
+            if ($ajk_detail) {
+                $ajk_detail->file_id = $file_id;
+                $ajk_detail->designation = $designation;
+                $ajk_detail->name = $name;
+                $ajk_detail->phone_no = $phone_no;
+                $ajk_detail->year = $year;
+                $ajk_detail->remarks = $remarks;
+                $success = $ajk_detail->save();
 
-            if ($success) {
-                # Audit Trail
-                $file_name = Files::find($ajk_detail->file_id);
-                $remarks = 'AJK Details (' . $file_name->file_no . ') ' . $ajk_detail->name . ' has been updated.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "COB File";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
+                if ($success) {
+                    # Audit Trail
+                    $file_name = Files::find($ajk_detail->file_id);
+                    $remarks = 'AJK Details (' . $file_name->file_no . ') ' . $ajk_detail->name . ' has been updated.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB File";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
 
-                print "true";
+                    print "true";
+                } else {
+                    print "false";
+                }
             } else {
                 print "false";
             }
@@ -252,18 +344,14 @@ class AgmController extends BaseController {
             $no = 1;
             foreach ($buyer_list as $buyer_lists) {
                 $button = "";
-                $button .= '<button type="button" class="btn btn-sm btn-success" title="Edit" onclick="window.location=\'' . URL::action('AgmController@editPurchaser', $buyer_lists->id) . '\'">
+                $button .= '<button type="button" class="btn btn-xs btn-success" title="Edit" onclick="window.location=\'' . URL::action('AgmController@editPurchaser', $buyer_lists->id) . '\'">
                                 <i class="fa fa-pencil"></i>
-                            </button>
-                            &nbsp;';
-                $button .= '<button type="button" class="btn btn-sm btn-danger" title="Delete" onclick="deletePurchaser(\'' . $buyer_lists->id . '\')">
+                            </button>&nbsp;';
+                $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deletePurchaser(\'' . $buyer_lists->id . '\')">
                                 <i class="fa fa-trash"></i>
-                            </button>
-                            &nbsp';
-
+                            </button>&nbsp';
 
                 $data_raw = array(
-//                    $no++,
                     $buyer_lists->unit_no,
                     $buyer_lists->unit_share,
                     $buyer_lists->owner_name,
@@ -1733,6 +1821,303 @@ class AgmController extends BaseController {
             } else {
                 print "false";
             }
+        }
+    }
+
+    //document
+    public function document() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderby('sort_no', 'asc')->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Document',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_en.document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Borang',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_my.document', $viewData);
+        }
+    }
+
+    public function getDocument() {
+        $document = Document::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+        if (count($document) > 0) {
+            $data = Array();
+            foreach ($document as $documents) {
+                $button = "";
+                if ($documents->is_hidden == 1) {
+                    $is_hidden = 'Yes';
+                } else {
+                    $is_hidden = 'No';
+                }
+
+                if ($documents->is_readonly == 1) {
+                    $is_readonly = 'Yes';
+                } else {
+                    $is_readonly = 'No';
+                }
+
+                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AgmController@updateDocument', $documents->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteDocument(\'' . $documents->id . '\')"><i class="fa fa-trash"></i></button>';
+
+                $data_raw = array(
+                    $documents->file->file_no,
+                    $documents->type->name,
+                    $documents->name,
+                    $is_hidden,
+                    $is_readonly,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function deleteDocument() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $document = Document::find($id);
+            if ($document) {
+                $document->is_deleted = 1;
+                $deleted = $document->save();
+                if ($deleted) {
+                    # Audit Trail
+                    $remarks = 'Document: ' . $document->name_en . ' has been deleted.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "Document";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    print "true";
+                } else {
+                    print "false";
+                }
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteDocumentFile() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $document = Document::find($id);
+            if ($document) {
+                $document->file_url = "";
+                $deleted = $document->save();
+
+                if ($deleted) {
+                    # Audit Trail
+                    $remarks = 'Document: ' . $document->name_en . ' has been updated.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "Document";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    print "true";
+                } else {
+                    print "false";
+                }
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function addDocument() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        if (!Auth::user()->getAdmin()) {
+            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }
+        }
+        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Document',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_en.add_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Add Document',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_my.add_document', $viewData);
+        }
+    }
+
+    public function submitAddDocument() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $document = new Document();
+            $document->file_id = $data['file_id'];
+            $document->document_type_id = $data['document_type'];
+            $document->name = $data['name'];
+            $document->remarks = $data['remarks'];
+            $document->is_hidden = $data['is_hidden'];
+            $document->is_readonly = $data['is_readonly'];
+            $document->file_url = $data['document_url'];
+            $success = $document->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Document: ' . $document->name_en . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Document";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function updateDocument($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $document = Document::find($id);
+        if (!Auth::user()->getAdmin()) {
+            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }
+        }
+        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Edit Document',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'document' => $document,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_en.edit_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Document',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'document' => $document,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_my.edit_document', $viewData);
+        }
+    }
+
+    public function submitUpdateDocument() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $id = $data['id'];
+
+            $document = Document::find($id);
+            if ($document) {
+                $document->file_id = $data['file_id'];
+                $document->document_type_id = $data['document_type'];
+                $document->name = $data['name'];
+                $document->remarks = $data['remarks'];
+                $document->is_hidden = $data['is_hidden'];
+                $document->is_readonly = $data['is_readonly'];
+                $document->file_url = $data['document_url'];
+                $success = $document->save();
+
+                if ($success) {
+                    # Audit Trail
+                    $remarks = $document->id . ' has been updated.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "Document";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    return "true";
+                } else {
+                    return "false";
+                }
+            } else {
+                return 'false';
+            }
+        } else {
+            return "false";
         }
     }
 

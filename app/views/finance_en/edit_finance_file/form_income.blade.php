@@ -6,8 +6,7 @@ $prefix = 'income_';
     <div class="col-lg-12">
 
         <h6>3. LAPORAN PENDAPATAN</h6>
-
-        <form id="financeFileIncome">                 
+              
             <div class="row">
                 <table class="table table-sm" id="dynamic_form_income" style="font-size: 12px;">
                     <thead>
@@ -69,14 +68,6 @@ $prefix = 'income_';
                     </tbody>
                 </table>
             </div>
-            <?php if ($update_permission == 1) { ?>
-                <div class="form-actions">                
-                    <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
-                    <input type="submit" value="Submit" class="btn btn-primary submit_button">
-                    <img class="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
-                </div>
-            <?php } ?>
-        </form>
     </div>
 </div>
 
@@ -155,42 +146,4 @@ $prefix = 'income_';
 
         calculateIncomeTotal();
     }
-
-    $("#financeFileIncome").submit(function (e) {
-        e.preventDefault();
-
-        $(".loading").css("display", "inline-block");
-        $(".submit_button").attr("disabled", "disabled");
-
-        var error = 0;
-
-        if (error == 0) {
-            $.ajax({
-                method: "POST",
-                url: "{{ URL::action('FinanceController@updateFinanceFileIncome') }}",
-                data: $(this).serialize(),
-                success: function (response) {
-                    $(".loading").css("display", "none");
-                    $(".submit_button").removeAttr("disabled");
-
-                    if (response.trim() == "true") {
-                        $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
-                        }, {
-                            type: 'success',
-                            placement: {
-                                align: "center"
-                            }
-                        });
-                        location = '{{URL::action("FinanceController@editFinanceFileList", [$finance_file_id, "income"]) }}';
-                    } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
-                    }
-                }
-            });
-        } else {
-            $(".loading").css("display", "none");
-            $(".submit_button").removeAttr("disabled");
-        }
-    });
 </script>

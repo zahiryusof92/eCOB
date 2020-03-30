@@ -33,7 +33,7 @@ foreach ($user_permission as $permission) {
                             <tr>
                                 <th style="width:70%;">Form Type (BI)</th>
                                 <th style="width:70%;">Form Type (BM)</th>
-                                <th style="width:20%;">Seq</th>
+                                <th style="width:20%;">Sort No</th>
                                 <th style="width:20%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
                                 <th style="width:10%;">Action</th>

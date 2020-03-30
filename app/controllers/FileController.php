@@ -20,6 +20,16 @@ class FileController extends BaseController {
             return Response::json(['success' => true, 'file' => $destinationPath . "/" . $filename, 'filename' => $filename]);
         }
     }
+    
+    public function uploadDocumentFile() {
+        $file = Input::file('document_file');
+        if ($file) {
+            $destinationPath = 'uploads/document_files';
+            $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
+            Input::file('document_file')->move($destinationPath, $filename);
+            return Response::json(['success' => true, 'file' => $destinationPath . "/" . $filename, 'filename' => $filename]);
+        }
+    }
 
     public function uploadStrataFile() {
         $file = Input::file('strata_file');

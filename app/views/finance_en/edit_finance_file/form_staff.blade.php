@@ -7,92 +7,83 @@ $prefix = 'staff_';
 
         <h6>4.5 LAPORAN PERBELANJAAN PEKERJA</h6>
 
-        <form id="financeFileStaff">
-            <div class="row">
-                <table class="table table-sm" id="dynamic_form_staff" style="font-size: 12px;">
-                    <thead>
-                        <tr>
-                            <th width="5%">&nbsp;</th>
-                            <th width="10%" style="text-align: center;">PERKARA</th>
-                            <th width="10%" style="text-align: center;">GAJI PERORANG (RM)<br/>A</th>
-                            <th width="10%" style="text-align: center;">BIL. PEKERJA<br/>B</th>
-                            <th width="10%" style="text-align: center;">JUMLAH GAJI<br/>A x B</th>
-                            <th width="10%" style="text-align: center;">TUNGGAKAN BULAN-BULAN TERDAHULU<br/>C</th>
-                            <th width="10%" style="text-align: center;">BULAN SEMASA<br/>D</th>
-                            <th width="10%" style="text-align: center;">BULAN HADAPAN<br/>E</th>
-                            <th width="10%" style="text-align: center;">JUMLAH<br/>C + D + E</th>
-                            <th width="10%" style="text-align: center;">JUMLAH<br/>BAKI BAYARAN MASIH TERTUNGGAK<br/>(BELUM BAYAR)</th>
-                            <td width="5%" style="text-align: center;">&nbsp;</td> 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $count = 0;
-                        $total_tunggakan = 0;
-                        $total_semasa = 0;
-                        $total_hadapan = 0;
-                        $total_tertunggak = 0;
-                        $total_all = 0;
-                        ?>
+        <div class="row">
+            <table class="table table-sm" id="dynamic_form_staff" style="font-size: 12px;">
+                <thead>
+                    <tr>
+                        <th width="5%">&nbsp;</th>
+                        <th width="10%" style="text-align: center;">PERKARA</th>
+                        <th width="10%" style="text-align: center;">GAJI PERORANG (RM)<br/>A</th>
+                        <th width="10%" style="text-align: center;">BIL. PEKERJA<br/>B</th>
+                        <th width="10%" style="text-align: center;">JUMLAH GAJI<br/>A x B</th>
+                        <th width="10%" style="text-align: center;">TUNGGAKAN BULAN-BULAN TERDAHULU<br/>C</th>
+                        <th width="10%" style="text-align: center;">BULAN SEMASA<br/>D</th>
+                        <th width="10%" style="text-align: center;">BULAN HADAPAN<br/>E</th>
+                        <th width="10%" style="text-align: center;">JUMLAH<br/>C + D + E</th>
+                        <th width="10%" style="text-align: center;">JUMLAH<br/>BAKI BAYARAN MASIH TERTUNGGAK<br/>(BELUM BAYAR)</th>
+                        <td width="5%" style="text-align: center;">&nbsp;</td> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $count = 0;
+                    $total_tunggakan = 0;
+                    $total_semasa = 0;
+                    $total_hadapan = 0;
+                    $total_tertunggak = 0;
+                    $total_all = 0;
+                    ?>
 
-                        @foreach ($staffFile as $staffFiles)
-                        <?php
-                        $gaji_per_person = $staffFiles['gaji_per_orang'];
-                        $bil_pekerja = $staffFiles['bil_pekerja'];
-                        $total_gaji = $staffFiles['gaji_per_orang'] * $staffFiles['bil_pekerja'];
-                        $total_tunggakan += $staffFiles['tunggakan'];
-                        $total_semasa += $staffFiles['semasa'];
-                        $total_hadapan += $staffFiles['hadapan'];
-                        $total_tertunggak += $staffFiles['tertunggak'];
-                        $total_income = $staffFiles['tunggakan'] + $staffFiles['semasa'] + $staffFiles['hadapan'];
-                        $total_all += $total_income;
-                        ?>
+                    @foreach ($staffFile as $staffFiles)
+                    <?php
+                    $gaji_per_person = $staffFiles['gaji_per_orang'];
+                    $bil_pekerja = $staffFiles['bil_pekerja'];
+                    $total_gaji = $staffFiles['gaji_per_orang'] * $staffFiles['bil_pekerja'];
+                    $total_tunggakan += $staffFiles['tunggakan'];
+                    $total_semasa += $staffFiles['semasa'];
+                    $total_hadapan += $staffFiles['hadapan'];
+                    $total_tertunggak += $staffFiles['tertunggak'];
+                    $total_income = $staffFiles['tunggakan'] + $staffFiles['semasa'] + $staffFiles['hadapan'];
+                    $total_all += $total_income;
+                    ?>
 
-                        <tr id="staff_row{{ ++$count }}">
-                            <td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="{{ $staffFiles['is_custom'] }}">{{ $count }}</td>
-                            <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $staffFiles['name'] }}" readonly=""></td>
-                            <td><input type="number" step="any" oninput="calculateStaff('{{ $count }}')" id="{{ $prefix . 'gaji_per_orang_' . $count }}" name="{{ $prefix }}gaji_per_orang[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['gaji_per_orang'] }}"></td>
-                            <td><input type="number" step="any" oninput="calculateStaff('{{ $count }}')" id="{{ $prefix . 'bil_pekerja_' . $count }}" name="{{ $prefix }}bil_pekerja[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['bil_pekerja'] }}"></td>
-                            <td><input type="number" step="any" id="{{ $prefix . 'total_gaji_' . $count }}" name="{{ $prefix }}total_gaji[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_gaji }}" readonly=""></td>
-                            <td><input type="number" step="any" oninput="calculateStaff('{{ $count }}')" id="{{ $prefix . 'tunggakan_' . $count }}" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['tunggakan'] }}"></td>
-                            <td><input type="number" step="any" oninput="calculateStaff('{{ $count }}')" id="{{ $prefix . 'semasa_' . $count }}" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['semasa'] }}"></td>
-                            <td><input type="number" step="any" oninput="calculateStaff('{{ $count }}')" id="{{ $prefix . 'hadapan_' . $count }}" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['hadapan'] }}"></td>
-                            <td><input type="number" step="any" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
-                            <td><input type="number" step="any" oninput="calculateStaffTotal('{{ $count }}')" id="{{ $prefix . 'tertunggak_' . $count }}" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['tertunggak'] }}"></td>
-                            @if ($staffFiles['is_custom'])
-                            <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowStaff('staff_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
-                            @else
-                            <td>&nbsp;</td>
-                            @endif
-                        </tr>
-                        @endforeach
+                    <tr id="staff_row{{ ++$count }}">
+                        <td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="{{ $staffFiles['is_custom'] }}">{{ $count }}</td>
+                        <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $staffFiles['name'] }}" readonly=""></td>
+                        <td><input type="number" step="any" oninput="calculateStaff('{{ $count }}')" id="{{ $prefix . 'gaji_per_orang_' . $count }}" name="{{ $prefix }}gaji_per_orang[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['gaji_per_orang'] }}"></td>
+                        <td><input type="number" step="any" oninput="calculateStaff('{{ $count }}')" id="{{ $prefix . 'bil_pekerja_' . $count }}" name="{{ $prefix }}bil_pekerja[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['bil_pekerja'] }}"></td>
+                        <td><input type="number" step="any" id="{{ $prefix . 'total_gaji_' . $count }}" name="{{ $prefix }}total_gaji[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_gaji }}" readonly=""></td>
+                        <td><input type="number" step="any" oninput="calculateStaff('{{ $count }}')" id="{{ $prefix . 'tunggakan_' . $count }}" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['tunggakan'] }}"></td>
+                        <td><input type="number" step="any" oninput="calculateStaff('{{ $count }}')" id="{{ $prefix . 'semasa_' . $count }}" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['semasa'] }}"></td>
+                        <td><input type="number" step="any" oninput="calculateStaff('{{ $count }}')" id="{{ $prefix . 'hadapan_' . $count }}" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['hadapan'] }}"></td>
+                        <td><input type="number" step="any" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
+                        <td><input type="number" step="any" oninput="calculateStaffTotal('{{ $count }}')" id="{{ $prefix . 'tertunggak_' . $count }}" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['tertunggak'] }}"></td>
+                        @if ($staffFiles['is_custom'])
+                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowStaff('staff_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
+                        @else
+                        <td>&nbsp;</td>
+                        @endif
+                    </tr>
+                    @endforeach
 
-                        <tr>
-                            <td class="padding-table text-right" colspan="11"><a href="javascript:void(0);" onclick="addRowStaff()" class="btn btn-success btn-xs">Add More</a></td>
-                        </tr>
+                    <tr>
+                        <td class="padding-table text-right" colspan="11"><a href="javascript:void(0);" onclick="addRowStaff()" class="btn btn-success btn-xs">Add More</a></td>
+                    </tr>
 
-                        <tr>
-                            <td>&nbsp;</td>
-                            <th class="padding-form" colspan="3">JUMLAH</th>
-                            <th><input type="number" step="any" id="{{ $prefix . 'total_gaji' }}" class="form-control form-control-sm text-right" value="{{ $total_gaji }}" readonly=""></th>
-                            <th><input type="number" step="any" id="{{ $prefix . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $total_tunggakan }}" readonly=""></th>
-                            <th><input type="number" step="any" id="{{ $prefix . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $total_semasa }}" readonly=""></th>
-                            <th><input type="number" step="any" id="{{ $prefix . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $total_hadapan }}" readonly=""></th>
-                            <th><input type="number" step="any" id="{{ $prefix . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $total_all }}" readonly=""></th>
-                            <th><input type="number" step="any" id="{{ $prefix . 'total_tertunggak' }}" class="form-control form-control-sm text-right" value="{{ $total_tertunggak }}" readonly=""></th>
-                            <td>&nbsp;</td>
-                        </tr>
-                    </tbody>
-                </table>    
-            </div>                                                
-            <?php if ($update_permission == 1) { ?>
-                <div class="form-actions">                
-                    <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
-                    <input type="submit" value="Submit" class="btn btn-primary submit_button">
-                    <img class="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
-                </div>
-            <?php } ?>
-        </form>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <th class="padding-form" colspan="3">JUMLAH</th>
+                        <th><input type="number" step="any" id="{{ $prefix . 'total_gaji' }}" class="form-control form-control-sm text-right" value="{{ $total_gaji }}" readonly=""></th>
+                        <th><input type="number" step="any" id="{{ $prefix . 'total_tunggakan' }}" class="form-control form-control-sm text-right" value="{{ $total_tunggakan }}" readonly=""></th>
+                        <th><input type="number" step="any" id="{{ $prefix . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $total_semasa }}" readonly=""></th>
+                        <th><input type="number" step="any" id="{{ $prefix . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $total_hadapan }}" readonly=""></th>
+                        <th><input type="number" step="any" id="{{ $prefix . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $total_all }}" readonly=""></th>
+                        <th><input type="number" step="any" id="{{ $prefix . 'total_tertunggak' }}" class="form-control form-control-sm text-right" value="{{ $total_tertunggak }}" readonly=""></th>
+                        <td>&nbsp;</td>
+                    </tr>
+                </tbody>
+            </table>    
+        </div>
     </div>
 </div>
 
@@ -202,42 +193,4 @@ $prefix = 'staff_';
 
         calculateStaffTotal();
     }
-
-    $("#financeFileStaff").submit(function (e) {
-        e.preventDefault();
-
-        $(".loading").css("display", "inline-block");
-        $(".submit_button").attr("disabled", "disabled");
-
-        var error = 0;
-
-        if (error == 0) {
-            $.ajax({
-                method: "POST",
-                url: "{{ URL::action('FinanceController@updateFinanceFileStaff') }}",
-                data: $(this).serialize(),
-                success: function (response) {
-                    $(".loading").css("display", "none");
-                    $(".submit_button").removeAttr("disabled");
-
-                    if (response.trim() == "true") {
-                        $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
-                        }, {
-                            type: 'success',
-                            placement: {
-                                align: "center"
-                            }
-                        });
-                        location = '{{URL::action("FinanceController@editFinanceFileList", [$finance_file_id, "staff"]) }}';
-                    } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
-                    }
-                }
-            });
-        } else {
-            $(".loading").css("display", "none");
-            $(".submit_button").removeAttr("disabled");
-        }
-    });
 </script>

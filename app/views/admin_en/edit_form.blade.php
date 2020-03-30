@@ -67,7 +67,7 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label class="form-label"><span style="color: red; font-style: italic;">*</span> Seq</label>
+                                    <label class="form-label"><span style="color: red; font-style: italic;">*</span> Sort No</label>
                                     <input id="sort_no" class="form-control" name="sort_no" type="text"  value="{{ $form->sort_no }}">
                                     <div id="sort_no_error" style="display:none;"></div>
                                 </div>
@@ -80,6 +80,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="form-label"><span style="color: red; font-style: italic;">*</span> Upload File</label>
+                                    <br/>
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                     <button type="button" id="clear_form_file" class="btn btn-xs btn-danger" onclick="clearFormFile()" style="display: none;"><i class="fa fa-times"></i></button>                                                        
                                     &nbsp;<input type="file" name="form_file" id="form_file" /> 
@@ -207,7 +208,7 @@ foreach ($user_permission as $permission) {
         }
 
         if (sort_no.trim() == "") {
-            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Seq</span>');
+            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Sort No</span>');
             $("#sort_no_error").css("display", "block");
             error = 1;
         }

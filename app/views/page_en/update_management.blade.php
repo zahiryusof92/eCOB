@@ -163,6 +163,14 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input type="email" class="form-control" placeholder="Email" id="jmb_email">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>                                            
                                         </div>
                                     </div>
@@ -278,6 +286,14 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Fax Number</label>
                                                             <input type="text" class="form-control" placeholder="Fax Number" id="jmb_fax_no" value="{{$management_jmb->fax_no}}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input type="email" class="form-control" placeholder="Email" id="jmb_email" value="{{$management_jmb->email}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -406,6 +422,14 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input type="email" class="form-control" placeholder="Email" id="mc_email">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>                                            
                                         </div>
                                     </div>
@@ -529,6 +553,14 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input type="email" class="form-control" placeholder="Email" id="mc_email" value="{{$management_mc->email}}">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>                                            
                                         </div>
                                     </div>
@@ -642,6 +674,14 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Fax Number</label>
                                                             <input type="text" class="form-control" placeholder="Fax Number" id="agent_fax_no">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input type="email" class="form-control" placeholder="Email" id="agent_email">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -759,6 +799,14 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input type="email" class="form-control" placeholder="Email" id="agent_email" value="{{$management_agent->email}}">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>                                            
                                         </div>
                                     </div>
@@ -858,6 +906,14 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input type="email" class="form-control" placeholder="Email" id="others_email">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>                                            
                                         </div>
                                     </div>
@@ -952,6 +1008,14 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Fax Number</label>
                                                             <input type="text" class="form-control" placeholder="Fax Number" id="others_fax_no" value="{{$management_others->fax_no}}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Email</label>
+                                                            <input type="email" class="form-control" placeholder="Email" id="others_email" value="{{$management_others->email}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1064,7 +1128,8 @@ foreach ($user_permission as $permission) {
                 jmb_state = $("#jmb_state").val(),
                 jmb_country = $("#jmb_country").val(),
                 jmb_phone_no = $("#jmb_phone_no").val(),
-                jmb_fax_no = $("#jmb_fax_no").val();
+                jmb_fax_no = $("#jmb_fax_no").val(),
+                jmb_email = $("#jmb_email").val();
         
         //mc
         var mc_date_formed = $("#mc_date_formed").val(),
@@ -1078,7 +1143,8 @@ foreach ($user_permission as $permission) {
                 mc_state = $("#mc_state").val(),
                 mc_country = $("#mc_country").val(),
                 mc_phone_no = $("#mc_phone_no").val(),
-                mc_fax_no = $("#mc_fax_no").val();
+                mc_fax_no = $("#mc_fax_no").val(),
+                mc_email = $("#mc_email").val();
         
         //agent
         var agent_selected_by = $("#agent_selected_by").val(), 
@@ -1091,7 +1157,8 @@ foreach ($user_permission as $permission) {
                 agent_state = $("#agent_state").val(),
                 agent_country = $("#agent_country").val(),
                 agent_phone_no = $("#agent_phone_no").val(),
-                agent_fax_no = $("#agent_fax_no").val();
+                agent_fax_no = $("#agent_fax_no").val(),
+                agent_email = $("#agent_email").val();
         
         //others
         var others_name = $("#others_name").val(),                
@@ -1104,6 +1171,7 @@ foreach ($user_permission as $permission) {
                 others_country = $("#others_country").val(),
                 others_phone_no = $("#others_phone_no").val(),
                 others_fax_no = $("#others_fax_no").val(),
+                others_email = $("#others_email").val(),
                 is_jmb,
                 is_mc,
                 is_agent,
@@ -1151,6 +1219,7 @@ foreach ($user_permission as $permission) {
                     jmb_country: jmb_country,
                     jmb_phone_no: jmb_phone_no,
                     jmb_fax_no: jmb_fax_no,
+                    jmb_email: jmb_email,
                     //mc
                     is_mc: is_mc,
                     mc_date_formed: mc_date_formed,
@@ -1165,6 +1234,7 @@ foreach ($user_permission as $permission) {
                     mc_country: mc_country,
                     mc_phone_no: mc_phone_no,
                     mc_fax_no: mc_fax_no,
+                    mc_email: mc_email,
                     //agent
                     is_agent: is_agent,
                     agent_selected_by: agent_selected_by,
@@ -1178,6 +1248,7 @@ foreach ($user_permission as $permission) {
                     agent_country: agent_country,
                     agent_phone_no: agent_phone_no,
                     agent_fax_no: agent_fax_no,
+                    agent_email: agent_email,
                     //others
                     is_others: is_others,
                     others_name: others_name,
@@ -1190,6 +1261,7 @@ foreach ($user_permission as $permission) {
                     others_country: others_country,
                     others_phone_no: others_phone_no,
                     others_fax_no: others_fax_no,
+                    others_email: others_email,
                     //id
                     management_id: '{{$management->id}}',
                     file_id: '{{$file->id}}'

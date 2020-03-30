@@ -141,15 +141,9 @@ foreach ($user_permission as $permission) {
             success: function (data) {
                 console.log(data);
                 if (data.trim() == "true") {
-                    $.notify({
-                        message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
-                    }, {
-                        type: 'success',
-                        placement: {
-                            align: "center"
-                        }
+                    bootbox.alert("<span style='color:green;'>Purchaser imported successfully!</span>", function () {
+                        window.location = '{{URL::action("AgmController@purchaser") }}';
                     });
-                    location = '{{ URL::action("AgmController@purchaser") }}';
                 }
             }
         });

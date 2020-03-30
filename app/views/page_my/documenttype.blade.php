@@ -32,7 +32,7 @@ foreach ($user_permission as $permission) {
                         <thead>
                             <tr>
                                 <th style="width:70%;">Document Type</th>
-                                <th style="width:20%;">Seq</th>
+                                <th style="width:20%;">Sort No</th>
                                 <th style="width:20%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
                                 <th style="width:10%;">Action</th>

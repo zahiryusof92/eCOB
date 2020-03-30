@@ -805,7 +805,7 @@ class AdminController extends BaseController {
         } else {
             $cob = Company::where('id', Session::get('admin_cob'))->get();
         }
-        
+
         $file = Files::where('is_deleted', 0)->get();
 
         if (Session::get('lang') == "en") {
@@ -1541,6 +1541,9 @@ class AdminController extends BaseController {
             $category = $data['strata_category'];
             $perimeter = $data['strata_perimeter'];
             $area = $data['strata_area'];
+            $total_share_unit = $data['strata_total_share_unit'];
+            $ccc_no = $data['strata_ccc_no'];
+            $ccc_date = $data['strata_ccc_date'];
             $is_residential = $data['is_residential'];
             $is_commercial = $data['is_commercial'];
             $stratafile = $data['strata_file_url'];
@@ -1568,6 +1571,9 @@ class AdminController extends BaseController {
             $strata->category = $category;
             $strata->perimeter = $perimeter;
             $strata->area = $area;
+            $strata->total_share_unit = $total_share_unit;
+            $strata->ccc_no = $ccc_no;
+            $strata->ccc_date = $ccc_date;
             $strata->file_url = $stratafile;
             $strata->is_residential = $is_residential;
             $strata->is_commercial = $is_commercial;
@@ -1845,6 +1851,8 @@ class AdminController extends BaseController {
             $jmb_country = $data['jmb_country'];
             $jmb_phone_no = $data['jmb_phone_no'];
             $jmb_fax_no = $data['jmb_fax_no'];
+            $jmb_email = $data['jmb_email'];
+
             //mc
             $is_mc = $data['is_mc'];
             $mc_date_formed = $data['mc_date_formed'];
@@ -1859,6 +1867,8 @@ class AdminController extends BaseController {
             $mc_country = $data['mc_country'];
             $mc_phone_no = $data['mc_phone_no'];
             $mc_fax_no = $data['mc_fax_no'];
+            $mc_email = $data['mc_email'];
+
             //agent
             $is_agent = $data['is_agent'];
             $agent_selected_by = $data['agent_selected_by'];
@@ -1872,7 +1882,9 @@ class AdminController extends BaseController {
             $agent_country = $data['agent_country'];
             $agent_phone_no = $data['agent_phone_no'];
             $agent_fax_no = $data['agent_fax_no'];
-            //agent
+            $agent_email = $data['agent_email'];
+
+            //others            
             $is_others = $data['is_others'];
             $others_name = $data['others_name'];
             $others_address1 = $data['others_address1'];
@@ -1884,6 +1896,8 @@ class AdminController extends BaseController {
             $others_country = $data['others_country'];
             $others_phone_no = $data['others_phone_no'];
             $others_fax_no = $data['others_fax_no'];
+            $others_email = $data['others_email'];
+
             //id
             $file_id = $data['file_id'];
             $management_id = $data['management_id'];
@@ -1920,6 +1934,7 @@ class AdminController extends BaseController {
                     $new_jmb->country = $jmb_country;
                     $new_jmb->phone_no = $jmb_phone_no;
                     $new_jmb->fax_no = $jmb_fax_no;
+                    $new_jmb->email = $jmb_email;
                     $new_jmb->save();
                 } else {
                     if (count($jmb_old) > 0) {
@@ -1946,6 +1961,7 @@ class AdminController extends BaseController {
                     $new_mc->country = $mc_country;
                     $new_mc->phone_no = $mc_phone_no;
                     $new_mc->fax_no = $mc_fax_no;
+                    $new_mc->email = $mc_email;
                     $new_mc->save();
                 } else {
                     if (count($mc_old) > 0) {
@@ -1971,6 +1987,7 @@ class AdminController extends BaseController {
                     $new_agent->country = $agent_country;
                     $new_agent->phone_no = $agent_phone_no;
                     $new_agent->fax_no = $agent_fax_no;
+                    $new_agent->email = $agent_email;
                     $new_agent->save();
                 } else {
                     if (count($agent_old) > 0) {
@@ -1995,6 +2012,7 @@ class AdminController extends BaseController {
                     $new_others->country = $others_country;
                     $new_others->phone_no = $others_phone_no;
                     $new_others->fax_no = $others_fax_no;
+                    $new_others->email = $others_email;
                     $new_others->save();
                 } else {
                     if (count($others_old) > 0) {
@@ -3338,7 +3356,7 @@ class AdminController extends BaseController {
                 }
 
                 $data_raw = array(
-                    $scorings->created_at->format('d-M-Y'),
+                    (!empty($scorings->date) ? date('d-M-Y', strtotime($scorings->date)) : '(not set)'),
                     number_format($scorings_A, 2),
                     number_format($scorings_B, 2),
                     number_format($scorings_C, 2),
@@ -3620,11 +3638,11 @@ class AdminController extends BaseController {
             $no = 1;
             foreach ($buyer_list as $buyer_lists) {
                 $button = "";
-                $button .= '<button type="button" class="btn btn-sm btn-success" title="Edit" onclick="window.location=\'' . URL::action('AdminController@editBuyer', $buyer_lists->id) . '\'">
+                $button .= '<button type="button" class="btn btn-xs btn-success" title="Edit" onclick="window.location=\'' . URL::action('AdminController@editBuyer', $buyer_lists->id) . '\'">
                                 <i class="fa fa-pencil"></i>
                             </button>
                             &nbsp;';
-                $button .= '<button type="button" class="btn btn-sm btn-danger" title="Delete" onclick="deleteBuyer(\'' . $buyer_lists->id . '\')">
+                $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteBuyer(\'' . $buyer_lists->id . '\')">
                                 <i class="fa fa-trash"></i>
                             </button>
                             &nbsp';
@@ -5461,6 +5479,412 @@ class AdminController extends BaseController {
         }
     }
 
+    //rating
+    public function rating() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Rating',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'rating_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('admin_en.rating', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Rating',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'rating_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('admin_my.rating', $viewData);
+        }
+    }
+
+    public function getRating() {
+        $rating = Scoring::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+        if (count($rating) > 0) {
+            $data = Array();
+            foreach ($rating as $ratings) {
+                $button = "";
+
+                $button .= '<button type="button" class="btn btn-xs btn-success" title="Edit" onclick="window.location=\'' . URL::action('AdminController@updateRating', $ratings->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                $button .= '<button class="btn btn-xs btn-danger" title="Delete" onclick="deleteRating(\'' . $ratings->id . '\')"><i class="fa fa-trash"></i></button>';
+
+                $ratings_A = ((($ratings->score1 + $ratings->score2 + $ratings->score3 + $ratings->score4 + $ratings->score5) / 20) * 25);
+                $ratings_B = ((($ratings->score6 + $ratings->score7 + $ratings->score8 + $ratings->score9 + $ratings->score10) / 20) * 25);
+                $ratings_C = ((($ratings->score11 + $ratings->score12 + $ratings->score13 + $ratings->score14) / 16) * 20);
+                $ratings_D = ((($ratings->score15 + $ratings->score16 + $ratings->score17 + $ratings->score18) / 16) * 20);
+                $ratings_E = ((($ratings->score19 + $ratings->score20 + $ratings->score21) / 12) * 10);
+
+                if ($ratings->total_score >= 86) {
+                    $rating = '<span style="color: orange;">'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star"></i>'
+                            . '</span>';
+                } else if ($ratings->total_score >= 61) {
+                    $rating = '<span style="color: orange;">'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '</span>';
+                } else if ($ratings->total_score >= 41) {
+                    $rating = '<span style="color: orange;">'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '</span>';
+                } else if ($ratings->total_score >= 21) {
+                    $rating = '<span style="color: orange;">'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '</span>';
+                } else if ($ratings->total_score >= 1) {
+                    $rating = '<span style="color: orange;">'
+                            . '<i class="fa fa-star"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '</span>';
+                } else {
+                    $rating = '<span style="color: orange;">'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '<i class="fa fa-star-o"></i>'
+                            . '</span>';
+                }
+
+                $data_raw = array(
+                    $ratings->file->file_no,
+                    (!empty($ratings->date) ? date('d-M-Y', strtotime($ratings->date)) : '(not set)'),
+                    number_format($ratings_A, 2),
+                    number_format($ratings_B, 2),
+                    number_format($ratings_C, 2),
+                    number_format($ratings_D, 2),
+                    number_format($ratings_E, 2),
+                    number_format($ratings->total_score, 2),
+                    $rating,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function addRating() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        if (!Auth::user()->getAdmin()) {
+            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }
+        }
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Rating',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'rating_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('admin_en.add_rating', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Add Rating',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'rating_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('admin_my.add_rating', $viewData);
+        }
+    }
+
+    public function submitAddRating() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $survey = 'strata_management';
+            $file_id = $data['file_id'];
+            $date = $data['date'];
+            $score1 = $data['score1'];
+            $score2 = $data['score2'];
+            $score3 = $data['score3'];
+            $score4 = $data['score4'];
+            $score5 = $data['score5'];
+            $score6 = $data['score6'];
+            $score7 = $data['score7'];
+            $score8 = $data['score8'];
+            $score9 = $data['score9'];
+            $score10 = $data['score10'];
+            $score11 = $data['score11'];
+            $score12 = $data['score12'];
+            $score13 = $data['score13'];
+            $score14 = $data['score14'];
+            $score15 = $data['score15'];
+            $score16 = $data['score16'];
+            $score17 = $data['score17'];
+            $score18 = $data['score18'];
+            $score19 = $data['score19'];
+            $score20 = $data['score20'];
+            $score21 = $data['score21'];
+
+            $ratings_A = ((($score1 + $score2 + $score3 + $score4 + $score5) / 20) * 25);
+            $ratings_B = ((($score6 + $score7 + $score8 + $score9 + $score10) / 20) * 25);
+            $ratings_C = ((($score11 + $score12 + $score13 + $score14) / 16) * 20);
+            $ratings_D = ((($score15 + $score16 + $score17 + $score18) / 16) * 20);
+            $ratings_E = ((($score19 + $score20 + $score21) / 12) * 10);
+
+            $total_score = $ratings_A + $ratings_B + $ratings_C + $ratings_D + $ratings_E;
+
+            $scoring = new Scoring();
+            $scoring->file_id = $file_id;
+            $scoring->date = $date;
+            $scoring->survey = $survey;
+            $scoring->score1 = $score1;
+            $scoring->score2 = $score2;
+            $scoring->score3 = $score3;
+            $scoring->score4 = $score4;
+            $scoring->score5 = $score5;
+            $scoring->score6 = $score6;
+            $scoring->score7 = $score7;
+            $scoring->score8 = $score8;
+            $scoring->score9 = $score9;
+            $scoring->score10 = $score10;
+            $scoring->score11 = $score11;
+            $scoring->score12 = $score12;
+            $scoring->score13 = $score13;
+            $scoring->score14 = $score14;
+            $scoring->score15 = $score15;
+            $scoring->score16 = $score16;
+            $scoring->score17 = $score17;
+            $scoring->score18 = $score18;
+            $scoring->score19 = $score19;
+            $scoring->score20 = $score20;
+            $scoring->score21 = $score21;
+            $scoring->total_score = $total_score;
+            $success = $scoring->save();
+
+            if ($success) {
+                # Audit Trail
+                $file_name = Files::find($scoring->file_id);
+                $remarks = 'COB Rating (' . $file_name->file_no . ') dated ' . date('d/m/Y', strtotime($scoring->date)) . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB File";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        } else {
+            print "false";
+        }
+    }
+
+    public function updateRating($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        if (!Auth::user()->getAdmin()) {
+            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }
+        }
+        $rating = Scoring::find($id);
+        if ($rating) {
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => 'Edit Rating',
+                    'panel_nav_active' => 'admin_panel',
+                    'main_nav_active' => 'admin_main',
+                    'sub_nav_active' => 'rating_list',
+                    'user_permission' => $user_permission,
+                    'files' => $files,
+                    'rating' => $rating,
+                    'image' => ""
+                );
+
+                return View::make('admin_en.edit_rating', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => 'Edit Rating',
+                    'panel_nav_active' => 'admin_panel',
+                    'main_nav_active' => 'admin_main',
+                    'sub_nav_active' => 'rating_list',
+                    'user_permission' => $user_permission,
+                    'files' => $files,
+                    'rating' => $rating,
+                    'image' => ""
+                );
+
+                return View::make('admin_my.edit_rating', $viewData);
+            }
+        }
+    }
+
+    public function submitUpdateRating() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+            $date = $data['date'];
+            $score1 = $data['score1'];
+            $score2 = $data['score2'];
+            $score3 = $data['score3'];
+            $score4 = $data['score4'];
+            $score5 = $data['score5'];
+            $score6 = $data['score6'];
+            $score7 = $data['score7'];
+            $score8 = $data['score8'];
+            $score9 = $data['score9'];
+            $score10 = $data['score10'];
+            $score11 = $data['score11'];
+            $score12 = $data['score12'];
+            $score13 = $data['score13'];
+            $score14 = $data['score14'];
+            $score15 = $data['score15'];
+            $score16 = $data['score16'];
+            $score17 = $data['score17'];
+            $score18 = $data['score18'];
+            $score19 = $data['score19'];
+            $score20 = $data['score20'];
+            $score21 = $data['score21'];
+
+            $ratings_A = ((($score1 + $score2 + $score3 + $score4 + $score5) / 20) * 25);
+            $ratings_B = ((($score6 + $score7 + $score8 + $score9 + $score10) / 20) * 25);
+            $ratings_C = ((($score11 + $score12 + $score13 + $score14) / 16) * 20);
+            $ratings_D = ((($score15 + $score16 + $score17 + $score18) / 16) * 20);
+            $ratings_E = ((($score19 + $score20 + $score21) / 12) * 10);
+
+            $total_score = $ratings_A + $ratings_B + $ratings_C + $ratings_D + $ratings_E;
+
+            $scoring = Scoring::find($id);
+            if ($scoring) {
+                $scoring->date = $date;
+                $scoring->score1 = $score1;
+                $scoring->score2 = $score2;
+                $scoring->score3 = $score3;
+                $scoring->score4 = $score4;
+                $scoring->score5 = $score5;
+                $scoring->score6 = $score6;
+                $scoring->score7 = $score7;
+                $scoring->score8 = $score8;
+                $scoring->score9 = $score9;
+                $scoring->score10 = $score10;
+                $scoring->score11 = $score11;
+                $scoring->score12 = $score12;
+                $scoring->score13 = $score13;
+                $scoring->score14 = $score14;
+                $scoring->score15 = $score15;
+                $scoring->score16 = $score16;
+                $scoring->score17 = $score17;
+                $scoring->score18 = $score18;
+                $scoring->score19 = $score19;
+                $scoring->score20 = $score20;
+                $scoring->score21 = $score21;
+                $scoring->total_score = $total_score;
+                $success = $scoring->save();
+
+                if ($success) {
+                    # Audit Trail
+                    $file_name = Files::find($scoring->file_id);
+                    $remarks = 'COB Rating (' . $file_name->file_no . ') dated ' . date('d/m/Y', strtotime($scoring->date)) . ' has been updated.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB File";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    print "true";
+                } else {
+                    print "false";
+                }
+            } else {
+                print "false";
+            }
+        } else {
+            print "false";
+        }
+    }
+
+    public function deleteRating() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $scoring = Scoring::find($id);
+            $scoring->is_deleted = 1;
+            $deleted = $scoring->save();
+            if ($deleted) {
+                # Audit Trail
+                $file_name = Files::find($scoring->file_id);
+                $remarks = 'COB Rating (' . $file_name->file_no . ') dated ' . date('d/m/Y', strtotime($scoring->date)) . ' has been deleted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB File";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
     //form
     public function form() {
         //get user permission
@@ -5795,10 +6219,10 @@ class AdminController extends BaseController {
                     return "false";
                 }
             } else {
-                return 'false1';
+                return 'false';
             }
         } else {
-            return "false2";
+            return "false";
         }
     }
 
@@ -6413,7 +6837,7 @@ class AdminController extends BaseController {
 
             $country = new Country();
             $country->name = $data['name'];
-            $country->seq = $data['seq'];
+            $country->sort_no = $data['sort_no'];
             $country->is_active = $is_active;
             $success = $country->save();
 
@@ -6462,7 +6886,7 @@ class AdminController extends BaseController {
 
                 $data_raw = array(
                     $cities->name,
-                    $cities->seq,
+                    $cities->sort_no,
                     $status,
                     $button
                 );
@@ -6599,7 +7023,7 @@ class AdminController extends BaseController {
 
             $country = Country::find($id);
             $country->name = $data['name'];
-            $country->seq = $data['seq'];
+            $country->sort_no = $data['sort_no'];
             $country->is_active = $data['is_active'];
             $success = $country->save();
 
@@ -6968,7 +7392,7 @@ class AdminController extends BaseController {
             $formtype = new FormType();
             $formtype->bi_type = $data['bi_type'];
             $formtype->bm_type = $data['bm_type'];
-            $formtype->seq = $data['seq'];
+            $formtype->sort_no = $data['sort_no'];
             $formtype->is_active = $data['is_active'];
             $success = $formtype->save();
 
@@ -7156,7 +7580,7 @@ class AdminController extends BaseController {
             $formtype = FormType::find($id);
             $formtype->bi_type = $data['bi_type'];
             $formtype->bm_type = $data['bm_type'];
-            $formtype->seq = $data['seq'];
+            $formtype->sort_no = $data['sort_no'];
             $formtype->is_active = $data['is_active'];
             $success = $formtype->save();
 
@@ -7242,7 +7666,7 @@ class AdminController extends BaseController {
 
             $state = new State();
             $state->name = $data['name'];
-            $state->seq = $data['seq'];
+            $state->sort_no = $data['sort_no'];
             $state->is_active = $is_active;
             $success = $state->save();
 
@@ -7267,31 +7691,31 @@ class AdminController extends BaseController {
 
         if (count($state) > 0) {
             $data = Array();
-            foreach ($state as $cities) {
+            foreach ($state as $states) {
                 $button = "";
                 if (Session::get('lang') == "en") {
-                    if ($cities->is_active == 1) {
+                    if ($states->is_active == 1) {
                         $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $cities->id . '\')">Inactive</button>&nbsp;';
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $states->id . '\')">Inactive</button>&nbsp;';
                     } else {
                         $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $cities->id . '\')">Active</button>&nbsp;';
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $states->id . '\')">Active</button>&nbsp;';
                     }
                 } else {
-                    if ($cities->is_active == 1) {
+                    if ($states->is_active == 1) {
                         $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $cities->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $states->id . '\')">Tidak Aktif</button>&nbsp;';
                     } else {
                         $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $cities->id . '\')">Aktif</button>&nbsp;';
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $states->id . '\')">Aktif</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateState', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
-                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteState(\'' . $cities->id . '\')"><i class="fa fa-trash"></i></button>';
+                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteState(\'' . $states->id . '\')"><i class="fa fa-trash"></i></button>';
 
                 $data_raw = array(
-                    $cities->name,
-                    $cities->seq,
+                    $states->name,
+                    $states->sort_no,
                     $status,
                     $button
                 );
@@ -7428,7 +7852,7 @@ class AdminController extends BaseController {
 
             $state = State::find($id);
             $state->name = $data['name'];
-            $state->seq = $data['seq'];
+            $state->sort_no = $data['sort_no'];
             $state->is_active = $data['is_active'];
             $success = $state->save();
 
@@ -7514,8 +7938,9 @@ class AdminController extends BaseController {
 
             $documenttype = new Documenttype();
             $documenttype->name = $data['name'];
-            $documenttype->seq = $data['seq'];
+            $documenttype->sort_no = $data['sort_no'];
             $documenttype->is_active = $is_active;
+            $documenttype->is_deleted = 0;
             $success = $documenttype->save();
 
             if ($success) {
@@ -7563,7 +7988,7 @@ class AdminController extends BaseController {
 
                 $data_raw = array(
                     $cities->name,
-                    $cities->seq,
+                    $cities->sort_no,
                     $status,
                     $button
                 );
@@ -7700,7 +8125,7 @@ class AdminController extends BaseController {
 
             $documenttype = Documenttype::find($id);
             $documenttype->name = $data['name'];
-            $documenttype->seq = $data['seq'];
+            $documenttype->sort_no = $data['sort_no'];
             $documenttype->is_active = $data['is_active'];
             $success = $documenttype->save();
 
@@ -10623,35 +11048,157 @@ class AdminController extends BaseController {
     }
 
     public function getAuditTrail() {
-        $audit_trail = AuditTrail::orderBy('id', 'desc')->get();
+        $data = array();
+        $requestData = Request::input();
 
-        if (count($audit_trail) > 0) {
-            $data = Array();
-            foreach ($audit_trail as $audit_trails) {
-                $user = User::find($audit_trails->audit_by);
-                $data_raw = array(
-                    $audit_trails->module,
-                    $audit_trails->remarks,
-                    $user->full_name,
-                    date('Y/m/d H:i:s', strtotime($audit_trails->created_at))
-                );
+        $columns = array(
+            0 => 'audit_trail.created_at',
+            1 => 'audit_trail.module',
+            2 => 'audit_trail.remarks',
+            3 => 'users.full_name'
+        );
 
-                array_push($data, $data_raw);
+        $totalData = DB::table('audit_trail')
+                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                ->count();
+
+        $limit = $requestData['length'];
+        $start = $requestData['start'];
+        $order = $columns[$requestData['order'][0]['column']];
+        $dir = $requestData['order'][0]['dir'];
+        $search = $requestData['search']['value'];
+        $date = $requestData['columns'][0]['search']['value'];
+
+        if ($limit == -1) {
+            if ($totalData != 0) {
+                $limit = $totalData;
+            } else {
+                $limit = 1;
             }
-            $output_raw = array(
-                "aaData" => $data
-            );
-
-            $output = json_encode($output_raw);
-            return $output;
         } else {
-            $output_raw = array(
-                "aaData" => []
-            );
-
-            $output = json_encode($output_raw);
-            return $output;
+            $limit = $limit;
         }
+
+        if (!empty($date)) {
+            $new_date = explode("&", $date);
+
+            $from_date2 = $new_date[0];
+            if (!empty($from_date2)) {
+                $from_date = explode("-", $from_date2);
+                $new_from_date = $from_date[2] . "-" . $from_date[1] . "-" . $from_date[0];
+            }
+
+            $to_date2 = $new_date[1];
+            if (!empty($to_date2)) {
+                $to_date = explode("-", $to_date2);
+                $new_to_date = $to_date[2] . "-" . $to_date[1] . "-" . $to_date[0];
+            }
+        }
+
+        if (empty($search)) {
+            if (!empty($new_from_date) && !empty($new_to_date)) {
+                $posts = DB::table('audit_trail')
+                        ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                        ->select('audit_trail.*', 'users.full_name as name')
+                        ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                        ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                        ->offset($start)
+                        ->limit($limit)
+                        ->orderBy($order, $dir)
+                        ->get();
+
+                $totalFiltered = DB::table('audit_trail')
+                        ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                        ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                        ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                        ->count();
+            } else {
+                $posts = DB::table('audit_trail')
+                        ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                        ->select('audit_trail.*', 'users.full_name as name')
+                        ->offset($start)
+                        ->limit($limit)
+                        ->orderBy($order, $dir)
+                        ->get();
+
+                $totalFiltered = DB::table('audit_trail')
+                        ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                        ->count();
+            }
+        } else {
+            if (!empty($new_from_date) && !empty($new_to_date)) {
+                $posts = DB::table('audit_trail')
+                        ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                        ->select('audit_trail.*', 'users.full_name as name')
+                        ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                        ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                        ->where(function($query) use ($search) {
+                            $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                            ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                            ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                            ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                        })
+                        ->offset($start)
+                        ->limit($limit)
+                        ->orderBy($order, $dir)
+                        ->get();
+
+                $totalFiltered = DB::table('audit_trail')
+                        ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                        ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                        ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                        ->where(function($query) use ($search) {
+                            $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                            ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                            ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                            ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                        })
+                        ->count();
+            } else {
+                $posts = DB::table('audit_trail')
+                        ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                        ->select('audit_trail.*', 'users.full_name as name')
+                        ->where(function($query) use ($search) {
+                            $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                            ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                            ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                            ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                        })
+                        ->offset($start)
+                        ->limit($limit)
+                        ->orderBy($order, $dir)
+                        ->get();
+
+                $totalFiltered = DB::table('audit_trail')
+                        ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                        ->where(function($query) use ($search) {
+                            $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                            ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                            ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                            ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                        })
+                        ->count();
+            }
+        }
+
+        if (!empty($posts)) {
+            foreach ($posts as $post) {
+                $nestedData['created_at'] = date('Y-m-d', strtotime($post->created_at));
+                $nestedData['module'] = $post->module;
+                $nestedData['remarks'] = $post->remarks;
+                $nestedData['full_name'] = $post->name;
+                $data[] = $nestedData;
+            }
+        }
+
+        $json_data = array(
+            "draw" => intval(Request::input('draw')),
+            "recordsTotal" => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data" => $data
+        );
+
+        echo json_encode($json_data);
     }
 
     //file by location

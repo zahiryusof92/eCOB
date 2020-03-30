@@ -182,15 +182,9 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>'
-                        }, {
-                            type: 'success',
-                            placement: {
-                                align: "center"
-                            }
+                        bootbox.alert("<span style='color:green;'>Purchaser added successfully!</span>", function () {
+                            window.location = '{{URL::action("AgmController@purchaser") }}';
                         });
-                        location = '{{URL::action("AgmController@purchaser") }}';
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }

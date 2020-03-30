@@ -39,11 +39,11 @@ foreach ($user_permission as $permission) {
 
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Seq</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Sort No</label>
                             </div>
                             <div class="col-md-4">
-                                <input id="seq" class="form-control" placeholder="Seq" type="text">
-                                <div id="seq_error" style="display:none;"></div>
+                                <input id="sort_no" class="form-control" placeholder="Sort No" type="text">
+                                <div id="sort_no_error" style="display:none;"></div>
                             </div>
                         </div>
 
@@ -81,7 +81,7 @@ foreach ($user_permission as $permission) {
         $("#loading").css("display", "inline-block");
 
         var name = $("#name").val(),
-            seq = $("#seq").val(),
+            sort_no = $("#sort_no").val(),
             is_active = $("#is_active").val();
 
         var error = 0;
@@ -92,9 +92,9 @@ foreach ($user_permission as $permission) {
             error = 1;
         }
 
-        if (seq.trim() == "") {
-            $("#seq_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Seq</span>');
-            $("#seq_error").css("display", "block");
+        if (sort_no.trim() == "") {
+            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Sort No</span>');
+            $("#sort_no_error").css("display", "block");
             error = 1;
         }
         
@@ -110,7 +110,7 @@ foreach ($user_permission as $permission) {
                 type: "POST",
                 data: {
                     name: name,
-                    seq : seq,
+                    sort_no : sort_no,
                     is_active: is_active
 
                 },
