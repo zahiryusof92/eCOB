@@ -7,7 +7,7 @@ $insert_permission = 0;
 $update_permission = 0;
 
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 2) {        
+    if ($permission->submodule_id == 2) {
         $access_permission = $permission->access_permission;
         $insert_permission = $permission->insert_permission;
     }
@@ -24,17 +24,33 @@ foreach ($user_permission as $permission) {
                 <div class="col-lg-12">
                     <form id="add_fileprefix">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label style="color: red; font-style: italic;">* Mandatory Fields</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
+                            @if (Auth::user()->getAdmin())
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><span style="color: red;">*</span> COB</label>
+                                    <select id="company" class="form-control select2">
+                                        <option value="">Please Select</option>
+                                        @foreach ($cob as $companies)
+                                        <option value="{{ $companies->id }}">{{ $companies->name }} ({{ $companies->short_name }})</option>
+                                        @endforeach                                    
+                                    </select>
+                                    <div id="company_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                            @else
+                            <input type="hidden" id="company" value="{{ Auth::user()->company_id }}">
+                            @endif
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> File Number</label>
-                                    <select id="file_no" class="form-control">
+                                    <select id="file_no" class="form-control select2">
                                         <option value="">Please Select</option>
                                         @foreach ($file_no as $files)
                                         <option value="{{$files->description}}">{{$files->description}}</option>
@@ -52,15 +68,16 @@ foreach ($user_permission as $permission) {
                             </div>
                         </div>                                                
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-12">
                                 <div id="file_already_exists_error" style="display: none;"></div>
                             </div>
                         </div>
                         <div class="form-actions">
                             <?php if ($insert_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addFile()">Submit</button>
-                             <?php } ?>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addFile()">Submit</button>
+                            <?php } ?>
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@addFile')}}'">Cancel</button>
+                            <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
                 </div>                
@@ -72,32 +89,42 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-    
+
     function addFile() {
         $("#loading").css("display", "inline-block");
+        $("#company_error").css("display", "none");
+        $("#file_no_error").css("display", "none");
+        $("#description_error").css("display", "none");
 
-        var file_no = $("#file_no").val(),
-            description = $("#description").val();
+        var company_id = $("#company").val(),
+                file_no = $("#file_no").val(),
+                description = $("#description").val();
 
         var error = 0;
-        
+
+        if (company_id.trim() == "") {
+            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select COB</span>');
+            $("#company_error").css("display", "block");
+            error = 1;
+        }
         if (file_no.trim() == "") {
             $("#file_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File Number</span>');
             $("#file_no_error").css("display", "block");
             error = 1;
         }
-        
+
         if (description.trim() == "") {
             $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Description</span>');
             $("#description_error").css("display", "block");
             error = 1;
         }
-        
+
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@submitFile') }}",
                 type: "POST",
                 data: {
+                    company_id: company_id,
                     file_no: file_no,
                     description: description
                 },
@@ -117,6 +144,11 @@ foreach ($user_permission as $permission) {
                     }
                 }
             });
+        } else {
+            $("#file_no").focus();
+            $("#loading").css("display", "none");
+            $("#submit_button").removeAttr("disabled");
+            $("#cancel_button").removeAttr("disabled");
         }
     }
 </script>

@@ -25,12 +25,30 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-12">
                                 <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields</label>
                             </div>
-                        </div>   
+                        </div>
+                        @if (Auth::user()->getAdmin())
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> COB</label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="company" class="form-control select2">
+                                    <option value="">Please Select</option>
+                                    @foreach ($cob as $companies)
+                                    <option value="{{ $companies->id }}">{{ $companies->name }} ({{ $companies->short_name }})</option>
+                                    @endforeach                                    
+                                </select>
+                                <div id="company_error" style="display:none;"></div>
+                            </div>
+                        </div>
+                        @else
+                        <input type="hidden" id="company" value="{{ Auth::user()->company_id }}">
+                        @endif
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label class="form-label"><span style="color: red; font-style: italic;">*</span> Description</label>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <input id="description" class="form-control" placeholder="Description" type="text">
                                 <div id="description_error" style="display:none;"></div>
                             </div>
@@ -62,6 +80,7 @@ foreach ($user_permission as $permission) {
                                 <button type="button" class="btn btn-primary" id="submit_button" onclick="addFilePrefix()">Submit</button>
                             <?php } ?>
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@filePrefix')}}'">Cancel</button>
+                             <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
                 </div>                
@@ -75,16 +94,23 @@ foreach ($user_permission as $permission) {
 <script>
     function addFilePrefix() {
         $("#loading").css("display", "inline-block");
+        $("#company_error").css("display", "none");
         $("#description_error").css("display", "none");
         $("#sort_no_error").css("display", "none");
         $("#is_active_error").css("display", "none");
 
-        var description = $("#description").val(),
+        var company_id = $("#company").val(),
+                description = $("#description").val(),
                 sort_no = $("#sort_no").val(),
                 is_active = $("#is_active").val();
 
         var error = 0;
 
+        if (company_id.trim() == "") {
+            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select COB</span>');
+            $("#company_error").css("display", "block");
+            error = 1;
+        }
         if (description.trim() == "") {
             $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Description</span>');
             $("#description_error").css("display", "block");
@@ -108,6 +134,7 @@ foreach ($user_permission as $permission) {
                 url: "{{ URL::action('AdminController@submitFilePrefix') }}",
                 type: "POST",
                 data: {
+                    company_id: company_id,
                     description: description,
                     sort_no: sort_no,
                     is_active: is_active
@@ -126,6 +153,11 @@ foreach ($user_permission as $permission) {
                     }
                 }
             });
+        } else {
+            $("#description").focus();
+            $("#loading").css("display", "none");
+            $("#submit_button").removeAttr("disabled");
+            $("#cancel_button").removeAttr("disabled");
         }
     }
 </script>

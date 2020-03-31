@@ -15,7 +15,16 @@ class FinanceController extends BaseController {
     public function addFinanceFileList() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $file_no = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year')->get();
+        if (!Auth::user()->getAdmin()) {
+            $file_no = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $file_no = Files::where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            } else {
+                $file_no = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            }
+        }
+
         $month = [
             1 => 'JAN',
             2 => 'FEB',

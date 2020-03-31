@@ -426,6 +426,15 @@ class AdminController extends BaseController {
     public function addFilePrefix() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        if (!Auth::user()->getAdmin()) {
+            $cob = Company::where('id', Auth::user()->company_id)->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $cob = Company::where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+            } else {
+                $cob = Company::where('id', Session::get('admin_cob'))->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+            }
+        }
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -434,6 +443,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'prefix_file',
                 'user_permission' => $user_permission,
+                'cob' => $cob,
                 'image' => ""
             );
 
@@ -445,6 +455,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'prefix_file',
                 'user_permission' => $user_permission,
+                'cob' => $cob,
                 'image' => ""
             );
 
@@ -455,12 +466,13 @@ class AdminController extends BaseController {
     public function submitFilePrefix() {
         $data = Input::all();
         if (Request::ajax()) {
+            $company_id = $data['company_id'];
             $description = $data['description'];
             $is_active = $data['is_active'];
             $sort_no = $data['sort_no'];
 
             $fileprefix = new FilePrefix();
-            $fileprefix->company_id = Auth::user()->company_id;
+            $fileprefix->company_id = $company_id;
             $fileprefix->description = $description;
             $fileprefix->sort_no = $sort_no;
             $fileprefix->is_active = $is_active;
@@ -676,7 +688,19 @@ class AdminController extends BaseController {
     public function addFile() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $file_no = FilePrefix::where('is_active', 1)->where('is_deleted', 0)->get();
+
+        if (!Auth::user()->getAdmin()) {
+            $cob = Company::where('id', Auth::user()->company_id)->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+            $file_no = FilePrefix::where('is_active', 1)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $cob = Company::where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+                $file_no = FilePrefix::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
+            } else {
+                $cob = Company::where('id', Session::get('admin_cob'))->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+                $file_no = FilePrefix::where('is_active', 1)->where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
+            }
+        }
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -685,6 +709,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'add_cob',
                 'file_no' => $file_no,
+                'cob' => $cob,
                 'user_permission' => $user_permission,
                 'image' => ""
             );
@@ -697,6 +722,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'add_cob',
                 'file_no' => $file_no,
+                'cob' => $cob,
                 'user_permission' => $user_permission,
                 'image' => ""
             );
@@ -708,16 +734,18 @@ class AdminController extends BaseController {
     public function submitFile() {
         $data = Input::all();
         if (Request::ajax()) {
+            $company_id = $data['company_id'];
             $file_no = $data['file_no'];
             $description = $data['description'];
 
             $filename = $file_no . '-' . $description;
             $year = substr($filename, strpos($filename, "/") + 1);
 
-            $check_file = Files::where('file_no', $filename)->count();
+            $check_file = Files::where('company_id', $company_id)->where('file_no', $filename)->count();
 
             if ($check_file <= 0) {
                 $files = new Files();
+                $files->company_id = $company_id;
                 $files->file_no = $filename;
                 $files->year = $year;
                 $files->is_active = 0;
@@ -3005,26 +3033,54 @@ class AdminController extends BaseController {
             $latitude = $data['latitude'];
             $longitude = $data['longitude'];
             $other_details_description = $data['other_details_description'];
+            $pms_system = $data['pms_system'];
+            $owner_occupied = $data['owner_occupied'];
+            $rented = $data['rented'];
+            $bantuan_lphs = $data['bantuan_lphs'];
+            $bantuan_others = $data['bantuan_others'];
+            $rsku = $data['rsku'];
+            $water_meter = $data['water_meter'];
+            $malay_composition = $data['malay_composition'];
+            $chinese_composition = $data['chinese_composition'];
+            $indian_composition = $data['indian_composition'];
+            $others_composition = $data['others_composition'];
+            $foreigner_composition = $data['foreigner_composition'];
 
             $others = OtherDetails::find($id);
-            $others->name = $other_details_name;
-            $others->image_url = $others_image_url;
-            $others->latitude = $latitude;
-            $others->longitude = $longitude;
-            $others->description = $other_details_description;
-            $success = $others->save();
+            if ($others) {
+                $others->name = $other_details_name;
+                $others->image_url = $others_image_url;
+                $others->latitude = $latitude;
+                $others->longitude = $longitude;
+                $others->description = $other_details_description;
+                $others->pms_system = $pms_system;
+                $others->owner_occupied = $owner_occupied;
+                $others->rented = $rented;
+                $others->bantuan_lphs = $bantuan_lphs;
+                $others->bantuan_others = $bantuan_others;
+                $others->rsku = $rsku;
+                $others->water_meter = $water_meter;
+                $others->malay_composition = $malay_composition;
+                $others->chinese_composition = $chinese_composition;
+                $others->indian_composition = $indian_composition;
+                $others->others_composition = $others_composition;
+                $others->foreigner_composition = $foreigner_composition;
+                $success = $others->save();
 
-            if ($success) {
-                # Audit Trail
-                $file_name = Files::find($others->file_id);
-                $remarks = 'Others Info (' . $file_name->file_no . ') has been updated.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "COB File";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
+                if ($success) {
+                    # Audit Trail
+                    $file_name = Files::find($others->file_id);
+                    $remarks = 'Others Info (' . $file_name->file_no . ') has been updated.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB File";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
 
-                print "true";
+                    print "true";
+                } else {
+                    print "false";
+                }
             } else {
                 print "false";
             }

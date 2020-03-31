@@ -160,6 +160,131 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>PMS System</label>
+                                                        <input type="text" class="form-control" placeholder="PMS System" id="pms_system" value="{{$other_details->pms_system}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Owner Occupied</label>
+                                                        <select id="owner_occupied" class="form-control">
+                                                            <option value="">Please Select</option>
+                                                            <option value="1" {{ ($other_details->owner_occupied == '1' ? " selected" : "") }}>Yes</option>
+                                                            <option value="0" {{ ($other_details->owner_occupied == '0' ? " selected" : "") }}>No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Rented</label>
+                                                        <select id="rented" class="form-control">
+                                                            <option value="">Please Select</option>
+                                                            <option value="1" {{ ($other_details->rented == '1' ? " selected" : "") }}>Yes</option>
+                                                            <option value="0" {{ ($other_details->rented == '0' ? " selected" : "") }}>No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Bantuan LPHS</label>
+                                                        <select id="bantuan_lphs" class="form-control">
+                                                            <option value="">Please Select</option>
+                                                            <option value="1" {{ ($other_details->bantuan_lphs == '1' ? " selected" : "") }}>Yes</option>
+                                                            <option value="0" {{ ($other_details->bantuan_lphs == '0' ? " selected" : "") }}>No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Other Bantuan</label>
+                                                        <select id="bantuan_others" class="form-control">
+                                                            <option value="">Please Select</option>
+                                                            <option value="1" {{ ($other_details->bantuan_others == '1' ? " selected" : "") }}>Yes</option>
+                                                            <option value="0" {{ ($other_details->bantuan_others == '0' ? " selected" : "") }}>No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Rumah Selangorku</label>
+                                                        <select id="rsku" class="form-control">
+                                                            <option value="">Please Select</option>
+                                                            <option value="none" {{ ($other_details->rsku == 'none' ? " selected" : "") }}>- None -</option>
+                                                            <option value="< 42,000" {{ ($other_details->rsku == '< 42,000' ? " selected" : "") }}>< 42,000</option>
+                                                            <option value="< 100,000" {{ ($other_details->rsku == '< 100,000' ? " selected" : "") }}>< 100,000</option>
+                                                            <option value="< 180,000" {{ ($other_details->rsku == '< 180,000' ? " selected" : "") }}>< 180,000</option>
+                                                            <option value="< 250,000" {{ ($other_details->rsku == '< 250,000' ? " selected" : "") }}>< 250,000</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Water Meter</label>
+                                                        <select id="water_meter" class="form-control">
+                                                            <option value="">Please Select</option>
+                                                            <option value="none" {{ ($other_details->water_meter == 'none' ? " selected" : "") }}>- None -</option>
+                                                            <option value="BULK" {{ ($other_details->water_meter == 'BULK' ? " selected" : "") }}>BULK</option>
+                                                            <option value="INDIVIDUAL" {{ ($other_details->water_meter == 'INDIVIDUAL' ? " selected" : "") }}>INDIVIDUAL</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Malay Composition</label>
+                                                        <input type="number" step="0.01" class="form-control text-right" placeholder="Malay Composition" id="malay_composition" value="{{$other_details->malay_composition}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Chinese Composition</label>
+                                                        <input type="number" step="0.01" class="form-control text-right" placeholder="Chinese Composition" id="chinese_composition" value="{{$other_details->chinese_composition}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Indian Composition</label>
+                                                        <input type="number" step="0.01" class="form-control text-right" placeholder="Indian Composition" id="indian_composition" value="{{$other_details->indian_composition}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Others Composition</label>
+                                                        <input type="number" step="0.01" class="form-control text-right" placeholder="Others Composition" id="others_composition" value="{{$other_details->others_composition}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <div class="form-group">
+                                                        <label>Foreigner Composition</label>
+                                                        <input type="number" step="0.01" class="form-control text-right" placeholder="Foreigner Composition" id="foreigner_composition" value="{{$other_details->foreigner_composition}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
                                             <div class="form-actions">
                                                 <input type="hidden" id="others_image_url" value="{{$other_details->image_url}}"/>
                                                 <?php if ($update_permission == 1) { ?>
@@ -252,7 +377,19 @@ foreach ($user_permission as $permission) {
                 others_image_url = $("#others_image_url").val(),
                 latitude = $("#latitude").val(),
                 longitude = $("#longitude").val(),
-                other_details_description = $("#other_details_description").val();
+                other_details_description = $("#other_details_description").val(),
+                pms_system = $("#pms_system").val(),
+                owner_occupied = $("#owner_occupied").val(),
+                rented = $("#rented").val(),
+                bantuan_lphs = $("#bantuan_lphs").val(),
+                bantuan_others = $("#bantuan_others").val(),
+                rsku = $("#rsku").val(),
+                water_meter = $("#water_meter").val(),
+                malay_composition = $("#malay_composition").val(),
+                chinese_composition = $("#chinese_composition").val(),
+                indian_composition = $("#indian_composition").val(),
+                others_composition = $("#others_composition").val(),
+                foreigner_composition = $("#foreigner_composition").val();
 
         var error = 0;        
 
@@ -266,6 +403,18 @@ foreach ($user_permission as $permission) {
                     latitude: latitude,
                     longitude: longitude,
                     other_details_description: other_details_description,
+                    pms_system: pms_system,
+                    owner_occupied: owner_occupied,
+                    rented: rented,
+                    bantuan_lphs: bantuan_lphs,
+                    bantuan_others: bantuan_others,
+                    rsku: rsku,
+                    water_meter: water_meter,
+                    malay_composition: malay_composition,
+                    chinese_composition: chinese_composition,
+                    indian_composition: indian_composition,
+                    others_composition: others_composition,
+                    foreigner_composition: foreigner_composition,
                     id: '{{$other_details->id}}'
                 },
                 success: function (data) {

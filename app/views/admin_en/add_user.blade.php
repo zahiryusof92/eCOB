@@ -79,7 +79,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> Access Group</label>
-                                    <select id="role" class="form-control">
+                                    <select id="role" class="form-control select2">
                                         <option value="">Please Select</option>
                                         @foreach ($role as $roles)
                                         <option value="{{$roles->id}}">{{$roles->name}}</option>
@@ -93,7 +93,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> Company</label>
-                                    <select id="company" class="form-control">
+                                    <select id="company" class="form-control select2">
                                         <option value="">Please Select</option>
                                         @foreach ($company as $companies)
                                         <option value="{{$companies->id}}">{{$companies->name}} ({{$companies->short_name}})</option>
