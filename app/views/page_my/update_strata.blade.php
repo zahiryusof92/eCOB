@@ -228,7 +228,7 @@ foreach ($user_permission as $permission) {
                                                             <input type="text" class="form-control" placeholder="Luas Tanah" id="strata_land_area" value="{{$strata->land_area}}">                               
                                                             <select class="form-control" id="strata_land_area_unit">
                                                                 @foreach ($unit as $units)
-                                                                <option value="{{$units->id}}" {{($strata->land_area_unit == $units->id ? " selected" : "")}}>{{$units->description}}</option>
+                                                                <option value="{{$units->id}}" {{($strata->land_area_unit == $units->id ? " selected" : "")}}>{{$units->description}} &nbsp;&nbsp;</option>
                                                                 @endforeach
                                                             </select>
                                                             <div id="strata_land_area_error" style="display:none;"></div> 
@@ -296,6 +296,31 @@ foreach ($user_permission as $permission) {
                                                             @endforeach
                                                         </select>
                                                         <div id="starta_perimeter_error" style="display:none;"></div>                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Total Share Unit</label>
+                                                        <input type="text" class="form-control" placeholder="Total Share Unit" id="strata_total_share_unit" value="{{$strata->total_share_unit}}">                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>CCC No.</label>
+                                                        <input type="text" class="form-control" placeholder="CCC No" id="strata_ccc_no" value="{{$strata->ccc_no}}">                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Date CCC</label>
+                                                        <label class="input-group datepicker-only-init">
+                                                            <input type="text" class="form-control" placeholder="Date CCC" id="strata_ccc_date" value="{{ ($strata->ccc_date != '0000-00-00' ? $strata->ccc_date : '') }}"/>
+                                                            <span class="input-group-addon">
+                                                                <i class="icmn-calendar"></i>
+                                                            </span>
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -538,6 +563,13 @@ foreach ($user_permission as $permission) {
                                                     <input type="radio" id="management_office" name="management_office" value="0" {{($facility->management_office == 0 ? " checked" : "")}}>
                                                     Tiada
                                                 </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="management_office_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->management_office_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-2">
@@ -550,6 +582,13 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-1">
                                                     <input type="radio" id="swimming_pool" name="swimming_pool" value="0" {{($facility->swimming_pool == 0 ? " checked" : "")}}>
                                                     Tiada
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="swimming_pool_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->swimming_pool_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -564,6 +603,13 @@ foreach ($user_permission as $permission) {
                                                     <input type="radio" id="surau" name="surau" value="0" {{($facility->surau == 0 ? " checked" : "")}}>
                                                     Tiada
                                                 </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="surau_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->surau_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-2">
@@ -576,6 +622,13 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-1">
                                                     <input type="radio" id="multipurpose_hall" name="multipurpose_hall" value="0" {{($facility->multipurpose_hall == 0 ? " checked" : "")}}>
                                                     Tiada
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="multipurpose_hall_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->multipurpose_hall_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -590,6 +643,13 @@ foreach ($user_permission as $permission) {
                                                     <input type="radio" id="gym" name="gym" value="0" {{($facility->gym == 0 ? " checked" : "")}}>
                                                     Tiada
                                                 </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="gym_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->gym_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-2">
@@ -602,6 +662,13 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-1">
                                                     <input type="radio" id="playground" name="playground" value="0" {{($facility->playground == 0 ? " checked" : "")}}>
                                                     Tiada
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="playground_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->playground_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -616,6 +683,13 @@ foreach ($user_permission as $permission) {
                                                     <input type="radio" id="guardhouse" name="guardhouse" value="0" {{($facility->guardhouse == 0 ? " checked" : "")}}>
                                                     Tiada
                                                 </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="guardhouse_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->guardhouse_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-2">
@@ -628,6 +702,13 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-1">
                                                     <input type="radio" id="kindergarten" name="kindergarten" value="0" {{($facility->kindergarten == 0 ? " checked" : "")}}>
                                                     Tiada
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="kindergarten_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->kindergarten_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -642,6 +723,13 @@ foreach ($user_permission as $permission) {
                                                     <input type="radio" id="open_space" name="open_space" value="0" {{($facility->open_space == 0 ? " checked" : "")}}>
                                                     Tiada
                                                 </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="open_space_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->open_space_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-2">
@@ -654,6 +742,13 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-1">
                                                     <input type="radio" id="lift" name="lift" value="0" {{($facility->lift == 0 ? " checked" : "")}}>
                                                     Tiada
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="lift_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->lift_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -668,6 +763,13 @@ foreach ($user_permission as $permission) {
                                                     <input type="radio" id="rubbish_room" name="rubbish_room" value="0" {{($facility->rubbish_room == 0 ? " checked" : "")}}>
                                                     Tiada
                                                 </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="rubbish_room_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->rubbish_room_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-2">
@@ -680,6 +782,13 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-1">
                                                     <input type="radio" id="gated" name="gated" value="0" {{($facility->gated == 0 ? " checked" : "")}}>
                                                     Tiada
+                                                </div>
+                                                <div class="col-md-1">
+                                                    <select class="form-control select2" id="gated_unit">
+                                                        @for ($x = 0; $x <= 50; $x++)
+                                                        <option value="{{ $x }}" {{ ($facility->gated_unit == $x ? 'selected' : '') }}>{{ $x }}</option>
+                                                        @endfor
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -731,6 +840,7 @@ foreach ($user_permission as $permission) {
         $("#validation-errors_strata_file").hide().empty();
         return true;
     }
+    
     function showResponse(response, statusText, xhr, $form) {
         if (response.success == false)
         {
@@ -754,7 +864,7 @@ foreach ($user_permission as $permission) {
     }
 
     $(function () {
-        $('#strata_date').datetimepicker({
+        $('#strata_date, #strata_ccc_date').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -812,6 +922,9 @@ foreach ($user_permission as $permission) {
                 strata_perimeter = $("#strata_perimeter").val(),
                 strata_area = $("#strata_area").val(),
                 strata_file_url = $("#strata_file_url").val(),
+                strata_total_share_unit = $("#strata_total_share_unit").val(),
+                strata_ccc_no = $("#strata_ccc_no").val(),
+                strata_ccc_date = $("#strata_ccc_date").val(),
                 //residential
                 residential_unit_no = $("#residential_unit_no").val(),
                 residential_maintenance_fee = $("#residential_maintenance_fee").val(),
@@ -826,22 +939,33 @@ foreach ($user_permission as $permission) {
                 commercial_sinking_fund_option = $("#commercial_sinking_fund_option").val(),
                 //facility
                 management_office = $("#management_office:checked").val(),
+                management_office_unit = $("#management_office_unit").val(),
                 swimming_pool = $("#swimming_pool:checked").val(),
+                swimming_pool_unit = $("#swimming_pool_unit").val(),
                 surau = $("#surau:checked").val(),
+                surau_unit = $("#surau_unit").val(),
                 gym = $("#gym:checked").val(),
+                gym_unit = $("#gym_unit").val(),
                 playground = $("#playground:checked").val(),
+                playground_unit = $("#playground_unit").val(),
                 multipurpose_hall = $("#multipurpose_hall:checked").val(),
+                multipurpose_hall_unit = $("#multipurpose_hall_unit").val(),
                 guardhouse = $("#guardhouse:checked").val(),
+                guardhouse_unit = $("#guardhouse_unit").val(),
                 kindergarten = $("#kindergarten:checked").val(),
+                kindergarten_unit = $("#kindergarten_unit").val(),
                 open_space = $("#open_space:checked").val(),
+                open_space_unit = $("#open_space_unit").val(),
                 lift = $("#lift:checked").val(),
+                lift_unit = $("#lift_unit").val(),
                 rubbish_room = $("#rubbish_room:checked").val(),
+                rubbish_room_unit = $("#rubbish_room_unit").val(),
                 gated = $("#gated:checked").val(),
+                gated_unit = $("#gated_unit").val(),
                 others = $("#others").val();
 
         var is_commercial;
         var is_residential;
-
         if (document.getElementById('residential').checked) {
             is_residential = 1;
         } else {
@@ -854,7 +978,7 @@ foreach ($user_permission as $permission) {
         }
 
         var error = 0;
-
+        
         if (strata_name.trim() == "") {
             $("#strata_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Nama</span>');
             $("#strata_name_error").css("display", "block");
@@ -904,6 +1028,9 @@ foreach ($user_permission as $permission) {
                     strata_category: strata_category,
                     strata_perimeter: strata_perimeter,
                     strata_area: strata_area,
+                    strata_total_share_unit: strata_total_share_unit,
+                    strata_ccc_no: strata_ccc_no,
+                    strata_ccc_date: strata_ccc_date,
                     is_residential: is_residential,
                     is_commercial: is_commercial,
                     strata_file_url: strata_file_url,
@@ -922,17 +1049,29 @@ foreach ($user_permission as $permission) {
                     commercial_sinking_fund_option: commercial_sinking_fund_option,
                     //facility
                     management_office: management_office,
+                    management_office_unit: management_office_unit,
                     swimming_pool: swimming_pool,
+                    swimming_pool_unit: swimming_pool_unit,
                     surau: surau,
+                    surau_unit: surau_unit,
                     multipurpose_hall: multipurpose_hall,
+                    multipurpose_hall_unit: multipurpose_hall_unit,
                     gym: gym,
+                    gym_unit: gym_unit,
                     playground: playground,
+                    playground_unit: playground_unit,
                     guardhouse: guardhouse,
+                    guardhouse_unit: guardhouse_unit,
                     kindergarten: kindergarten,
+                    kindergarten_unit: kindergarten_unit,
                     open_space: open_space,
+                    open_space_unit: open_space_unit,
                     lift: lift,
+                    lift_unit: lift_unit,
                     rubbish_room: rubbish_room,
+                    rubbish_room_unit: rubbish_room_unit,
                     gated: gated,
+                    gated_unit: gated_unit,
                     others: others,
                     facility_id: '{{$facility->id}}'
                 },
@@ -995,8 +1134,7 @@ foreach ($user_permission as $permission) {
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
             closeOnConfirm: true
-        },
-        function(){
+        },function(){
             $.ajax({
                 url: "{{ URL::action('AdminController@deleteStrataFile') }}",
                 type: "POST",
@@ -1028,7 +1166,6 @@ foreach ($user_permission as $permission) {
         $("#check_strata_file").hide();
     }
 </script>
-
 <!-- End Page Scripts-->
 
 @stop

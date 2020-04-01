@@ -31,6 +31,10 @@ $access_permission21 = 0;
 $access_permission22 = 0;
 $access_permission23 = 0;
 $access_permission24 = 0;
+$access_permission25 = 0;
+$access_permission26 = 0;
+$access_permission27 = 0;
+$access_permission28 = 0;
 $access_permission29 = 0;
 $access_permission30 = 0;
 $access_permission31 = 0;
@@ -186,7 +190,7 @@ if ($user_permission) {
 
 $company = Company::find(Auth::user()->company_id);
 if (!Auth::user()->getAdmin()) {
-    $pending = Files::where('created_by', Auth::user()->id)->where('status', 0)->where('is_deleted', 0)->count();
+    $pending = Files::where('company_id', Auth::user()->company_id)->where('status', 0)->where('is_deleted', 0)->count();
 } else {
     if (empty(Session::get('admin_cob'))) {
         $pending = Files::where('status', 0)->where('is_deleted', 0)->count();
@@ -504,7 +508,7 @@ if (!Auth::user()->getAdmin()) {
                     @endif
                     @if ($access_permission29 == 1)
                     <li id="lphs_report_strata_form">
-                        <a class="left-menu-link" href="{{URL::action('ReportController@reportStrataProfile')}}">
+                        <a class="left-menu-link" href="#">
                             Laporan Strata Profile
                         </a>
                     </li>

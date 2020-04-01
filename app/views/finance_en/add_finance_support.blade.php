@@ -34,7 +34,7 @@ foreach ($user_permission as $permission) {
                                 <label><span style="color: red;">*</span> File No.</label>
                             </div>
                             <div class="col-md-6">
-                                <select id="file_id" class="form-control">
+                                <select id="file_id" class="form-control select2">
                                     <option value="">Please Select</option>
                                     @foreach ($file_no as $files)
                                     <option value="{{$files->id}}">{{$files->file_no}}</option>

@@ -569,7 +569,7 @@ class FinanceController extends BaseController {
 
     public function getFinanceList() {
         if (!Auth::user()->getAdmin()) {
-            $filelist = Finance::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            $filelist = Finance::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
         } else {
             if (empty(Session::get('admin_cob'))) {
                 $filelist = Finance::where('is_deleted', 0)->orderBy('id', 'desc')->get();
@@ -1524,7 +1524,17 @@ class FinanceController extends BaseController {
     }
 
     public function getFinanceSupportList() {
-        $filelist = FinanceSupport::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+        if (!Auth::user()->getAdmin()) {
+            $filelist = FinanceSupport::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $filelist = FinanceSupport::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            } else {
+                $filelist = FinanceSupport::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            }
+        }
+
+
 
         if (count($filelist) > 0) {
             $data = Array();
@@ -1566,7 +1576,15 @@ class FinanceController extends BaseController {
     public function addFinanceSupport() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $file_no = Files::where('is_active', 1)->where('is_deleted', 0)->get();
+        if (!Auth::user()->getAdmin()) {
+            $file_no = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $file_no = Files::where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            } else {
+                $file_no = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            }
+        }
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -1601,25 +1619,31 @@ class FinanceController extends BaseController {
             $file_id = $data['file_id'];
             $is_active = $data['is_active'];
 
-            $finance = new FinanceSupport();
-            $finance->file_id = $file_id;
-            $finance->date = $data['date'];
-            $finance->name = $data['name'];
-            $finance->amount = $data['amount'];
-            $finance->remark = $data['remark'];
-            $finance->is_active = $is_active;
-            $success = $finance->save();
+            $files = Files::find($file_id);
+            if ($files) {
+                $finance = new FinanceSupport();
+                $finance->file_id = $files->id;
+                $finance->company_id = $files->company_id;
+                $finance->date = $data['date'];
+                $finance->name = $data['name'];
+                $finance->amount = $data['amount'];
+                $finance->remark = $data['remark'];
+                $finance->is_active = $is_active;
+                $success = $finance->save();
 
 
-            if ($success) {
-                # Audit Trail
-                $remarks = 'Finance Support with id : ' . $finance->id . ' has been inserted.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "COB Finance Support";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
-                print "true";
+                if ($success) {
+                    # Audit Trail
+                    $remarks = 'Finance Support with id : ' . $finance->id . ' has been inserted.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB Finance Support";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+                    print "true";
+                } else {
+                    print "false";
+                }
             } else {
                 print "false";
             }
@@ -1629,7 +1653,15 @@ class FinanceController extends BaseController {
     public function editFinanceSupport($id) {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $file_no = Files::where('is_active', 1)->where('is_deleted', 0)->get();
+        if (!Auth::user()->getAdmin()) {
+            $file_no = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $file_no = Files::where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            } else {
+                $file_no = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            }
+        }
         $financeSupportData = FinanceSupport::where('id', $id)->first();
 
         if (Session::get('lang') == "en") {
@@ -1667,25 +1699,31 @@ class FinanceController extends BaseController {
             $file_id = $data['file_id'];
             $id = $data['id'];
 
-            $finance = FinanceSupport::find($id);
-            if ($finance) {
-                $finance->file_id = $file_id;
-                $finance->date = $data['date'];
-                $finance->name = $data['name'];
-                $finance->amount = $data['amount'];
-                $finance->remark = $data['remark'];
-                $finance->is_active = 1;
-                $success = $finance->save();
+            $files = Files::find($file_id);
+            if ($files) {
+                $finance = FinanceSupport::find($id);
+                if ($finance) {
+                    $finance->file_id = $files->id;
+                    $finance->company_id = $files->company_id;
+                    $finance->date = $data['date'];
+                    $finance->name = $data['name'];
+                    $finance->amount = $data['amount'];
+                    $finance->remark = $data['remark'];
+                    $finance->is_active = 1;
+                    $success = $finance->save();
 
-                if ($success) {
-                    # Audit Trail
-                    $remarks = 'Finance Support with id : ' . $finance->id . ' has been updated.';
-                    $auditTrail = new AuditTrail();
-                    $auditTrail->module = "COB Finance Support";
-                    $auditTrail->remarks = $remarks;
-                    $auditTrail->audit_by = Auth::user()->id;
-                    $auditTrail->save();
-                    print "true";
+                    if ($success) {
+                        # Audit Trail
+                        $remarks = 'Finance Support with id : ' . $finance->id . ' has been updated.';
+                        $auditTrail = new AuditTrail();
+                        $auditTrail->module = "COB Finance Support";
+                        $auditTrail->remarks = $remarks;
+                        $auditTrail->audit_by = Auth::user()->id;
+                        $auditTrail->save();
+                        print "true";
+                    } else {
+                        print "false";
+                    }
                 } else {
                     print "false";
                 }

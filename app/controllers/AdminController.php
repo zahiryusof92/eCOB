@@ -41,9 +41,13 @@ class AdminController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         if (!Auth::user()->getAdmin()) {
-            $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
-            $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            if (empty(Session::get('admin_cob'))) {
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            } else {
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            }
         }
 
         $stratas = 0;
@@ -495,7 +499,15 @@ class AdminController extends BaseController {
     }
 
     public function getFilePrefix() {
-        $prefix = FilePrefix::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+        if (!Auth::user()->getAdmin()) {
+            $prefix = FilePrefix::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $prefix = FilePrefix::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            } else {
+                $prefix = FilePrefix::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            }
+        }
 
         if (count($prefix) > 0) {
             $data = Array();
@@ -1577,136 +1589,168 @@ class AdminController extends BaseController {
             $stratafile = $data['strata_file_url'];
 
             $strata = Strata::find($strata_id);
-            $strata->name = $name;
-            $strata->parliament = $parliament;
-            $strata->dun = $dun;
-            $strata->park = $park;
-            $strata->address1 = $address1;
-            $strata->address2 = $address2;
-            $strata->address3 = $address3;
-            $strata->city = $city;
-            $strata->poscode = $poscode;
-            $strata->state = $state;
-            $strata->country = $country;
-            $strata->block_no = $block_no;
-            $strata->ownership_no = $ownership_no;
-            $strata->town = $town;
-            $strata->land_area = $land_area;
-            $strata->land_area_unit = $land_area_unit;
-            $strata->lot_no = $lot_no;
-            $strata->date = $date;
-            $strata->land_title = $land_title;
-            $strata->category = $category;
-            $strata->perimeter = $perimeter;
-            $strata->area = $area;
-            $strata->total_share_unit = $total_share_unit;
-            $strata->ccc_no = $ccc_no;
-            $strata->ccc_date = $ccc_date;
-            $strata->file_url = $stratafile;
-            $strata->is_residential = $is_residential;
-            $strata->is_commercial = $is_commercial;
-            $success = $strata->save();
+            if ($strata) {
+                $strata->name = $name;
+                $strata->parliament = $parliament;
+                $strata->dun = $dun;
+                $strata->park = $park;
+                $strata->address1 = $address1;
+                $strata->address2 = $address2;
+                $strata->address3 = $address3;
+                $strata->city = $city;
+                $strata->poscode = $poscode;
+                $strata->state = $state;
+                $strata->country = $country;
+                $strata->block_no = $block_no;
+                $strata->ownership_no = $ownership_no;
+                $strata->town = $town;
+                $strata->land_area = $land_area;
+                $strata->land_area_unit = $land_area_unit;
+                $strata->lot_no = $lot_no;
+                $strata->date = $date;
+                $strata->land_title = $land_title;
+                $strata->category = $category;
+                $strata->perimeter = $perimeter;
+                $strata->area = $area;
+                $strata->total_share_unit = $total_share_unit;
+                $strata->ccc_no = $ccc_no;
+                $strata->ccc_date = $ccc_date;
+                $strata->file_url = $stratafile;
+                $strata->is_residential = $is_residential;
+                $strata->is_commercial = $is_commercial;
+                $success = $strata->save();
 
-            if ($success) {
-                //residential               
-                $residential_unit_no = $data['residential_unit_no'];
-                $residential_maintenance_fee = $data['residential_maintenance_fee'];
-                $residential_maintenance_fee_option = $data['residential_maintenance_fee_option'];
-                $residential_sinking_fund = $data['residential_sinking_fund'];
-                $residential_sinking_fund_option = $data['residential_sinking_fund_option'];
+                if ($success) {
+                    //residential               
+                    $residential_unit_no = $data['residential_unit_no'];
+                    $residential_maintenance_fee = $data['residential_maintenance_fee'];
+                    $residential_maintenance_fee_option = $data['residential_maintenance_fee_option'];
+                    $residential_sinking_fund = $data['residential_sinking_fund'];
+                    $residential_sinking_fund_option = $data['residential_sinking_fund_option'];
 
-                //commercial                          
-                $commercial_unit_no = $data['commercial_unit_no'];
-                $commercial_maintenance_fee = $data['commercial_maintenance_fee'];
-                $commercial_maintenance_fee_option = $data['commercial_maintenance_fee_option'];
-                $commercial_sinking_fund = $data['commercial_sinking_fund'];
-                $commercial_sinking_fund_option = $data['commercial_sinking_fund_option'];
+                    //commercial                          
+                    $commercial_unit_no = $data['commercial_unit_no'];
+                    $commercial_maintenance_fee = $data['commercial_maintenance_fee'];
+                    $commercial_maintenance_fee_option = $data['commercial_maintenance_fee_option'];
+                    $commercial_sinking_fund = $data['commercial_sinking_fund'];
+                    $commercial_sinking_fund_option = $data['commercial_sinking_fund_option'];
 
-                //facility
-                $management_office = $data['management_office'];
-                $swimming_pool = $data['swimming_pool'];
-                $surau = $data['surau'];
-                $multipurpose_hall = $data['multipurpose_hall'];
-                $gym = $data['gym'];
-                $playground = $data['playground'];
-                $guardhouse = $data['guardhouse'];
-                $kindergarten = $data['kindergarten'];
-                $open_space = $data['open_space'];
-                $lift = $data['lift'];
-                $rubbish_room = $data['rubbish_room'];
-                $gated = $data['gated'];
-                $others = $data['others'];
+                    //facility
+                    $management_office = $data['management_office'];
+                    $management_office_unit = $data['management_office_unit'];
+                    $swimming_pool = $data['swimming_pool'];
+                    $swimming_pool_unit = $data['swimming_pool_unit'];
+                    $surau = $data['surau'];
+                    $surau_unit = $data['surau_unit'];
+                    $multipurpose_hall = $data['multipurpose_hall'];
+                    $multipurpose_hall_unit = $data['multipurpose_hall_unit'];
+                    $gym = $data['gym'];
+                    $gym_unit = $data['gym_unit'];
+                    $playground = $data['playground'];
+                    $playground_unit = $data['playground_unit'];
+                    $guardhouse = $data['guardhouse'];
+                    $guardhouse_unit = $data['guardhouse_unit'];
+                    $kindergarten = $data['kindergarten'];
+                    $kindergarten_unit = $data['kindergarten_unit'];
+                    $open_space = $data['open_space'];
+                    $open_space_unit = $data['open_space_unit'];
+                    $lift = $data['lift'];
+                    $lift_unit = $data['lift_unit'];
+                    $rubbish_room = $data['rubbish_room'];
+                    $rubbish_room_unit = $data['rubbish_room_unit'];
+                    $gated = $data['gated'];
+                    $gated_unit = $data['gated_unit'];
+                    $others = $data['others'];
 
-                $residential_old = Residential::where('file_id', $file_id)->where('strata_id', $strata->id)->first();
-                if ($strata->is_residential == 1) {
-                    if (count($residential_old) > 0) {
-                        $residential_old->delete();
+                    $residential_old = Residential::where('file_id', $file_id)->where('strata_id', $strata->id)->first();
+                    if ($strata->is_residential == 1) {
+                        if (count($residential_old) > 0) {
+                            $residential_old->delete();
+                        }
+                        $residential = new Residential();
+                        $residential->file_id = $file_id;
+                        $residential->strata_id = $strata->id;
+                        $residential->unit_no = $residential_unit_no;
+                        $residential->maintenance_fee = $residential_maintenance_fee;
+                        $residential->maintenance_fee_option = $residential_maintenance_fee_option;
+                        $residential->sinking_fund = $residential_sinking_fund;
+                        $residential->sinking_fund_option = $residential_sinking_fund_option;
+                        $residential->save();
+                    } else {
+                        if (count($residential_old) > 0) {
+                            $residential_old->delete();
+                        }
                     }
-                    $residential = new Residential();
-                    $residential->file_id = $file_id;
-                    $residential->strata_id = $strata->id;
-                    $residential->unit_no = $residential_unit_no;
-                    $residential->maintenance_fee = $residential_maintenance_fee;
-                    $residential->maintenance_fee_option = $residential_maintenance_fee_option;
-                    $residential->sinking_fund = $residential_sinking_fund;
-                    $residential->sinking_fund_option = $residential_sinking_fund_option;
-                    $residential->save();
-                } else {
-                    if (count($residential_old) > 0) {
-                        $residential_old->delete();
+
+                    $commercial_old = Commercial::where('file_id', $file_id)->where('strata_id', $strata->id)->first();
+                    if ($strata->is_commercial == 1) {
+                        if (count($commercial_old) > 0) {
+                            $commercial_old->delete();
+                        }
+                        $commercial = new Commercial();
+                        $commercial->file_id = $file_id;
+                        $commercial->strata_id = $strata->id;
+                        $commercial->unit_no = $commercial_unit_no;
+                        $commercial->maintenance_fee = $commercial_maintenance_fee;
+                        $commercial->maintenance_fee_option = $commercial_maintenance_fee_option;
+                        $commercial->sinking_fund = $commercial_sinking_fund;
+                        $commercial->sinking_fund_option = $commercial_sinking_fund_option;
+                        $commercial->save();
+                    } else {
+                        if (count($commercial_old) > 0) {
+                            $commercial_old->delete();
+                        }
                     }
                 }
 
-                $commercial_old = Commercial::where('file_id', $file_id)->where('strata_id', $strata->id)->first();
-                if ($strata->is_commercial == 1) {
-                    if (count($commercial_old) > 0) {
-                        $commercial_old->delete();
+                $facility = Facility::find($facility_id);
+                if ($facility) {
+                    $facility->management_office = $management_office;
+                    $facility->management_office_unit = $management_office_unit;
+                    $facility->swimming_pool = $swimming_pool;
+                    $facility->swimming_pool_unit = $swimming_pool_unit;
+                    $facility->surau = $surau;
+                    $facility->surau_unit = $surau_unit;
+                    $facility->multipurpose_hall = $multipurpose_hall;
+                    $facility->multipurpose_hall_unit = $multipurpose_hall_unit;
+                    $facility->gym = $gym;
+                    $facility->gym_unit = $gym_unit;
+                    $facility->playground = $playground;
+                    $facility->playground_unit = $playground_unit;
+                    $facility->guardhouse = $guardhouse;
+                    $facility->guardhouse_unit = $guardhouse_unit;
+                    $facility->kindergarten = $kindergarten;
+                    $facility->kindergarten_unit = $kindergarten_unit;
+                    $facility->open_space = $open_space;
+                    $facility->open_space_unit = $open_space_unit;
+                    $facility->lift = $lift;
+                    $facility->lift_unit = $lift_unit;
+                    $facility->rubbish_room = $rubbish_room;
+                    $facility->rubbish_room_unit = $rubbish_room_unit;
+                    $facility->gated = $gated;
+                    $facility->gated_unit = $gated_unit;
+                    $facility->others = $others;
+                    $saved = $facility->save();
+
+                    if ($saved) {
+                        # Audit Trail
+                        $file_name = Files::find($strata->file_id);
+                        $remarks = 'Strata Info (' . $file_name->file_no . ') has been updated.';
+                        $auditTrail = new AuditTrail();
+                        $auditTrail->module = "COB File";
+                        $auditTrail->remarks = $remarks;
+                        $auditTrail->audit_by = Auth::user()->id;
+                        $auditTrail->save();
+
+                        return "true";
+                    } else {
+                        return "false";
                     }
-                    $commercial = new Commercial();
-                    $commercial->file_id = $file_id;
-                    $commercial->strata_id = $strata->id;
-                    $commercial->unit_no = $commercial_unit_no;
-                    $commercial->maintenance_fee = $commercial_maintenance_fee;
-                    $commercial->maintenance_fee_option = $commercial_maintenance_fee_option;
-                    $commercial->sinking_fund = $commercial_sinking_fund;
-                    $commercial->sinking_fund_option = $commercial_sinking_fund_option;
-                    $commercial->save();
                 } else {
-                    if (count($commercial_old) > 0) {
-                        $commercial_old->delete();
-                    }
+                    return "false";
                 }
-            }
-
-            $facility = Facility::find($facility_id);
-            $facility->management_office = $management_office;
-            $facility->swimming_pool = $swimming_pool;
-            $facility->surau = $surau;
-            $facility->multipurpose_hall = $multipurpose_hall;
-            $facility->gym = $gym;
-            $facility->playground = $playground;
-            $facility->guardhouse = $guardhouse;
-            $facility->kindergarten = $kindergarten;
-            $facility->open_space = $open_space;
-            $facility->lift = $lift;
-            $facility->rubbish_room = $rubbish_room;
-            $facility->gated = $gated;
-            $facility->others = $others;
-            $saved = $facility->save();
-
-            if ($saved) {
-                # Audit Trail
-                $file_name = Files::find($strata->file_id);
-                $remarks = 'Strata Info (' . $file_name->file_no . ') has been updated.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "COB File";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
-
-                return "true";
             } else {
-                return "false";
+                print "false";
             }
         } else {
             print "false";
@@ -11290,9 +11334,13 @@ class AdminController extends BaseController {
         $data = Array();
 
         if (!Auth::user()->getAdmin()) {
-            $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
-            $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            if (empty(Session::get('admin_cob'))) {
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            } else {
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            }
         }
 
         if (count($file) > 0) {
@@ -11418,9 +11466,13 @@ class AdminController extends BaseController {
     public function ratingSummary() {
 
         if (!Auth::user()->getAdmin()) {
-            $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
-            $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            if (empty(Session::get('admin_cob'))) {
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            } else {
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            }
         }
 
         $stratas = 0;
@@ -11507,30 +11559,43 @@ class AdminController extends BaseController {
 
     //management summary
     public function managementSummary() {
-
         if (!Auth::user()->getAdmin()) {
             $strata = DB::table('files')
                     ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                     ->select('strata.*', 'files.id as file_id')
-                    ->where('files.created_by', Auth::user()->id)
+                    ->where('files.company_id', Auth::user()->company_id)
                     ->where('files.is_active', 1)
                     ->where('files.status', 1)
                     ->where('files.is_deleted', 0)
                     ->orderBy('strata.id')
                     ->get();
 
-            $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
-            $strata = DB::table('files')
-                    ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
-                    ->select('strata.*', 'files.id as file_id')
-                    ->where('files.is_active', 1)
-                    ->where('files.status', 1)
-                    ->where('files.is_deleted', 0)
-                    ->orderBy('strata.id')
-                    ->get();
+            if (empty(Session::get('admin_cob'))) {
+                $strata = DB::table('files')
+                        ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
+                        ->select('strata.*', 'files.id as file_id')
+                        ->where('files.is_active', 1)
+                        ->where('files.status', 1)
+                        ->where('files.is_deleted', 0)
+                        ->orderBy('strata.id')
+                        ->get();
 
-            $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            } else {
+                $strata = DB::table('files')
+                        ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
+                        ->select('strata.*', 'files.id as file_id')
+                        ->where('files.company_id', Session::get('admin_cob'))
+                        ->where('files.is_active', 1)
+                        ->where('files.status', 1)
+                        ->where('files.is_deleted', 0)
+                        ->orderBy('strata.id')
+                        ->get();
+
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            }
         }
 
         $jmbs = 0;
@@ -11548,8 +11613,6 @@ class AdminController extends BaseController {
 
         if (count($file) > 0) {
             foreach ($file as $files) {
-
-
                 $jmb = ManagementJMB::where('file_id', $files->id)->count();
                 $mc = ManagementMC::where('file_id', $files->id)->count();
                 $agent = ManagementAgent::where('file_id', $files->id)->count();
@@ -11623,30 +11686,43 @@ class AdminController extends BaseController {
 
     //cob file / management
     public function cobFileManagement() {
-
         if (!Auth::user()->getAdmin()) {
-            $strata = DB::table('strata')
-                    ->leftJoin('files', 'strata.file_id', '=', 'files.id')
+            $strata = DB::table('files')
+                    ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                     ->select('strata.*', 'files.id as file_id')
-                    ->where('files.created_by', Auth::user()->id)
+                    ->where('files.company_id', Auth::user()->company_id)
                     ->where('files.is_active', 1)
                     ->where('files.status', 1)
                     ->where('files.is_deleted', 0)
                     ->orderBy('strata.id')
                     ->get();
 
-            $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
-            $strata = DB::table('strata')
-                    ->leftJoin('files', 'strata.file_id', '=', 'files.id')
-                    ->select('strata.*', 'files.id as file_id')
-                    ->where('files.is_active', 1)
-                    ->where('files.status', 1)
-                    ->where('files.is_deleted', 0)
-                    ->orderBy('strata.id')
-                    ->get();
+            if (empty(Session::get('admin_cob'))) {
+                $strata = DB::table('files')
+                        ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
+                        ->select('strata.*', 'files.id as file_id')
+                        ->where('files.is_active', 1)
+                        ->where('files.status', 1)
+                        ->where('files.is_deleted', 0)
+                        ->orderBy('strata.id')
+                        ->get();
 
-            $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            } else {
+                $strata = DB::table('files')
+                        ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
+                        ->select('strata.*', 'files.id as file_id')
+                        ->where('files.company_id', Session::get('admin_cob'))
+                        ->where('files.is_active', 1)
+                        ->where('files.status', 1)
+                        ->where('files.is_deleted', 0)
+                        ->orderBy('strata.id')
+                        ->get();
+
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            }
         }
 
         $jmbs = 0;

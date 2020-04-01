@@ -1,12 +1,12 @@
 <?php
 
 class ReportController extends BaseController {
-    
+
     public function __construct() {
         if (empty(Session::get('lang'))) {
             Session::put('lang', 'en');
         }
-        
+
         $locale = Session::get('lang');
         App::setLocale($locale);
     }
@@ -26,17 +26,18 @@ class ReportController extends BaseController {
             'main_nav_active' => 'lhps_main',
             'sub_nav_active' => 'strataprofile_form',
             'user_permission' => $user_permission,
-            'image' => '', 
-            'parliment' => $parliment, 
-            'dun' => $dun, 
-            'category' => $category, 
-            'land' => $land, 
+            'image' => '',
+            'parliment' => $parliment,
+            'dun' => $dun,
+            'category' => $category,
+            'land' => $land,
         );
 
         return View::make('page.report_lhps.print_strata', $viewData);
     }
 
-    public function submitLhpsReportStrata(){
+    public function submitLhpsReportStrata() {
         die();
     }
+
 }
