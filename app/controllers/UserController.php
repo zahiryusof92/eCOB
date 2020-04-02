@@ -73,7 +73,7 @@ class UserController extends BaseController {
             $phone_no = $data['phone_no'];
             $company = $data['company'];
 
-            $check_username = User::where('username', $username)->count();
+            $check_username = User::where('username', $username)->where('is_deleted', 0)->count();
 
             if ($check_username <= 0) {
                 $user = new User();

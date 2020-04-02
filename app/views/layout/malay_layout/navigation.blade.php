@@ -546,7 +546,7 @@ if (!Auth::user()->getAdmin()) {
                     </li>
                     @endif
                     @if ($access_permission33 == 1)
-                    <li id="agmpurchasesub_list">
+                    <li id="agmdocumentsub_list">
                         <a class="left-menu-link" href="#">
                             Upload Document
                         </a>

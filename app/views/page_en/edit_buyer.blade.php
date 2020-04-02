@@ -34,6 +34,9 @@
                             <li class="nav-item">
                                 <a class="nav-link active">Buyer List</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $files->id)}}">Document</a>
+                            </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
                             <div class="tab-pane active" id="buyer_tab" role="tabpanel">

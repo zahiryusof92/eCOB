@@ -395,7 +395,7 @@ class AgmController extends BaseController {
                 'files' => $files,
                 'Uploadmessage' => '',
                 'upload' => "true",
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.view_buyer', $viewData);
@@ -409,7 +409,7 @@ class AgmController extends BaseController {
                 'files' => $files,
                 'Uploadmessage' => '',
                 'upload' => "true",
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.view_buyer', $viewData);

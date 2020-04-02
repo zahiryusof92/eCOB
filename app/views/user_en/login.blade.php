@@ -53,8 +53,7 @@ $company = Company::orderBy('id')->first();
                 @endif
 
                 <div class="form-group">
-                    <input id="email" class="form-control" placeholder="Username" name="username" type="text"
-                           {{ (Input::old('username')) ? ' value="'.Input::old('username').'"' : '' }}/>
+                    <input id="email" class="form-control" placeholder="Username" name="username" type="text" value="{{ Input::old('username') }}"/>
                     @if($errors->has('username'))
                     <span style="color:red;font-style:italic;font-size:13px;">{{$errors->first('username')}}</span>
                     <br />
@@ -62,8 +61,7 @@ $company = Company::orderBy('id')->first();
                 </div>
 
                 <div class="form-group">                        
-                    <input id="password" class="form-control password" placeholder="Password" name="password" type="password"
-                           {{ (Input::old('password')) ? ' value="'.Input::old('password').'"' : '' }}/>
+                    <input id="password" class="form-control password" placeholder="Password" name="password" type="password"/>
                     @if($errors->has('password'))
                     <span style="color:red;font-style:italic;font-size:13px;">{{$errors->first('password')}}</span>
                     <br />

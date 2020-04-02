@@ -34,6 +34,9 @@
                             <li class="nav-item">
                                 <a class="nav-link active" href="{{URL::action('AdminController@buyer', $files->id)}}">Senarai Pembeli</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $files->id)}}">Document</a>
+                            </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
                             <div class="tab-pane active" id="buyer_tab" role="tabpanel">
@@ -121,6 +124,7 @@
 <!-- Page Scripts -->
 <script>
     function addBuyer() {
+        $("#submit_button").attr("disabled", "disabled");
 
         var unit_no = $("#unit_no").val(), 
                 unit_share = $("#unit_share").val(), 

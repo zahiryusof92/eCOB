@@ -753,7 +753,7 @@ class AdminController extends BaseController {
             $filename = $file_no . '-' . $description;
             $year = substr($filename, strpos($filename, "/") + 1);
 
-            $check_file = Files::where('company_id', $company_id)->where('file_no', $filename)->count();
+            $check_file = Files::where('company_id', $company_id)->where('file_no', $filename)->where('is_deleted', 0)->count();
 
             if ($check_file <= 0) {
                 $files = new Files();
@@ -1029,134 +1029,54 @@ class AdminController extends BaseController {
             $id = $data['id'];
 
             $files = Files::find($id);
-            $deleted = $files->delete();
+            if ($files) {
+                $deleted = $files->delete();
 
-            if ($deleted) {
-                $house_scheme = HouseScheme::where('file_id', $files->id)->first();
-                $deleted1 = $house_scheme->delete();
+                if ($deleted) {
+                    $house_scheme = HouseScheme::where('file_id', $files->id)->delete();
+                    $strata = Strata::where('file_id', $files->id)->delete();
+                    $facility = Facility::where('file_id', $files->id)->delete();
+                    $management = Management::where('file_id', $files->id)->delete();
+                    $monitor = Monitoring::where('file_id', $files->id)->delete();
+                    $others = OtherDetails::where('file_id', $files->id)->delete();
+                    # Commercial Block
+                    $commercial = Commercial::where('file_id', $files->id)->delete();
+                    # Residential Block
+                    $residential = Residential::where('file_id', $files->id)->delete();
+                    # Management JMB
+                    $managementjmb = ManagementJMB::where('file_id', $files->id)->delete();
+                    # Management MC
+                    $managementmc = ManagementMC::where('file_id', $files->id)->delete();
+                    # Management Agent
+                    $managementagent = ManagementAgent::where('file_id', $files->id)->delete();
+                    # Management Other
+                    $managementother = ManagementOthers::where('file_id', $files->id)->delete();
+                    # Meeting Document
+                    $meetingdocument = MeetingDocument::where('file_id', $files->id)->delete();
+                    # AJK Detail
+                    $ajkdetail = AJKDetails::where('file_id', $files->id)->delete();
+                    # Scoring
+                    $scoring = Scoring::where('file_id', $files->id)->delete();
+                    # Buyer List
+                    $buyerlist = Buyer::where('file_id', $files->id)->delete();
 
-                if ($deleted1) {
-                    $strata = Strata::where('file_id', $files->id)->first();
-                    $deleted2 = $strata->delete();
+                    # Audit Trail
+                    $remarks = $files->file_no . ' has been deleted.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB File";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
 
-                    if ($deleted2) {
-                        $facility = Facility::where('file_id', $files->id)->first();
-                        $deleted3 = $facility->delete();
-
-                        if ($deleted3) {
-                            $management = Management::where('file_id', $files->id)->first();
-                            $deleted4 = $management->delete();
-
-                            if ($deleted4) {
-                                $monitor = Monitoring::where('file_id', $files->id)->first();
-                                $deleted5 = $monitor->delete();
-
-                                if ($deleted5) {
-                                    $others = OtherDetails::where('file_id', $files->id)->first();
-                                    $deleted6 = $others->delete();
-
-                                    if ($deleted6) {
-                                        # Commercial Block
-                                        $commercial = Commercial::where('file_id', $files->id)->get();
-                                        if (count($commercial) > 0) {
-                                            foreach ($commercial as $commercials) {
-                                                $commercials->delete();
-                                            }
-                                        }
-                                        # Residential Block
-                                        $residential = Residential::where('file_id', $files->id)->get();
-                                        if (count($residential) > 0) {
-                                            foreach ($residential as $residentials) {
-                                                $residentials->delete();
-                                            }
-                                        }
-                                        # Management JMB
-                                        $managementjmb = ManagementJMB::where('file_id', $files->id)->get();
-                                        if (count($managementjmb) > 0) {
-                                            foreach ($managementjmb as $managementjmbs) {
-                                                $managementjmbs->delete();
-                                            }
-                                        }
-                                        # Management MC
-                                        $managementmc = ManagementMC::where('file_id', $files->id)->get();
-                                        if (count($managementmc) > 0) {
-                                            foreach ($managementmc as $managementmcs) {
-                                                $managementmcs->delete();
-                                            }
-                                        }
-                                        # Management Agent
-                                        $managementagent = ManagementAgent::where('file_id', $files->id)->get();
-                                        if (count($managementagent) > 0) {
-                                            foreach ($managementagent as $managementagents) {
-                                                $managementagents->delete();
-                                            }
-                                        }
-                                        # Management Other
-                                        $managementother = ManagementOthers::where('file_id', $files->id)->get();
-                                        if (count($managementother) > 0) {
-                                            foreach ($managementother as $managementothers) {
-                                                $managementothers->delete();
-                                            }
-                                        }
-                                        # Meeting Document
-                                        $meetingdocument = MeetingDocument::where('file_id', $files->id)->get();
-                                        if (count($meetingdocument) > 0) {
-                                            foreach ($meetingdocument as $meetingdocuments) {
-                                                $meetingdocuments->delete();
-                                            }
-                                        }
-                                        # AJK Detail
-                                        $ajkdetail = AJKDetails::where('file_id', $files->id)->get();
-                                        if (count($ajkdetail) > 0) {
-                                            foreach ($ajkdetail as $ajkdetails) {
-                                                $ajkdetails->delete();
-                                            }
-                                        }
-                                        # Scoring
-                                        $scoring = Scoring::where('file_id', $files->id)->get();
-                                        if (count($scoring) > 0) {
-                                            foreach ($scoring as $scorings) {
-                                                $scorings->delete();
-                                            }
-                                        }
-                                        # Buyer List
-                                        $buyerlist = Buyer::where('file_id', $files->id)->get();
-                                        if (count($buyerlist) > 0) {
-                                            foreach ($buyerlist as $buyerlists) {
-                                                $buyerlists->delete();
-                                            }
-                                        }
-
-                                        # Audit Trail
-                                        $remarks = $files->file_no . ' has been deleted.';
-                                        $auditTrail = new AuditTrail();
-                                        $auditTrail->module = "COB File";
-                                        $auditTrail->remarks = $remarks;
-                                        $auditTrail->audit_by = Auth::user()->id;
-                                        $auditTrail->save();
-
-                                        print "true";
-                                    } else {
-                                        print "false";
-                                    }
-                                } else {
-                                    print "false";
-                                }
-                            } else {
-                                print "false";
-                            }
-                        } else {
-                            print "false";
-                        }
-                    } else {
-                        print "false";
-                    }
+                    print "true";
                 } else {
                     print "false";
                 }
             } else {
                 print "false";
             }
+        } else {
+            print "false";
         }
     }
 
@@ -1185,7 +1105,7 @@ class AdminController extends BaseController {
                 'country' => $country,
                 'state' => $state,
                 'file' => $file,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.view_house_scheme', $viewData);
@@ -1202,7 +1122,7 @@ class AdminController extends BaseController {
                 'country' => $country,
                 'state' => $state,
                 'file' => $file,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.view_house_scheme', $viewData);
@@ -1234,7 +1154,7 @@ class AdminController extends BaseController {
                 'country' => $country,
                 'state' => $state,
                 'file' => $file,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.update_house_scheme', $viewData);
@@ -1251,7 +1171,7 @@ class AdminController extends BaseController {
                 'country' => $country,
                 'state' => $state,
                 'file' => $file,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.update_house_scheme', $viewData);
@@ -1267,6 +1187,7 @@ class AdminController extends BaseController {
             $address1 = $data['address1'];
             $address2 = $data['address2'];
             $address3 = $data['address3'];
+            $address4 = $data['address4'];
             $city = $data['city'];
             $poscode = $data['poscode'];
             $state = $data['state'];
@@ -1367,7 +1288,7 @@ class AdminController extends BaseController {
                 'residential' => $residential,
                 'commercial' => $commercial,
                 'designation' => $designation,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.view_strata', $viewData);
@@ -1396,7 +1317,7 @@ class AdminController extends BaseController {
                 'residential' => $residential,
                 'commercial' => $commercial,
                 'designation' => $designation,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.view_strata', $viewData);
@@ -1461,7 +1382,7 @@ class AdminController extends BaseController {
                 'residential' => $residential,
                 'commercial' => $commercial,
                 'designation' => $designation,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.update_strata', $viewData);
@@ -1490,7 +1411,7 @@ class AdminController extends BaseController {
                 'residential' => $residential,
                 'commercial' => $commercial,
                 'designation' => $designation,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.update_strata', $viewData);
@@ -1816,7 +1737,7 @@ class AdminController extends BaseController {
                 'management_mc' => $management_mc,
                 'management_agent' => $management_agent,
                 'management_others' => $management_others,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.view_management', $viewData);
@@ -1837,7 +1758,7 @@ class AdminController extends BaseController {
                 'management_mc' => $management_mc,
                 'management_agent' => $management_agent,
                 'management_others' => $management_others,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.view_management', $viewData);
@@ -1877,7 +1798,7 @@ class AdminController extends BaseController {
                 'management_mc' => $management_mc,
                 'management_agent' => $management_agent,
                 'management_others' => $management_others,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.update_management', $viewData);
@@ -1898,7 +1819,7 @@ class AdminController extends BaseController {
                 'management_mc' => $management_mc,
                 'management_agent' => $management_agent,
                 'management_others' => $management_others,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.update_management', $viewData);
@@ -2125,7 +2046,7 @@ class AdminController extends BaseController {
                 'file' => $file,
                 'designation' => $designation,
                 'monitoring' => $monitoring,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.view_monitoring', $viewData);
@@ -2139,7 +2060,7 @@ class AdminController extends BaseController {
                 'file' => $file,
                 'designation' => $designation,
                 'monitoring' => $monitoring,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.view_monitoring', $viewData);
@@ -2164,7 +2085,7 @@ class AdminController extends BaseController {
                 'file' => $file,
                 'designation' => $designation,
                 'monitoring' => $monitoring,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.update_monitoring', $viewData);
@@ -2178,7 +2099,7 @@ class AdminController extends BaseController {
                 'file' => $file,
                 'designation' => $designation,
                 'monitoring' => $monitoring,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.update_monitoring', $viewData);
@@ -3012,7 +2933,7 @@ class AdminController extends BaseController {
                 'user_permission' => $user_permission,
                 'file' => $files,
                 'other_details' => $other_details,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.view_others', $viewData);
@@ -3025,7 +2946,7 @@ class AdminController extends BaseController {
                 'user_permission' => $user_permission,
                 'file' => $files,
                 'other_details' => $other_details,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.view_others', $viewData);
@@ -3048,7 +2969,7 @@ class AdminController extends BaseController {
                 'user_permission' => $user_permission,
                 'file' => $files,
                 'other_details' => $other_details,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.update_others', $viewData);
@@ -3061,7 +2982,7 @@ class AdminController extends BaseController {
                 'user_permission' => $user_permission,
                 'file' => $files,
                 'other_details' => $other_details,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.update_others', $viewData);
@@ -3171,7 +3092,7 @@ class AdminController extends BaseController {
                 'sub_nav_active' => 'cob_list',
                 'user_permission' => $user_permission,
                 'files' => $files,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.view_scoring', $viewData);
@@ -3183,7 +3104,7 @@ class AdminController extends BaseController {
                 'sub_nav_active' => 'cob_list',
                 'user_permission' => $user_permission,
                 'files' => $files,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.view_scoring', $viewData);
@@ -3204,7 +3125,7 @@ class AdminController extends BaseController {
                 'sub_nav_active' => 'cob_list',
                 'user_permission' => $user_permission,
                 'files' => $files,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.update_scoring', $viewData);
@@ -3216,7 +3137,7 @@ class AdminController extends BaseController {
                 'sub_nav_active' => 'cob_list',
                 'user_permission' => $user_permission,
                 'files' => $files,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.update_scoring', $viewData);
@@ -3527,7 +3448,7 @@ class AdminController extends BaseController {
                 'files' => $files,
                 'Uploadmessage' => '',
                 'upload' => "true",
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.view_buyer', $viewData);
@@ -3541,7 +3462,7 @@ class AdminController extends BaseController {
                 'files' => $files,
                 'Uploadmessage' => '',
                 'upload' => "true",
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.view_buyer', $viewData);
@@ -3564,7 +3485,7 @@ class AdminController extends BaseController {
                 'files' => $files,
                 'Uploadmessage' => '',
                 'upload' => "true",
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.update_buyer', $viewData);
@@ -3578,7 +3499,7 @@ class AdminController extends BaseController {
                 'files' => $files,
                 'Uploadmessage' => '',
                 'upload' => "true",
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.update_buyer', $viewData);
@@ -3596,7 +3517,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_list',
                 'files' => $files,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.add_buyer', $viewData);
@@ -3607,7 +3528,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_list',
                 'files' => $files,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.add_buyer', $viewData);
@@ -3674,7 +3595,7 @@ class AdminController extends BaseController {
             'user_permission' => $user_permission,
             'files' => $files,
             'buyer' => $buyer,
-            'image' => $image->image_url
+            'image' => (!empty($image->image_url) ? $image->image_url : '')
         );
 
         return View::make('page_en.edit_buyer', $viewData);
@@ -3817,7 +3738,7 @@ class AdminController extends BaseController {
                 'files' => $files,
                 'Uploadmessage' => '',
                 'upload' => "true",
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.import_buyer', $viewData);
@@ -3831,7 +3752,7 @@ class AdminController extends BaseController {
                 'files' => $files,
                 'Uploadmessage' => '',
                 'upload' => "true",
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.import_buyer', $viewData);
@@ -3890,6 +3811,296 @@ class AdminController extends BaseController {
         }
     }
 
+    //document
+    public function document($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $files = Files::find($id);
+        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderby('sort_no', 'asc')->get();
+        $image = OtherDetails::where('file_id', $files->id)->first();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_en.update_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.update_document', $viewData);
+        }
+    }
+
+    public function getDocument($id) {
+        $files = Files::find($id);
+        $document = Document::where('file_id', $files->id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+        if (count($document) > 0) {
+            $data = Array();
+            foreach ($document as $documents) {
+                $button = "";
+                if ($documents->is_hidden == 1) {
+                    $is_hidden = 'Yes';
+                } else {
+                    $is_hidden = 'No';
+                }
+
+                if ($documents->is_readonly == 1) {
+                    $is_readonly = 'Yes';
+                } else {
+                    $is_readonly = 'No';
+                }
+
+                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@editDocument', $documents->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteDocument(\'' . $documents->id . '\')"><i class="fa fa-trash"></i></button>';
+
+                $data_raw = array(
+                    $documents->type->name,
+                    $documents->name,
+                    $is_hidden,
+                    $is_readonly,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function deleteDocument() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $document = Document::find($id);
+            if ($document) {
+                $document->is_deleted = 1;
+                $deleted = $document->save();
+                if ($deleted) {
+                    # Audit Trail
+                    $remarks = 'Document: ' . $document->name_en . ' has been deleted.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "Document";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    print "true";
+                } else {
+                    print "false";
+                }
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteDocumentFile() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $document = Document::find($id);
+            if ($document) {
+                $document->file_url = "";
+                $deleted = $document->save();
+
+                if ($deleted) {
+                    # Audit Trail
+                    $remarks = 'Document: ' . $document->name_en . ' has been updated.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "Document";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    print "true";
+                } else {
+                    print "false";
+                }
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function addDocument($id) {
+        $files = Files::find($id);
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+        $image = OtherDetails::where('file_id', $files->id)->first();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_en.add_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.add_document', $viewData);
+        }
+    }
+
+    public function submitAddDocument() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $document = new Document();
+            $document->file_id = $data['file_id'];
+            $document->document_type_id = $data['document_type'];
+            $document->name = $data['name'];
+            $document->remarks = $data['remarks'];
+            $document->is_hidden = $data['is_hidden'];
+            $document->is_readonly = $data['is_readonly'];
+            $document->file_url = $data['document_url'];
+            $success = $document->save();
+
+            if ($success) {
+                # Audit Trail
+                $file_name = Files::find($document->file_id);
+                $remarks = 'COB Document (' . $file_name->file_no . ') has been inserted.';
+                $remarks = $document->id . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB File";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function editDocument($id) {
+        $files = Files::find($id);
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $document = Document::find($id);
+        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->get();
+        $image = OtherDetails::where('file_id', $files->id)->first();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'document' => $document,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_en.edit_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'document' => $document,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.edit_document', $viewData);
+        }
+    }
+
+    public function submitEditDocument() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $id = $data['id'];
+
+            $document = Document::find($id);
+            if ($document) {
+                $document->document_type_id = $data['document_type'];
+                $document->name = $data['name'];
+                $document->remarks = $data['remarks'];
+                $document->is_hidden = $data['is_hidden'];
+                $document->is_readonly = $data['is_readonly'];
+                $document->file_url = $data['document_url'];
+                $success = $document->save();
+
+                if ($success) {
+                    # Audit Trail
+                    $file_name = Files::find($document->file_id);
+                    $remarks = 'COB Document (' . $file_name->file_no . ') has been updated.';
+                    $remarks = $document->id . ' has been updated.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB File";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    return "true";
+                } else {
+                    return "false";
+                }
+            } else {
+                return 'false';
+            }
+        } else {
+            return "false";
+        }
+    }
+
     public function fileApproval($id) {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
@@ -3917,7 +4128,7 @@ class AdminController extends BaseController {
                 'Uploadmessage' => '',
                 'upload' => "true",
                 'role' => Auth::user()->role,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_en.file_approval', $viewData);
@@ -3934,7 +4145,7 @@ class AdminController extends BaseController {
                 'Uploadmessage' => '',
                 'upload' => "true",
                 'role' => Auth::user()->role,
-                'image' => $image->image_url
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
             return View::make('page_my.file_approval', $viewData);

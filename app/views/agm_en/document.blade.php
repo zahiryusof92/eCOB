@@ -69,44 +69,6 @@ foreach ($user_permission as $permission) {
         });
     });
 
-    function inactiveDocument(id) {
-        $.ajax({
-            url: "{{ URL::action('AgmController@inactiveDocument') }}",
-            type: "POST",
-            data: {
-                id: id
-            },
-            success: function (data) {
-                if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function () {
-                        window.location = "{{URL::action('AgmController@document')}}";
-                    });
-                } else {
-                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
-                }
-            }
-        });
-    }
-
-    function activeDocument(id) {
-        $.ajax({
-            url: "{{ URL::action('AgmController@activeDocument') }}",
-            type: "POST",
-            data: {
-                id: id
-            },
-            success: function (data) {
-                if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function () {
-                        window.location = "{{URL::action('AgmController@document')}}";
-                    });
-                } else {
-                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
-                }
-            }
-        });
-    }
-
     function deleteDocument(id) {
         swal({
             title: "Are you sure?",

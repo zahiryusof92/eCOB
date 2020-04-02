@@ -44,6 +44,9 @@ foreach ($user_permission as $permission) {
                             <li class="nav-item">
                                 <a class="nav-link" href="{{URL::action('AdminController@buyer', $file->id)}}">Senarai Pembeli</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $file->id)}}">Document</a>
+                            </li> 
                         </ul>
                         <div class="tab-content padding-vertical-20">
                             <div class="tab-pane active" id="house_scheme" role="tabpanel">
@@ -101,6 +104,13 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-8">
                                                     <div class="form-group">
                                                         <input type="text" class="form-control" placeholder="Alamat 3" id="address3" value="{{$house_scheme->address3}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" placeholder="Address 4" id="address4" value="{{$house_scheme->address4}}">
                                                         <div id="address_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
@@ -191,7 +201,7 @@ foreach ($user_permission as $permission) {
                                             </div>
                                             <div class="form-actions">
                                                 <?php if ($update_permission == 1) { ?>
-                                                <button type="button" class="btn btn-primary" id="submit_button" onclick="updateHouseScheme()">Hantar</button>
+                                                    <button type="button" class="btn btn-primary" id="submit_button" onclick="updateHouseScheme()">Hantar</button>
                                                 <?php } ?>
                                                 <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">Batal</button>
                                             </div>
@@ -219,6 +229,7 @@ foreach ($user_permission as $permission) {
                 address1 = $("#address1").val(),
                 address2 = $("#address2").val(),
                 address3 = $("#address3").val(),
+                address4 = $("#address4").val(),
                 city = $("#city").val(),
                 poscode = $("#poscode").val(),
                 state = $("#state").val(),
@@ -252,6 +263,7 @@ foreach ($user_permission as $permission) {
                     address1: address1,
                     address2: address2,
                     address3: address3,
+                    address4: address4,
                     city: city,
                     poscode: poscode,
                     state: state,

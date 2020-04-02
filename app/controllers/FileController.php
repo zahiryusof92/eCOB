@@ -129,7 +129,7 @@ class FileController extends BaseController {
                                 'Uploadmessage' => 'success',
                                 'csvData' => $csvData,
                                 'upload' => "true",
-                                'image' => $image->image_url
+                                'image' => (!empty($image->image_url) ? $image->image_url : '')
                             );
                             return View::make('page_en.import_buyer', $viewData);
                         } else {
@@ -143,7 +143,7 @@ class FileController extends BaseController {
                                 'Uploadmessage' => 'success',
                                 'csvData' => $csvData,
                                 'upload' => "true",
-                                'image' => $image->image_url
+                                'image' => (!empty($image->image_url) ? $image->image_url : '')
                             );
                             return View::make('page_my.import_buyer', $viewData);
                         }
@@ -159,7 +159,7 @@ class FileController extends BaseController {
                                 'Uploadmessage' => 'success',
                                 'csvData' => "No Data",
                                 'upload' => "true",
-                                'image' => $image->image_url
+                                'image' => (!empty($image->image_url) ? $image->image_url : '')
                             );
                             return View::make('page_en.import_buyer', $viewData);
                         } else {
@@ -173,7 +173,7 @@ class FileController extends BaseController {
                                 'Uploadmessage' => 'success',
                                 'csvData' => "No Data",
                                 'upload' => "true",
-                                'image' => $image->image_url
+                                'image' => (!empty($image->image_url) ? $image->image_url : '')
                             );
                             return View::make('page_my.import_buyer', $viewData);
                         }
@@ -189,7 +189,7 @@ class FileController extends BaseController {
                             'files' => $files,
                             'Uploadmessage' => 'error',
                             'upload' => "true",
-                            'image' => $image->image_url
+                            'image' => (!empty($image->image_url) ? $image->image_url : '')
                         );
 
                         return View::make('page_en.import_buyer', $viewData);
@@ -203,7 +203,7 @@ class FileController extends BaseController {
                             'files' => $files,
                             'Uploadmessage' => 'error',
                             'upload' => "true",
-                            'image' => $image->image_url
+                            'image' => (!empty($image->image_url) ? $image->image_url : '')
                         );
 
                         return View::make('page_my.import_buyer', $viewData);
@@ -220,7 +220,7 @@ class FileController extends BaseController {
                         'files' => $files,
                         'Uploadmessage' => 'Please upload CSV file',
                         'upload' => "true",
-                        'image' => $image->image_url
+                        'image' => (!empty($image->image_url) ? $image->image_url : '')
                     );
 
                     return View::make('page_en.import_buyer', $viewData);
@@ -234,7 +234,7 @@ class FileController extends BaseController {
                         'files' => $files,
                         'Uploadmessage' => 'Sila muat naik CSV fail',
                         'upload' => "true",
-                        'image' => $image->image_url
+                        'image' => (!empty($image->image_url) ? $image->image_url : '')
                     );
 
                     return View::make('page_my.import_buyer', $viewData);
@@ -251,7 +251,7 @@ class FileController extends BaseController {
                     'files' => $files,
                     'Uploadmessage' => 'Please upload CSV file',
                     'upload' => "true",
-                    'image' => $image->image_url
+                    'image' => (!empty($image->image_url) ? $image->image_url : '')
                 );
 
                 return View::make('page_en.import_buyer', $viewData);
@@ -265,7 +265,7 @@ class FileController extends BaseController {
                     'files' => $files,
                     'Uploadmessage' => 'Sila muat naik CSV fail',
                     'upload' => "true",
-                    'image' => $image->image_url
+                    'image' => (!empty($image->image_url) ? $image->image_url : '')
                 );
 
                 return View::make('page_my.import_buyer', $viewData);

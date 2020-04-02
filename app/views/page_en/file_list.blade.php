@@ -18,6 +18,147 @@ foreach ($user_permission as $permission) {
             <h3>{{$title}}</h3>
         </div>
         <div class="panel-body">
+
+            @if (Auth::user()->getAdmin())
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="btn btn-success" data-toggle="modal" data-target="#importForm">
+                        Import COB Files &nbsp;<i class="fa fa-upload"></i>
+                    </button>
+                </div>
+            </div>
+
+            <br/>
+
+            <div class="modal fade" id="importForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog">
+                    <form id="form_import" enctype="multipart/form-data" class="form-horizontal" data-parsley-validate>
+                        <div class="modal-content">
+                            <div class="modal-header">                    
+                                <h4 class="modal-title">Import COB File</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label><span style="color: red;">*</span> COB</label>
+                                            <select name="import_company" id="import_company" class="form-control">
+                                                <option value="">Please Select</option>
+                                                @foreach ($cob as $companies)
+                                                <option value="{{ $companies->id }}">{{ $companies->name }} ({{ $companies->short_name }})</option>
+                                                @endforeach                                    
+                                            </select>
+                                            <div id="import_company_error" style="display: none;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label><span style="color: red;">*</span> Excel File</label>
+                                            <input type="file" name="import_file" id="import_file" class="form-control form-control-file"/>
+                                            <div id="import_file_error" style="display: none;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <img id="loading_import" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
+                                <button id="submit_button_import" class="btn btn-primary" type="submit">
+                                    Submit
+                                </button>
+                                <button data-dismiss="modal" id="cancel_button_import" class="btn btn-default" type="button">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- modal -->
+
+            <script>
+                $("#form_import").on('submit', (function (e) {
+                    e.preventDefault();
+
+                    $('#loading_import').css("display", "inline-block");
+                    $("#submit_button_import").attr("disabled", "disabled");
+                    $("#cancel_button_import").attr("disabled", "disabled");
+                    $("#import_company_error").css("display", "none");
+                    $("#import_file_error").css("display", "none");
+
+                    var import_company = $("#import_company").val(),
+                            import_file = $("#import_file").val();
+
+                    var error = 0;
+
+                    if (import_company.trim() == "") {
+                        $("#import_company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select COB</span>');
+                        $("#import_company_error").css("display", "block");
+                        error = 1;
+                    }
+                    if (import_file.trim() == "") {
+                        $("#import_file_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please upload Excel File</span>');
+                        $("#import_file_error").css("display", "block");
+                        error = 1;
+                    }
+
+                    if (error == 0) {
+                        var formData = new FormData(this);
+                        $.ajax({
+                            url: "{{ URL::action('ImportController@importCOBFile') }}",
+                            type: "POST",
+                            data: formData,
+                            async: true,
+                            contentType: false, // The content type used when sending data to the server.
+                            cache: false, // To unable request pages to be cached
+                            processData: false,
+                            success: function (data) { //function to be called if request succeeds
+                                console.log(data);
+
+                                $('#loading_import').css("display", "none");
+                                $("#submit_button_import").removeAttr("disabled");
+                                $("#cancel_button_import").removeAttr("disabled");
+
+                                if (data.trim() === "true") {
+                                    $("#importForm").modal("hide");
+                                    bootbox.alert("<span style='color:green;'>Import successfully!</span>", function () {
+                                        window.location.reload();
+                                    });
+                                } else if (data.trim() === "empty_file") {
+                                    $("#importForm").modal("hide");
+                                    $("#import_file_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please upload Excel File</span>');
+                                    $("#import_file_error").css("display", "block");
+                                } else if (data.trim() === "empty_data") {
+                                    $("#importForm").modal("hide");
+                                    bootbox.alert("<span style='color:red;'>Error, empty file or all data already exist.</span>", function () {
+                                        window.location.reload();
+                                    });
+                                } else {
+                                    $("#importForm").modal("hide");
+                                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>", function () {
+                                        window.location.reload();
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        $("#import_company").focus();
+                        $('#loading_import').css("display", "none");
+                        $("#submit_button_import").removeAttr("disabled");
+                        $("#cancel_button_import").removeAttr("disabled");
+                    }
+                }));
+            </script>
+            @endif
+
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <form>
@@ -50,9 +191,9 @@ foreach ($user_permission as $permission) {
                     </form>
                 </div>
             </div>
-            
+
             <hr/>
-            
+
             <div class="row">
                 <div class="col-lg-12"> 
                     <table class="table table-hover nowrap" id="filelist" width="100%">
@@ -65,8 +206,8 @@ foreach ($user_permission as $permission) {
                                 <th style="width:10%;">Active</th>
                                 <th style="width:10%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
-                                <th style="width:20%;">Action</th>
-                                <?php } ?>
+                                    <th style="width:20%;">Action</th>
+                                    <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,8 +229,7 @@ foreach ($user_permission as $permission) {
             "lengthMenu": [
                 [15, 30, 50, 100, -1],
                 [15, 30, 50, 100, "All"]
-            ],
-            "responsive": true,
+            ],            
             "aoColumnDefs": [
                 {
                     "bSortable": false,
@@ -98,17 +238,18 @@ foreach ($user_permission as $permission) {
             ],
             "sorting": [
                 [5, "asc"]
-            ]
+            ],
+            "responsive": true
         });
-        
+
         $('#company').on('change', function () {
             oTable.columns(2).search(this.value).draw();
-        });        
+        });
         $('#year').on('change', function () {
             oTable.columns(3).search(this.value).draw();
         });
-    }); 
-        
+    });
+
     function inactiveFileList(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@inactiveFileList') }}",
@@ -116,9 +257,9 @@ foreach ($user_permission as $permission) {
             data: {
                 id: id
             },
-            success: function(data) {
+            success: function (data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function () {
                         window.location = "{{URL::action('AdminController@fileList')}}";
                     });
                 } else {
@@ -135,9 +276,9 @@ foreach ($user_permission as $permission) {
             data: {
                 id: id
             },
-            success: function(data) {
+            success: function (data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function () {
                         window.location = "{{URL::action('AdminController@fileList')}}";
                     });
                 } else {
@@ -146,9 +287,9 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-    
+
     function deleteFileList(id) {
-        bootbox.confirm("Are you sure want to delete this file?", function(result){
+        bootbox.confirm("Are you sure want to delete this file?", function (result) {
             if (result) {
                 $.ajax({
                     url: "{{ URL::action('AdminController@deleteFileList') }}",
@@ -156,9 +297,9 @@ foreach ($user_permission as $permission) {
                     data: {
                         id: id
                     },
-                    success: function(data) {
+                    success: function (data) {
                         if (data.trim() == "true") {
-                            bootbox.alert("<span style='color:green;'>Delete successfully!</span>", function() {
+                            bootbox.alert("<span style='color:green;'>Delete successfully!</span>", function () {
                                 window.location = "{{URL::action('AdminController@fileList')}}";
                             });
                         } else {

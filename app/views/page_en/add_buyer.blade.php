@@ -32,7 +32,10 @@
                                 <a class="nav-link" href="{{URL::action('AdminController@scoring', $files->id)}}">Scoring Component Value</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{URL::action('AdminController@buyer', $files->id)}}">Buyer List</a>
+                                <a class="nav-link active">Buyer List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $files->id)}}">Document</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">

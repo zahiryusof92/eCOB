@@ -44,6 +44,9 @@ foreach ($user_permission as $permission) {
                             <li class="nav-item">
                                 <a class="nav-link" href="{{URL::action('AdminController@buyer', $file->id)}}">Senarai Pembeli</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $file->id)}}">Document</a>
+                            </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">                            
                             <div class="tab-pane active" id="others_tab" role="tabpanel">

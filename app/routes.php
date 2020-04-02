@@ -65,6 +65,7 @@ Route::post('/deleteFilePrefix/{id}', 'AdminController@deleteFilePrefix')->befor
 //add file
 Route::get('/addFile', 'AdminController@addFile')->before('authMember');
 Route::post('/submitFile', 'AdminController@submitFile')->before('authMember');
+Route::post('/importCOBFile', 'ImportController@importCOBFile')->before('authMember');
 
 // file list
 Route::get('/fileList', 'AdminController@fileList')->before('authMember');
@@ -140,6 +141,17 @@ Route::post('/submitBuyer', 'AdminController@submitBuyer')->before('authMember')
 Route::post('/submitEditBuyer', 'AdminController@submitEditBuyer')->before('authMember');
 Route::get('/getBuyerList/{id}', 'AdminController@getBuyerList')->before('authMember');
 Route::post('/deleteBuyer', 'AdminController@deleteBuyer')->before('authMember');
+
+//document
+Route::get('/update/document/{id}', 'AdminController@document')->before('authMember');
+Route::get('/getDocument/{id}', 'AdminController@getDocument')->before('authMember');
+Route::get('/update/addDocument/{id}', 'AdminController@addDocument')->before('authMember');
+Route::post('/submitAddDocument', 'AdminController@submitAddDocument')->before('authMember');
+Route::get('/update/editDocument/{id}', 'AdminController@editDocument')->before('authMember');
+Route::post('/submitEditDocument', 'AdminController@submitEditDocument')->before('authMember');
+Route::post('/deleteDocument/{id}', 'AdminController@deleteDocument')->before('authMember');
+Route::post('/deleteDocumentFile', 'AdminController@deleteDocumentFile')->before('authMember');
+Route::post('/uploadDocumentFile', 'FileController@uploadDocumentFile')->before('authMember');
 
 //upload csv
 Route::get('/update/importBuyer/{id}', 'AdminController@importBuyer')->before('authMember');
@@ -263,15 +275,13 @@ Route::post('/deleteMinutes/{id}', 'AgmController@deleteMinutes')->before('authM
 //document
 Route::get('/document', 'AgmController@document')->before('authMember');
 Route::get('/getDocument', 'AgmController@getDocument')->before('authMember');
-Route::post('/activeDocument', 'AgmController@activeDocument')->before('authMember');
-Route::post('/inactiveDocument', 'AgmController@inactiveDocument')->before('authMember');
 Route::get('/addDocument', 'AgmController@addDocument')->before('authMember');
 Route::post('/submitAddDocument', 'AgmController@submitAddDocument')->before('authMember');
 Route::get('/updateDocument/{id}', 'AgmController@updateDocument')->before('authMember');
 Route::post('/submitUpdateDocument', 'AgmController@submitUpdateDocument')->before('authMember');
 Route::post('/deleteDocument/{id}', 'AgmController@deleteDocument')->before('authMember');
-Route::post('/deleteDocumentFile', 'AgmController@deleteDocumentFile');
-Route::post('/uploadDocumentFile', 'FileController@uploadDocumentFile');
+Route::post('/deleteDocumentFile', 'AgmController@deleteDocumentFile')->before('authMember');
+Route::post('/uploadDocumentFile', 'FileController@uploadDocumentFile')->before('authMember');
 
 /*
  * RONALDO
