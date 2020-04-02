@@ -407,7 +407,7 @@ foreach ($user_permission as $permission) {
 
         if (error == 0) {
             $.ajax({
-                url: "{{ URL::action('AdminController@submitEditCompany') }}",
+                url: "{{ URL::action('AdminController@submitAddCompany') }}",
                 type: "POST",
                 data: {
                     name: name,
