@@ -252,7 +252,7 @@ class ImportController extends BaseController {
                                         $dun = '';
                                         if (isset($row['19']) && !empty($row['19'])) {
                                             $dun_raw = trim($row['19']);
-                                            
+
                                             if (!empty($dun_raw)) {
                                                 $dun_query = Dun::where('parliament', $parliament)->where('description', $dun_raw)->where('is_deleted', 0)->first();
                                                 if ($dun_query) {
@@ -272,7 +272,7 @@ class ImportController extends BaseController {
                                         $park = '';
                                         if (isset($row['20']) && !empty($row['20'])) {
                                             $park_raw = trim($row['20']);
-                                            
+
                                             if (!empty($park_raw)) {
                                                 $park_query = Park::where('dun', $dun)->where('description', $park_raw)->where('is_deleted', 0)->first();
                                                 if ($park_query) {
@@ -317,7 +317,7 @@ class ImportController extends BaseController {
                                         $strata_city = '';
                                         if (isset($row['26']) && !empty($row['26'])) {
                                             $strata_city_raw = trim($row['26']);
-                                            
+
                                             if (!empty($strata_city_raw)) {
                                                 $strata_city_query = City::where('description', $strata_city_raw)->where('is_deleted', 0)->first();
                                                 if ($strata_city_query) {
@@ -336,7 +336,7 @@ class ImportController extends BaseController {
                                         $strata_state = '';
                                         if (isset($row['27']) && !empty($row['27'])) {
                                             $strata_state_raw = trim($row['27']);
-                                            
+
                                             if (!empty($strata_state_raw)) {
                                                 $strata_state_query = State::where('name', $strata_state_raw)->where('is_deleted', 0)->first();
                                                 if ($strata_state_query) {
@@ -355,7 +355,7 @@ class ImportController extends BaseController {
                                         $strata_country = '';
                                         if (isset($row['28']) && !empty($row['28'])) {
                                             $strata_country_raw = trim($row['28']);
-                                            
+
                                             if (!empty($strata_country_raw)) {
                                                 $strata_country_query = Country::where('name', $strata_country_raw)->where('is_deleted', 0)->first();
                                                 if ($strata_country_query) {
@@ -379,7 +379,7 @@ class ImportController extends BaseController {
                                         $town = '';
                                         if (isset($row['30']) && !empty($row['30'])) {
                                             $town_raw = trim($row['30']);
-                                            
+
                                             if (!empty($town_raw)) {
                                                 $town_query = City::where('description', $town_raw)->where('is_deleted', 0)->first();
                                                 if ($town_query) {
@@ -398,7 +398,7 @@ class ImportController extends BaseController {
                                         $area = '';
                                         if (isset($row['31']) && !empty($row['31'])) {
                                             $area_raw = trim($row['31']);
-                                            
+
                                             if (!empty($area_raw)) {
                                                 $area_query = Area::where('description', $area_raw)->where('is_deleted', 0)->first();
                                                 if ($area_query) {
@@ -457,7 +457,7 @@ class ImportController extends BaseController {
                                         $land_title = '';
                                         if (isset($row['40']) && !empty($row['40'])) {
                                             $land_title_raw = trim($row['40']);
-                                            
+
                                             if (!empty($land_title_raw)) {
                                                 $land_title_query = LandTitle::where('description', $land_title_raw)->where('is_deleted', 0)->first();
                                                 if ($land_title_query) {
@@ -476,7 +476,7 @@ class ImportController extends BaseController {
                                         $category = '';
                                         if (isset($row['41']) && !empty($row['41'])) {
                                             $category_raw = trim($row['41']);
-                                            
+
                                             if (!empty($category_raw)) {
                                                 $category_query = Category::where('description', $category_raw)->where('is_deleted', 0)->first();
                                                 if ($category_query) {
@@ -607,6 +607,10 @@ class ImportController extends BaseController {
                                         $mc_date_formed = '';
                                         if (isset($row['52']) && !empty($row['52'])) {
                                             $mc_date_formed = trim($row['52']);
+                                        }
+                                        // Certificate Series Number
+                                        if (isset($row['53']) && !empty($row['53'])) {
+                                            $mc_first_agm = trim($row['53']);
                                         }
                                         // Tarikh Mesyuarat Agong Pertama
                                         $mc_first_agm = '';
