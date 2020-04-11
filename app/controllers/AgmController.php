@@ -27,6 +27,21 @@ class AgmController extends BaseController {
             }
         }
 
+        $month = [
+            1 => 'JAN',
+            2 => 'FEB',
+            3 => 'MAR',
+            4 => 'APR',
+            5 => 'MAY',
+            6 => 'JUN',
+            7 => 'JUL',
+            8 => 'AUG',
+            9 => 'SEP',
+            10 => 'OCT',
+            11 => 'NOV',
+            12 => 'DEC'
+        ];
+
         if (Session::get('lang') == "en") {
             $viewData = array(
                 'title' => 'Designation Submission',
@@ -36,6 +51,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'cob' => $cob,
+                'month' => $month,
                 'image' => ''
             );
 
@@ -49,6 +65,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'cob' => $cob,
+                'month' => $month,
                 'image' => ''
             );
 
@@ -78,6 +95,7 @@ class AgmController extends BaseController {
                     $designation->description,
                     $ajk_details->name,
                     $ajk_details->phone_no,
+                    $ajk_details->monthName(),
                     $ajk_details->year,
                     $button
                 );
@@ -115,6 +133,21 @@ class AgmController extends BaseController {
             }
         }
 
+        $month = [
+            1 => 'JAN',
+            2 => 'FEB',
+            3 => 'MAR',
+            4 => 'APR',
+            5 => 'MAY',
+            6 => 'JUN',
+            7 => 'JUL',
+            8 => 'AUG',
+            9 => 'SEP',
+            10 => 'OCT',
+            11 => 'NOV',
+            12 => 'DEC'
+        ];
+
         if (Session::get('lang') == "en") {
             $viewData = array(
                 'title' => 'Add Designation',
@@ -124,6 +157,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'designation' => $designation,
+                'month' => $month,
                 'image' => ''
             );
 
@@ -137,6 +171,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'designation' => $designation,
+                'month' => $month,
                 'image' => ''
             );
 
@@ -149,10 +184,11 @@ class AgmController extends BaseController {
         if (Request::ajax()) {
 
             $file_id = $data['file_id'];
-            $designation = $data['ajk_designation'];
-            $name = $data['ajk_name'];
-            $phone_no = $data['ajk_phone_no'];
-            $year = $data['ajk_year'];
+            $designation = $data['designation'];
+            $name = $data['name'];
+            $phone_no = $data['phone_no'];
+            $month = $data['month'];
+            $year = $data['year'];
             $remarks = $data['remarks'];
 
             $ajk_detail = new AJKDetails();
@@ -160,6 +196,7 @@ class AgmController extends BaseController {
             $ajk_detail->designation = $designation;
             $ajk_detail->name = $name;
             $ajk_detail->phone_no = $phone_no;
+            $ajk_detail->month = $month;
             $ajk_detail->year = $year;
             $ajk_detail->remarks = $remarks;
             $success = $ajk_detail->save();
@@ -195,6 +232,22 @@ class AgmController extends BaseController {
                 $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
             }
         }
+
+        $month = [
+            1 => 'JAN',
+            2 => 'FEB',
+            3 => 'MAR',
+            4 => 'APR',
+            5 => 'MAY',
+            6 => 'JUN',
+            7 => 'JUL',
+            8 => 'AUG',
+            9 => 'SEP',
+            10 => 'OCT',
+            11 => 'NOV',
+            12 => 'DEC'
+        ];
+
         $ajk_details = AJKDetails::find($id);
 
         if (Session::get('lang') == "en") {
@@ -206,6 +259,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'designation' => $designation,
+                'month' => $month,
                 'ajk_details' => $ajk_details,
                 'image' => ''
             );
@@ -220,6 +274,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'designation' => $designation,
+                'month' => $month,
                 'ajk_details' => $ajk_details,
                 'image' => ''
             );
@@ -237,6 +292,7 @@ class AgmController extends BaseController {
             $designation = $data['designation'];
             $name = $data['name'];
             $phone_no = $data['phone_no'];
+            $month = $data['month'];
             $year = $data['year'];
             $remarks = $data['remarks'];
 
@@ -246,6 +302,7 @@ class AgmController extends BaseController {
                 $ajk_detail->designation = $designation;
                 $ajk_detail->name = $name;
                 $ajk_detail->phone_no = $phone_no;
+                $ajk_detail->month = $month;
                 $ajk_detail->year = $year;
                 $ajk_detail->remarks = $remarks;
                 $success = $ajk_detail->save();
@@ -341,7 +398,6 @@ class AgmController extends BaseController {
 
         if (count($buyer_list) > 0) {
             $data = Array();
-            $no = 1;
             foreach ($buyer_list as $buyer_lists) {
                 $button = "";
                 $button .= '<button type="button" class="btn btn-xs btn-success" title="Edit" onclick="window.location=\'' . URL::action('AgmController@editPurchaser', $buyer_lists->id) . '\'">
@@ -358,6 +414,7 @@ class AgmController extends BaseController {
                     $buyer_lists->ic_company_no,
                     $buyer_lists->phone_no,
                     $buyer_lists->email,
+                    $buyer_lists->race->name,
                     $button
                 );
 
@@ -379,47 +436,11 @@ class AgmController extends BaseController {
         }
     }
 
-    public function viewBuyer($id) {
-        //get user permission
-        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $files = Files::find($id);
-        $image = OtherDetails::where('file_id', $files->id)->first();
-
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'Update COB File',
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'cob_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'Uploadmessage' => '',
-                'upload' => "true",
-                'image' => (!empty($image->image_url) ? $image->image_url : '')
-            );
-
-            return View::make('page_en.view_buyer', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Edit Fail COB',
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'cob_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'Uploadmessage' => '',
-                'upload' => "true",
-                'image' => (!empty($image->image_url) ? $image->image_url : '')
-            );
-
-            return View::make('page_my.view_buyer', $viewData);
-        }
-    }
-
     public function addPurchaser() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+        $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -429,6 +450,7 @@ class AgmController extends BaseController {
                 'sub_nav_active' => 'agmpurchasesub_list',
                 'user_permission' => $user_permission,
                 'files' => $files,
+                'race' => $race,
                 'image' => ''
             );
 
@@ -441,6 +463,7 @@ class AgmController extends BaseController {
                 'sub_nav_active' => 'agmpurchasesub_list',
                 'user_permission' => $user_permission,
                 'files' => $files,
+                'race' => $race,
                 'image' => ''
             );
 
@@ -460,6 +483,7 @@ class AgmController extends BaseController {
             $address = $data['address'];
             $phone_no = $data['phone_no'];
             $email = $data['email'];
+            $race = $data['race'];
             $remarks = $data['remarks'];
 
             $checkFile = Files::find($file_id);
@@ -474,6 +498,7 @@ class AgmController extends BaseController {
                 $buyer->address = $address;
                 $buyer->phone_no = $phone_no;
                 $buyer->email = $email;
+                $buyer->race_id = $race;
                 $buyer->remarks = $remarks;
                 $success = $buyer->save();
 
@@ -502,6 +527,7 @@ class AgmController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $buyer = Buyer::find($id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+        $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -512,6 +538,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'buyer' => $buyer,
+                'race' => $race,
                 'image' => ''
             );
 
@@ -525,6 +552,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'buyer' => $buyer,
+                'race' => $race,
                 'image' => ''
             );
 
@@ -544,6 +572,7 @@ class AgmController extends BaseController {
             $address = $data['address'];
             $phone_no = $data['phone_no'];
             $email = $data['email'];
+            $race = $data['race'];
             $remarks = $data['remarks'];
             $id = $data['id'];
 
@@ -560,6 +589,7 @@ class AgmController extends BaseController {
                     $buyer->address = $address;
                     $buyer->phone_no = $phone_no;
                     $buyer->email = $email;
+                    $buyer->race_id = $race;
                     $buyer->remarks = $remarks;
                     $success = $buyer->save();
 
@@ -659,6 +689,25 @@ class AgmController extends BaseController {
 
                     $check_buyer = Buyer::where('file_id', $files_id)->where('unit_no', $buyerList[1])->where('is_deleted', 0)->first();
                     if (count($check_buyer) <= 0) {
+                        $race = '';
+                        if (isset($buyerList[8]) && !empty($buyerList[8])) {
+                            $race_raw = trim($buyerList[8]);
+
+                            if (!empty($race_raw)) {
+                                $race_query = Race::where('name', $race_raw)->where('is_deleted', 0)->first();
+                                if ($race_query) {
+                                    $race = $race_query->id;
+                                } else {
+                                    $race_query = new Race();
+                                    $race_query->name = $race_raw;
+                                    $race_query->is_active = 1;
+                                    $race_query->save();
+
+                                    $race = $race_query->id;
+                                }
+                            }
+                        }
+
                         $buyer = new Buyer();
                         $buyer->file_id = $files_id;
                         $buyer->unit_no = $buyerList[1];
@@ -668,7 +717,8 @@ class AgmController extends BaseController {
                         $buyer->address = $buyerList[5];
                         $buyer->phone_no = $buyerList[6];
                         $buyer->email = $buyerList[7];
-                        $buyer->remarks = $buyerList[8];
+                        $buyer->race_id = $race;
+                        $buyer->remarks = $buyerList[9];
                         $buyer->save();
 
                         # Audit Trail
@@ -686,6 +736,1175 @@ class AgmController extends BaseController {
             print "true";
         } else {
             print "false";
+        }
+    }
+
+    /*
+     * Tenant
+     */
+
+    public function tenant() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Tenant Submission',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
+
+            return View::make('agm_en.tenant', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Penyerahan Maklumat Pembeli',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
+
+            return View::make('agm_my.tenant', $viewData);
+        }
+    }
+
+    public function getTenant() {
+        $tenant_list = Tenant::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+
+        if (count($tenant_list) > 0) {
+            $data = Array();
+            foreach ($tenant_list as $tenant_lists) {
+                $button = "";
+                $button .= '<button type="button" class="btn btn-xs btn-success" title="Edit" onclick="window.location=\'' . URL::action('AgmController@editTenant', $tenant_lists->id) . '\'">
+                                <i class="fa fa-pencil"></i>
+                            </button>&nbsp;';
+                $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteTenant(\'' . $tenant_lists->id . '\')">
+                                <i class="fa fa-trash"></i>
+                            </button>&nbsp';
+
+                $data_raw = array(
+                    $tenant_lists->unit_no,
+                    $tenant_lists->tenant_name,
+                    $tenant_lists->ic_company_no,
+                    $tenant_lists->phone_no,
+                    $tenant_lists->email,
+                    $tenant_lists->race->name,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function addTenant() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+        $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Tenant',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'race' => $race,
+                'image' => ''
+            );
+
+            return View::make('agm_en.add_tenant', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Pembeli',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'race' => $race,
+                'image' => ''
+            );
+
+            return View::make('agm_my.add_tenant', $viewData);
+        }
+    }
+
+    public function submitTenant() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $file_id = $data['file_id'];
+            $unit_no = $data['unit_no'];
+            $tenant_name = $data['tenant_name'];
+            $ic_company_no = $data['ic_company_no'];
+            $address = $data['address'];
+            $phone_no = $data['phone_no'];
+            $email = $data['email'];
+            $race = $data['race'];
+            $remarks = $data['remarks'];
+
+            $checkFile = Files::find($file_id);
+
+            if (count($checkFile) > 0) {
+                $tenant = new Tenant();
+                $tenant->file_id = $file_id;
+                $tenant->unit_no = $unit_no;
+                $tenant->tenant_name = $tenant_name;
+                $tenant->ic_company_no = $ic_company_no;
+                $tenant->address = $address;
+                $tenant->phone_no = $phone_no;
+                $tenant->email = $email;
+                $tenant->race_id = $race;
+                $tenant->remarks = $remarks;
+                $success = $tenant->save();
+
+                if ($success) {
+                    # Audit Trail
+                    $file_name = Files::find($tenant->file_id);
+                    $remarks = 'COB Owner List (' . $file_name->file_no . ') for Unit' . $tenant->unit_no . ' has been inserted.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB File";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    print "true";
+                } else {
+                    print "false";
+                }
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function editTenant($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $tenant = Tenant::find($id);
+        $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+        $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'tenant' => $tenant,
+                'race' => $race,
+                'image' => ''
+            );
+
+            return View::make('agm_en.edit_tenant', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'tenant' => $tenant,
+                'race' => $race,
+                'image' => ''
+            );
+
+            return View::make('agm_my.edit_tenant', $viewData);
+        }
+    }
+
+    public function submitEditTenant() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $file_id = $data['file_id'];
+            $unit_no = $data['unit_no'];
+            $tenant_name = $data['tenant_name'];
+            $ic_company_no = $data['ic_company_no'];
+            $address = $data['address'];
+            $phone_no = $data['phone_no'];
+            $email = $data['email'];
+            $race = $data['race'];
+            $remarks = $data['remarks'];
+            $id = $data['id'];
+
+            $checkFile = Files::find($file_id);
+
+            if (count($checkFile) > 0) {
+                $tenant = Tenant::find($id);
+                if (count($tenant) > 0) {
+                    $tenant->file_id = $file_id;
+                    $tenant->unit_no = $unit_no;
+                    $tenant->tenant_name = $tenant_name;
+                    $tenant->ic_company_no = $ic_company_no;
+                    $tenant->address = $address;
+                    $tenant->phone_no = $phone_no;
+                    $tenant->email = $email;
+                    $tenant->race_id = $race;
+                    $tenant->remarks = $remarks;
+                    $success = $tenant->save();
+
+                    if ($success) {
+                        # Audit Trail
+                        $file_name = Files::find($tenant->file_id);
+                        $remarks = 'COB Owner List (' . $file_name->file_no . ') for Unit ' . $tenant->unit_no . ' has been updated.';
+                        $auditTrail = new AuditTrail();
+                        $auditTrail->module = "COB File";
+                        $auditTrail->remarks = $remarks;
+                        $auditTrail->audit_by = Auth::user()->id;
+                        $auditTrail->save();
+
+                        print "true";
+                    } else {
+                        print "false";
+                    }
+                } else {
+                    print "false";
+                }
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteTenant() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $tenant = Tenant::find($id);
+            $tenant->is_deleted = 1;
+            $deleted = $tenant->save();
+            if ($deleted) {
+                # Audit Trail
+                $file_name = Files::find($tenant->file_id);
+                $remarks = 'COB Owner List (' . $file_name->file_no . ') for Unit ' . $tenant->unit_no . ' has been deleted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB File";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function importTenant() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Import Tenant',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
+
+            return View::make('agm_en.import_tenant', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Import Tenant',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
+
+            return View::make('agm_my.import_tenant', $viewData);
+        }
+    }
+
+    public function submitUploadTenant() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $getAllTenant = $data['getAllTenant'];
+
+            foreach ($getAllTenant as $tenantList) {
+
+                $check_file_id = Files::where('file_no', $tenantList[0])->first();
+                if (count($check_file_id) > 0) {
+                    $files_id = $check_file_id->id;
+
+                    $check_tenant = Tenant::where('file_id', $files_id)->where('unit_no', $tenantList[1])->where('is_deleted', 0)->first();
+                    if (count($check_tenant) <= 0) {
+                        $race = '';
+                        if (isset($tenantList[7]) && !empty($tenantList[7])) {
+                            $race_raw = trim($tenantList[7]);
+
+                            if (!empty($race_raw)) {
+                                $race_query = Race::where('name', $race_raw)->where('is_deleted', 0)->first();
+                                if ($race_query) {
+                                    $race = $race_query->id;
+                                } else {
+                                    $race_query = new Race();
+                                    $race_query->name = $race_raw;
+                                    $race_query->is_active = 1;
+                                    $race_query->save();
+
+                                    $race = $race_query->id;
+                                }
+                            }
+                        }
+
+                        $tenant = new Tenant();
+                        $tenant->file_id = $files_id;
+                        $tenant->unit_no = $tenantList[1];
+                        $tenant->tenant_name = $tenantList[2];
+                        $tenant->ic_company_no = $tenantList[3];
+                        $tenant->address = $tenantList[4];
+                        $tenant->phone_no = $tenantList[5];
+                        $tenant->email = $tenantList[6];
+                        $tenant->race_id = $race;
+                        $tenant->remarks = $tenantList[8];
+                        $tenant->save();
+
+                        # Audit Trail
+                        $file_name = Files::find($tenant->file_id);
+                        $remarks = 'COB Tenant List (' . $file_name->file_no . ') for Unit ' . $tenant->unit_no . ' has been inserted.';
+                        $auditTrail = new AuditTrail();
+                        $auditTrail->module = "COB File";
+                        $auditTrail->remarks = $remarks;
+                        $auditTrail->audit_by = Auth::user()->id;
+                        $auditTrail->save();
+                    }
+                }
+            }
+
+            print "true";
+        } else {
+            print "false";
+        }
+    }
+
+    public function viewBuyer($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $files = Files::find($id);
+        $image = OtherDetails::where('file_id', $files->id)->first();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_en.view_buyer', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.view_buyer', $viewData);
+        }
+    }
+
+    /*
+     * Upload Minutes
+     */
+
+    public function minutes() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Upload of Minutes',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('agm_en.minutes', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Upload of Minutes',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('agm_my.minutes', $viewData);
+        }
+    }
+
+    public function getMinutes() {
+        $agm_detail = MeetingDocument::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+
+        if (count($agm_detail) > 0) {
+            $data = Array();
+            foreach ($agm_detail as $agm_details) {
+                $button = "";
+                $button .= '<button type="button" class="btn btn-xs btn-success edit_agm" title="Edit" onclick="window.location=\'' . URL::action('AgmController@editMinutes', $agm_details->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;&nbsp;';
+                $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAGMDetails(\'' . $agm_details->id . '\')"><i class="fa fa-trash""></i></button>';
+
+                if ($agm_details->agm_date == "0000-00-00") {
+                    $date_agm = '';
+                } else {
+                    $date_agm = date('d-M-Y', strtotime($agm_details->agm_date));
+                }
+                if ($agm_details->audit_start_date == "0000-00-00") {
+                    $date_audit_start = '';
+                } else {
+                    $date_audit_start = date('d-M-Y', strtotime($agm_details->audit_start_date));
+                }
+                if ($agm_details->audit_end_date == "0000-00-00") {
+                    $date_audit_end = '';
+                } else {
+                    $date_audit_end = date('d-M-Y', strtotime($agm_details->audit_end_date));
+                }
+                if ($agm_details->agm == 0 || $agm_details->agm == "") {
+                    $status1 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status1 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->egm == 0 || $agm_details->egm == "") {
+                    $status2 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status2 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->minit_meeting == 0 || $agm_details->minit_meeting == "") {
+                    $status3 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status3 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->letter_integrity_url == "") {
+                    $status4 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status4 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->letter_bankruptcy_url == "") {
+                    $status5 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status5 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->jmc_spa == 0 || $agm_details->jmc_spa == "") {
+                    $status6 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status6 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->identity_card == 0 || $agm_details->identity_card == "") {
+                    $status7 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status7 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->attendance == 0 || $agm_details->attendance == "") {
+                    $status8 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status8 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->financial_report == 0 || $agm_details->financial_report == "") {
+                    $status9 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status9 = '<i class="icmn-checkmark"></i>';
+                }
+                if ($agm_details->audit_report_url == "") {
+                    $status10 = '<i class="icmn-cross"></i>';
+                } else {
+                    $status10 = '<i class="icmn-checkmark"></i>';
+                }
+
+                if (Session::get('lang') == "en") {
+                    $data_raw = array(
+                        $date_agm,
+                        'Anual General Meeting (AGM)<br/>'
+                        . 'Extraordinary General Meeting (EGM)<br/>'
+                        . 'Minit Meeting<br/>'
+                        . 'Pledge letter of integrity JMC<br>'
+                        . 'Declaration letter of non-bankruptcy',
+                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
+                        'JMC SPA Copy<br/>'
+                        . 'Identity Card List<br/>'
+                        . 'Attendance List',
+                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
+                        'Audited Financial Report<br/>'
+                        . 'Financial Audit Start Date<br/>'
+                        . 'Financial Audit End Date<br/>'
+                        . 'Financial Audit Report',
+                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
+                        $button
+                    );
+                } else {
+                    $data_raw = array(
+                        $date_agm,
+                        'Mesyuarat Agung Tahunan (AGM)<br/>'
+                        . 'Mesyuarat Agung Luarbiasa (EGM)<br/>'
+                        . 'Minit Mesyuarat<br/>'
+                        . 'Surat ikrar integriti JMC<br>'
+                        . 'Surat akuan tidak muflis',
+                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
+                        'Salinan Perjanjian Jualbeli JMC<br/>'
+                        . 'Salinan Kad Pengenalan<br/>'
+                        . 'Senarai Kehadiran',
+                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
+                        'Laporan Kew Teraudit<br/>'
+                        . 'Tarikh Mula Kewangan Audit<br/>'
+                        . 'Tarikh Akhir Kewangan Audit<br/>'
+                        . 'Laporan Kewangan Audit',
+                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
+                        $button
+                    );
+                }
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function addMinutes() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Minutes',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('agm_en.add_minutes', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Upload of Minutes',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('agm_my.add_minutes', $viewData);
+        }
+    }
+
+    public function submitAddMinutes() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $file_id = $data['file_id'];
+            $agm_date = $data['agm_date'];
+            $agm = $data['agm'];
+            $agm_file_url = $data['agm_file_url'];
+            $egm = $data['egm'];
+            $egm_file_url = $data['egm_file_url'];
+            $minit_meeting = $data['minit_meeting'];
+            $minutes_meeting_file_url = $data['minutes_meeting_file_url'];
+            $jmc_copy = $data['jmc_copy'];
+            $jmc_file_url = $data['jmc_file_url'];
+            $ic_list = $data['ic_list'];
+            $ic_file_url = $data['ic_file_url'];
+            $attendance_list = $data['attendance_list'];
+            $attendance_file_url = $data['attendance_file_url'];
+            $audited_financial_report = $data['audited_financial_report'];
+            $audited_financial_file_url = $data['audited_financial_file_url'];
+            $audit_report = $data['audit_report'];
+            $audit_start = $data['audit_start'];
+            $audit_end = $data['audit_end'];
+            $audit_report_file_url = $data['audit_report_file_url'];
+            $letter_integrity_url = $data['letter_integrity_url'];
+            $letter_bankruptcy_url = $data['letter_bankruptcy_url'];
+            $remarks = $data['remarks'];
+
+            $agm_detail = new MeetingDocument();
+            $agm_detail->file_id = $file_id;
+            $agm_detail->agm_date = $agm_date;
+            $agm_detail->agm = $agm;
+            if (!empty($agm_file_url)) {
+                $agm_detail->agm_file_url = $agm_file_url;
+            }
+            $agm_detail->egm = $egm;
+            if (!empty($egm_file_url)) {
+                $agm_detail->egm_file_url = $egm_file_url;
+            }
+            $agm_detail->minit_meeting = $minit_meeting;
+            if (!empty($minutes_meeting_file_url)) {
+                $agm_detail->minutes_meeting_file_url = $minutes_meeting_file_url;
+            }
+            $agm_detail->jmc_spa = $jmc_copy;
+            if (!empty($jmc_file_url)) {
+                $agm_detail->jmc_file_url = $jmc_file_url;
+            }
+            $agm_detail->identity_card = $ic_list;
+            if (!empty($ic_file_url)) {
+                $agm_detail->ic_file_url = $ic_file_url;
+            }
+            $agm_detail->attendance = $attendance_list;
+            if (!empty($attendance_file_url)) {
+                $agm_detail->attendance_file_url = $attendance_file_url;
+            }
+            $agm_detail->financial_report = $audited_financial_report;
+            if (!empty($audited_financial_file_url)) {
+                $agm_detail->audited_financial_file_url = $audited_financial_file_url;
+            }
+            $agm_detail->audit_report = $audit_report;
+            if (!empty($audit_report_file_url)) {
+                $agm_detail->audit_report_url = $audit_report_file_url;
+            }
+            if (!empty($letter_integrity_url)) {
+                $agm_detail->letter_integrity_url = $letter_integrity_url;
+            }
+            if (!empty($letter_bankruptcy_url)) {
+                $agm_detail->letter_bankruptcy_url = $letter_bankruptcy_url;
+            }
+            $agm_detail->audit_start_date = $audit_start;
+            $agm_detail->audit_end_date = $audit_end;
+            $agm_detail->remarks = $remarks;
+            $success = $agm_detail->save();
+
+            if ($success) {
+                # Audit Trail
+                $file_name = Files::find($agm_detail->file_id);
+                $remarks = 'AGM Details (' . $file_name->file_no . ')' . ' dated ' . date('d/m/Y', strtotime($agm_detail->agm_date)) . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB File";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function editMinutes($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $meeting_doc = MeetingDocument::find($id);
+        if ($meeting_doc) {
+            $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
+
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => 'Add Minutes',
+                    'panel_nav_active' => 'agm_panel',
+                    'main_nav_active' => 'agm_main',
+                    'sub_nav_active' => 'agmminutesub_list',
+                    'user_permission' => $user_permission,
+                    'meeting_doc' => $meeting_doc,
+                    'files' => $files,
+                    'image' => ""
+                );
+
+                return View::make('agm_en.edit_minutes', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => 'Upload of Minutes',
+                    'panel_nav_active' => 'agm_panel',
+                    'main_nav_active' => 'agm_main',
+                    'sub_nav_active' => 'agmminutesub_list',
+                    'user_permission' => $user_permission,
+                    'meeting_doc' => $meeting_doc,
+                    'files' => $files,
+                    'image' => ""
+                );
+
+                return View::make('agm_my.edit_minutes', $viewData);
+            }
+        }
+    }
+
+    public function submitEditMinutes() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+            $file_id = $data['file_id'];
+            $agm_date = $data['agm_date'];
+            $agm = $data['agm'];
+            $agm_file_url = $data['agm_file_url'];
+            $egm = $data['egm'];
+            $egm_file_url = $data['egm_file_url'];
+            $minit_meeting = $data['minit_meeting'];
+            $minutes_meeting_file_url = $data['minutes_meeting_file_url'];
+            $jmc_copy = $data['jmc_copy'];
+            $jmc_file_url = $data['jmc_file_url'];
+            $ic_list = $data['ic_list'];
+            $ic_file_url = $data['ic_file_url'];
+            $attendance_list = $data['attendance_list'];
+            $attendance_file_url = $data['attendance_file_url'];
+            $audited_financial_report = $data['audited_financial_report'];
+            $audited_financial_file_url = $data['audited_financial_file_url'];
+            $audit_report = $data['audit_report'];
+            $audit_start = $data['audit_start'];
+            $audit_end = $data['audit_end'];
+            $audit_report_file_url = $data['audit_report_file_url'];
+            $letter_integrity_url = $data['letter_integrity_url'];
+            $letter_bankruptcy_url = $data['letter_bankruptcy_url'];
+            $remarks = $data['remarks'];
+
+            $agm_detail = MeetingDocument::find($id);
+            if ($agm_detail) {
+                $agm_detail->file_id = $file_id;
+                $agm_detail->agm_date = $agm_date;
+                $agm_detail->agm = $agm;
+                if (!empty($agm_file_url)) {
+                    $agm_detail->agm_file_url = $agm_file_url;
+                }
+                $agm_detail->egm = $egm;
+                if (!empty($egm_file_url)) {
+                    $agm_detail->egm_file_url = $egm_file_url;
+                }
+                $agm_detail->minit_meeting = $minit_meeting;
+                if (!empty($minutes_meeting_file_url)) {
+                    $agm_detail->minutes_meeting_file_url = $minutes_meeting_file_url;
+                }
+                $agm_detail->jmc_spa = $jmc_copy;
+                if (!empty($jmc_file_url)) {
+                    $agm_detail->jmc_file_url = $jmc_file_url;
+                }
+                $agm_detail->identity_card = $ic_list;
+                if (!empty($ic_file_url)) {
+                    $agm_detail->ic_file_url = $ic_file_url;
+                }
+                $agm_detail->attendance = $attendance_list;
+                if (!empty($attendance_file_url)) {
+                    $agm_detail->attendance_file_url = $attendance_file_url;
+                }
+                $agm_detail->financial_report = $audited_financial_report;
+                if (!empty($audited_financial_file_url)) {
+                    $agm_detail->audited_financial_file_url = $audited_financial_file_url;
+                }
+                $agm_detail->audit_report = $audit_report;
+                if (!empty($audit_report_file_url)) {
+                    $agm_detail->audit_report_url = $audit_report_file_url;
+                }
+                if (!empty($letter_integrity_url)) {
+                    $agm_detail->letter_integrity_url = $letter_integrity_url;
+                }
+                if (!empty($letter_bankruptcy_url)) {
+                    $agm_detail->letter_bankruptcy_url = $letter_bankruptcy_url;
+                }
+                $agm_detail->audit_start_date = $audit_start;
+                $agm_detail->audit_end_date = $audit_end;
+                $agm_detail->remarks = $remarks;
+                $success = $agm_detail->save();
+
+                if ($success) {
+                    # Audit Trail
+                    $file_name = Files::find($agm_detail->file_id);
+                    $remarks = 'AGM Details (' . $file_name->file_no . ')' . ' dated ' . date('d/m/Y', strtotime($agm_detail->agm_date)) . ' has been inserted.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB File";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    print "true";
+                } else {
+                    print "false";
+                }
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteMinuteDetails() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $agm_details = MeetingDocument::find($id);
+            $agm_details->is_deleted = 1;
+            $deleted = $agm_details->save();
+
+            if ($deleted) {
+                # Audit Trail
+                $file_name = Files::find($agm_details->file_id);
+                $remarks = 'AGM Details (' . $file_name->file_no . ')' . ' dated ' . date('d/m/Y', strtotime($agm_details->agm_date)) . ' has been deleted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB File";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    //document
+    public function document() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderby('sort_no', 'asc')->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Document',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_en.document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Borang',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_my.document', $viewData);
+        }
+    }
+
+    public function getDocument() {
+        $document = Document::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+        if (count($document) > 0) {
+            $data = Array();
+            foreach ($document as $documents) {
+                $button = "";
+                if ($documents->is_hidden == 1) {
+                    $is_hidden = 'Yes';
+                } else {
+                    $is_hidden = 'No';
+                }
+
+                if ($documents->is_readonly == 1) {
+                    $is_readonly = 'Yes';
+                } else {
+                    $is_readonly = 'No';
+                }
+
+                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AgmController@updateDocument', $documents->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteDocument(\'' . $documents->id . '\')"><i class="fa fa-trash"></i></button>';
+
+                $data_raw = array(
+                    $documents->file->file_no,
+                    $documents->type->name,
+                    $documents->name,
+                    $is_hidden,
+                    $is_readonly,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function deleteDocument() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $document = Document::find($id);
+            if ($document) {
+                $document->is_deleted = 1;
+                $deleted = $document->save();
+                if ($deleted) {
+                    # Audit Trail
+                    $remarks = 'Document: ' . $document->name_en . ' has been deleted.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "Document";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    print "true";
+                } else {
+                    print "false";
+                }
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteDocumentFile() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $document = Document::find($id);
+            if ($document) {
+                $document->file_url = "";
+                $deleted = $document->save();
+
+                if ($deleted) {
+                    # Audit Trail
+                    $remarks = 'Document: ' . $document->name_en . ' has been updated.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "Document";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    print "true";
+                } else {
+                    print "false";
+                }
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function addDocument() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        if (!Auth::user()->getAdmin()) {
+            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }
+        }
+        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Document',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_en.add_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Add Document',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_my.add_document', $viewData);
+        }
+    }
+
+    public function submitAddDocument() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $document = new Document();
+            $document->file_id = $data['file_id'];
+            $document->document_type_id = $data['document_type'];
+            $document->name = $data['name'];
+            $document->remarks = $data['remarks'];
+            $document->is_hidden = $data['is_hidden'];
+            $document->is_readonly = $data['is_readonly'];
+            $document->file_url = $data['document_url'];
+            $success = $document->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Document: ' . $document->name_en . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Document";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function updateDocument($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $document = Document::find($id);
+        if (!Auth::user()->getAdmin()) {
+            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }
+        }
+        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->get();
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Edit Document',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'document' => $document,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_en.edit_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Document',
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'document' => $document,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_my.edit_document', $viewData);
+        }
+    }
+
+    public function submitUpdateDocument() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $id = $data['id'];
+
+            $document = Document::find($id);
+            if ($document) {
+                $document->file_id = $data['file_id'];
+                $document->document_type_id = $data['document_type'];
+                $document->name = $data['name'];
+                $document->remarks = $data['remarks'];
+                $document->is_hidden = $data['is_hidden'];
+                $document->is_readonly = $data['is_readonly'];
+                $document->file_url = $data['document_url'];
+                $success = $document->save();
+
+                if ($success) {
+                    # Audit Trail
+                    $remarks = $document->id . ' has been updated.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "Document";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
+
+                    return "true";
+                } else {
+                    return "false";
+                }
+            } else {
+                return 'false';
+            }
+        } else {
+            return "false";
         }
     }
 
@@ -1168,956 +2387,6 @@ class AgmController extends BaseController {
             } else {
                 print "false";
             }
-        }
-    }
-
-    /*
-     * Upload Minutes
-     */
-
-    public function minutes() {
-        //get user permission
-        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
-
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'Upload of Minutes',
-                'panel_nav_active' => 'agm_panel',
-                'main_nav_active' => 'agm_main',
-                'sub_nav_active' => 'agmminutesub_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'image' => ""
-            );
-
-            return View::make('agm_en.minutes', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Upload of Minutes',
-                'panel_nav_active' => 'agm_panel',
-                'main_nav_active' => 'agm_main',
-                'sub_nav_active' => 'agmminutesub_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'image' => ""
-            );
-
-            return View::make('agm_my.minutes', $viewData);
-        }
-    }
-
-    public function getMinutes() {
-        $agm_detail = MeetingDocument::where('is_deleted', 0)->orderBy('id', 'desc')->get();
-
-        if (count($agm_detail) > 0) {
-            $data = Array();
-            foreach ($agm_detail as $agm_details) {
-                $button = "";
-                $button .= '<button type="button" class="btn btn-xs btn-success edit_agm" title="Edit" onclick="window.location=\'' . URL::action('AgmController@editMinutes', $agm_details->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;&nbsp;';
-                $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAGMDetails(\'' . $agm_details->id . '\')"><i class="fa fa-trash""></i></button>';
-
-                if ($agm_details->agm_date == "0000-00-00") {
-                    $date_agm = '';
-                } else {
-                    $date_agm = date('d-M-Y', strtotime($agm_details->agm_date));
-                }
-                if ($agm_details->audit_start_date == "0000-00-00") {
-                    $date_audit_start = '';
-                } else {
-                    $date_audit_start = date('d-M-Y', strtotime($agm_details->audit_start_date));
-                }
-                if ($agm_details->audit_end_date == "0000-00-00") {
-                    $date_audit_end = '';
-                } else {
-                    $date_audit_end = date('d-M-Y', strtotime($agm_details->audit_end_date));
-                }
-                if ($agm_details->agm == 0 || $agm_details->agm == "") {
-                    $status1 = '<i class="icmn-cross"></i>';
-                } else {
-                    $status1 = '<i class="icmn-checkmark"></i>';
-                }
-                if ($agm_details->egm == 0 || $agm_details->egm == "") {
-                    $status2 = '<i class="icmn-cross"></i>';
-                } else {
-                    $status2 = '<i class="icmn-checkmark"></i>';
-                }
-                if ($agm_details->minit_meeting == 0 || $agm_details->minit_meeting == "") {
-                    $status3 = '<i class="icmn-cross"></i>';
-                } else {
-                    $status3 = '<i class="icmn-checkmark"></i>';
-                }
-                if ($agm_details->letter_integrity_url == "") {
-                    $status4 = '<i class="icmn-cross"></i>';
-                } else {
-                    $status4 = '<i class="icmn-checkmark"></i>';
-                }
-                if ($agm_details->letter_bankruptcy_url == "") {
-                    $status5 = '<i class="icmn-cross"></i>';
-                } else {
-                    $status5 = '<i class="icmn-checkmark"></i>';
-                }
-                if ($agm_details->jmc_spa == 0 || $agm_details->jmc_spa == "") {
-                    $status6 = '<i class="icmn-cross"></i>';
-                } else {
-                    $status6 = '<i class="icmn-checkmark"></i>';
-                }
-                if ($agm_details->identity_card == 0 || $agm_details->identity_card == "") {
-                    $status7 = '<i class="icmn-cross"></i>';
-                } else {
-                    $status7 = '<i class="icmn-checkmark"></i>';
-                }
-                if ($agm_details->attendance == 0 || $agm_details->attendance == "") {
-                    $status8 = '<i class="icmn-cross"></i>';
-                } else {
-                    $status8 = '<i class="icmn-checkmark"></i>';
-                }
-                if ($agm_details->financial_report == 0 || $agm_details->financial_report == "") {
-                    $status9 = '<i class="icmn-cross"></i>';
-                } else {
-                    $status9 = '<i class="icmn-checkmark"></i>';
-                }
-                if ($agm_details->audit_report_url == "") {
-                    $status10 = '<i class="icmn-cross"></i>';
-                } else {
-                    $status10 = '<i class="icmn-checkmark"></i>';
-                }
-
-                if (Session::get('lang') == "en") {
-                    $data_raw = array(
-                        $date_agm,
-                        'Anual General Meeting (AGM)<br/>'
-                        . 'Extraordinary General Meeting (EGM)<br/>'
-                        . 'Minit Meeting<br/>'
-                        . 'Pledge letter of integrity JMC<br>'
-                        . 'Declaration letter of non-bankruptcy',
-                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
-                        'JMC SPA Copy<br/>'
-                        . 'Identity Card List<br/>'
-                        . 'Attendance List',
-                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
-                        'Audited Financial Report<br/>'
-                        . 'Financial Audit Start Date<br/>'
-                        . 'Financial Audit End Date<br/>'
-                        . 'Financial Audit Report',
-                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
-                        $button
-                    );
-                } else {
-                    $data_raw = array(
-                        $date_agm,
-                        'Mesyuarat Agung Tahunan (AGM)<br/>'
-                        . 'Mesyuarat Agung Luarbiasa (EGM)<br/>'
-                        . 'Minit Mesyuarat<br/>'
-                        . 'Surat ikrar integriti JMC<br>'
-                        . 'Surat akuan tidak muflis',
-                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
-                        'Salinan Perjanjian Jualbeli JMC<br/>'
-                        . 'Salinan Kad Pengenalan<br/>'
-                        . 'Senarai Kehadiran',
-                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
-                        'Laporan Kew Teraudit<br/>'
-                        . 'Tarikh Mula Kewangan Audit<br/>'
-                        . 'Tarikh Akhir Kewangan Audit<br/>'
-                        . 'Laporan Kewangan Audit',
-                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
-                        $button
-                    );
-                }
-
-                array_push($data, $data_raw);
-            }
-            $output_raw = array(
-                "aaData" => $data
-            );
-
-            $output = json_encode($output_raw);
-            return $output;
-        } else {
-            $output_raw = array(
-                "aaData" => []
-            );
-
-            $output = json_encode($output_raw);
-            return $output;
-        }
-    }
-
-    public function addMinutes() {
-        //get user permission
-        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
-
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'Add Minutes',
-                'panel_nav_active' => 'agm_panel',
-                'main_nav_active' => 'agm_main',
-                'sub_nav_active' => 'agmminutesub_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'image' => ""
-            );
-
-            return View::make('agm_en.add_minutes', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Upload of Minutes',
-                'panel_nav_active' => 'agm_panel',
-                'main_nav_active' => 'agm_main',
-                'sub_nav_active' => 'agmminutesub_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'image' => ""
-            );
-
-            return View::make('agm_my.add_minutes', $viewData);
-        }
-    }
-
-    public function submitAddMinutes() {
-        $data = Input::all();
-        if (Request::ajax()) {
-
-            $file_id = $data['file_id'];
-            $agm_date = $data['agm_date'];
-            $agm = $data['agm'];
-            $egm = $data['egm'];
-            $minit_meeting = $data['minit_meeting'];
-            $jmc_copy = $data['jmc_copy'];
-            $ic_list = $data['ic_list'];
-            $attendance_list = $data['attendance_list'];
-            $audited_financial_report = $data['audited_financial_report'];
-            $audit_report = $data['audit_report'];
-            $audit_start = $data['audit_start'];
-            $audit_end = $data['audit_end'];
-            $remarks = $data['remarks'];
-
-            $agm_detail = new MeetingDocument();
-            $agm_detail->file_id = $file_id;
-            $agm_detail->agm_date = $agm_date;
-            $agm_detail->agm = $agm;
-            $agm_detail->egm = $egm;
-            $agm_detail->minit_meeting = $minit_meeting;
-            $agm_detail->jmc_spa = $jmc_copy;
-            $agm_detail->identity_card = $ic_list;
-            $agm_detail->attendance = $attendance_list;
-            $agm_detail->financial_report = $audited_financial_report;
-            $agm_detail->audit_report = $audit_report;
-            $agm_detail->audit_start_date = $audit_start;
-            $agm_detail->audit_end_date = $audit_end;
-            $agm_detail->remarks = $remarks;
-            $success = $agm_detail->save();
-
-            if ($success) {
-                # Audit Trail
-                $file_name = Files::find($agm_detail->file_id);
-                $remarks = 'AGM Details (' . $file_name->file_no . ')' . ' dated ' . date('d/m/Y', strtotime($agm_detail->agm_date)) . ' has been inserted.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "COB File";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
-
-                print "true";
-            } else {
-                print "false";
-            }
-        }
-    }
-
-    public function editMinutes($id) {
-        //get user permission
-        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $meeting_doc = MeetingDocument::find($id);
-        if ($meeting_doc) {
-            $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
-
-            if (Session::get('lang') == "en") {
-                $viewData = array(
-                    'title' => 'Add Minutes',
-                    'panel_nav_active' => 'agm_panel',
-                    'main_nav_active' => 'agm_main',
-                    'sub_nav_active' => 'agmminutesub_list',
-                    'user_permission' => $user_permission,
-                    'meeting_doc' => $meeting_doc,
-                    'files' => $files,
-                    'image' => ""
-                );
-
-                return View::make('agm_en.edit_minutes', $viewData);
-            } else {
-                $viewData = array(
-                    'title' => 'Upload of Minutes',
-                    'panel_nav_active' => 'agm_panel',
-                    'main_nav_active' => 'agm_main',
-                    'sub_nav_active' => 'agmminutesub_list',
-                    'user_permission' => $user_permission,
-                    'meeting_doc' => $meeting_doc,
-                    'files' => $files,
-                    'image' => ""
-                );
-
-                return View::make('agm_my.edit_minutes', $viewData);
-            }
-        }
-    }
-
-    public function submitEditMinutes() {
-        $data = Input::all();
-        if (Request::ajax()) {
-
-            $id = $data['id'];
-            $file_id = $data['file_id'];
-            $agm_date = $data['agm_date'];
-            $agm = $data['agm'];
-            $egm = $data['egm'];
-            $minit_meeting = $data['minit_meeting'];
-            $jmc_copy = $data['jmc_copy'];
-            $ic_list = $data['ic_list'];
-            $attendance_list = $data['attendance_list'];
-            $audited_financial_report = $data['audited_financial_report'];
-            $audit_report = $data['audit_report'];
-            $audit_start = $data['audit_start'];
-            $audit_end = $data['audit_end'];
-            $remarks = $data['remarks'];
-
-            $agm_detail = MeetingDocument::find($id);
-            if ($agm_detail) {
-                $agm_detail->file_id = $file_id;
-                $agm_detail->agm_date = $agm_date;
-                $agm_detail->agm = $agm;
-                $agm_detail->egm = $egm;
-                $agm_detail->minit_meeting = $minit_meeting;
-                $agm_detail->jmc_spa = $jmc_copy;
-                $agm_detail->identity_card = $ic_list;
-                $agm_detail->attendance = $attendance_list;
-                $agm_detail->financial_report = $audited_financial_report;
-                $agm_detail->audit_report = $audit_report;
-                $agm_detail->audit_start_date = $audit_start;
-                $agm_detail->audit_end_date = $audit_end;
-                $agm_detail->remarks = $remarks;
-                $success = $agm_detail->save();
-
-                if ($success) {
-                    # Audit Trail
-                    $file_name = Files::find($agm_detail->file_id);
-                    $remarks = 'AGM Details (' . $file_name->file_no . ')' . ' dated ' . date('d/m/Y', strtotime($agm_detail->agm_date)) . ' has been inserted.';
-                    $auditTrail = new AuditTrail();
-                    $auditTrail->module = "COB File";
-                    $auditTrail->remarks = $remarks;
-                    $auditTrail->audit_by = Auth::user()->id;
-                    $auditTrail->save();
-
-                    print "true";
-                } else {
-                    print "false";
-                }
-            } else {
-                print "false";
-            }
-        }
-    }
-
-    public function getMinuteDetails() {
-        $data = Input::all();
-        if (Request::ajax()) {
-
-            $result = "";
-            $id = $data['id'];
-
-            $agm = MeetingDocument::find($id);
-
-            if (count($agm) > 0) {
-                $result .= '<form>';
-                if (Session::get('lang') == "en") {
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Anual General Meeting (AGM)</label></div>';
-                    if ($agm->agm == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1" checked> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0"> No</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1"> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0" checked> No</div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Extraordinary General Meeting (EGM)</label></div>';
-                    if ($agm->egm == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1" checked> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0"> No</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1"> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0" checked> No</div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Minit Meeting</label></div>';
-                    if ($agm->minit_meeting == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1" checked> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0"> No</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1"> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0" checked> No</div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">JMC SPA Copy</label></div>';
-                    if ($agm->jmc_spa == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1" checked>Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0">No</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1">Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0" checked>No</div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Identity Card List</label></div>';
-                    if ($agm->identity_card == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1" checked> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0"> No</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1"> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0" checked> No</div>';
-                    }
-                    $result .= '</div>';
-
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Attendance List</label></div>';
-                    if ($agm->attendance == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1" checked> Yes </div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0"> No </div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1"> Yes </div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0" checked> No </div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Audited Financial Report</label></div>';
-                    if ($agm->financial_report == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1" checked> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0"> No</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1"> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0" checked> No</div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Financial Audit Report</label></div>';
-                    $result .= '<div class="col-md-6"><input type="text" class="form-control" placeholder="Financial Audit Report" id="audit_report_edit" value=' . "$agm->audit_report" . '></div>';
-                    $result .= '</div>';
-
-                    $result .= '</form>';
-
-                    $result .= '<form id="upload_audit_report_file_edit" enctype="multipart/form-data" method="post" action="' . url("uploadAuditReportFileEdit") . '" autocomplete="off">';
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">&nbsp;</label></div>';
-                    $result .= '<div class="col-md-6">';
-                    $result .= '<button type="button" id="clear_audit_report_file_edit" class="btn btn-xs btn-danger" onclick="clearAuditFileEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
-                    $result .= '<input type="file" name="audit_report_file_edit" id="audit_report_file_edit">';
-                    $result .= '<div id="validation-errors_audit_report_file_edit"></div><div id="view_audit_report_file_edit"></div>';
-                    if ($agm->audit_report_url != "") {
-                        $result .= '<div id="report_edit"><a href="' . asset($agm->audit_report_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
-                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteAuditReport(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
-                    }
-                    $result .= '</div>';
-                    $result .= '</div>';
-                    $result .= '</form>';
-
-                    $result .= '<form id="upload_letter_integrity_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterIntegrityEdit") . '" autocomplete="off">';
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Pledge letter of integrity JMC</label></div>';
-                    $result .= '<div class="col-md-6">';
-                    $result .= '<button type="button" id="clear_letter_integrity_edit" class="btn btn-xs btn-danger" onclick="clearLetterIntegrityEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
-                    $result .= '<input type="file" name="letter_integrity_edit" id="letter_integrity_edit">';
-                    $result .= '<div id="validation-errors_letter_integrity_edit"></div>';
-                    if ($agm->letter_integrity_url != "") {
-                        $result .= '<div id="integrity_edit"><a href="' . asset($agm->letter_integrity_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
-                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteLetterIntegrity(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
-                    }
-                    $result .= '</div>';
-                    $result .= '</div>';
-                    $result .= '</form>';
-
-                    $result .= '<form id="upload_letter_bankruptcy_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterBankruptcyEdit") . '" autocomplete="off">';
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Declaration letter of non-bankruptcy</label></div>';
-                    $result .= '<div class="col-md-6">';
-                    $result .= '<button type="button" id="clear_letter_bankruptcy_edit" class="btn btn-xs btn-danger" onclick="clearLetterBankruptcyEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
-                    $result .= '<input type="file" name="letter_bankruptcy_edit" id="letter_bankruptcy_edit">';
-                    $result .= '<div id="validation-errors_letter_bankruptcy_edit"></div>';
-                    if ($agm->letter_bankruptcy_url != "") {
-                        $result .= '<div id="bankruptcy_edit"><a href="' . asset($agm->letter_bankruptcy_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
-                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteLetterBankruptcy(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
-                    }
-                    $result .= '</div>';
-                    $result .= '</div>';
-                } else {
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Mesyuarat Agung Tahunan (AGM)</label></div>';
-                    if ($agm->agm == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1" checked> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0"> Tiada</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1"> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0" checked> Tiada</div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Mesyuarat Agung Luarbiasa (EGM)</label></div>';
-                    if ($agm->egm == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1" checked> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0"> Tiada</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1"> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0" checked> Tiada</div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Minit Mesyuarat</label></div>';
-                    if ($agm->minit_meeting == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1" checked> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0"> Tiada</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1"> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0" checked> Tiada</div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Salinan Perjanjian Jualbeli JMC</label></div>';
-                    if ($agm->jmc_spa == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1" checked>Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0">Tiada</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1">Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0" checked>Tiada</div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Salinan Kad Pengenalan</label></div>';
-                    if ($agm->identity_card == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1" checked> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0"> Tiada</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1"> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0" checked> Tiada</div>';
-                    }
-                    $result .= '</div>';
-
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Senarai Kehadiran</label></div>';
-                    if ($agm->attendance == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1" checked> Ada </div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0"> Tiada </div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1"> Ada </div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0" checked> Tiada </div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Laporan Kew Teraudit</label></div>';
-                    if ($agm->financial_report == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1" checked> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0"> Tiada</div>';
-                    } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1"> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0" checked> Tiada</div>';
-                    }
-                    $result .= '</div>';
-
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Laporan Kewangan Audit</label></div>';
-                    $result .= '<div class="col-md-6"><input type="text" class="form-control" placeholder="Laporan Kewangan Audit" id="audit_report_edit" value=' . "$agm->audit_report" . '></div>';
-                    $result .= '</div>';
-
-                    $result .= '</form>';
-
-                    $result .= '<form id="upload_audit_report_file_edit" enctype="multipart/form-data" method="post" action="' . url("uploadAuditReportFileEdit") . '" autocomplete="off">';
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">&nbsp;</label></div>';
-                    $result .= '<div class="col-md-6">';
-                    $result .= '<button type="button" id="clear_audit_report_file_edit" class="btn btn-xs btn-danger" onclick="clearAuditFileEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
-                    $result .= '<input type="file" name="audit_report_file_edit" id="audit_report_file_edit">';
-                    $result .= '<div id="validation-errors_audit_report_file_edit"></div><div id="view_audit_report_file_edit"></div>';
-                    if ($agm->audit_report_url != "") {
-                        $result .= '<div id="report_edit"><a href="' . asset($agm->audit_report_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
-                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteAuditReport(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
-                    }
-                    $result .= '</div>';
-                    $result .= '</div>';
-                    $result .= '</form>';
-
-                    $result .= '<form id="upload_letter_integrity_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterIntegrityEdit") . '" autocomplete="off">';
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Surat ikrar integriti JMC</label></div>';
-                    $result .= '<div class="col-md-6">';
-                    $result .= '<button type="button" id="clear_letter_integrity_edit" class="btn btn-xs btn-danger" onclick="clearLetterIntegrityEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
-                    $result .= '<input type="file" name="letter_integrity_edit" id="letter_integrity_edit">';
-                    $result .= '<div id="validation-errors_letter_integrity_edit"></div>';
-                    if ($agm->letter_integrity_url != "") {
-                        $result .= '<div id="integrity_edit"><a href="' . asset($agm->letter_integrity_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
-                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteLetterIntegrity(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
-                    }
-                    $result .= '</div>';
-                    $result .= '</div>';
-                    $result .= '</form>';
-
-                    $result .= '<form id="upload_letter_bankruptcy_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterBankruptcyEdit") . '" autocomplete="off">';
-                    $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Surat akuan tidak muflis</label></div>';
-                    $result .= '<div class="col-md-6">';
-                    $result .= '<button type="button" id="clear_letter_bankruptcy_edit" class="btn btn-xs btn-danger" onclick="clearLetterBankruptcyEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
-                    $result .= '<input type="file" name="letter_bankruptcy_edit" id="letter_bankruptcy_edit">';
-                    $result .= '<div id="validation-errors_letter_bankruptcy_edit"></div>';
-                    if ($agm->letter_bankruptcy_url != "") {
-                        $result .= '<div id="bankruptcy_edit"><a href="' . asset($agm->letter_bankruptcy_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
-                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteLetterBankruptcy(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
-                    }
-                    $result .= '</div>';
-                    $result .= '</div>';
-                }
-                $result .= '</form>';
-            } else {
-                $result = "No Data Found";
-            }
-            print $result;
-        }
-    }
-
-    public function deleteMinuteDetails() {
-        $data = Input::all();
-        if (Request::ajax()) {
-
-            $id = $data['id'];
-
-            $agm_details = MeetingDocument::find($id);
-            $agm_details->is_deleted = 1;
-            $deleted = $agm_details->save();
-
-            if ($deleted) {
-                # Audit Trail
-                $file_name = Files::find($agm_details->file_id);
-                $remarks = 'AGM Details (' . $file_name->file_no . ')' . ' dated ' . date('d/m/Y', strtotime($agm_details->agm_date)) . ' has been deleted.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "COB File";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
-
-                print "true";
-            } else {
-                print "false";
-            }
-        }
-    }
-
-    //document
-    public function document() {
-        //get user permission
-        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderby('sort_no', 'asc')->get();
-
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'Document',
-                'panel_nav_active' => 'agm_panel',
-                'main_nav_active' => 'agm_main',
-                'sub_nav_active' => 'agmdocumentsub_list',
-                'user_permission' => $user_permission,
-                'documentType' => $documentType,
-                'image' => ""
-            );
-
-            return View::make('agm_en.document', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Borang',
-                'panel_nav_active' => 'agm_panel',
-                'main_nav_active' => 'agm_main',
-                'sub_nav_active' => 'agmdocumentsub_list',
-                'user_permission' => $user_permission,
-                'documentType' => $documentType,
-                'image' => ""
-            );
-
-            return View::make('agm_my.document', $viewData);
-        }
-    }
-
-    public function getDocument() {
-        $document = Document::where('is_deleted', 0)->orderBy('id', 'desc')->get();
-        if (count($document) > 0) {
-            $data = Array();
-            foreach ($document as $documents) {
-                $button = "";
-                if ($documents->is_hidden == 1) {
-                    $is_hidden = 'Yes';
-                } else {
-                    $is_hidden = 'No';
-                }
-
-                if ($documents->is_readonly == 1) {
-                    $is_readonly = 'Yes';
-                } else {
-                    $is_readonly = 'No';
-                }
-
-                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AgmController@updateDocument', $documents->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
-                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteDocument(\'' . $documents->id . '\')"><i class="fa fa-trash"></i></button>';
-
-                $data_raw = array(
-                    $documents->file->file_no,
-                    $documents->type->name,
-                    $documents->name,
-                    $is_hidden,
-                    $is_readonly,
-                    $button
-                );
-
-                array_push($data, $data_raw);
-            }
-
-            $output_raw = array(
-                "aaData" => $data
-            );
-
-            $output = json_encode($output_raw);
-            return $output;
-        } else {
-            $output_raw = array(
-                "aaData" => []
-            );
-
-            $output = json_encode($output_raw);
-            return $output;
-        }
-    }
-
-    public function deleteDocument() {
-        $data = Input::all();
-        if (Request::ajax()) {
-
-            $id = $data['id'];
-
-            $document = Document::find($id);
-            if ($document) {
-                $document->is_deleted = 1;
-                $deleted = $document->save();
-                if ($deleted) {
-                    # Audit Trail
-                    $remarks = 'Document: ' . $document->name_en . ' has been deleted.';
-                    $auditTrail = new AuditTrail();
-                    $auditTrail->module = "Document";
-                    $auditTrail->remarks = $remarks;
-                    $auditTrail->audit_by = Auth::user()->id;
-                    $auditTrail->save();
-
-                    print "true";
-                } else {
-                    print "false";
-                }
-            } else {
-                print "false";
-            }
-        }
-    }
-
-    public function deleteDocumentFile() {
-        $data = Input::all();
-        if (Request::ajax()) {
-
-            $id = $data['id'];
-
-            $document = Document::find($id);
-            if ($document) {
-                $document->file_url = "";
-                $deleted = $document->save();
-
-                if ($deleted) {
-                    # Audit Trail
-                    $remarks = 'Document: ' . $document->name_en . ' has been updated.';
-                    $auditTrail = new AuditTrail();
-                    $auditTrail->module = "Document";
-                    $auditTrail->remarks = $remarks;
-                    $auditTrail->audit_by = Auth::user()->id;
-                    $auditTrail->save();
-
-                    print "true";
-                } else {
-                    print "false";
-                }
-            } else {
-                print "false";
-            }
-        }
-    }
-
-    public function addDocument() {
-        //get user permission
-        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        if (!Auth::user()->getAdmin()) {
-            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
-        } else {
-            if (empty(Session::get('admin_cob'))) {
-                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
-            } else {
-                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
-            }
-        }
-        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
-
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'Add Document',
-                'panel_nav_active' => 'agm_panel',
-                'main_nav_active' => 'agm_main',
-                'sub_nav_active' => 'agmdocumentsub_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'documentType' => $documentType,
-                'image' => ""
-            );
-
-            return View::make('agm_en.add_document', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Add Document',
-                'panel_nav_active' => 'agm_panel',
-                'main_nav_active' => 'agm_main',
-                'sub_nav_active' => 'agmdocumentsub_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'documentType' => $documentType,
-                'image' => ""
-            );
-
-            return View::make('agm_my.add_document', $viewData);
-        }
-    }
-
-    public function submitAddDocument() {
-        $data = Input::all();
-        if (Request::ajax()) {
-
-            $document = new Document();
-            $document->file_id = $data['file_id'];
-            $document->document_type_id = $data['document_type'];
-            $document->name = $data['name'];
-            $document->remarks = $data['remarks'];
-            $document->is_hidden = $data['is_hidden'];
-            $document->is_readonly = $data['is_readonly'];
-            $document->file_url = $data['document_url'];
-            $success = $document->save();
-
-            if ($success) {
-                # Audit Trail
-                $remarks = 'Document: ' . $document->name_en . ' has been inserted.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "Document";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
-
-                print "true";
-            } else {
-                print "false";
-            }
-        }
-    }
-
-    public function updateDocument($id) {
-        //get user permission
-        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $document = Document::find($id);
-        if (!Auth::user()->getAdmin()) {
-            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
-        } else {
-            if (empty(Session::get('admin_cob'))) {
-                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
-            } else {
-                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
-            }
-        }
-        $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->get();
-
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'Edit Document',
-                'panel_nav_active' => 'agm_panel',
-                'main_nav_active' => 'agm_main',
-                'sub_nav_active' => 'agmdocumentsub_list',
-                'user_permission' => $user_permission,
-                'document' => $document,
-                'files' => $files,
-                'documentType' => $documentType,
-                'image' => ""
-            );
-
-            return View::make('agm_en.edit_document', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Edit Document',
-                'panel_nav_active' => 'agm_panel',
-                'main_nav_active' => 'agm_main',
-                'sub_nav_active' => 'agmdocumentsub_list',
-                'user_permission' => $user_permission,
-                'document' => $document,
-                'files' => $files,
-                'documentType' => $documentType,
-                'image' => ""
-            );
-
-            return View::make('agm_my.edit_document', $viewData);
-        }
-    }
-
-    public function submitUpdateDocument() {
-        $data = Input::all();
-        if (Request::ajax()) {
-            $id = $data['id'];
-
-            $document = Document::find($id);
-            if ($document) {
-                $document->file_id = $data['file_id'];
-                $document->document_type_id = $data['document_type'];
-                $document->name = $data['name'];
-                $document->remarks = $data['remarks'];
-                $document->is_hidden = $data['is_hidden'];
-                $document->is_readonly = $data['is_readonly'];
-                $document->file_url = $data['document_url'];
-                $success = $document->save();
-
-                if ($success) {
-                    # Audit Trail
-                    $remarks = $document->id . ' has been updated.';
-                    $auditTrail = new AuditTrail();
-                    $auditTrail->module = "Document";
-                    $auditTrail->remarks = $remarks;
-                    $auditTrail->audit_by = Auth::user()->id;
-                    $auditTrail->save();
-
-                    return "true";
-                } else {
-                    return "false";
-                }
-            } else {
-                return 'false';
-            }
-        } else {
-            return "false";
         }
     }
 

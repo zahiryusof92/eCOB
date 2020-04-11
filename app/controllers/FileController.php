@@ -20,7 +20,7 @@ class FileController extends BaseController {
             return Response::json(['success' => true, 'file' => $destinationPath . "/" . $filename, 'filename' => $filename]);
         }
     }
-    
+
     public function uploadDocumentFile() {
         $file = Input::file('document_file');
         if ($file) {
@@ -444,6 +444,104 @@ class FileController extends BaseController {
 
                 return View::make('agm_my.import_purchaser', $viewData);
             }
+        }
+    }
+
+    public function uploadAGMFile() {
+        $file = Input::file('agm_file');
+        if ($file) {
+            $destinationPath = 'uploads/agm_files';
+            $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
+            $file->move($destinationPath, $filename);
+            $output = $destinationPath . "/" . $filename;
+            
+            return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
+        } else {
+            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+        }
+    }
+    
+    public function uploadEGMFile() {
+        $file = Input::file('egm_file');
+        if ($file) {
+            $destinationPath = 'uploads/egm_files';
+            $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
+            $file->move($destinationPath, $filename);
+            $output = $destinationPath . "/" . $filename;
+            
+            return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
+        } else {
+            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+        }
+    }
+    
+     public function uploadMinutesMeetingFile() {
+        $file = Input::file('minutes_meeting_file');
+        if ($file) {
+            $destinationPath = 'uploads/minutes_meeting_files';
+            $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
+            $file->move($destinationPath, $filename);
+            $output = $destinationPath . "/" . $filename;
+            
+            return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
+        } else {
+            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+        }
+    }
+    
+    public function uploadJMCFile() {
+        $file = Input::file('jmc_file');
+        if ($file) {
+            $destinationPath = 'uploads/jmc_files';
+            $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
+            $file->move($destinationPath, $filename);
+            $output = $destinationPath . "/" . $filename;
+            
+            return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
+        } else {
+            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+        }
+    }
+    
+    public function uploadICFile() {
+        $file = Input::file('ic_file');
+        if ($file) {
+            $destinationPath = 'uploads/ic_files';
+            $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
+            $file->move($destinationPath, $filename);
+            $output = $destinationPath . "/" . $filename;
+            
+            return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
+        } else {
+            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+        }
+    }
+    
+    public function uploadAttendanceFile() {
+        $file = Input::file('attendance_file');
+        if ($file) {
+            $destinationPath = 'uploads/attendance_files';
+            $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
+            $file->move($destinationPath, $filename);
+            $output = $destinationPath . "/" . $filename;
+            
+            return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
+        } else {
+            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+        }
+    }
+    
+    public function uploadAuditedFinancialFile() {
+        $file = Input::file('audited_financial_file');
+        if ($file) {
+            $destinationPath = 'uploads/audited_financial_files';
+            $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
+            $file->move($destinationPath, $filename);
+            $output = $destinationPath . "/" . $filename;
+            
+            return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
+        } else {
+            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
         }
     }
 

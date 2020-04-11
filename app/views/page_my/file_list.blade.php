@@ -70,6 +70,7 @@ foreach ($user_permission as $permission) {
                                 </div>
                             </div>
                             <div class="modal-footer">
+                                <input type="hidden" name="status" id="status" value="1"/>
                                 <img id="loading_import" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                                 <button id="submit_button_import" class="btn btn-primary" type="submit">
                                     Submit

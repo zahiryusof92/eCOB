@@ -25,7 +25,7 @@ foreach ($user_permission as $permission) {
                     <form>
                         <div class="row">
                             @if (Auth::user()->getAdmin())
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>COB</label>
                                     <select id="company" class="form-control select2">
@@ -37,7 +37,7 @@ foreach ($user_permission as $permission) {
                                 </div>
                             </div>
                             @endif
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label>File No</label>
                                     <select id="file_no" class="form-control select2">
@@ -48,6 +48,17 @@ foreach ($user_permission as $permission) {
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Month</label>
+                                    <select id="month" class="form-control select2">
+                                        <option value="">Please Select</option>
+                                        @foreach ($month as $months)
+                                        <option value="{{ $months }}">{{ $months }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>  
                             <div class="col-md-2">
                                 <div class="form-group">
                                     <label>Year</label>
@@ -79,9 +90,10 @@ foreach ($user_permission as $permission) {
                                 <tr>
                                     <th style="width:10%;">COB</th> 
                                     <th style="width:20%;">File No</th>
-                                    <th style="width:20%;">Designation</th>
+                                    <th style="width:10%;">Designation</th>
                                     <th style="width:20%;">Name</th>
-                                    <th style="width:10%;">Phone No</th>                                                                       
+                                    <th style="width:10%;">Phone No</th>
+                                    <th style="width:10%;">Month</th>
                                     <th style="width:10%;">Year</th>
                                     <?php if ($update_permission == 1) { ?>
                                         <th style="width:10%;">Action</th>
@@ -106,7 +118,7 @@ foreach ($user_permission as $permission) {
         oTable = $('#ajk_details_list').DataTable({
             "sAjaxSource": "{{URL::action('AgmController@getAJK')}}",
             "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            "order": [[5, "desc"]],
+            "order": [[6, "desc"]],
             "responsive": true,
             "aoColumnDefs": [
                 {
@@ -122,8 +134,11 @@ foreach ($user_permission as $permission) {
         $('#file_no').on('change', function () {
             oTable.columns(0).search(this.value).draw();
         });
-        $('#year').on('change', function () {
+        $('#month').on('change', function () {
             oTable.columns(5).search(this.value).draw();
+        });
+        $('#year').on('change', function () {
+            oTable.columns(6).search(this.value).draw();
         });
     });
 

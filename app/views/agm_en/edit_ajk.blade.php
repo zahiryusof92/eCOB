@@ -79,6 +79,21 @@ foreach ($user_permission as $permission) {
                                 </div>                    
                             </div> 
                         </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label><span style="color: red;">*</span> Month</label>
+                                    <select id="month" class="form-control select2">
+                                        <option value="">Please Select</option>
+                                        @foreach ($month as $value => $months)
+                                        <option value="{{ $value }}" {{ ($ajk_details->month == $value ? 'selected' : '' ) }}>{{ $months }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div id="month_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col-md-2">
@@ -126,6 +141,7 @@ foreach ($user_permission as $permission) {
         $("#name_error").css("display", "none");
         $("#phone_no_error").css("display", "none");
         $("#phone_no_invalid_error").css("display", "none");
+        $("#month_error").css("display", "none");
         $("#year_error").css("display", "none");
         $("#year_invalid_error").css("display", "none");
 
@@ -133,6 +149,7 @@ foreach ($user_permission as $permission) {
                 designation = $("#designation").val(),
                 name = $("#name").val(),
                 phone_no = $("#phone_no").val(),
+                month = $("#month").val(),
                 year = $("#year").val(),
                 remarks = $("#remarks").val();
 
@@ -169,6 +186,12 @@ foreach ($user_permission as $permission) {
             $("#phone_no_error").css("display", "none");
             error = 1;
         }
+        
+        if (month.trim() == "") {
+            $("#month_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Month</span>');
+            $("#month_error").css("display", "block");
+            error = 1;
+        }
 
         if (year.trim() == "") {
             $("#year_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Year</span>');
@@ -193,6 +216,7 @@ foreach ($user_permission as $permission) {
                     designation: designation,
                     name: name,
                     phone_no: phone_no,
+                    month: month,
                     year: year,
                     remarks: remarks,
                     id: "{{ $ajk_details->id }}"

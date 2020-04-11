@@ -41,6 +41,8 @@ class ImportController extends BaseController {
         if (Request::ajax()) {
             $file = Input::file('import_file');
             $company_id = Input::get('import_company');
+            $status = Input::get('status');
+
             if ($file) {
                 $path = $file->getRealPath();
                 $data = Excel::load($path, function($reader) {
@@ -62,8 +64,8 @@ class ImportController extends BaseController {
                             }
                             // Status
                             $is_active = 0;
-                            if (isset($row['64']) && !empty($row['64'])) {
-                                $is_active_raw = trim($row['64']);
+                            if (isset($row['65']) && !empty($row['65'])) {
+                                $is_active_raw = trim($row['65']);
 
                                 if (!empty($is_active_raw)) {
                                     if ($is_active_raw == 'AKTIF') {
@@ -81,9 +83,11 @@ class ImportController extends BaseController {
                                     $files->file_no = $file_no;
                                     $files->year = $year;
                                     $files->is_active = $is_active;
-                                    $files->status = 1;
-                                    $files->approved_by = Auth::user()->id;
-                                    $files->approved_at = date('Y-m-d H:i:s');
+                                    $files->status = $status;
+                                    if ($status == 1) {
+                                        $files->approved_by = Auth::user()->id;
+                                        $files->approved_at = date('Y-m-d H:i:s');
+                                    }
                                     $files->created_by = Auth::user()->id;
                                     $create_file = $files->save();
 
@@ -224,6 +228,14 @@ class ImportController extends BaseController {
 
                                         // Strata Scheme Status
                                         // Strata Title
+                                        $strata_title = '';
+                                        if (isset($row['16']) && !empty($row['16'])) {
+                                            $strata_raw = trim($row['16']);
+                                            
+                                            if ($strata_raw == 'Y') {
+                                                $strata_title = 1;
+                                            }
+                                        }
                                         // Strata
                                         $strata_name = '';
                                         if (isset($row['17']) && !empty($row['17'])) {
@@ -516,6 +528,7 @@ class ImportController extends BaseController {
 
                                         $strata = new Strata();
                                         $strata->file_id = $files->id;
+                                        $strata->title = $strata_title;
                                         $strata->name = $strata_name;
                                         $strata->parliament = $parliament;
                                         $strata->dun = $dun;
@@ -608,19 +621,20 @@ class ImportController extends BaseController {
                                         if (isset($row['52']) && !empty($row['52'])) {
                                             $mc_date_formed = trim($row['52']);
                                         }
-                                        // Certificate Series Number
+                                        // No Siri Sijil
+                                        $mc_certificate_no = '';
                                         if (isset($row['53']) && !empty($row['53'])) {
-                                            $mc_first_agm = trim($row['53']);
+                                            $mc_certificate_no = trim($row['53']);
                                         }
                                         // Tarikh Mesyuarat Agong Pertama
                                         $mc_first_agm = '';
-                                        if (isset($row['53']) && !empty($row['53'])) {
-                                            $mc_first_agm = trim($row['53']);
+                                        if (isset($row['54']) && !empty($row['54'])) {
+                                            $mc_first_agm = trim($row['54']);
                                         }
                                         // Nama
                                         $mc_name = '';
-                                        if (isset($row['54']) && !empty($row['54'])) {
-                                            $mc_name = trim($row['54']);
+                                        if (isset($row['55']) && !empty($row['55'])) {
+                                            $mc_name = trim($row['55']);
                                         }
                                         if (!empty($mc_name)) {
                                             $is_mc = 1;
@@ -630,13 +644,13 @@ class ImportController extends BaseController {
                                         $is_agent = 0;
                                         // Lantikan
                                         $agent_selected_by = '';
-                                        if (isset($row['56']) && !empty($row['56'])) {
-                                            $agent_selected_by = trim($row['56']);
+                                        if (isset($row['57']) && !empty($row['57'])) {
+                                            $agent_selected_by = trim($row['57']);
                                         }
                                         // Nama Ejen
                                         $agent_name = '';
-                                        if (isset($row['57']) && !empty($row['57'])) {
-                                            $agent_name = trim($row['57']);
+                                        if (isset($row['58']) && !empty($row['58'])) {
+                                            $agent_name = trim($row['58']);
                                         }
                                         if (!empty($agent_name)) {
                                             $is_agent = 1;
@@ -646,8 +660,8 @@ class ImportController extends BaseController {
                                         $is_others = 0;
                                         // Nama
                                         $others_name = '';
-                                        if (isset($row['59']) && !empty($row['59'])) {
-                                            $others_name = trim($row['59']);
+                                        if (isset($row['60']) && !empty($row['60'])) {
+                                            $others_name = trim($row['60']);
                                         }
                                         if (!empty($others_name)) {
                                             $is_others = 1;
@@ -687,6 +701,7 @@ class ImportController extends BaseController {
                                                 $new_mc->file_id = $files->id;
                                                 $new_mc->management_id = $management->id;
                                                 $new_mc->date_formed = $mc_date_formed;
+                                                $new_mc->certificate_no = $mc_certificate_no;
                                                 $new_mc->first_agm = $mc_first_agm;
                                                 $new_mc->name = $mc_name;
                                                 $new_mc->address1 = '';
@@ -747,18 +762,18 @@ class ImportController extends BaseController {
                                         // Bulan Mula Laporan Kewangan
                                         // Nama
                                         $other_details_name = '';
-                                        if (isset($row['61']) && !empty($row['61'])) {
-                                            $other_details_name = trim($row['61']);
+                                        if (isset($row['62']) && !empty($row['62'])) {
+                                            $other_details_name = trim($row['62']);
                                         }
                                         // Latitud
                                         $latitude = '';
-                                        if (isset($row['62']) && !empty($row['62'])) {
-                                            $latitude = trim($row['62']);
+                                        if (isset($row['63']) && !empty($row['63'])) {
+                                            $latitude = trim($row['63']);
                                         }
                                         // Latitud
                                         $longitude = '';
-                                        if (isset($row['63']) && !empty($row['63'])) {
-                                            $longitude = trim($row['63']);
+                                        if (isset($row['64']) && !empty($row['64'])) {
+                                            $longitude = trim($row['64']);
                                         }
 
                                         $others_details = new OtherDetails();

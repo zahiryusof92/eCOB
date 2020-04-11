@@ -63,6 +63,18 @@ foreach ($user_permission as $permission) {
                                                 </div>
                                             </div>
                                             <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label><span style="color: red; font-style: italic;">* </span>Strata Title</label>
+                                                        <select class="form-control" id="strata_title">
+                                                            <option value="1" {{($strata->title == "1" ? " selected" : "")}}>Yes</option>
+                                                            <option value="0" {{($strata->title == "0" ? " selected" : "")}}>No</option>
+                                                        </select>
+                                                        <div id="strata_title_error" style="display:none;"></div> 
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label><span style="color: red; font-style: italic;">* </span> Nama</label>
@@ -130,6 +142,13 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-8">
                                                     <div class="form-group">
                                                         <input type="text" class="form-control" placeholder="Alamat 3" id="strata_address3" value="{{$strata->address3}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" placeholder="Address 4" id="strata_address4" value="{{$strata->address4}}">
                                                         <div id="strata_address_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
@@ -342,7 +361,7 @@ foreach ($user_permission as $permission) {
                                                         <br/>
                                                         <a href="{{asset($strata->file_url)}}" target="_blank"><button button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>
                                                         <?php if ($update_permission == 1) { ?>
-                                                        <button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteStrataFile('{{$strata->id}}')"><i class="fa fa-times"></i></button>
+                                                            <button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteStrataFile('{{$strata->id}}')"><i class="fa fa-times"></i></button>
                                                         <?php } ?>
                                                         @endif
                                                     </div>
@@ -807,7 +826,7 @@ foreach ($user_permission as $permission) {
                                     <div class="form-actions">
                                         <input type="hidden" id="strata_file_url" value="{{$strata->file_url}}"/>
                                         <?php if ($update_permission == 1) { ?>
-                                        <button type="button" class="btn btn-primary" id="submit_button" onclick="updateStrata()">Simpan</button>
+                                            <button type="button" class="btn btn-primary" id="submit_button" onclick="updateStrata()">Simpan</button>
                                         <?php } ?>
                                         <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">Batal</button>
                                     </div>
@@ -902,13 +921,15 @@ foreach ($user_permission as $permission) {
     function updateStrata() {
         $("#loading").css("display", "inline-block");
 
-        var strata_name = $("#strata_name").val(),
+        var strata_title = $("#strata_title").val(),
+                strata_name = $("#strata_name").val(),
                 strata_parliament = $("#strata_parliament").val(),
                 strata_dun = $("#strata_dun").val(),
                 strata_park = $("#strata_park").val(),
                 strata_address1 = $("#strata_address1").val(),
                 strata_address2 = $("#strata_address2").val(),
                 strata_address3 = $("#strata_address3").val(),
+                strata_address4 = $("#strata_address4").val(),
                 strata_city = $("#strata_city").val(),
                 strata_poscode = $("#strata_poscode").val(),
                 strata_state = $("#strata_state").val(),
@@ -982,6 +1003,11 @@ foreach ($user_permission as $permission) {
 
         var error = 0;
         
+        if (strata_title.trim() == "") {
+            $("#strata_title_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Strata Title</span>');
+            $("#strata_title_error").css("display", "block");
+            error = 1;
+        }
         if (strata_name.trim() == "") {
             $("#strata_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Nama</span>');
             $("#strata_name_error").css("display", "block");
@@ -1009,6 +1035,7 @@ foreach ($user_permission as $permission) {
                 type: "POST",
                 data: {
                     file_id: '{{$file->id}}',
+                    strata_title: strata_title,
                     strata_name: strata_name,
                     strata_parliament: strata_parliament,
                     strata_dun: strata_dun,
@@ -1016,6 +1043,7 @@ foreach ($user_permission as $permission) {
                     strata_address1: strata_address1,
                     strata_address2: strata_address2,
                     strata_address3: strata_address3,
+                    strata_address4: strata_address4,
                     strata_city: strata_city,
                     strata_poscode: strata_poscode,
                     strata_state: strata_state,

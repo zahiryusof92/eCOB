@@ -19,7 +19,7 @@ foreach ($user_permission as $permission) {
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-lg-6">                    
+                <div class="col-lg-12">                    
                     <h4>AGM</h4>
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
@@ -99,7 +99,12 @@ foreach ($user_permission as $permission) {
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-offset-1 col-lg-5">
+            </div>
+
+            <hr/>
+
+            <div class="row">
+                <div class="col-lg-12">
                     <h4>Memo</h4>
                     <table class="table table-hover nowrap" id="memo" width="100%">
                         <thead>
@@ -114,7 +119,9 @@ foreach ($user_permission as $permission) {
                     </table>
                 </div>
             </div>
-            <br/>
+
+            <hr/>
+
             <div class="row">
                 <div class="col-lg-6">
                     <div class="margin-bottom-50">
@@ -146,7 +153,7 @@ foreach ($user_permission as $permission) {
 </div>
 
 <div class="modal fade modal" id="memoDetailsModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content"></div>
     </div>
 </div>
@@ -241,7 +248,7 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-    
+
     // Build the chart
     Highcharts.chart('management_type', {
         chart: {

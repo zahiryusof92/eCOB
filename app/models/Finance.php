@@ -57,9 +57,9 @@ class Finance extends Eloquent {
             $dateObj = DateTime::createFromFormat('!m', $this->month);
             $monthName = $dateObj->format('M'); // March
 
-            return $monthName;
+            return strtoupper($monthName);
         } else {
-            return "(Not Set)";
+            return "<i>(not set)</i>";
         }
     }
 

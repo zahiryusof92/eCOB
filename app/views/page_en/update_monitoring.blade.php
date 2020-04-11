@@ -97,10 +97,10 @@ foreach ($user_permission as $permission) {
                                             <h6>2. Delivery Document for Each Meeting</h6>
                                             <div class="table-responsive">
                                                 <?php if ($update_permission == 1) { ?>
-                                                <button type="button" class="btn btn-primary pull-right margin-bottom-25" onclick="addAGMDetails()">
-                                                    Add
-                                                </button>
-                                                <br/><br/>
+                                                    <button type="button" class="btn btn-primary pull-right margin-bottom-25" onclick="addAGMDetails()">
+                                                        Add
+                                                    </button>
+                                                    <br/><br/>
                                                 <?php } ?>
                                                 <div class="form-group row">
                                                     <div class="col-md-3">
@@ -135,7 +135,7 @@ foreach ($user_permission as $permission) {
                                                             <th style="width:20%;">Financial Report</th>
                                                             <th style="width:5%;"></th>
                                                             <?php if ($update_permission == 1) { ?>
-                                                            <th style="width:5%;">Action</th>
+                                                                <th style="width:5%;">Action</th>
                                                             <?php } ?>
                                                         </tr>
                                                     </thead>
@@ -151,10 +151,10 @@ foreach ($user_permission as $permission) {
                                             <h6>Additional Info</h6>   
                                             <div class="table-responsive">
                                                 <?php if ($update_permission == 1) { ?>
-                                                <button type="button" class="btn btn-primary pull-right margin-bottom-25" onclick="addAJKDetails()">
-                                                    Add
-                                                </button>
-                                                <br/><br/>
+                                                    <button type="button" class="btn btn-primary pull-right margin-bottom-25" onclick="addAJKDetails()">
+                                                        Add
+                                                    </button>
+                                                    <br/><br/>
                                                 <?php } ?>
                                                 <table class="table table-hover nowrap" id="ajk_details_list" width="100%">
                                                     <thead>
@@ -164,7 +164,7 @@ foreach ($user_permission as $permission) {
                                                             <th style="width:20%;">Phone Number</th>
                                                             <th style="width:10%;">Year</th>
                                                             <?php if ($update_permission == 1) { ?>
-                                                            <th style="width:10%;">Action</th>
+                                                                <th style="width:10%;">Action</th>
                                                             <?php } ?>
                                                         </tr>
                                                     </thead>
@@ -185,7 +185,7 @@ foreach ($user_permission as $permission) {
                                     </div>
                                     <div class="form-actions">
                                         <?php if ($update_permission == 1) { ?>
-                                        <button type="button" class="btn btn-primary" id="submit_button" onclick="updateMonitoring()">Submit</button>
+                                            <button type="button" class="btn btn-primary" id="submit_button" onclick="updateMonitoring()">Submit</button>
                                         <?php } ?>
                                         <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">Cancel</button>
                                     </div>
@@ -623,13 +623,13 @@ foreach ($user_permission as $permission) {
             data: {
                 id: id
             },
-            success: function(data) {
+            success: function (data) {
                 $("#agmEdit").html(data);
                 $("#edit_agm_details").modal("show");
             }
         });
     }
-    
+
     $(function () {
         $('#agm_date').datetimepicker({
             widgetPositioning: {
@@ -709,7 +709,7 @@ foreach ($user_permission as $permission) {
         $('#financial_report_list').DataTable({
             "sAjaxSource": "{{URL::action('AdminController@getAGM', $file->id)}}",
             "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            "order": [[ 0, "asc" ]],
+            "order": [[0, "asc"]],
             "responsive": true,
             "aoColumnDefs": [
                 {
@@ -721,7 +721,7 @@ foreach ($user_permission as $permission) {
         $('#ajk_details_list').DataTable({
             "sAjaxSource": "{{URL::action('AdminController@getAJK', $file->id)}}",
             "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-            "order": [[ 0, "asc" ]],
+            "order": [[0, "asc"]],
             "responsive": true,
             "aoColumnDefs": [
                 {
@@ -961,7 +961,7 @@ foreach ($user_permission as $permission) {
         var audit_end_date = $(this).data('audit_end_date');
         var audit_report_file_url = $(this).data('audit_report_file_url');
         var letter_integrity_url = $(this).data('letter_integrity_url');
-        var letter_bankruptcy_url = $(this).data('letter_bankruptcy_url');        
+        var letter_bankruptcy_url = $(this).data('letter_bankruptcy_url');
 
         $("#agm_id_edit").val(agm_id);
         if (agm_date == "0000-00-00 00:00:00") {
@@ -973,7 +973,7 @@ foreach ($user_permission as $permission) {
             $("#audit_start_edit").val("");
         } else {
             $("#audit_start_edit").val(audit_start_date);
-        } 
+        }
         if (audit_end_date == "0000-00-00 00:00:00") {
             $("#audit_end_edit").val("");
         } else {
@@ -1057,7 +1057,7 @@ foreach ($user_permission as $permission) {
                                 align: "center"
                             }
                         });
-                        window.location = "{{URL::action('AdminController@others', $file->id)}}";                        
+                        window.location = "{{URL::action('AdminController@others', $file->id)}}";
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
@@ -1282,37 +1282,37 @@ foreach ($user_permission as $permission) {
             $("#ajk_designation_error").css("display", "block");
             error = 1;
         }
-        
+
         if (ajk_name.trim() == "") {
             $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Name</span>');
             $("#ajk_name_error").css("display", "block");
             error = 1;
         }
-        
+
         if (ajk_phone_no.trim() == "") {
             $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Phone Number</span>');
             $("#ajk_phone_no_error").css("display", "block");
             $("#ajk_phone_no_invalid_error").css("display", "none");
             error = 1;
         }
-        
+
         if (isNaN(ajk_phone_no)) {
             $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Phone Number</span>');
-            $("#ajk_phone_no_invalid_error").css("display", "block");  
+            $("#ajk_phone_no_invalid_error").css("display", "block");
             $("#ajk_phone_no_error").css("display", "none");
             error = 1;
-        } 
-        
+        }
+
         if (ajk_year.trim() == "") {
             $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Year</span>');
             $("#ajk_year_error").css("display", "block");
-            $("#ajk_year_invalid_error").css("display", "none"); 
+            $("#ajk_year_invalid_error").css("display", "none");
             error = 1;
         }
-        
+
         if (isNaN(ajk_year)) {
             $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Year</span>');
-            $("#ajk_year_invalid_error").css("display", "block");   
+            $("#ajk_year_invalid_error").css("display", "block");
             $("#ajk_year_error").css("display", "none");
             error = 1;
         }
@@ -1366,37 +1366,37 @@ foreach ($user_permission as $permission) {
             $("#ajk_designation_edit_error").css("display", "block");
             error = 1;
         }
-        
+
         if (ajk_name.trim() == "") {
             $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Name</span>');
             $("#ajk_name_error").css("display", "block");
             error = 1;
         }
-        
+
         if (ajk_phone_no.trim() == "") {
             $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Phone Number</span>');
             $("#ajk_phone_no_error").css("display", "block");
             $("#ajk_phone_no_invalid_error").css("display", "none");
             error = 1;
         }
-        
+
         if (isNaN(ajk_phone_no)) {
             $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Phone Number</span>');
-            $("#ajk_phone_no_invalid_error").css("display", "block");  
+            $("#ajk_phone_no_invalid_error").css("display", "block");
             $("#ajk_phone_no_error").css("display", "none");
             error = 1;
-        } 
-        
+        }
+
         if (ajk_year.trim() == "") {
             $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Year</span>');
             $("#ajk_year_error").css("display", "block");
-            $("#ajk_year_invalid_error").css("display", "none"); 
+            $("#ajk_year_invalid_error").css("display", "none");
             error = 1;
         }
-        
+
         if (isNaN(ajk_year)) {
             $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Year</span>');
-            $("#ajk_year_invalid_error").css("display", "block");   
+            $("#ajk_year_invalid_error").css("display", "block");
             $("#ajk_year_error").css("display", "none");
             error = 1;
         }
@@ -1444,8 +1444,7 @@ foreach ($user_permission as $permission) {
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
             closeOnConfirm: true
-        },
-        function () {
+        }, function () {
             $.ajax({
                 url: "{{ URL::action('AdminController@deleteAGMDetails') }}",
                 type: "POST",
@@ -1481,8 +1480,7 @@ foreach ($user_permission as $permission) {
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
             closeOnConfirm: true
-        },
-        function () {
+        }, function () {
             $.ajax({
                 url: "{{ URL::action('AdminController@deleteAJKDetails') }}",
                 type: "POST",
@@ -1507,26 +1505,25 @@ foreach ($user_permission as $permission) {
             });
         });
     }
-    
+
     function deleteAuditReport(id) {
         swal({
             title: "Are you sure?",
             text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
             closeOnConfirm: true
-        },
-        function(){
+        }, function () {
             $.ajax({
                 url: "{{ URL::action('AdminController@deleteAuditReport') }}",
                 type: "POST",
                 data: {
                     id: id
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data.trim() == "true") {
                         swal({
                             title: "Deleted!",
@@ -1543,26 +1540,25 @@ foreach ($user_permission as $permission) {
             });
         });
     }
-    
+
     function deleteLetterIntegrity(id) {
         swal({
             title: "Are you sure?",
             text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
             closeOnConfirm: true
-        },
-        function(){
+        }, function () {
             $.ajax({
                 url: "{{ URL::action('AdminController@deleteLetterIntegrity') }}",
                 type: "POST",
                 data: {
                     id: id
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data.trim() == "true") {
                         swal({
                             title: "Deleted!",
@@ -1579,26 +1575,25 @@ foreach ($user_permission as $permission) {
             });
         });
     }
-    
+
     function deleteLetterBankruptcy(id) {
         swal({
             title: "Are you sure?",
             text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
             closeOnConfirm: true
-        },
-        function(){
+        }, function () {
             $.ajax({
                 url: "{{ URL::action('AdminController@deleteLetterBankruptcy') }}",
                 type: "POST",
                 data: {
                     id: id
                 },
-                success: function(data) {
+                success: function (data) {
                     if (data.trim() == "true") {
                         swal({
                             title: "Deleted!",
@@ -1615,15 +1610,15 @@ foreach ($user_permission as $permission) {
             });
         });
     }
-    
+
     function clearAuditFile() {
-        $("#audit_report_file").val(""); 
-        $("#audit_report_file_url").val(""); 
+        $("#audit_report_file").val("");
+        $("#audit_report_file_url").val("");
         $("#audit_report_file").css("color", "grey");
         $("#clear_audit_report_file").hide();
         $("#check_audit_report_file").hide();
     }
-    
+
     function clearLetterIntegrity() {
         $("#letter_integrity").val("");
         $("#letter_integrity_url").val("");
@@ -1631,33 +1626,34 @@ foreach ($user_permission as $permission) {
         $("#clear_letter_integrity").hide();
         $("#check_letter_integrity").hide();
     }
-    
+
     function clearLetterBankruptcy() {
-        $("#letter_bankruptcy").val(""); 
+        $("#letter_bankruptcy").val("");
         $("#letter_bankruptcy_url").val("");
         $("#letter_bankruptcy").css("color", "grey");
         $("#clear_letter_bankruptcy").hide();
         $("#check_letter_bankruptcy").hide();
     }
-    function clearAuditFileEdit() {        
+    
+    function clearAuditFileEdit() {
         $("#audit_report_file_edit").val("");
-        $("#audit_report_file_url_edit").val(""); 
+        $("#audit_report_file_url_edit").val("");
         $("#audit_report_file_edit").css("color", "grey");
         $("#clear_audit_report_file_edit").hide();
         $("#check_audit_report_file_edit").hide();
     }
-    
-    function clearLetterIntegrityEdit() {        
-        $("#letter_integrity_edit").val(""); 
+
+    function clearLetterIntegrityEdit() {
+        $("#letter_integrity_edit").val("");
         $("#letter_integrity_url_edit").val("");
         $("#letter_integrity_edit").css("color", "grey");
         $("#clear_letter_integrity_edit").hide();
         $("#check_letter_integrity_edit").hide();
     }
-    
-    function clearLetterBankruptcyEdit() {        
-        $("#letter_bankruptcy_edit").val(""); 
-        $("#letter_bankruptcy_url_edit").val(""); 
+
+    function clearLetterBankruptcyEdit() {
+        $("#letter_bankruptcy_edit").val("");
+        $("#letter_bankruptcy_url_edit").val("");
         $("#letter_bankruptcy_edit").css("color", "grey");
         $("#clear_letter_bankruptcy_edit").hide();
         $("#check_letter_bankruptcy_edit").hide();

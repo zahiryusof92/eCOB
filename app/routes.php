@@ -65,11 +65,18 @@ Route::post('/deleteFilePrefix/{id}', 'AdminController@deleteFilePrefix')->befor
 //add file
 Route::get('/addFile', 'AdminController@addFile')->before('authMember');
 Route::post('/submitFile', 'AdminController@submitFile')->before('authMember');
+
+// import Files
 Route::post('/importCOBFile', 'ImportController@importCOBFile')->before('authMember');
 
 // file list
 Route::get('/fileList', 'AdminController@fileList')->before('authMember');
 Route::get('/getFileList', 'AdminController@getFileList')->before('authMember');
+
+// file list before VP
+Route::get('/fileListBeforeVP', 'AdminController@fileListBeforeVP')->before('authMember');
+Route::get('/getFileListBeforeVP', 'AdminController@getFileListBeforeVP')->before('authMember');
+
 Route::post('/activeFileList', 'AdminController@activeFileList')->before('authMember');
 Route::post('/inactiveFileList', 'AdminController@inactiveFileList')->before('authMember');
 Route::post('/deleteFileList', 'AdminController@deleteFileList')->before('authMember');
@@ -96,6 +103,14 @@ Route::post('/deleteAuditReport/{id}', 'AdminController@deleteAuditReport')->bef
 Route::post('/deleteLetterIntegrity/{id}', 'AdminController@deleteLetterIntegrity')->before('authMember');
 Route::post('/deleteLetterBankruptcy/{id}', 'AdminController@deleteLetterBankruptcy')->before('authMember');
 
+Route::post('/deleteAGMFile/{id}', 'AdminController@deleteAGMFile')->before('authMember');
+Route::post('/deleteEGMFile/{id}', 'AdminController@deleteEGMFile')->before('authMember');
+Route::post('/deleteMinutesMeetingFile/{id}', 'AdminController@deleteMinutesMeetingFile')->before('authMember');
+Route::post('/deleteJMCFile/{id}', 'AdminController@deleteJMCFile')->before('authMember');
+Route::post('/deleteICFile/{id}', 'AdminController@deleteICFile')->before('authMember');
+Route::post('/deleteAttendanceFile/{id}', 'AdminController@deleteAttendanceFile')->before('authMember');
+Route::post('/deleteAuditedFinancialFile/{id}', 'AdminController@deleteAuditedFinancialFile')->before('authMember');
+
 //monitoring
 Route::get('/view/monitoring/{id}', 'AdminController@viewMonitoring')->before('authMember');
 Route::get('/update/monitoring/{id}', 'AdminController@monitoring')->before('authMember');
@@ -116,6 +131,14 @@ Route::post('/uploadLetterIntegrity', 'FileController@uploadLetterIntegrity');
 Route::post('/uploadLetterIntegrityEdit', 'FileController@uploadLetterIntegrityEdit');
 Route::post('/uploadLetterBankruptcy', 'FileController@uploadLetterBankruptcy');
 Route::post('/uploadLetterBankruptcyEdit', 'FileController@uploadLetterBankruptcyEdit');
+
+Route::post('/uploadAGMFile', 'FileController@uploadAGMFile');
+Route::post('/uploadEGMFile', 'FileController@uploadEGMFile');
+Route::post('/uploadMinutesMeetingFile', 'FileController@uploadMinutesMeetingFile');
+Route::post('/uploadJMCFile', 'FileController@uploadJMCFile');
+Route::post('/uploadICFile', 'FileController@uploadICFile');
+Route::post('/uploadAttendanceFile', 'FileController@uploadAttendanceFile');
+Route::post('/uploadAuditedFinancialFile', 'FileController@uploadAuditedFinancialFile');
 
 //others
 Route::get('/view/others/{id}', 'AdminController@viewOthers')->before('authMember');
@@ -240,7 +263,7 @@ Route::post('/deleteForm/{id}', 'AdminController@deleteForm')->before('authMembe
 Route::post('/deleteFormFile', 'AdminController@deleteFormFile');
 Route::post('/uploadFormFile', 'FileController@uploadFormFile');
 
-########################## AGM Submission
+########################## AGM Submission ##########################
 //AGM Design Submission
 Route::get('/AJK', 'AgmController@AJK')->before('authMember');
 Route::get('/getAJK', 'AgmController@getAJK')->before('authMember');
@@ -261,6 +284,18 @@ Route::post('/deletePurchaser', 'AgmController@deletePurchaser')->before('authMe
 Route::get('/importPurchaser', 'AgmController@importPurchaser')->before('authMember');
 Route::post('/uploadPurchaserCSVAction', 'FileController@uploadPurchaserCSVAction')->before('authMember');
 Route::post('/submitUploadPurchaser', 'AgmController@submitUploadPurchaser')->before('authMember');
+
+//Tenant Submission
+Route::get('/tenant', 'AgmController@tenant')->before('authMember');
+Route::get('/getTenant', 'AgmController@getTenant')->before('authMember');
+Route::get('/addTenant', 'AgmController@addTenant')->before('authMember');
+Route::post('/submitTenant', 'AgmController@submitTenant')->before('authMember');
+Route::get('/editTenant/{id}', 'AgmController@editTenant')->before('authMember');
+Route::post('/submitEditTenant', 'AgmController@submitEditTenant')->before('authMember');
+Route::post('/deleteTenant', 'AgmController@deleteTenant')->before('authMember');
+Route::get('/importTenant', 'AgmController@importTenant')->before('authMember');
+Route::post('/uploadTenantCSVAction', 'FileController@uploadTenantCSVAction')->before('authMember');
+Route::post('/submitUploadTenant', 'AgmController@submitUploadTenant')->before('authMember');
 
 // upload minutes
 Route::get('/minutes', 'AgmController@minutes')->before('authMember');
@@ -283,222 +318,197 @@ Route::post('/deleteDocument/{id}', 'AgmController@deleteDocument')->before('aut
 Route::post('/deleteDocumentFile', 'AgmController@deleteDocumentFile')->before('authMember');
 Route::post('/uploadDocumentFile', 'FileController@uploadDocumentFile')->before('authMember');
 
-/*
- * RONALDO
- */
-Route::get('/agmDesignSub', 'AgmController@agmDesignSub')->before('authMember');
-Route::get('/addAgmDesignSub', 'AgmController@addAgmDesignSub')->before('authMember');
-Route::post('/submitAgmDesignSub', 'AgmController@submitAgmDesignSub')->before('authMember');
-Route::get('/getAgmDesignSub', 'AgmController@getAgmDesignSub')->before('authMember');
-Route::post('/activeAgmDesignSub', 'AgmController@activeAgmDesignSub')->before('authMember');
-Route::post('/inactiveAgmDesignSub', 'AgmController@inactiveAgmDesignSub')->before('authMember');
-Route::get('/updateAgmDesignSub/{id}', 'AgmController@updateAgmDesignSub')->before('authMember');
-Route::post('/submitUpdateAgmDesignSub', 'AgmController@submitUpdateAgmDesignSub')->before('authMember');
-Route::post('/deleteAgmDesignSub/{id}', 'AgmController@deleteAgmDesignSub')->before('authMember');
-
-//AGM Purchase Sub
-Route::get('/agmPurchaseSub', 'AgmController@agmPurchaseSub')->before('authMember');
-Route::get('/addAgmPurchaseSub', 'AgmController@addAgmPurchaseSub')->before('authMember');
-Route::post('/submitAgmPurchaseSub', 'AgmController@submitAgmPurchaseSub')->before('authMember');
-Route::get('/getAgmPurchaseSub', 'AgmController@getAgmPurchaseSub')->before('authMember');
-Route::post('/activeAgmPurchaseSub', 'AgmController@activeAgmPurchaseSub')->before('authMember');
-Route::post('/inactiveAgmPurchaseSub', 'AgmController@inactiveAgmPurchaseSub')->before('authMember');
-Route::get('/updateAgmPurchaseSub/{id}', 'AgmController@updateAgmPurchaseSub')->before('authMember');
-Route::post('/submitUpdateAgmPurchaseSub', 'AgmController@submitUpdateAgmPurchaseSub')->before('authMember');
-Route::post('/deleteAgmPurchaseSub/{id}', 'AgmController@deleteAgmPurchaseSub')->before('authMember');
-
 // Report LHPS
 Route::get('/lhpsReportStrata', 'ReportController@reportStrataProfile')->before('authMember');
 Route::get('/submitLhpsReportStrata', 'ReportController@submitLhpsReportStrata')->before('authMember');
 
-// --- Master Setup --- //
+########################## Master Setup ##########################
 //area
-Route::get('/area', 'AdminController@area')->before('authMember');
-Route::get('/addArea', 'AdminController@addArea')->before('authMember');
-Route::post('/submitArea', 'AdminController@submitArea')->before('authMember');
-Route::get('/getArea', 'AdminController@getArea')->before('authMember');
-Route::post('/activeArea', 'AdminController@activeArea')->before('authMember');
-Route::post('/inactiveArea', 'AdminController@inactiveArea')->before('authMember');
-Route::get('/updateArea/{id}', 'AdminController@updateArea')->before('authMember');
-Route::post('/submitUpdateArea', 'AdminController@submitUpdateArea')->before('authMember');
-Route::post('/deleteArea/{id}', 'AdminController@deleteArea')->before('authMember');
+Route::get('/area', 'SettingController@area')->before('authMember');
+Route::get('/addArea', 'SettingController@addArea')->before('authMember');
+Route::post('/submitArea', 'SettingController@submitArea')->before('authMember');
+Route::get('/getArea', 'SettingController@getArea')->before('authMember');
+Route::post('/activeArea', 'SettingController@activeArea')->before('authMember');
+Route::post('/inactiveArea', 'SettingController@inactiveArea')->before('authMember');
+Route::get('/updateArea/{id}', 'SettingController@updateArea')->before('authMember');
+Route::post('/submitUpdateArea', 'SettingController@submitUpdateArea')->before('authMember');
+Route::post('/deleteArea/{id}', 'SettingController@deleteArea')->before('authMember');
 
 //city
-Route::get('/city', 'AdminController@city')->before('authMember');
-Route::get('/addCity', 'AdminController@addCity')->before('authMember');
-Route::post('/submitCity', 'AdminController@submitCity')->before('authMember');
-Route::get('/getCity', 'AdminController@getCity')->before('authMember');
-Route::post('/activeCity', 'AdminController@activeCity')->before('authMember');
-Route::post('/inactiveCity', 'AdminController@inactiveCity')->before('authMember');
-Route::get('/updateCity/{id}', 'AdminController@updateCity')->before('authMember');
-Route::post('/submitUpdateCity', 'AdminController@submitUpdateCity')->before('authMember');
-Route::post('/deleteCity/{id}', 'AdminController@deleteCity')->before('authMember');
+Route::get('/city', 'SettingController@city')->before('authMember');
+Route::get('/addCity', 'SettingController@addCity')->before('authMember');
+Route::post('/submitCity', 'SettingController@submitCity')->before('authMember');
+Route::get('/getCity', 'SettingController@getCity')->before('authMember');
+Route::post('/activeCity', 'SettingController@activeCity')->before('authMember');
+Route::post('/inactiveCity', 'SettingController@inactiveCity')->before('authMember');
+Route::get('/updateCity/{id}', 'SettingController@updateCity')->before('authMember');
+Route::post('/submitUpdateCity', 'SettingController@submitUpdateCity')->before('authMember');
+Route::post('/deleteCity/{id}', 'SettingController@deleteCity')->before('authMember');
 
 //country
-Route::get('/country', 'AdminController@country')->before('authMember');
-Route::get('/addCountry', 'AdminController@addCountry')->before('authMember');
-Route::post('/submitCountry', 'AdminController@submitCountry')->before('authMember');
-Route::get('/getCountry', 'AdminController@getCountry')->before('authMember');
-Route::post('/activeCountry', 'AdminController@activeCountry')->before('authMember');
-Route::post('/inactiveCountry', 'AdminController@inactiveCountry')->before('authMember');
-Route::get('/updateCountry/{id}', 'AdminController@updateCountry')->before('authMember');
-Route::post('/submitUpdateCountry', 'AdminController@submitUpdateCountry')->before('authMember');
-Route::post('/deleteCountry/{id}', 'AdminController@deleteCountry')->before('authMember');
-
-//language
-Route::get('/language', 'AdminController@language')->before('authMember');
-Route::get('/addLanguage', 'AdminController@addLanguage')->before('authMember');
-Route::post('/submitLanguage', 'AdminController@submitLanguage')->before('authMember');
-Route::get('/getLanguage', 'AdminController@getLanguage')->before('authMember');
-Route::post('/activeLanguage', 'AdminController@activeLanguage')->before('authMember');
-Route::post('/inactiveLanguage', 'AdminController@inactiveLanguage')->before('authMember');
-Route::get('/updateLanguage/{id}', 'AdminController@updateLanguage')->before('authMember');
-Route::post('/submitUpdateLanguage', 'AdminController@submitUpdateLanguage')->before('authMember');
-Route::post('/deleteLanguage/{id}', 'AdminController@deleteLanguage')->before('authMember');
+Route::get('/country', 'SettingController@country')->before('authMember');
+Route::get('/addCountry', 'SettingController@addCountry')->before('authMember');
+Route::post('/submitCountry', 'SettingController@submitCountry')->before('authMember');
+Route::get('/getCountry', 'SettingController@getCountry')->before('authMember');
+Route::post('/activeCountry', 'SettingController@activeCountry')->before('authMember');
+Route::post('/inactiveCountry', 'SettingController@inactiveCountry')->before('authMember');
+Route::get('/updateCountry/{id}', 'SettingController@updateCountry')->before('authMember');
+Route::post('/submitUpdateCountry', 'SettingController@submitUpdateCountry')->before('authMember');
+Route::post('/deleteCountry/{id}', 'SettingController@deleteCountry')->before('authMember');
 
 //state
-Route::get('/state', 'AdminController@state')->before('authMember');
-Route::get('/addState', 'AdminController@addState')->before('authMember');
-Route::post('/submitState', 'AdminController@submitState')->before('authMember');
-Route::get('/getState', 'AdminController@getState')->before('authMember');
-Route::post('/activeState', 'AdminController@activeState')->before('authMember');
-Route::post('/inactiveState', 'AdminController@inactiveState')->before('authMember');
-Route::get('/updateState/{id}', 'AdminController@updateState')->before('authMember');
-Route::post('/submitUpdateState', 'AdminController@submitUpdateState')->before('authMember');
-Route::post('/deleteState/{id}', 'AdminController@deleteState')->before('authMember');
-
+Route::get('/state', 'SettingController@state')->before('authMember');
+Route::get('/addState', 'SettingController@addState')->before('authMember');
+Route::post('/submitState', 'SettingController@submitState')->before('authMember');
+Route::get('/getState', 'SettingController@getState')->before('authMember');
+Route::post('/activeState', 'SettingController@activeState')->before('authMember');
+Route::post('/inactiveState', 'SettingController@inactiveState')->before('authMember');
+Route::get('/updateState/{id}', 'SettingController@updateState')->before('authMember');
+Route::post('/submitUpdateState', 'SettingController@submitUpdateState')->before('authMember');
+Route::post('/deleteState/{id}', 'SettingController@deleteState')->before('authMember');
 
 //Document Type
-Route::get('/documenttype', 'AdminController@documenttype')->before('authMember');
-Route::get('/addDocumenttype', 'AdminController@addDocumenttype')->before('authMember');
-Route::post('/submitDocumenttype', 'AdminController@submitDocumenttype')->before('authMember');
-Route::get('/getDocumenttype', 'AdminController@getDocumenttype')->before('authMember');
-Route::post('/activeDocumenttype', 'AdminController@activeDocumenttype')->before('authMember');
-Route::post('/inactiveDocumenttype', 'AdminController@inactiveDocumenttype')->before('authMember');
-Route::get('/updateDocumenttype/{id}', 'AdminController@updateDocumenttype')->before('authMember');
-Route::post('/submitUpdateDocumenttype', 'AdminController@submitUpdateDocumenttype')->before('authMember');
-Route::post('/deleteDocumenttype/{id}', 'AdminController@deleteDocumenttype')->before('authMember');
+Route::get('/documenttype', 'SettingController@documenttype')->before('authMember');
+Route::get('/addDocumenttype', 'SettingController@addDocumenttype')->before('authMember');
+Route::post('/submitDocumenttype', 'SettingController@submitDocumenttype')->before('authMember');
+Route::get('/getDocumenttype', 'SettingController@getDocumenttype')->before('authMember');
+Route::post('/activeDocumenttype', 'SettingController@activeDocumenttype')->before('authMember');
+Route::post('/inactiveDocumenttype', 'SettingController@inactiveDocumenttype')->before('authMember');
+Route::get('/updateDocumenttype/{id}', 'SettingController@updateDocumenttype')->before('authMember');
+Route::post('/submitUpdateDocumenttype', 'SettingController@submitUpdateDocumenttype')->before('authMember');
+Route::post('/deleteDocumenttype/{id}', 'SettingController@deleteDocumenttype')->before('authMember');
 
 //Form Type
-Route::get('/formtype', 'AdminController@formtype')->before('authMember');
-Route::get('/addFormtype', 'AdminController@addFormtype')->before('authMember');
-Route::post('/submitFormtype', 'AdminController@submitFormtype')->before('authMember');
-Route::get('/getFormtype', 'AdminController@getFormtype')->before('authMember');
-Route::post('/activeFormtype', 'AdminController@activeFormtype')->before('authMember');
-Route::post('/inactiveFormtype', 'AdminController@inactiveFormtype')->before('authMember');
-Route::get('/updateFormtype/{id}', 'AdminController@updateFormtype')->before('authMember');
-Route::post('/submitUpdateFormtype', 'AdminController@submitUpdateFormtype')->before('authMember');
-Route::post('/deleteFormtype/{id}', 'AdminController@deleteFormtype')->before('authMember');
+Route::get('/formtype', 'SettingController@formtype')->before('authMember');
+Route::get('/addFormtype', 'SettingController@addFormtype')->before('authMember');
+Route::post('/submitFormtype', 'SettingController@submitFormtype')->before('authMember');
+Route::get('/getFormtype', 'SettingController@getFormtype')->before('authMember');
+Route::post('/activeFormtype', 'SettingController@activeFormtype')->before('authMember');
+Route::post('/inactiveFormtype', 'SettingController@inactiveFormtype')->before('authMember');
+Route::get('/updateFormtype/{id}', 'SettingController@updateFormtype')->before('authMember');
+Route::post('/submitUpdateFormtype', 'SettingController@submitUpdateFormtype')->before('authMember');
+Route::post('/deleteFormtype/{id}', 'SettingController@deleteFormtype')->before('authMember');
 
 //category
-Route::get('/category', 'AdminController@category')->before('authMember');
-Route::get('/addCategory', 'AdminController@addCategory')->before('authMember');
-Route::post('/submitCategory', 'AdminController@submitCategory')->before('authMember');
-Route::get('/getCategory', 'AdminController@getCategory')->before('authMember');
-Route::post('/activeCategory', 'AdminController@activeCategory')->before('authMember');
-Route::post('/inactiveCategory', 'AdminController@inactiveCategory')->before('authMember');
-Route::get('/updateCategory/{id}', 'AdminController@updateCategory')->before('authMember');
-Route::post('/submitUpdateCategory', 'AdminController@submitUpdateCategory')->before('authMember');
-Route::post('/deleteCategory/{id}', 'AdminController@deleteCategory')->before('authMember');
+Route::get('/category', 'SettingController@category')->before('authMember');
+Route::get('/addCategory', 'SettingController@addCategory')->before('authMember');
+Route::post('/submitCategory', 'SettingController@submitCategory')->before('authMember');
+Route::get('/getCategory', 'SettingController@getCategory')->before('authMember');
+Route::post('/activeCategory', 'SettingController@activeCategory')->before('authMember');
+Route::post('/inactiveCategory', 'SettingController@inactiveCategory')->before('authMember');
+Route::get('/updateCategory/{id}', 'SettingController@updateCategory')->before('authMember');
+Route::post('/submitUpdateCategory', 'SettingController@submitUpdateCategory')->before('authMember');
+Route::post('/deleteCategory/{id}', 'SettingController@deleteCategory')->before('authMember');
 
 //land
-Route::get('/landTitle', 'AdminController@landTitle')->before('authMember');
-Route::get('/addLandTitle', 'AdminController@addLandTitle')->before('authMember');
-Route::post('/submitLandTitle', 'AdminController@submitLandTitle')->before('authMember');
-Route::get('/getLandTitle', 'AdminController@getLandTitle')->before('authMember');
-Route::post('/activeLandTitle', 'AdminController@activeLandTitle')->before('authMember');
-Route::post('/inactiveLandTitle', 'AdminController@inactiveLandTitle')->before('authMember');
-Route::get('/updateLandTitle/{id}', 'AdminController@updateLandTitle')->before('authMember');
-Route::post('/submitUpdateLandTitle', 'AdminController@submitUpdateLandTitle')->before('authMember');
-Route::post('/deleteLandTitle/{id}', 'AdminController@deleteLandTitle')->before('authMember');
+Route::get('/landTitle', 'SettingController@landTitle')->before('authMember');
+Route::get('/addLandTitle', 'SettingController@addLandTitle')->before('authMember');
+Route::post('/submitLandTitle', 'SettingController@submitLandTitle')->before('authMember');
+Route::get('/getLandTitle', 'SettingController@getLandTitle')->before('authMember');
+Route::post('/activeLandTitle', 'SettingController@activeLandTitle')->before('authMember');
+Route::post('/inactiveLandTitle', 'SettingController@inactiveLandTitle')->before('authMember');
+Route::get('/updateLandTitle/{id}', 'SettingController@updateLandTitle')->before('authMember');
+Route::post('/submitUpdateLandTitle', 'SettingController@submitUpdateLandTitle')->before('authMember');
+Route::post('/deleteLandTitle/{id}', 'SettingController@deleteLandTitle')->before('authMember');
 
 //developer
-Route::get('/developer', 'AdminController@developer')->before('authMember');
-Route::get('/addDeveloper', 'AdminController@addDeveloper')->before('authMember');
-Route::post('/submitDeveloper', 'AdminController@submitDeveloper')->before('authMember');
-Route::get('/getDeveloper', 'AdminController@getDeveloper')->before('authMember');
-Route::post('/activeDeveloper', 'AdminController@activeDeveloper')->before('authMember');
-Route::post('/inactiveDeveloper', 'AdminController@inactiveDeveloper')->before('authMember');
-Route::get('/updateDeveloper/{id}', 'AdminController@updateDeveloper')->before('authMember');
-Route::post('/submitUpdateDeveloper', 'AdminController@submitUpdateDeveloper')->before('authMember');
-Route::post('/deleteDeveloper/{id}', 'AdminController@deleteDeveloper')->before('authMember');
+Route::get('/developer', 'SettingController@developer')->before('authMember');
+Route::get('/addDeveloper', 'SettingController@addDeveloper')->before('authMember');
+Route::post('/submitDeveloper', 'SettingController@submitDeveloper')->before('authMember');
+Route::get('/getDeveloper', 'SettingController@getDeveloper')->before('authMember');
+Route::post('/activeDeveloper', 'SettingController@activeDeveloper')->before('authMember');
+Route::post('/inactiveDeveloper', 'SettingController@inactiveDeveloper')->before('authMember');
+Route::get('/updateDeveloper/{id}', 'SettingController@updateDeveloper')->before('authMember');
+Route::post('/submitUpdateDeveloper', 'SettingController@submitUpdateDeveloper')->before('authMember');
+Route::post('/deleteDeveloper/{id}', 'SettingController@deleteDeveloper')->before('authMember');
 
 //developer
-Route::get('/agent', 'AdminController@agent')->before('authMember');
-Route::get('/addAgent', 'AdminController@addAgent')->before('authMember');
-Route::post('/submitAgent', 'AdminController@submitAgent')->before('authMember');
-Route::get('/getAgent', 'AdminController@getAgent')->before('authMember');
-Route::post('/activeAgent', 'AdminController@activeAgent')->before('authMember');
-Route::post('/inactiveAgent', 'AdminController@inactiveAgent')->before('authMember');
-Route::get('/updateAgent/{id}', 'AdminController@updateAgent')->before('authMember');
-Route::post('/submitUpdateAgent', 'AdminController@submitUpdateAgent')->before('authMember');
-Route::post('/deleteAgent/{id}', 'AdminController@deleteAgent')->before('authMember');
+Route::get('/agent', 'SettingController@agent')->before('authMember');
+Route::get('/addAgent', 'SettingController@addAgent')->before('authMember');
+Route::post('/submitAgent', 'SettingController@submitAgent')->before('authMember');
+Route::get('/getAgent', 'SettingController@getAgent')->before('authMember');
+Route::post('/activeAgent', 'SettingController@activeAgent')->before('authMember');
+Route::post('/inactiveAgent', 'SettingController@inactiveAgent')->before('authMember');
+Route::get('/updateAgent/{id}', 'SettingController@updateAgent')->before('authMember');
+Route::post('/submitUpdateAgent', 'SettingController@submitUpdateAgent')->before('authMember');
+Route::post('/deleteAgent/{id}', 'SettingController@deleteAgent')->before('authMember');
 
 //parliment
-Route::get('/parliment', 'AdminController@parliment')->before('authMember');
-Route::get('/addParliment', 'AdminController@addParliment')->before('authMember');
-Route::post('/submitParliment', 'AdminController@submitParliment')->before('authMember');
-Route::get('/getParliment', 'AdminController@getParliment')->before('authMember');
-Route::post('/activeParliment', 'AdminController@activeParliment')->before('authMemberauthMember');
-Route::post('/inactiveParliment', 'AdminController@inactiveParliment')->before('authMember');
-Route::get('/updateParliment/{id}', 'AdminController@updateParliment')->before('authMember');
-Route::post('/submitUpdateParliment', 'AdminController@submitUpdateParliment')->before('authMember');
-Route::post('/deleteParliment/{id}', 'AdminController@deleteParliment')->before('authMember');
+Route::get('/parliment', 'SettingController@parliment')->before('authMember');
+Route::get('/addParliment', 'SettingController@addParliment')->before('authMember');
+Route::post('/submitParliment', 'SettingController@submitParliment')->before('authMember');
+Route::get('/getParliment', 'SettingController@getParliment')->before('authMember');
+Route::post('/activeParliment', 'SettingController@activeParliment')->before('authMemberauthMember');
+Route::post('/inactiveParliment', 'SettingController@inactiveParliment')->before('authMember');
+Route::get('/updateParliment/{id}', 'SettingController@updateParliment')->before('authMember');
+Route::post('/submitUpdateParliment', 'SettingController@submitUpdateParliment')->before('authMember');
+Route::post('/deleteParliment/{id}', 'SettingController@deleteParliment')->before('authMember');
 
 //DUN
-Route::get('/DUN', 'AdminController@dun')->before('authMember');
-Route::get('/addDUN', 'AdminController@addDun')->before('authMember');
-Route::post('/submitDUN', 'AdminController@submitDun')->before('authMember');
-Route::get('/getDUN', 'AdminController@getDun')->before('authMember');
-Route::post('/activeDUN', 'AdminController@activeDun')->before('authMember');
-Route::post('/inactiveDUN', 'AdminController@inactiveDun')->before('authMember');
-Route::get('/updateDUN/{id}', 'AdminController@updateDun')->before('authMember');
-Route::post('/submitUpdateDUN', 'AdminController@submitUpdateDun')->before('authMember');
-Route::post('/deleteDUN/{id}', 'AdminController@deleteDun')->before('authMember');
+Route::get('/DUN', 'SettingController@dun')->before('authMember');
+Route::get('/addDUN', 'SettingController@addDun')->before('authMember');
+Route::post('/submitDUN', 'SettingController@submitDun')->before('authMember');
+Route::get('/getDUN', 'SettingController@getDun')->before('authMember');
+Route::post('/activeDUN', 'SettingController@activeDun')->before('authMember');
+Route::post('/inactiveDUN', 'SettingController@inactiveDun')->before('authMember');
+Route::get('/updateDUN/{id}', 'SettingController@updateDun')->before('authMember');
+Route::post('/submitUpdateDUN', 'SettingController@submitUpdateDun')->before('authMember');
+Route::post('/deleteDUN/{id}', 'SettingController@deleteDun')->before('authMember');
 
 //Park
-Route::get('/park', 'AdminController@park')->before('authMember');
-Route::get('/addPark', 'AdminController@addPark')->before('authMember');
-Route::post('/submitPark', 'AdminController@submitPark')->before('authMember');
-Route::get('/getPark', 'AdminController@getPark')->before('authMember');
-Route::post('/activePark', 'AdminController@activePark')->before('authMember');
-Route::post('/inactivePark', 'AdminController@inactivePark')->before('authMemberauthMember');
-Route::get('/updatePark/{id}', 'AdminController@updatePark')->before('authMember');
-Route::post('/submitUpdatePark', 'AdminController@submitUpdatePark')->before('authMember');
-Route::post('/deletePark/{id}', 'AdminController@deletePark')->before('authMember');
+Route::get('/park', 'SettingController@park')->before('authMember');
+Route::get('/addPark', 'SettingController@addPark')->before('authMember');
+Route::post('/submitPark', 'SettingController@submitPark')->before('authMember');
+Route::get('/getPark', 'SettingController@getPark')->before('authMember');
+Route::post('/activePark', 'SettingController@activePark')->before('authMember');
+Route::post('/inactivePark', 'SettingController@inactivePark')->before('authMemberauthMember');
+Route::get('/updatePark/{id}', 'SettingController@updatePark')->before('authMember');
+Route::post('/submitUpdatePark', 'SettingController@submitUpdatePark')->before('authMember');
+Route::post('/deletePark/{id}', 'SettingController@deletePark')->before('authMember');
 
 //memo type
-Route::get('/memoType', 'AdminController@memoType')->before('authMember');
-Route::get('/addMemoType', 'AdminController@addMemoType')->before('authMember');
-Route::post('/submitMemoType', 'AdminController@submitMemoType')->before('authMember');
-Route::get('/getMemoType', 'AdminController@getMemoType')->before('authMember');
-Route::post('/activeMemoType', 'AdminController@activeMemoType')->before('authMember');
-Route::post('/inactiveMemoType', 'AdminController@inactiveMemoType')->before('authMember');
-Route::get('/updateMemoType/{id}', 'AdminController@updateMemoType')->before('authMemberauthMember');
-Route::post('/submitUpdateMemoType', 'AdminController@submitUpdateMemoType')->before('authMember');
-Route::post('/deleteMemoType/{id}', 'AdminController@deleteMemoType')->before('authMember');
+Route::get('/memoType', 'SettingController@memoType')->before('authMember');
+Route::get('/addMemoType', 'SettingController@addMemoType')->before('authMember');
+Route::post('/submitMemoType', 'SettingController@submitMemoType')->before('authMember');
+Route::get('/getMemoType', 'SettingController@getMemoType')->before('authMember');
+Route::post('/activeMemoType', 'SettingController@activeMemoType')->before('authMember');
+Route::post('/inactiveMemoType', 'SettingController@inactiveMemoType')->before('authMember');
+Route::get('/updateMemoType/{id}', 'SettingController@updateMemoType')->before('authMemberauthMember');
+Route::post('/submitUpdateMemoType', 'SettingController@submitUpdateMemoType')->before('authMember');
+Route::post('/deleteMemoType/{id}', 'SettingController@deleteMemoType')->before('authMember');
 
 //designation
-Route::get('/designation', 'AdminController@designation')->before('authMember');
-Route::get('/addDesignation', 'AdminController@addDesignation')->before('authMember');
-Route::post('/submitDesignation', 'AdminController@submitDesignation')->before('authMember');
-Route::get('/getDesignation', 'AdminController@getDesignation')->before('authMember');
-Route::post('/activeDesignation', 'AdminController@activeDesignation')->before('authMember');
-Route::post('/inactiveDesignation', 'AdminController@inactiveDesignation')->before('authMember');
-Route::get('/updateDesignation/{id}', 'AdminController@updateDesignation')->before('authMember');
-Route::post('/submitUpdateDesignation', 'AdminController@submitUpdateDesignation')->before('authMember');
-Route::post('/deleteDesignation/{id}', 'AdminController@deleteDesignation')->before('authMember');
+Route::get('/designation', 'SettingController@designation')->before('authMember');
+Route::get('/addDesignation', 'SettingController@addDesignation')->before('authMember');
+Route::post('/submitDesignation', 'SettingController@submitDesignation')->before('authMember');
+Route::get('/getDesignation', 'SettingController@getDesignation')->before('authMember');
+Route::post('/activeDesignation', 'SettingController@activeDesignation')->before('authMember');
+Route::post('/inactiveDesignation', 'SettingController@inactiveDesignation')->before('authMember');
+Route::get('/updateDesignation/{id}', 'SettingController@updateDesignation')->before('authMember');
+Route::post('/submitUpdateDesignation', 'SettingController@submitUpdateDesignation')->before('authMember');
+Route::post('/deleteDesignation/{id}', 'SettingController@deleteDesignation')->before('authMember');
 
 //unit measure
-Route::get('/unitMeasure', 'AdminController@unitMeasure')->before('authMember');
-Route::get('/addUnitMeasure', 'AdminController@addUnitMeasure')->before('authMember');
-Route::post('/submitUnitMeasure', 'AdminController@submitUnitMeasure')->before('authMember');
-Route::get('/getUnitMeasure', 'AdminController@getUnitMeasure')->before('authMember');
-Route::post('/activeUnitMeasure', 'AdminController@activeUnitMeasure')->before('authMember');
-Route::post('/inactiveUnitMeasure', 'AdminController@inactiveUnitMeasure')->before('authMember');
-Route::get('/updateUnitMeasure/{id}', 'AdminController@updateUnitMeasure')->before('authMember');
-Route::post('/submitUpdateUnitMeasure', 'AdminController@submitUpdateUnitMeasure')->before('authMember');
-Route::post('/deleteUnitMeasure/{id}', 'AdminController@deleteUnitMeasure')->before('authMember');
+Route::get('/unitMeasure', 'SettingController@unitMeasure')->before('authMember');
+Route::get('/addUnitMeasure', 'SettingController@addUnitMeasure')->before('authMember');
+Route::post('/submitUnitMeasure', 'SettingController@submitUnitMeasure')->before('authMember');
+Route::get('/getUnitMeasure', 'SettingController@getUnitMeasure')->before('authMember');
+Route::post('/activeUnitMeasure', 'SettingController@activeUnitMeasure')->before('authMember');
+Route::post('/inactiveUnitMeasure', 'SettingController@inactiveUnitMeasure')->before('authMember');
+Route::get('/updateUnitMeasure/{id}', 'SettingController@updateUnitMeasure')->before('authMember');
+Route::post('/submitUpdateUnitMeasure', 'SettingController@submitUpdateUnitMeasure')->before('authMember');
+Route::post('/deleteUnitMeasure/{id}', 'SettingController@deleteUnitMeasure')->before('authMember');
+
+//race
+Route::get('/race', 'SettingController@race')->before('authMember');
+Route::get('/addRace', 'SettingController@addRace')->before('authMember');
+Route::post('/submitRace', 'SettingController@submitRace')->before('authMember');
+Route::get('/getRace', 'SettingController@getRace')->before('authMember');
+Route::post('/activeRace', 'SettingController@activeRace')->before('authMember');
+Route::post('/inactiveRace', 'SettingController@inactiveRace')->before('authMember');
+Route::get('/updateRace/{id}', 'SettingController@updateRace')->before('authMember');
+Route::post('/submitUpdateRace', 'SettingController@submitUpdateRace')->before('authMember');
+Route::post('/deleteRace/{id}', 'SettingController@deleteRace')->before('authMember');
 
 // --- Reporting --- //
 //audit trail
@@ -579,6 +589,30 @@ Route::post('/deleteFinanceSupport', 'FinanceController@deleteFinanceSupport')->
 //form download
 Route::get('/formDownload', 'AdminController@formDownload')->before('authMember');
 Route::get('/getForm', 'AdminController@getForm')->before('authMember');
+
+/*
+ * RONALDO
+ */
+Route::get('/agmDesignSub', 'AgmController@agmDesignSub')->before('authMember');
+Route::get('/addAgmDesignSub', 'AgmController@addAgmDesignSub')->before('authMember');
+Route::post('/submitAgmDesignSub', 'AgmController@submitAgmDesignSub')->before('authMember');
+Route::get('/getAgmDesignSub', 'AgmController@getAgmDesignSub')->before('authMember');
+Route::post('/activeAgmDesignSub', 'AgmController@activeAgmDesignSub')->before('authMember');
+Route::post('/inactiveAgmDesignSub', 'AgmController@inactiveAgmDesignSub')->before('authMember');
+Route::get('/updateAgmDesignSub/{id}', 'AgmController@updateAgmDesignSub')->before('authMember');
+Route::post('/submitUpdateAgmDesignSub', 'AgmController@submitUpdateAgmDesignSub')->before('authMember');
+Route::post('/deleteAgmDesignSub/{id}', 'AgmController@deleteAgmDesignSub')->before('authMember');
+
+//AGM Purchase Sub
+Route::get('/agmPurchaseSub', 'AgmController@agmPurchaseSub')->before('authMember');
+Route::get('/addAgmPurchaseSub', 'AgmController@addAgmPurchaseSub')->before('authMember');
+Route::post('/submitAgmPurchaseSub', 'AgmController@submitAgmPurchaseSub')->before('authMember');
+Route::get('/getAgmPurchaseSub', 'AgmController@getAgmPurchaseSub')->before('authMember');
+Route::post('/activeAgmPurchaseSub', 'AgmController@activeAgmPurchaseSub')->before('authMember');
+Route::post('/inactiveAgmPurchaseSub', 'AgmController@inactiveAgmPurchaseSub')->before('authMember');
+Route::get('/updateAgmPurchaseSub/{id}', 'AgmController@updateAgmPurchaseSub')->before('authMember');
+Route::post('/submitUpdateAgmPurchaseSub', 'AgmController@submitUpdateAgmPurchaseSub')->before('authMember');
+Route::post('/deleteAgmPurchaseSub/{id}', 'AgmController@deleteAgmPurchaseSub')->before('authMember');
 
 //invalid route
 Route::get('/{name?}', 'AdminController@showView')->before('authMember');

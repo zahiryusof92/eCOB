@@ -328,6 +328,14 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
+                                                            <label>Certificate Series Number</label>
+                                                            <input type="text" class="form-control" placeholder="Certificate Series Number" id="mc_certificate_no">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
                                                             <label>First AGM Date</label>
                                                             <label class="input-group datepicker-only-init">
                                                                 <input type="text" class="form-control" placeholder="First AGM Date" id="mc_first_agm"/>
@@ -453,6 +461,14 @@ foreach ($user_permission as $permission) {
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
                                                             </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Certificate Series Number</label>
+                                                            <input type="text" class="form-control" placeholder="Certificate Series Number" id="mc_certificate_no" value="{{$management_mc->certificate_no}}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1136,6 +1152,7 @@ foreach ($user_permission as $permission) {
         
         //mc
         var mc_date_formed = $("#mc_date_formed").val(),
+                mc_certificate_no = $("#mc_certificate_no").val(),
                 mc_first_agm = $("#mc_first_agm").val(),
                 mc_name = $("#mc_name").val(),                
                 mc_address1 = $("#mc_address1").val(),
@@ -1226,6 +1243,7 @@ foreach ($user_permission as $permission) {
                     //mc
                     is_mc: is_mc,
                     mc_date_formed: mc_date_formed,
+                    mc_certificate_no: mc_certificate_no,
                     mc_first_agm: mc_first_agm,
                     mc_name: mc_name,
                     mc_address1: mc_address1,

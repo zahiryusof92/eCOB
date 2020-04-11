@@ -48,6 +48,8 @@ $access_permission38 = 0;
 $access_permission39 = 0;
 $access_permission40 = 0;
 $access_permission41 = 0;
+$access_permission42 = 0;
+$access_permission43 = 0;
 
 $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
@@ -185,6 +187,13 @@ if ($user_permission) {
         if ($permission->submodule_id == 41) {
             $access_permission41 = $permission->access_permission;
         }
+        
+        if ($permission->submodule_id == 42) {
+            $access_permission42 = $permission->access_permission;
+        }
+        if ($permission->submodule_id == 43) {
+            $access_permission43 = $permission->access_permission;
+        }
     }
 }
 
@@ -256,7 +265,7 @@ if (!Auth::user()->getAdmin()) {
                     @endif
                     @if ($access_permission36 == 1)
                     <li id="cob_before_vp_list">
-                        <a class="left-menu-link" href="#">
+                        <a class="left-menu-link" href="{{ URL::action('AdminController@fileListBeforeVP') }}">
                             COB File List Before VP
                         </a>
                     </li>
@@ -335,6 +344,13 @@ if (!Auth::user()->getAdmin()) {
                         </a>
                     </li>
                     @endif
+                    @if ($access_permission42 == 1)
+                    <li id="form_list">
+                        <a class="left-menu-link" href="{{URL::action('AdminController@form')}}">
+                            Form
+                        </a>
+                    </li>
+                    @endif
                 </ul>
             </li>
             @endif
@@ -351,112 +367,112 @@ if (!Auth::user()->getAdmin()) {
                 <ul class="left-menu-list list-unstyled" id="master_main">                    
                     @if ($access_permission8 == 1)
                     <li id="country_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@country')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@country')}}">
                             Country
                         </a>
                     </li>
                     @endif
                     @if ($access_permission9 == 1)
-                    <li id="state_list"><a class="left-menu-link" href="{{URL::action('AdminController@state')}}">
+                    <li id="state_list"><a class="left-menu-link" href="{{URL::action('SettingController@state')}}">
                             State
                         </a>
                     </li>
                     @endif
                     @if ($access_permission10 == 1)
                     <li id="area_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@area')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@area')}}">
                             Area
                         </a>
                     </li>
                     @endif
                     @if ($access_permission11 == 1)
                     <li id="city_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@city')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@city')}}">
                             City
                         </a>
                     </li>
                     @endif
                     @if ($access_permission12 == 1)
                     <li id="category_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@category')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@category')}}">
                             Category
                         </a>
                     </li> 
                     @endif
                     @if ($access_permission13 == 1)
                     <li id="land_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@landTitle')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@landTitle')}}">
                             Land Title
                         </a>
                     </li> 
                     @endif
                     @if ($access_permission14 == 1)
                     <li id="developer_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@developer')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@developer')}}">
                             Developer
                         </a>
                     </li> 
                     @endif
                     @if ($access_permission15 == 1)
                     <li id="agent_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@agent')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@agent')}}">
                             Agent
                         </a>
                     </li> 
                     @endif
                     @if ($access_permission16 == 1)
                     <li id="parliament_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@parliment')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@parliment')}}">
                             Parliament
                         </a>
                     </li>
                     @endif
                     @if ($access_permission17 == 1)
                     <li id="dun_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@dun')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@dun')}}">
                             DUN
                         </a>
                     </li>
                     @endif
                     @if ($access_permission18 == 1)
                     <li id="park_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@park')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@park')}}">
                             Park
                         </a>
                     </li> 
                     @endif
                     @if ($access_permission19 == 1)
                     <li id="memo_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@memoType')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@memoType')}}">
                             Memo Type
                         </a>
                     </li>
                     @endif
                     @if ($access_permission20 == 1)
                     <li id="designation_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@designation')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@designation')}}">
                             Designation
                         </a>
                     </li> 
                     @endif
                     @if ($access_permission21 == 1)
                     <li id="unit_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@unitMeasure')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@unitMeasure')}}">
                             Unit of Measure
                         </a>
                     </li> 
                     @endif
                     @if ($access_permission22 == 1)
                     <li id="formtype_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@formtype')}}">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@formtype')}}">
                             Form Type
                         </a>
                     </li>
                     @endif
-                    @if ($access_permission23 == 1)
-                    <li id="documenttype_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@documenttype')}}">
-                            Document Type
+                    @if ($access_permission42 == 1)
+                    <li id="race_list">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@race')}}">
+                            Race
                         </a>
                     </li>
                     @endif
@@ -535,6 +551,13 @@ if (!Auth::user()->getAdmin()) {
                     <li id="agmpurchasesub_list">
                         <a class="left-menu-link" href="{{URL::action('AgmController@purchaser')}}">
                             Purchaser Submission
+                        </a>
+                    </li>
+                    @endif
+                    @if ($access_permission43 == 1)
+                    <li id="agmtenantsub_list">
+                        <a class="left-menu-link" href="{{URL::action('AgmController@tenant')}}">
+                            Tenant Submission
                         </a>
                     </li>
                     @endif

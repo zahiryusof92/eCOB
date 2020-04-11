@@ -607,7 +607,7 @@ class FinanceController extends BaseController {
                     "<a style='text-decoration:underline;' href='" . URL::action('FinanceController@editFinanceFileList', $filelists->id) . "'>" . $filelists->file->file_no . " " . $filelists->year . "-" . strtoupper($filelists->monthName()) . "</a>",
                     $filelists->file->strata->strataName(),
                     $filelists->company->short_name,
-                    strtoupper($filelists->monthName()),
+                    $filelists->monthName(),
                     $filelists->year,
                     $status,
                     $button

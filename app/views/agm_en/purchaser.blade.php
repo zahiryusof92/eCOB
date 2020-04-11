@@ -46,8 +46,9 @@ foreach ($user_permission as $permission) {
                                     <th style="width:10%;">Share Unit</th>
                                     <th style="width:20%;">Buyer</th>
                                     <th style="width:15%;">NRIC</th>
-                                    <th style="width:15%;">Phone No</th>
-                                    <th style="width:20%;">Email</th>
+                                    <th style="width:10%;">Phone No</th>
+                                    <th style="width:15%;">Email</th>
+                                    <th style="width:10%;">Race</th>
                                     <th style="width:10%;">Action</th>
                                 </tr>
                             </thead>
