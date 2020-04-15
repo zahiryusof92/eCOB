@@ -61,9 +61,8 @@ class ReportController extends BaseController {
 
     public function submitOwnerTenant() {
         $data = Input::all();
-        
-//        return $data['file_no'];
 
+//        return $data['file_no'];
 //        if (Request::ajax()) {
         $file_id = $data['file_no'];
         $type = $data['type'];
@@ -108,7 +107,7 @@ class ReportController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => trans('report_lhps.title_strata'),
+                'title' => 'Strata Profile',
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'strata_profile_list',
@@ -122,7 +121,7 @@ class ReportController extends BaseController {
             return View::make('report_en.strata_profile', $viewData);
         } else {
             $viewData = array(
-                'title' => trans('report_lhps.title_strata'),
+                'title' => 'Strata Profile',
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'strata_profile_list',

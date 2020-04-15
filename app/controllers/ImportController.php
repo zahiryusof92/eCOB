@@ -58,10 +58,10 @@ class ImportController extends BaseController {
                             if (isset($row['1']) && !empty($row['1'])) {
                                 $file_no = trim($row['1']);
                             }
-                            // 2. Year
+                            // 3. Year
                             $year = '';
-                            if (isset($row['2']) && !empty($row['2'])) {
-                                $year = trim($row['2']);
+                            if (isset($row['3']) && !empty($row['3'])) {
+                                $year = trim($row['3']);
                             }
                             // 124. Status
                             $is_active = 0;

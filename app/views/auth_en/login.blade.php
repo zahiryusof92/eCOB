@@ -1,14 +1,9 @@
-@extends('layout.malay_layout.loginlayout')
+@extends('layout.english_layout.loginlayout')
 
 @section('content')
 
 <?php
-
-if (isset($cob) && !empty($cob)) {
-    $company = Company::where('short_name', $cob)->first();
-} else {
-    $company = Company::orderBy('id')->first();
-}
+$company = Company::orderBy('id')->first();
 ?>
 
 <div class="page-content-inner" style="background-image: url({{asset('assets/common/img/temp/login/4.jpg')}})">
@@ -58,7 +53,7 @@ if (isset($cob) && !empty($cob)) {
                 @endif
 
                 <div class="form-group">
-                    <input id="email" class="form-control" placeholder="Nama Pengguna" name="username" type="text" value="{{ Input::old('username') }}"/>
+                    <input id="email" class="form-control" placeholder="Username" name="username" type="text" value="{{ Input::old('username') }}"/>
                     @if($errors->has('username'))
                     <span style="color:red;font-style:italic;font-size:13px;">{{$errors->first('username')}}</span>
                     <br />
@@ -66,7 +61,7 @@ if (isset($cob) && !empty($cob)) {
                 </div>
 
                 <div class="form-group">                        
-                    <input id="password" class="form-control password" placeholder="Kata Laluan" name="password" type="password"/>
+                    <input id="password" class="form-control password" placeholder="Password" name="password" type="password"/>
                     @if($errors->has('password'))
                     <span style="color:red;font-style:italic;font-size:13px;">{{$errors->first('password')}}</span>
                     <br />
@@ -76,15 +71,14 @@ if (isset($cob) && !empty($cob)) {
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" value="remember" name="remember" id="remember" checked="">
-                            Ingatkan saya
+                            Remember Me
                         </label>
                     </div>
                 </div>
                 <div class="form-actions text-center">
-                    <input type="hidden" name="cob" value="{{ $cob }}"/>
-                    <button type="submit" class="btn btn-primary width-150">Log Masuk</button>
+                    <button type="submit" class="btn btn-primary width-150">Login</button>
                 </div>
-                
+
                 {{Form::close()}}
             </div>
         </div>
@@ -129,6 +123,7 @@ if (isset($cob) && !empty($cob)) {
                 top: top
             });
         }
+        ;
 
         setImage();
         changeImgPositon();

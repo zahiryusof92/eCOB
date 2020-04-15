@@ -110,26 +110,70 @@ class UserController extends BaseController {
     }
 
     //member login start
-    public function login() {
+    public function login($cob = '') {
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => "Login",
-                'panel_nav_active' => '',
-                'main_nav_active' => '',
-                'sub_nav_active' => '',
-            );
+        if (!empty($cob)) {
+            $company = Company::where('short_name', $cob)->where('is_deleted', 0)->first();
 
-            return View::make('user_en.login', $viewData);
+            if ($company) {
+                if (Session::get('lang') == "en") {
+                    $viewData = array(
+                        'title' => "Login",
+                        'panel_nav_active' => '',
+                        'main_nav_active' => '',
+                        'sub_nav_active' => '',
+                        'cob' => $cob
+                    );
+
+                    return View::make('user_en.login', $viewData);
+                } else {
+                    $viewData = array(
+                        'title' => "Log Masuk",
+                        'panel_nav_active' => '',
+                        'main_nav_active' => '',
+                        'sub_nav_active' => '',
+                        'cob' => $cob
+                    );
+
+                    return View::make('user_my.login', $viewData);
+                }
+            } else {
+                if (Session::get('lang') == "en") {
+                    $viewData = array(
+                        'title' => "Page not found!"
+                    );
+
+                    return View::make('404_en', $viewData);
+                } else {
+                    $viewData = array(
+                        'title' => "Halaman tidak dijumpai!"
+                    );
+
+                    return View::make('404_my', $viewData);
+                }
+            }
         } else {
-            $viewData = array(
-                'title' => "Log Masuk",
-                'panel_nav_active' => '',
-                'main_nav_active' => '',
-                'sub_nav_active' => '',
-            );
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => "Login",
+                    'panel_nav_active' => '',
+                    'main_nav_active' => '',
+                    'sub_nav_active' => '',
+                    'cob' => $cob
+                );
 
-            return View::make('user_my.login', $viewData);
+                return View::make('user_en.login', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => "Log Masuk",
+                    'panel_nav_active' => '',
+                    'main_nav_active' => '',
+                    'sub_nav_active' => '',
+                    'cob' => $cob
+                );
+
+                return View::make('user_my.login', $viewData);
+            }
         }
     }
 
@@ -142,50 +186,107 @@ class UserController extends BaseController {
                     'password' => 'required'
         ));
 
-        if ($validator->fails()) {
-            return Redirect::to('/login')->withErrors($validator)->withInput();
-        } else {
+        $cob = Input::get('cob');
+        if (isset($cob) && !empty($cob)) {
+            $cob_company = Company::where('short_name', $cob)->where('is_main', 0)->first();
 
-            $remember = (Input::has('remember')) ? true : false;
-            $password = Input::get('password');
+            if ($cob_company) {
+                if ($validator->fails()) {
+                    return Redirect::to('/' . $cob)->withErrors($validator)->withInput();
+                } else {
+                    $remember = (Input::has('remember')) ? true : false;
+                    $username = Input::get('username');
+                    $password = Input::get('password');
 
-            $auth = Auth::attempt(array(
-                        'username' => Input::get('username'),
-                        'password' => $password,
-                        'status' => 1,
-                        'is_active' => 1,
-                        'is_deleted' => 0,
-                            ), $remember);
+                    $auth = Auth::attempt(array(
+                                'username' => $username,
+                                'password' => $password,
+                                'company_id' => $cob_company->id,
+                                'status' => 1,
+                                'is_active' => 1,
+                                'is_deleted' => 0,
+                                    ), $remember);
 
-            if ($auth) {
+                    if ($auth) {
+                        $user_account = User::where('id', Auth::user()->id)->first();
+                        Session::put('id', $user_account['id']);
+                        Session::put('username', $user_account['username']);
+                        Session::put('full_name', $user_account['full_name']);
+                        Session::put('role', $user_account['role']);
 
-                $user_account = User::where('id', Auth::user()->id)->first();
-                Session::put('id', $user_account['id']);
-                Session::put('username', $user_account['username']);
-                Session::put('full_name', $user_account['full_name']);
-                Session::put('role', $user_account['role']);
+                        # Audit Trail
+                        $remarks = 'User ' . Auth::user()->username . ' is signed.';
+                        $auditTrail = new AuditTrail();
+                        $auditTrail->module = "System Administration";
+                        $auditTrail->remarks = $remarks;
+                        $auditTrail->audit_by = Auth::user()->id;
+                        $auditTrail->save();
 
-                # Audit Trail
-                $remarks = 'User ' . Auth::user()->username . ' is signed.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "System Administration";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
-
-                return Redirect::to('/home');
+                        return Redirect::to('/home');
+                    } else {
+                        if (Session::get('lang') == "en") {
+                            return Redirect::to('/' . $cob)->with('login_error', 'Wrong Username/Password');
+                        } else {
+                            return Redirect::to('/' . $cob)->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                        }
+                    }
+                }
             } else {
                 if (Session::get('lang') == "en") {
-                    return Redirect::to('/login')->with('login_error', 'Wrong Username/Password');
+                    return Redirect::to('/' . $cob)->with('login_error', 'Wrong Username/Password');
                 } else {
-                    return Redirect::to('/login')->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                    return Redirect::to('/' . $cob)->with('login_error', 'Nama Pengguna/Kata Laluan salah');
                 }
             }
-        }
-        if (Session::get('lang') == "en") {
-            return Redirect::to('/login')->with('login_error', 'There was problem logging in');
         } else {
-            return Redirect::to('/login')->with('login_error', 'Masalah Log Masuk');
+            if ($validator->fails()) {
+                return Redirect::to('/login')->withErrors($validator)->withInput();
+            } else {
+                $remember = (Input::has('remember')) ? true : false;
+                $username = Input::get('username');
+                $password = Input::get('password');
+
+                $auth = Auth::attempt(array(
+                            'username' => $username,
+                            'password' => $password,
+                            'status' => 1,
+                            'is_active' => 1,
+                            'is_deleted' => 0,
+                                ), $remember);
+
+                if ($auth) {
+
+                    if (Auth::user()->getAdmin()) {
+                        $user_account = User::where('id', Auth::user()->id)->first();
+                        Session::put('id', $user_account['id']);
+                        Session::put('username', $user_account['username']);
+                        Session::put('full_name', $user_account['full_name']);
+                        Session::put('role', $user_account['role']);
+
+                        # Audit Trail
+                        $remarks = 'User ' . Auth::user()->username . ' is signed.';
+                        $auditTrail = new AuditTrail();
+                        $auditTrail->module = "System Administration";
+                        $auditTrail->remarks = $remarks;
+                        $auditTrail->audit_by = Auth::user()->id;
+                        $auditTrail->save();
+
+                        return Redirect::to('/home');
+                    } else {
+                        if (Session::get('lang') == "en") {
+                            return Redirect::to('/login')->with('login_error', 'Wrong Username/Password');
+                        } else {
+                            return Redirect::to('/login')->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                        }
+                    }
+                } else {
+                    if (Session::get('lang') == "en") {
+                        return Redirect::to('/login')->with('login_error', 'Wrong Username/Password');
+                    } else {
+                        return Redirect::to('/login')->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                    }
+                }
+            }
         }
     }
 
@@ -317,11 +418,16 @@ class UserController extends BaseController {
     }
 
     //member logout start 
-    public function logout() {
+    public function logout($cob = '') {
         Session::forget('id');
         Session::forget('username');
         Session::forget('role');
         Auth::logout();
+
+        if (!empty($cob)) {
+            return Redirect::to('/' . $cob);
+        }
+
         return Redirect::to('/login');
     }
 

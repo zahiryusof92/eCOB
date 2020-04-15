@@ -1,4 +1,4 @@
-@extends('layout.english_layout.default')
+@extends('layout.malay_layout.default')
 
 @section('content')
 

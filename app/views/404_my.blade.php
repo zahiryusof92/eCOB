@@ -1,4 +1,4 @@
-@extends('layout.malay_layout.default')
+@extends('layout.malay_layout.loginlayout')
 
 @section('content')
 

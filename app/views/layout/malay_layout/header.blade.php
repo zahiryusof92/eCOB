@@ -1,6 +1,12 @@
 <!-- BEGIN TOP NAVIGATION -->
 <?php
 $company = Company::find(Auth::user()->company_id);
+
+if ($company->is_main != 1) {
+    $cob_logout = strtolower($company->short_name);
+} else {
+    $cob_logout = '';
+}
 ?>
 
 <nav class="top-menu">
@@ -35,7 +41,11 @@ $company = Company::find(Auth::user()->company_id);
                         <a class="dropdown-item" href="{{URL::action('UserController@editProfile')}}"><i class="dropdown-icon icmn-profile"></i> Profil Penyelaras</a>
                         <a class="dropdown-item" href="{{URL::action('UserController@changePassword')}}"><i class="dropdown-icon fa fa-key"></i> Tukar Kata Laluan</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{URL::action('UserController@logout')}}"><i class="dropdown-icon icmn-exit"></i> Daftar Keluar</a>
+                        @if (!empty($cob_logout))
+                        <a class="dropdown-item" href="{{ url('/' . $cob_logout . '/logout') }}"><i class="dropdown-icon icmn-exit"></i> Logout</a>
+                        @else
+                        <a class="dropdown-item" href="{{ url('/logout') }}"><i class="dropdown-icon icmn-exit"></i> Logout</a>
+                        @endif
                     </ul>
                 </div>
             </div>

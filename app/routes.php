@@ -24,6 +24,7 @@ Route::post('/getCompanyName', 'HomeController@getCompanyName');
 Route::get('/', 'UserController@login')->before('guest');
 Route::get('/login', 'UserController@login')->before('guest');
 Route::post('/loginAction', 'UserController@loginAction')->before('guest');
+Route::get('/logout', 'UserController@logout')->before('authMember');
 
 //register
 Route::get('/register', 'UserController@register')->before('guest');
@@ -37,9 +38,6 @@ Route::post('/submitChangePassword', 'UserController@submitChangePassword')->bef
 //edit profile
 Route::get('/editProfile', 'UserController@editProfile')->before('authMember');
 Route::post('/submitEditProfile', 'UserController@submitEditProfile')->before('authMember');
-
-//logout
-Route::get('/logout', 'UserController@logout')->before('authMember');
 
 //home
 Route::get('/home', 'AdminController@home')->before('authMember');
@@ -620,6 +618,11 @@ Route::post('/inactiveAgmPurchaseSub', 'AgmController@inactiveAgmPurchaseSub')->
 Route::get('/updateAgmPurchaseSub/{id}', 'AgmController@updateAgmPurchaseSub')->before('authMember');
 Route::post('/submitUpdateAgmPurchaseSub', 'AgmController@submitUpdateAgmPurchaseSub')->before('authMember');
 Route::post('/deleteAgmPurchaseSub/{id}', 'AgmController@deleteAgmPurchaseSub')->before('authMember');
+
+
+Route::get('/{cob}', 'UserController@login')->before('guest');
+Route::get('/{cob}/login', 'UserController@login')->before('guest');
+Route::get('/{cob}/logout', 'UserController@logout')->before('authMember');
 
 //invalid route
 Route::get('/{name?}', 'AdminController@showView')->before('authMember');

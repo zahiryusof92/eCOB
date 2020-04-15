@@ -3,7 +3,12 @@
 @section('content')
 
 <?php
-$company = Company::orderBy('id')->first();
+
+if (isset($cob) && !empty($cob)) {
+    $company = Company::where('short_name', $cob)->first();
+} else {
+    $company = Company::orderBy('id')->first();
+}
 ?>
 
 <div class="page-content-inner" style="background-image: url({{asset('assets/common/img/temp/login/4.jpg')}})">
@@ -76,6 +81,7 @@ $company = Company::orderBy('id')->first();
                     </div>
                 </div>
                 <div class="form-actions text-center">
+                    <input type="hidden" name="cob" value="{{ $cob }}"/>
                     <button type="submit" class="btn btn-primary width-150">Login</button>
                 </div>
                 
@@ -123,7 +129,6 @@ $company = Company::orderBy('id')->first();
                 top: top
             });
         }
-        ;
 
         setImage();
         changeImgPositon();
