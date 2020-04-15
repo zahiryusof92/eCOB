@@ -3,7 +3,7 @@
 @section('content')
 
 <?php
-$company = Company::first();
+$company = Company::find(Auth::user()->company_id);
 ?>
 
 <table width="100%">

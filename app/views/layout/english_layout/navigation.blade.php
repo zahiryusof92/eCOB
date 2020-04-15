@@ -187,7 +187,7 @@ if ($user_permission) {
         if ($permission->submodule_id == 41) {
             $access_permission41 = $permission->access_permission;
         }
-        
+
         if ($permission->submodule_id == 42) {
             $access_permission42 = $permission->access_permission;
         }
@@ -344,13 +344,6 @@ if (!Auth::user()->getAdmin()) {
                         </a>
                     </li>
                     @endif
-                    @if ($access_permission42 == 1)
-                    <li id="form_list">
-                        <a class="left-menu-link" href="{{URL::action('AdminController@form')}}">
-                            Form
-                        </a>
-                    </li>
-                    @endif
                 </ul>
             </li>
             @endif
@@ -469,6 +462,13 @@ if (!Auth::user()->getAdmin()) {
                         </a>
                     </li>
                     @endif
+                    @if ($access_permission23 == 1)
+                    <li id="documenttype_list">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@documenttype')}}">
+                            Document Type
+                        </a>
+                    </li>
+                    @endif
                     @if ($access_permission42 == 1)
                     <li id="race_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@race')}}">
@@ -523,9 +523,14 @@ if (!Auth::user()->getAdmin()) {
                     </li>  
                     @endif
                     @if ($access_permission29 == 1)
-                    <li id="lphs_report_strata_form">
-                        <a class="left-menu-link" href="#">
-                            Laporan Strata Profile
+                    <li id="strata_profile_list">
+                        <a class="left-menu-link" href="{{ URL::action('ReportController@strataProfile') }}">
+                            Strata Profile
+                        </a>
+                    </li>
+                    <li id="owner_tenant_list">
+                        <a class="left-menu-link" href="{{ URL::action('ReportController@ownerTenant') }}">
+                            Owner / Tenant
                         </a>
                     </li>
                     @endif

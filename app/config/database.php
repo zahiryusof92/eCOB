@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'ecob',
+			'database'  => 'ecob_lphs',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',

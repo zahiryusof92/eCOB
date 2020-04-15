@@ -116,7 +116,7 @@ class AdminController extends BaseController {
                 'image' => ""
             );
 
-            return View::make('page_en.home', $viewData);
+            return View::make('home_en.index', $viewData);
         } else {
             $viewData = array(
                 'title' => 'Sistem eCOB',
@@ -139,16 +139,21 @@ class AdminController extends BaseController {
                 'image' => ""
             );
 
-            return View::make('page_my.home', $viewData);
+            return View::make('home_my.index', $viewData);
         }
     }
 
     public function getAGMRemainder() {
         $oneyear = strtotime("-1 Year");
+
         if (!Auth::user()->getAdmin()) {
-            $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
-            $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            if (empty(Session::get('admin_cob'))) {
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            } else {
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            }
         }
 
         if (count($file) > 0) {
@@ -164,6 +169,7 @@ class AdminController extends BaseController {
                             $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">Papar</button>&nbsp;';
                         }
                         $data_raw = array(
+                            $files->company->short_name,
                             $files->file_no,
                             date('d-M-Y', strtotime($agm_remainder->agm_date)),
                             $button
@@ -191,9 +197,13 @@ class AdminController extends BaseController {
 
     public function getNeverAGM() {
         if (!Auth::user()->getAdmin()) {
-            $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
-            $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            if (empty(Session::get('admin_cob'))) {
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            } else {
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            }
         }
 
         if (count($file) > 0) {
@@ -210,6 +220,7 @@ class AdminController extends BaseController {
                 if (count($never_agm) > 0) {
                     if ($never_agm->agm_date == "0000-00-00") {
                         $data_raw = array(
+                            $files->company->short_name,
                             $files->file_no,
                             $button
                         );
@@ -218,6 +229,7 @@ class AdminController extends BaseController {
                     }
                 } else {
                     $data_raw = array(
+                        $files->company->short_name,
                         $files->file_no,
                         $button
                     );
@@ -243,10 +255,15 @@ class AdminController extends BaseController {
 
     public function getAGM12Months() {
         $twelveMonths = strtotime("-12 Months");
+
         if (!Auth::user()->getAdmin()) {
-            $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
-            $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            if (empty(Session::get('admin_cob'))) {
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            } else {
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            }
         }
 
         if (count($file) > 0) {
@@ -262,6 +279,7 @@ class AdminController extends BaseController {
                             $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">Papar</button>&nbsp;';
                         }
                         $data_raw = array(
+                            $files->company->short_name,
                             $files->file_no,
                             date('d-M-Y', strtotime($agm_more12months->agm_date)),
                             $button
@@ -289,10 +307,15 @@ class AdminController extends BaseController {
 
     public function getAGM15Months() {
         $fifthteenMonths = strtotime("-15 Months");
+
         if (!Auth::user()->getAdmin()) {
-            $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
-            $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            if (empty(Session::get('admin_cob'))) {
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            } else {
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+            }
         }
 
         if (count($file) > 0) {
@@ -308,6 +331,7 @@ class AdminController extends BaseController {
                             $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">Papar</button>&nbsp;';
                         }
                         $data_raw = array(
+                            $files->company->short_name,
                             $files->file_no,
                             date('d-M-Y', strtotime($agm_more15months->agm_date)),
                             $button
@@ -917,7 +941,7 @@ class AdminController extends BaseController {
                         $is_active = "No";
                     }
 
-                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
+//                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
                     $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Delete <i class="fa fa-trash"></i></button>';
                 } else {
                     if ($files->status == 1) {
@@ -1630,6 +1654,8 @@ class AdminController extends BaseController {
             $state = $data['strata_state'];
             $country = $data['strata_country'];
             $block_no = $data['strata_block_no'];
+            $floor = $data['strata_floor'];
+            $year = $data['strata_year'];
             $ownership_no = $data['strata_ownership_no'];
             $town = $data['strata_town'];
             $land_area = $data['strata_land_area'];
@@ -1658,22 +1684,24 @@ class AdminController extends BaseController {
                 $strata->address2 = $address2;
                 $strata->address3 = $address3;
                 $strata->address4 = $address4;
-                $strata->city = $city;
                 $strata->poscode = $poscode;
+                $strata->city = $city;
                 $strata->state = $state;
                 $strata->country = $country;
                 $strata->block_no = $block_no;
-                $strata->ownership_no = $ownership_no;
+                $strata->total_floor = $floor;
+                $strata->year = $year;
                 $strata->town = $town;
+                $strata->area = $area;
                 $strata->land_area = $land_area;
+                $strata->total_share_unit = $total_share_unit;
                 $strata->land_area_unit = $land_area_unit;
                 $strata->lot_no = $lot_no;
+                $strata->ownership_no = $ownership_no;                
                 $strata->date = $date;
                 $strata->land_title = $land_title;
                 $strata->category = $category;
                 $strata->perimeter = $perimeter;
-                $strata->area = $area;
-                $strata->total_share_unit = $total_share_unit;
                 $strata->ccc_no = $ccc_no;
                 $strata->ccc_date = $ccc_date;
                 $strata->file_url = $stratafile;
@@ -2915,7 +2943,7 @@ class AdminController extends BaseController {
             }
         }
     }
-    
+
     public function deleteAGMFile() {
         $data = Input::all();
         if (Request::ajax()) {
@@ -2941,7 +2969,7 @@ class AdminController extends BaseController {
             }
         }
     }
-    
+
     public function deleteEGMFile() {
         $data = Input::all();
         if (Request::ajax()) {
@@ -2967,7 +2995,7 @@ class AdminController extends BaseController {
             }
         }
     }
-    
+
     public function deleteMinutesMeetingFile() {
         $data = Input::all();
         if (Request::ajax()) {
@@ -2993,7 +3021,7 @@ class AdminController extends BaseController {
             }
         }
     }
-    
+
     public function deleteJMCFile() {
         $data = Input::all();
         if (Request::ajax()) {
@@ -3019,7 +3047,7 @@ class AdminController extends BaseController {
             }
         }
     }
-    
+
     public function deleteICFile() {
         $data = Input::all();
         if (Request::ajax()) {
@@ -3045,7 +3073,7 @@ class AdminController extends BaseController {
             }
         }
     }
-    
+
     public function deleteAttendanceFile() {
         $data = Input::all();
         if (Request::ajax()) {
@@ -3071,7 +3099,7 @@ class AdminController extends BaseController {
             }
         }
     }
-    
+
     public function deleteAuditedFinancialFile() {
         $data = Input::all();
         if (Request::ajax()) {

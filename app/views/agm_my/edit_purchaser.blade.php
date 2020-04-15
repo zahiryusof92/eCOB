@@ -103,6 +103,20 @@ foreach ($user_permission as $permission) {
                             </div>                            
                         </div>
                         <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><span style="color: red;">*</span> Race</label>
+                                    <select id="race" class="form-control select2">
+                                        <option value="">Please select</option>
+                                        @foreach ($race as $races) 
+                                        <option value="{{ $races->id }}" {{($buyer->race_id == $races->id ? " selected" : "")}}>{{ $races->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div id="race_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Remarks</label>
@@ -132,6 +146,10 @@ foreach ($user_permission as $permission) {
         $("#loading").css("display", "inline-block");
         $("#submit_button").attr("disabled", "disabled");
         $("#cancel_button").attr("disabled", "disabled");
+        $("#file_id_error").css("display", "none");
+        $("#unit_no_error").css("display", "none");
+        $("#owner_name_error").css("display", "none");
+        $("#race_error").css("display", "none");
 
         var file_id = $("#file_id").val(),
                 unit_no = $("#unit_no").val(),
@@ -141,10 +159,16 @@ foreach ($user_permission as $permission) {
                 address = $("#address").val(),
                 phone_no = $("#phone_no").val(),
                 email = $("#email").val(),
+                race = $("#race").val(),
                 remarks = $("#remarks").val();
 
         var error = 0;
 
+        if (file_id.trim() == "") {
+            $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File</span>');
+            $("#file_id_error").css("display", "block");
+            error = 1;
+        }
         if (unit_no.trim() == "") {
             $("#unit_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Unit Number</span>');
             $("#unit_no_error").css("display", "block");
@@ -155,11 +179,11 @@ foreach ($user_permission as $permission) {
             $("#owner_name_error").css("display", "block");
             error = 1;
         }
-//        if (ic_company_no.trim() == "") {
-//            $("#ic_company_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter IC / Company Number</span>');
-//            $("#ic_company_no_error").css("display", "block");
-//            error = 1;
-//        }
+        if (race.trim() == "") {
+            $("#race_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Race</span>');
+            $("#race_error").css("display", "block");
+            error = 1;
+        }
 
         if (error == 0) {
             $.ajax({
@@ -174,6 +198,7 @@ foreach ($user_permission as $permission) {
                     phone_no: phone_no,
                     email: email,
                     remarks: remarks,
+                    race: race,
                     file_id: file_id,
                     id: '{{$buyer->id}}'
                 },
@@ -182,15 +207,9 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>'
-                        }, {
-                            type: 'success',
-                            placement: {
-                                align: "center"
-                            }
+                        bootbox.alert("<span style='color:green;'>Purchaser added successfully!</span>", function () {
+                            window.location = '{{URL::action("AgmController@purchaser") }}';
                         });
-                        location = '{{URL::action("AgmController@purchaser") }}';
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }

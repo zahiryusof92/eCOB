@@ -78,7 +78,7 @@ $company = Company::orderBy('id')->first();
                 <div class="form-actions text-center">
                     <button type="submit" class="btn btn-primary width-150">Login</button>
                 </div>
-                <a href="{{URL::action('UserController@register')}}">Register as JMB</a>
+                
                 {{Form::close()}}
             </div>
         </div>
@@ -130,7 +130,7 @@ $company = Company::orderBy('id')->first();
 
         $(window).on('resize', function () {
             changeImgPositon();
-        });       
+        });
     });
 </script>
 <!-- End Page Scripts -->

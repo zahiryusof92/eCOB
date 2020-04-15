@@ -184,8 +184,8 @@ foreach ($user_permission as $permission) {
                                                         <label><span style="color: red;">*</span> Status</label>
                                                         <select id="is_active" class="form-control">
                                                             <option value="">Please Select</option>
-                                                            <option value="1" {{($house_scheme->is_active==1 ? " selected" : "")}}>Active</option>
-                                                            <option value="0" {{($house_scheme->is_active==0 ? " selected" : "")}}>Inactive</option>
+                                                            <option value="1" {{($house_scheme->is_active == '1' ? " selected" : "")}}>Active</option>
+                                                            <option value="0" {{($house_scheme->is_active == '0' ? " selected" : "")}}>Inactive</option>
                                                         </select>
                                                         <div id="is_active_error" style="display:none;"></div>
                                                     </div>

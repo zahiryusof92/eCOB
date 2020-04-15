@@ -109,7 +109,7 @@ foreach ($user_permission as $permission) {
                                     <select id="race" class="form-control select2">
                                         <option value="">Please select</option>
                                         @foreach ($race as $races) 
-                                        <option value="{{ $races->id }}" {{($buyer->race == $races->id ? " selected" : "")}}>{{ $races->name }}</option>
+                                        <option value="{{ $races->id }}" {{($buyer->race_id == $races->id ? " selected" : "")}}>{{ $races->name }}</option>
                                         @endforeach
                                     </select>
                                     <div id="race_error" style="display:none;"></div>

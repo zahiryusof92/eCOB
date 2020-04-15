@@ -78,7 +78,7 @@ $company = Company::first();
                 <div class="form-actions text-center">
                     <button type="submit" class="btn btn-primary width-150">Log Masuk</button>
                 </div>
-                <a href="{{URL::action('UserController@register')}}">Daftar sebagai JMB</a>
+                
                 {{Form::close()}}
             </div>
         </div>
@@ -130,7 +130,7 @@ $company = Company::first();
 
         $(window).on('resize', function () {
             changeImgPositon();
-        });       
+        });
     });
 </script>
 <!-- End Page Scripts -->

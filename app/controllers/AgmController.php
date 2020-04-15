@@ -11,6 +11,120 @@ class AgmController extends BaseController {
         App::setLocale($locale);
     }
 
+    public function getDesignationRemainder() {
+        $currentMonth = strtotime(date('Y-m-d'));
+
+        $ajk_detail = AJKDetails::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+
+        if (count($ajk_detail) > 0) {
+            $data = array();
+
+            foreach ($ajk_detail as $ajk_details) {
+                if (!empty($ajk_details->year) && !empty($ajk_details->month)) {
+                    $raw_month = $ajk_details->year . '-' . $ajk_details->month . '-' . '01';
+
+                    $designation_time = strtotime($raw_month);
+                    $designation_final = strtotime('+1 month', $designation_time);
+
+                    if ($designation_final <= $currentMonth) {
+                        if (!Auth::user()->getAdmin()) {
+                            if ($ajk_details->files->company->id == Auth::user()->company_id) {
+                                $designation = Designation::find($ajk_details->designation);
+
+                                $button = "";
+                                $button .= '<button type="button" class="btn btn-xs btn-success edit_ajk" title="Edit"  onclick="window.location=\'' . URL::action('AgmController@editAJK', $ajk_details->id) . '\'">';
+                                $button .= '<i class="fa fa-pencil"></i>';
+                                $button .= '</button>&nbsp;';
+                                $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAJKDetails(\'' . $ajk_details->id . '\')">';
+                                $button .= '<i class="fa fa-trash"></i>';
+                                $button .= '</button>&nbsp';
+
+                                $data_raw = array(
+                                    $ajk_details->files->company->short_name,
+                                    $ajk_details->files->file_no,
+                                    $designation->description,
+                                    $ajk_details->name,
+                                    $ajk_details->phone_no,
+                                    $ajk_details->monthName(),
+                                    $ajk_details->year,
+//                                    $button
+                                );
+
+                                array_push($data, $data_raw);
+                            }
+                        } else {
+                            if (empty(Session::get('admin_cob'))) {
+
+                                $designation = Designation::find($ajk_details->designation);
+
+                                $button = "";
+                                $button .= '<button type="button" class="btn btn-xs btn-success edit_ajk" title="Edit"  onclick="window.location=\'' . URL::action('AgmController@editAJK', $ajk_details->id) . '\'">';
+                                $button .= '<i class="fa fa-pencil"></i>';
+                                $button .= '</button>&nbsp;';
+                                $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAJKDetails(\'' . $ajk_details->id . '\')">';
+                                $button .= '<i class="fa fa-trash"></i>';
+                                $button .= '</button>&nbsp';
+
+                                $data_raw = array(
+                                    $ajk_details->files->company->short_name,
+                                    $ajk_details->files->file_no,
+                                    $designation->description,
+                                    $ajk_details->name,
+                                    $ajk_details->phone_no,
+                                    $ajk_details->monthName(),
+                                    $ajk_details->year,
+//                                    $button
+                                );
+
+                                array_push($data, $data_raw);
+                            } else {
+                                if ($ajk_details->files->company->id == Session::get('admin_cob')) {
+                                    $designation = Designation::find($ajk_details->designation);
+
+                                    $button = "";
+                                    $button .= '<button type="button" class="btn btn-xs btn-success edit_ajk" title="Edit"  onclick="window.location=\'' . URL::action('AgmController@editAJK', $ajk_details->id) . '\'">';
+                                    $button .= '<i class="fa fa-pencil"></i>';
+                                    $button .= '</button>&nbsp;';
+                                    $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAJKDetails(\'' . $ajk_details->id . '\')">';
+                                    $button .= '<i class="fa fa-trash"></i>';
+                                    $button .= '</button>&nbsp';
+
+                                    $data_raw = array(
+                                        $ajk_details->files->company->short_name,
+                                        $ajk_details->files->file_no,
+                                        $designation->description,
+                                        $ajk_details->name,
+                                        $ajk_details->phone_no,
+                                        $ajk_details->monthName(),
+                                        $ajk_details->year,
+//                                        $button
+                                    );
+
+                                    array_push($data, $data_raw);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
     public function AJK() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);

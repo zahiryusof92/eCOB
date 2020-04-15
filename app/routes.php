@@ -50,6 +50,8 @@ Route::get('/getAGM15Months', 'AdminController@getAGM15Months')->before('authMem
 Route::get('/getMemoHome', 'AdminController@getMemoHome')->before('authMember');
 Route::post('/getMemoDetails', 'AdminController@getMemoDetails')->before('authMember');
 
+Route::get('/getDesignationRemainder', 'AgmController@getDesignationRemainder')->before('authMember');
+
 // --- COB Maintenance --- //
 //file prefix
 Route::get('/filePrefix', 'AdminController@filePrefix')->before('authMember');
@@ -318,10 +320,6 @@ Route::post('/deleteDocument/{id}', 'AgmController@deleteDocument')->before('aut
 Route::post('/deleteDocumentFile', 'AgmController@deleteDocumentFile')->before('authMember');
 Route::post('/uploadDocumentFile', 'FileController@uploadDocumentFile')->before('authMember');
 
-// Report LHPS
-Route::get('/lhpsReportStrata', 'ReportController@reportStrataProfile')->before('authMember');
-Route::get('/submitLhpsReportStrata', 'ReportController@submitLhpsReportStrata')->before('authMember');
-
 ########################## Master Setup ##########################
 //area
 Route::get('/area', 'SettingController@area')->before('authMember');
@@ -527,6 +525,15 @@ Route::get('/reporting/managementSummary', 'AdminController@managementSummary')-
 
 //cob file / management
 Route::get('/reporting/cobFileManagement', 'AdminController@cobFileManagement')->before('authMember');
+
+
+// strata profile
+Route::get('/reporting/strataProfile', 'ReportController@strataProfile')->before('authMember');
+Route::post('/reporting/submitStrataProfile', 'ReportController@submitStrataProfile')->before('authMember');
+
+// owner tenant
+Route::get('/reporting/ownerTenant', 'ReportController@ownerTenant')->before('authMember');
+Route::post('/reporting/submitOwnerTenant', 'ReportController@submitOwnerTenant')->before('authMember');
 
 // -- COB -- //
 Route::get('cob/get/{id}', 'CobController@get');

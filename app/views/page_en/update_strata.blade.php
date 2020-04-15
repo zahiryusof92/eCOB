@@ -210,6 +210,22 @@ foreach ($user_permission as $permission) {
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
+                                                        <label>Floor</label>
+                                                        <input type="text" class="form-control" placeholder="Floor" id="strata_floor" value="{{$strata->total_floor}}">
+                                                        <div id="floor_error" style="display:none;"></div>
+                                                    </div>
+                                                </div>                                                
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Year</label>
+                                                        <input type="text" class="form-control" placeholder="Year" id="strata_year" value="{{$strata->year}}">
+                                                        <div id="year_error" style="display:none;"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
                                                         <label>Ownership Number</label>
                                                         <input type="text" class="form-control" placeholder="Ownership Number" id="strata_ownership_no" value="{{$strata->ownership_no}}">
                                                         <div id="strata_ownership_no_error" style="display:none;"></div>
@@ -935,6 +951,8 @@ foreach ($user_permission as $permission) {
                 strata_state = $("#strata_state").val(),
                 strata_country = $("#strata_country").val(),
                 strata_block_no = $("#strata_block_no").val(),
+                strata_floor = $("#strata_floor").val(),
+                strata_year = $("#strata_year").val(),
                 strata_ownership_no = $("#strata_ownership_no").val(),
                 strata_town = $("#strata_town").val(),
                 strata_land_area = $("#strata_land_area").val(),
@@ -1049,6 +1067,8 @@ foreach ($user_permission as $permission) {
                     strata_state: strata_state,
                     strata_country: strata_country,
                     strata_block_no: strata_block_no,
+                    strata_floor: strata_floor,
+                    strata_year: strata_year,
                     strata_ownership_no: strata_ownership_no,
                     strata_town: strata_town,
                     strata_land_area: strata_land_area,

@@ -80,7 +80,7 @@ foreach ($user_permission as $permission) {
                                 <button type="button" class="btn btn-primary" id="submit_button" onclick="addFilePrefix()">Submit</button>
                             <?php } ?>
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@filePrefix')}}'">Cancel</button>
-                             <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
+                            <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
                 </div>                

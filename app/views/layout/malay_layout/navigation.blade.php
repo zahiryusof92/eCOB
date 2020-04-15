@@ -460,6 +460,13 @@ if (!Auth::user()->getAdmin()) {
                         </a>
                     </li>
                     @endif
+                    @if ($access_permission42 == 1)
+                    <li id="race_list">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@race')}}">
+                            Race
+                        </a>
+                    </li>
+                    @endif
                 </ul>
             </li>
             @endif
@@ -507,8 +514,8 @@ if (!Auth::user()->getAdmin()) {
                     </li>  
                     @endif
                     @if ($access_permission29 == 1)
-                    <li id="lphs_report_strata_form">
-                        <a class="left-menu-link" href="#">
+                    <li id="strata_profile_list">
+                        <a class="left-menu-link" href="{{ URL::action('ReportController@strataProfile') }}">
                             Laporan Strata Profile
                         </a>
                     </li>
