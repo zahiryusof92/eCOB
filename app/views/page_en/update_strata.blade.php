@@ -287,12 +287,13 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Vacant Possession Date</label>
-                                                        <label class="input-group datepicker-only-init">
-                                                            <input type="text" class="form-control" placeholder="Vacant Possession Date" id="strata_date" value="{{$strata->date}}"/>
+                                                        <label class="input-group">
+                                                            <input type="text" class="form-control" placeholder="Vacant Possession Date" id="strata_date_raw" value="{{ ($strata->date != '0000-00-00' ? date('d-m-Y', strtotime($strata->date)) : '') }}"/>
                                                             <span class="input-group-addon">
                                                                 <i class="icmn-calendar"></i>
                                                             </span>
                                                         </label>
+                                                        <input type="hidden" id="strata_date" value="{{ $strata->date }}"
                                                         <div id="strata_date_error" style="display:block;"></div>
                                                     </div>
                                                 </div>
@@ -354,11 +355,12 @@ foreach ($user_permission as $permission) {
                                                     <div class="form-group">
                                                         <label>Date CCC</label>
                                                         <label class="input-group datepicker-only-init">
-                                                            <input type="text" class="form-control" placeholder="Date CCC" id="strata_ccc_date" value="{{ ($strata->ccc_date != '0000-00-00' ? $strata->ccc_date : '') }}"/>
+                                                            <input type="text" class="form-control" placeholder="Date CCC" id="strata_ccc_date" value="{{ ($strata->ccc_date != '0000-00-00' ? date('d-m-Y', strtotime($strata->ccc_date)) : '') }}"/>
                                                             <span class="input-group-addon">
                                                                 <i class="icmn-calendar"></i>
                                                             </span>
                                                         </label>
+                                                        <input type="hidden" id="strata_ccc_date" value="{{ $strata->ccc_date }}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -902,7 +904,7 @@ foreach ($user_permission as $permission) {
     }
 
     $(function () {
-        $('#strata_date, #strata_ccc_date').datetimepicker({
+        $("#strata_date_raw").datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -912,9 +914,27 @@ foreach ($user_permission as $permission) {
                 up: "fa fa-arrow-up",
                 down: "fa fa-arrow-down"
             },
-            format: 'YYYY-MM-DD'
+            format: 'DD-MM-YYYY'
+        }).on('dp.change', function () {
+            let currentDate = $(this).val().split('-');
+            $("#strata_date").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });
-        $("[data-toggle=tooltip]").tooltip();
+    
+        $("#strata_ccc_date_raw").datetimepicker({
+            widgetPositioning: {
+                horizontal: 'left'
+            },
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            format: 'DD-MM-YYYY'
+        }).on('dp.change', function () {
+            let currentDate = $(this).val().split('-');
+            $("#strata_ccc_date").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
+        });        
     });
     
     $(document).ready(function () {

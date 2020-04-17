@@ -3,9 +3,7 @@
 class AdminController extends BaseController {
 
     public function __construct() {
-        if (empty(Session::get('lang'))) {
-            Session::put('lang', 'en');
-        }
+        Session::put('lang', 'en');
 
         $locale = Session::get('lang');
         App::setLocale($locale);
@@ -923,48 +921,26 @@ class AdminController extends BaseController {
                 }
                 $button = "";
                 if (Session::get('lang') == "en") {
-                    if ($files->status == 1) {
-                        $status = "Approved";
-                        if ($files->is_active == 1) {
-                            $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Inactive</button>&nbsp;';
-                        } else {
-                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Active</button>&nbsp;';
-                        }
-                    } else if ($files->status == 2) {
-                        $status = "Rejected";
-                    } else {
-                        $status = "Pending";
-                    }
                     if ($files->is_active == 1) {
                         $is_active = "Yes";
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Inactive</button>&nbsp;';
                     } else {
                         $is_active = "No";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Active</button>&nbsp;';
                     }
 
 //                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
                     $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Delete <i class="fa fa-trash"></i></button>';
                 } else {
-                    if ($files->status == 1) {
-                        $status = "Diterima";
-                        if ($files->is_active == 1) {
-                            $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Tidak Aktif</button>&nbsp;';
-                        } else {
-                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Aktif</button>&nbsp;';
-                        }
-                        $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@house', $files->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
-                    } else if ($files->status == 2) {
-                        $status = "Ditolak";
-                    } else {
-                        $status = "Menunggu";
-                        $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@house', $files->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
-                    }
                     if ($files->is_active == 1) {
                         $is_active = "Ya";
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Tidak Aktif</button>&nbsp;';
                     } else {
                         $is_active = "Tidak";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Aktif</button>&nbsp;';
                     }
 
-                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
+//                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
                     $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Padam <i class="fa fa-trash"></i></button>';
                 }
 
@@ -974,7 +950,6 @@ class AdminController extends BaseController {
                     $files->company->short_name,
                     $files->year,
                     $is_active,
-                    $status,
                     $button
                 );
 
@@ -1059,48 +1034,26 @@ class AdminController extends BaseController {
                 }
                 $button = "";
                 if (Session::get('lang') == "en") {
-                    if ($files->status == 1) {
-                        $status = "Approved";
-                        if ($files->is_active == 1) {
-                            $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Inactive</button>&nbsp;';
-                        } else {
-                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Active</button>&nbsp;';
-                        }
-                    } else if ($files->status == 2) {
-                        $status = "Rejected";
-                    } else {
-                        $status = "Pending";
-                    }
                     if ($files->is_active == 1) {
                         $is_active = "Yes";
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Inactive</button>&nbsp;';
                     } else {
                         $is_active = "No";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Active</button>&nbsp;';
                     }
 
-                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
+//                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
                     $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Delete <i class="fa fa-trash"></i></button>';
                 } else {
-                    if ($files->status == 1) {
-                        $status = "Diterima";
-                        if ($files->is_active == 1) {
-                            $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Tidak Aktif</button>&nbsp;';
-                        } else {
-                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Aktif</button>&nbsp;';
-                        }
-                        $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@house', $files->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
-                    } else if ($files->status == 2) {
-                        $status = "Ditolak";
-                    } else {
-                        $status = "Menunggu";
-                        $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@house', $files->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
-                    }
                     if ($files->is_active == 1) {
                         $is_active = "Ya";
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Tidak Aktif</button>&nbsp;';
                     } else {
                         $is_active = "Tidak";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Aktif</button>&nbsp;';
                     }
 
-                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
+//                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
                     $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Padam <i class="fa fa-trash"></i></button>';
                 }
 
@@ -1110,7 +1063,6 @@ class AdminController extends BaseController {
                     $files->company->short_name,
                     $files->year,
                     $is_active,
-                    $status,
                     $button
                 );
 
@@ -1697,7 +1649,7 @@ class AdminController extends BaseController {
                 $strata->total_share_unit = $total_share_unit;
                 $strata->land_area_unit = $land_area_unit;
                 $strata->lot_no = $lot_no;
-                $strata->ownership_no = $ownership_no;                
+                $strata->ownership_no = $ownership_no;
                 $strata->date = $date;
                 $strata->land_title = $land_title;
                 $strata->category = $category;

@@ -44,7 +44,7 @@ class ImportController extends BaseController {
             $status = Input::get('status');
 
             if ($file) {
-                
+
                 $path = $file->getRealPath();
                 $data = Excel::load($path, function($reader) {
                             
@@ -1069,11 +1069,17 @@ class ImportController extends BaseController {
                                                     $mc_email = trim($row['89']);
                                                 }
 
+                                                // 125. Certificate No
+                                                $certificate_no = 0;
+                                                if (isset($row['125']) && !empty($row['125'])) {
+                                                    $certificate_no = trim($row['125']);
+                                                }
+
                                                 $new_mc = new ManagementMC();
                                                 $new_mc->file_id = $files->id;
                                                 $new_mc->management_id = $management->id;
                                                 $new_mc->date_formed = $mc_date_formed;
-                                                $new_mc->certificate_no = '';
+                                                $new_mc->certificate_no = $certificate_no;
                                                 $new_mc->first_agm = $mc_first_agm;
                                                 $new_mc->name = $mc_name;
                                                 $new_mc->address1 = $mc_address1;

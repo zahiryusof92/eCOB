@@ -3,9 +3,7 @@
 class UserController extends BaseController {
 
     public function __construct() {
-        if (empty(Session::get('lang'))) {
-            Session::put('lang', 'en');
-        }
+        Session::put('lang', 'en');
 
         if (empty(Session::get('admin_cob'))) {
             Session::put('admin_cob', '');

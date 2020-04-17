@@ -48,6 +48,8 @@ $access_permission38 = 0;
 $access_permission39 = 0;
 $access_permission40 = 0;
 $access_permission41 = 0;
+$access_permission42 = 0;
+$access_permission43 = 0;
 
 $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
@@ -184,6 +186,13 @@ if ($user_permission) {
         }
         if ($permission->submodule_id == 41) {
             $access_permission41 = $permission->access_permission;
+        }
+
+        if ($permission->submodule_id == 42) {
+            $access_permission42 = $permission->access_permission;
+        }
+        if ($permission->submodule_id == 43) {
+            $access_permission43 = $permission->access_permission;
         }
     }
 }
@@ -519,6 +528,11 @@ if (!Auth::user()->getAdmin()) {
                             Laporan Strata Profile
                         </a>
                     </li>
+                    <li id="owner_tenant_list">
+                        <a class="left-menu-link" href="{{ URL::action('ReportController@ownerTenant') }}">
+                            Owner / Tenant
+                        </a>
+                    </li>
                     @endif
                 </ul>
             </li>
@@ -542,6 +556,13 @@ if (!Auth::user()->getAdmin()) {
                     <li id="agmpurchasesub_list">
                         <a class="left-menu-link" href="{{URL::action('AgmController@purchaser')}}">
                             Purchaser Submission
+                        </a>
+                    </li>
+                    @endif
+                    @if ($access_permission43 == 1)
+                    <li id="agmtenantsub_list">
+                        <a class="left-menu-link" href="{{URL::action('AgmController@tenant')}}">
+                            Tenant Submission
                         </a>
                     </li>
                     @endif

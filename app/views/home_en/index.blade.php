@@ -24,7 +24,7 @@ foreach ($user_permission as $permission) {
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab">AGM Remainder</a>
+                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab">AGM Reminder</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab2" role="tab">Never Has AGM</a>
@@ -113,7 +113,7 @@ foreach ($user_permission as $permission) {
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tabDesignation1" role="tab">Designation Remainder</a>
+                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tabDesignation1" role="tab">Designation Reminder</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">

@@ -63,11 +63,12 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Date Formed</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="Date Formed" id="jmb_date_formed"/>
+                                                                <input type="text" class="form-control" placeholder="Date Formed" id="jmb_date_formed_raw"/>
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
                                                             </label>
+                                                            <input type="hidden" id="jmb_date_formed"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -189,11 +190,12 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Date Formed</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="Date Formed" id="jmb_date_formed" value="{{$management_jmb->date_formed}}"/>
+                                                                <input type="text" class="form-control" placeholder="Date Formed" id="jmb_date_formed_raw" value="{{ (!empty($management_jmb->date_formed) ? date('d-m-Y', strtotime($management_jmb->date_formed)) : '') }}"/>
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
                                                             </label>
+                                                            <input type="hidden" id="jmb_date_formed" value="{{ $management_jmb->date_formed }}"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -317,11 +319,12 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Date Formed</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="Date Formed" id="mc_date_formed"/>
+                                                                <input type="text" class="form-control" placeholder="Date Formed" id="mc_date_formed_raw"/>
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
                                                             </label>
+                                                            <input type="hidden" id="mc_date_formed"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -338,11 +341,12 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>First AGM Date</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="First AGM Date" id="mc_first_agm"/>
+                                                                <input type="text" class="form-control" placeholder="First AGM Date" id="mc_first_agm_raw"/>
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
                                                             </label>
+                                                            <input type="hidden" id="mc_first_agm"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -456,11 +460,12 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Date Formed</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="Date Formed" id="mc_date_formed" value="{{$management_mc->date_formed}}"/>
+                                                                <input type="text" class="form-control" placeholder="Date Formed" id="mc_date_formed_raw" value="{{ (!empty($management_mc->date_formed) ? date('d-m-Y', strtotime($management_mc->date_formed)) : '') }}"/>
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
                                                             </label>
+                                                            <input type="hidden" id="mc_date_formed" value="{{ $management_mc->date_formed }}"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -477,11 +482,12 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>First AGM Date</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="First AGM Date" id="mc_first_agm" value="{{$management_mc->first_agm}}"/>
+                                                                <input type="text" class="form-control" placeholder="First AGM Date" id="mc_first_agm_raw" value="{{ (!empty($management_mc->first_agm) ? date('d-m-Y', strtotime($management_mc->first_agm)) : '') }}"/>
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
                                                             </label>
+                                                            <input type="hidden" id="mc_first_agm" value="{{$management_mc->first_agm}}"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1044,7 +1050,7 @@ foreach ($user_permission as $permission) {
                                     @endif
                                     <div class="form-actions">
                                         <?php if ($update_permission == 1) { ?>
-                                        <button type="button" class="btn btn-primary" id="submit_button" onclick="updateManagement()">Submit</button>
+                                            <button type="button" class="btn btn-primary" id="submit_button" onclick="updateManagement()">Submit</button>
                                         <?php } ?>
                                         <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">Cancel</button>
                                     </div>
@@ -1060,9 +1066,9 @@ foreach ($user_permission as $permission) {
 </div>
 
 <!-- Page Scripts -->
- <script>
-    $(function(){        
-        $('#jmb_date_formed').datetimepicker({
+<script>
+    $(function () {
+        $('#jmb_date_formed_raw').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -1072,9 +1078,13 @@ foreach ($user_permission as $permission) {
                 up: "fa fa-arrow-up",
                 down: "fa fa-arrow-down"
             },
-            format: 'YYYY-MM-DD'
+            format: 'DD-MM-YYYY'
+        }).on('dp.change', function () {
+            let currentDate = $(this).val().split('-');
+            $("#jmb_date_formed").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });
-        $('#mc_date_formed').datetimepicker({
+
+        $('#mc_date_formed_raw').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -1084,9 +1094,13 @@ foreach ($user_permission as $permission) {
                 up: "fa fa-arrow-up",
                 down: "fa fa-arrow-down"
             },
-            format: 'YYYY-MM-DD'
+            format: 'DD-MM-YYYY'
+        }).on('dp.change', function () {
+            let currentDate = $(this).val().split('-');
+            $("#mc_date_formed").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });
-        $('#mc_first_agm').datetimepicker({
+
+        $('#mc_first_agm_raw').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -1096,49 +1110,53 @@ foreach ($user_permission as $permission) {
                 up: "fa fa-arrow-up",
                 down: "fa fa-arrow-down"
             },
-            format: 'YYYY-MM-DD'
+            format: 'DD-MM-YYYY'
+        }).on('dp.change', function () {
+            let currentDate = $(this).val().split('-');
+            $("#mc_first_agm").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });
+
         $("[data-toggle=tooltip]").tooltip();
     });
-    
-    $(document).ready(function () {        
-        $('#is_jmb').click(function() {
+
+    $(document).ready(function () {
+        $('#is_jmb').click(function () {
             if ($(this).is(':checked')) {
                 $("#jmb_form").fadeIn(500);
             } else {
                 $("#jmb_form").fadeOut(0);
-            }            
+            }
         });
-        $('#is_mc').click(function() {
+        $('#is_mc').click(function () {
             if ($(this).is(':checked')) {
                 $("#mc_form").fadeIn(500);
             } else {
                 $("#mc_form").fadeOut(0);
-            }            
+            }
         });
-        $('#is_agent').click(function() {
+        $('#is_agent').click(function () {
             if ($(this).is(':checked')) {
                 $("#agent_form").fadeIn(500);
             } else {
                 $("#agent_form").fadeOut(0);
-            }            
+            }
         });
-        $('#is_others').click(function() {
+        $('#is_others').click(function () {
             if ($(this).is(':checked')) {
                 $("#other_form").fadeIn(500);
             } else {
                 $("#other_form").fadeOut(0);
-            }            
+            }
         });
     });
-    
+
     function updateManagement() {
         $("#loading").css("display", "inline-block");
-        
+
         //jmb
         var jmb_date_formed = $("#jmb_date_formed").val(),
                 jmb_certificate_no = $("#jmb_certificate_no").val(),
-                jmb_name = $("#jmb_name").val(),                
+                jmb_name = $("#jmb_name").val(),
                 jmb_address1 = $("#jmb_address1").val(),
                 jmb_address2 = $("#jmb_address2").val(),
                 jmb_address3 = $("#jmb_address3").val(),
@@ -1149,12 +1167,12 @@ foreach ($user_permission as $permission) {
                 jmb_phone_no = $("#jmb_phone_no").val(),
                 jmb_fax_no = $("#jmb_fax_no").val(),
                 jmb_email = $("#jmb_email").val();
-        
+
         //mc
         var mc_date_formed = $("#mc_date_formed").val(),
                 mc_certificate_no = $("#mc_certificate_no").val(),
                 mc_first_agm = $("#mc_first_agm").val(),
-                mc_name = $("#mc_name").val(),                
+                mc_name = $("#mc_name").val(),
                 mc_address1 = $("#mc_address1").val(),
                 mc_address2 = $("#mc_address2").val(),
                 mc_address3 = $("#mc_address3").val(),
@@ -1165,10 +1183,10 @@ foreach ($user_permission as $permission) {
                 mc_phone_no = $("#mc_phone_no").val(),
                 mc_fax_no = $("#mc_fax_no").val(),
                 mc_email = $("#mc_email").val();
-        
+
         //agent
-        var agent_selected_by = $("#agent_selected_by").val(), 
-                agent_name = $("#agent_name").val(),                
+        var agent_selected_by = $("#agent_selected_by").val(),
+                agent_name = $("#agent_name").val(),
                 agent_address1 = $("#agent_address1").val(),
                 agent_address2 = $("#agent_address2").val(),
                 agent_address3 = $("#agent_address3").val(),
@@ -1179,9 +1197,9 @@ foreach ($user_permission as $permission) {
                 agent_phone_no = $("#agent_phone_no").val(),
                 agent_fax_no = $("#agent_fax_no").val(),
                 agent_email = $("#agent_email").val();
-        
+
         //others
-        var others_name = $("#others_name").val(),                
+        var others_name = $("#others_name").val(),
                 others_address1 = $("#others_address1").val(),
                 others_address2 = $("#others_address2").val(),
                 others_address3 = $("#others_address3").val(),
@@ -1196,23 +1214,23 @@ foreach ($user_permission as $permission) {
                 is_mc,
                 is_agent,
                 is_others;
-        
-        if (document.getElementById('is_jmb').checked){
+
+        if (document.getElementById('is_jmb').checked) {
             is_jmb = 1;
         } else {
             is_jmb = 0;
         }
-        if (document.getElementById('is_mc').checked){
+        if (document.getElementById('is_mc').checked) {
             is_mc = 1;
         } else {
             is_mc = 0;
         }
-        if (document.getElementById('is_agent').checked){
+        if (document.getElementById('is_agent').checked) {
             is_agent = 1;
         } else {
             is_agent = 0;
         }
-        if (document.getElementById('is_others').checked){
+        if (document.getElementById('is_others').checked) {
             is_others = 1;
         } else {
             is_others = 0;
@@ -1294,13 +1312,13 @@ foreach ($user_permission as $permission) {
                     if (data.trim() == "true") {
                         $.notify({
                             message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
-                        },{
+                        }, {
                             type: 'success',
                             placement: {
                                 align: "center"
                             }
-                        }); 
-                        window.location = "{{URL::action('AdminController@monitoring', $file->id)}}";            
+                        });
+                        window.location = "{{URL::action('AdminController@monitoring', $file->id)}}";
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }

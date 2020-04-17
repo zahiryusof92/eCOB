@@ -217,11 +217,12 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="col-md-4">
                             <label class="input-group datepicker-only-init">
-                                <input type="text" class="form-control" placeholder="AGM Date" id="agm_date"/>
+                                <input type="text" class="form-control" placeholder="AGM Date" id="agm_date_raw"/>
                                 <span class="input-group-addon">
                                     <i class="icmn-calendar"></i>
                                 </span>
                             </label>
+                            <input type="hidden" id="agm_date"/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -356,11 +357,12 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="col-md-4">
                             <label class="input-group datepicker-only-init">
-                                <input type="text" class="form-control" placeholder="Start Date" id="audit_start"/>
+                                <input type="text" class="form-control" placeholder="Start Date" id="audit_start_raw"/>
                                 <span class="input-group-addon">
                                     <i class="icmn-calendar"></i>
                                 </span>
                             </label>
+                            <input type="hidden" id="audit_start"/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -369,11 +371,12 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="col-md-4">
                             <label class="input-group datepicker-only-init">
-                                <input type="text" class="form-control" placeholder="End Date" id="audit_end"/>
+                                <input type="text" class="form-control" placeholder="End Date" id="audit_end_raw"/>
                                 <span class="input-group-addon">
                                     <i class="icmn-calendar"></i>
                                 </span>
                             </label>
+                            <input type="hidden" id="audit_end"/>
                         </div>
                     </div>
                 </form>
@@ -413,11 +416,12 @@ foreach ($user_permission as $permission) {
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
-                                    <input type="text" class="form-control" placeholder="AGM Date" id="agm_date_edit"/>
+                                    <input type="text" class="form-control" placeholder="AGM Date" id="agm_date_edit_raw"/>
                                     <span class="input-group-addon">
                                         <i class="icmn-calendar"></i>
                                     </span>
                                 </label>
+                                <input type="hidden" id="agm_date_edit"/>
                             </div>
                         </div>
                     </div>
@@ -431,11 +435,12 @@ foreach ($user_permission as $permission) {
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
-                                    <input type="text" class="form-control" placeholder="Start Date" id="audit_start_edit"/>
+                                    <input type="text" class="form-control" placeholder="Start Date" id="audit_start_edit_raw"/>
                                     <span class="input-group-addon">
                                         <i class="icmn-calendar"></i>
                                     </span>
                                 </label>
+                                <input type="hidden" id="audit_start_edit"/>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -444,11 +449,12 @@ foreach ($user_permission as $permission) {
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
-                                    <input type="text" class="form-control" placeholder="End Date" id="audit_end_edit"/>
+                                    <input type="text" class="form-control" placeholder="End Date" id="audit_end_edit_raw"/>
                                     <span class="input-group-addon">
                                         <i class="icmn-calendar"></i>
                                     </span>
                                 </label>
+                                <input type="hidden" id="audit_end_edit"/>
                             </div>
                         </div>
                     </div>
@@ -631,7 +637,7 @@ foreach ($user_permission as $permission) {
     }
 
     $(function () {
-        $('#agm_date').datetimepicker({
+        $('#agm_date_raw').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -641,9 +647,13 @@ foreach ($user_permission as $permission) {
                 up: "fa fa-arrow-up",
                 down: "fa fa-arrow-down"
             },
-            format: 'YYYY-MM-DD'
+            format: 'DD-MM-YYYY'
+        }).on('dp.change', function () {
+            let currentDate = $(this).val().split('-');
+            $("#agm_date").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });
-        $('#agm_date_edit').datetimepicker({
+
+        $('#agm_date_edit_raw').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -653,9 +663,13 @@ foreach ($user_permission as $permission) {
                 up: "fa fa-arrow-up",
                 down: "fa fa-arrow-down"
             },
-            format: 'YYYY-MM-DD'
+            format: 'DD-MM-YYYY'
+        }).on('dp.change', function () {
+            let currentDate = $(this).val().split('-');
+            $("#agm_date_edit").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });
-        $('#audit_start').datetimepicker({
+
+        $('#audit_start_raw').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -665,9 +679,13 @@ foreach ($user_permission as $permission) {
                 up: "fa fa-arrow-up",
                 down: "fa fa-arrow-down"
             },
-            format: 'YYYY-MM-DD'
+            format: 'DD-MM-YYYY'
+        }).on('dp.change', function () {
+            let currentDate = $(this).val().split('-');
+            $("#audit_start").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });
-        $('#audit_start_edit').datetimepicker({
+
+        $('#audit_start_edit_raw').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -677,9 +695,13 @@ foreach ($user_permission as $permission) {
                 up: "fa fa-arrow-up",
                 down: "fa fa-arrow-down"
             },
-            format: 'YYYY-MM-DD'
+            format: 'DD-MM-YYYY'
+        }).on('dp.change', function () {
+            let currentDate = $(this).val().split('-');
+            $("#audit_start_edit").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });
-        $('#audit_end').datetimepicker({
+
+        $('#audit_end_raw').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -689,9 +711,13 @@ foreach ($user_permission as $permission) {
                 up: "fa fa-arrow-up",
                 down: "fa fa-arrow-down"
             },
-            format: 'YYYY-MM-DD'
+            format: 'DD-MM-YYYY'
+        }).on('dp.change', function () {
+            let currentDate = $(this).val().split('-');
+            $("#audit_end").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });
-        $('#audit_end_edit').datetimepicker({
+
+        $('#audit_end_edit_raw').datetimepicker({
             widgetPositioning: {
                 horizontal: 'left'
             },
@@ -701,7 +727,10 @@ foreach ($user_permission as $permission) {
                 up: "fa fa-arrow-up",
                 down: "fa fa-arrow-down"
             },
-            format: 'YYYY-MM-DD'
+            format: 'DD-MM-YYYY'
+        }).on('dp.change', function () {
+            let currentDate = $(this).val().split('-');
+            $("#audit_end_edit").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });
     });
 
@@ -1634,7 +1663,7 @@ foreach ($user_permission as $permission) {
         $("#clear_letter_bankruptcy").hide();
         $("#check_letter_bankruptcy").hide();
     }
-    
+
     function clearAuditFileEdit() {
         $("#audit_report_file_edit").val("");
         $("#audit_report_file_url_edit").val("");

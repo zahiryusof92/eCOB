@@ -197,15 +197,14 @@ foreach ($user_permission as $permission) {
 
             <div class="row">
                 <div class="col-lg-12"> 
-                    <table class="table table-hover nowrap" id="filelist" width="100%">
+                    <table class="table table-hover nowrap" id="filelist" width="100%" style="font-size: 13px;">
                         <thead>
                             <tr>
-                                <th style="width:20%;">File Number</th>                                
-                                <th style="width:20%;">Name</th>
+                                <th style="width:20%;">File No</th>                                
+                                <th style="width:30%;">Name</th>
                                 <th style="width:10%;">COB</th>
                                 <th style="width:10%;">Year</th>
                                 <th style="width:10%;">Active</th>
-                                <th style="width:10%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
                                     <th style="width:20%;">Action</th>
                                     <?php } ?>
@@ -238,9 +237,11 @@ foreach ($user_permission as $permission) {
                 }
             ],
             "sorting": [
-                [5, "asc"]
+                [2, "asc"]
             ],
-            "responsive": true
+            "scrollX": true,
+            "fixedColumns": true,
+            "responsive": false
         });
 
         $('#company').on('change', function () {

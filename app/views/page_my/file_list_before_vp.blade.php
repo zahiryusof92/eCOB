@@ -201,11 +201,10 @@ foreach ($user_permission as $permission) {
                         <thead>
                             <tr>
                                 <th style="width:20%;">File Number</th>                                
-                                <th style="width:20%;">Name</th>
+                                <th style="width:30%;">Name</th>
                                 <th style="width:10%;">COB</th>
                                 <th style="width:10%;">Year</th>
                                 <th style="width:10%;">Active</th>
-                                <th style="width:10%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
                                     <th style="width:20%;">Action</th>
                                     <?php } ?>
@@ -238,8 +237,10 @@ foreach ($user_permission as $permission) {
                 }
             ],
             "sorting": [
-                [5, "asc"]
+                [2, "asc"]
             ],
+            "scrollX": true,
+            "fixedColumns": true,
             "responsive": true
         });
 

@@ -7,6 +7,8 @@ if ($company->is_main != 1) {
 } else {
     $cob_logout = '';
 }
+
+$swith_lang = false;
 ?>
 
 <nav class="top-menu">
@@ -17,6 +19,7 @@ if ($company->is_main != 1) {
     </div>
     <div class="menu">
         <div class="menu-user-block margin-top-5">
+            @if ($swith_lang)
             <div class="dropdown">
                 <a href="javascript: void(0);" class="dropdown-toggle dropdown-inline-button" data-toggle="dropdown" aria-expanded="false">
                     <i class="dropdown-inline-button-icon fa fa-globe"></i>
@@ -28,6 +31,7 @@ if ($company->is_main != 1) {
                     <a class="dropdown-item" href="{{URL::action('UserController@changeLanguage',['en'])}}">English</a>                    
                 </ul>
             </div>
+            @endif
             <div class="menu-user-block">
                 <div class="dropdown dropdown-avatar">
                     <a href="javascript: void(0);" class="dropdown-toggle dropdown-inline-button" data-toggle="dropdown" aria-expanded="false">
@@ -52,11 +56,11 @@ if ($company->is_main != 1) {
         </div>
         <div class="menu-info-block">
             <div class="row">
-<!--                <div class="logo-container">
-                    <div class="logo">
-                        <img src="{{$company->image_url}}" alt="" style="width: 40px;"/>
-                    </div>
-                </div>          -->
+                <!--                <div class="logo-container">
+                                    <div class="logo">
+                                        <img src="{{$company->image_url}}" alt="" style="width: 40px;"/>
+                                    </div>
+                                </div>          -->
                 <h6 class="margin-top-10">Sistem eCOB - {{$company->name}}</h6>
             </div>
         </div>
