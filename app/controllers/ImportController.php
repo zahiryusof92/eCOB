@@ -69,7 +69,7 @@ class ImportController extends BaseController {
                                 $is_active_raw = trim($row['124']);
 
                                 if (!empty($is_active_raw)) {
-                                    if ($is_active_raw == 'Aktif' || $is_active_raw == 'Active') {
+                                    if (strtolower($is_active_raw) == 'aktif' || strtolower($is_active_raw == 'active')) {
                                         $is_active = 1;
                                     }
                                 }
