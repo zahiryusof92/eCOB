@@ -1067,6 +1067,17 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
+    var changes = false;
+    $('input, textarea, select').on('keypress change input', function () {
+        changes = true;
+    });
+
+    $(window).on('beforeunload', function () {
+        if (changes) {
+            return "Data you have entered may not be saved, do you really want to leave?";
+        }
+    });
+    
     $(function () {
         $('#jmb_date_formed_raw').datetimepicker({
             widgetPositioning: {
@@ -1151,6 +1162,7 @@ foreach ($user_permission as $permission) {
     });
 
     function updateManagement() {
+        changes = false;
         $("#loading").css("display", "inline-block");
 
         //jmb

@@ -311,6 +311,17 @@ foreach ($user_permission as $permission) {
 <!-- Page Scripts -->
 
  <script>
+     var changes = false;
+    $('input, textarea, select').on('keypress change input', function () {
+        changes = true;
+    });
+
+    $(window).on('beforeunload', function () {
+        if (changes) {
+            return "Data you have entered may not be saved, do you really want to leave?";
+        }
+    });
+    
     $(document).ready(function () {
         $(function() {
             $("#image").change(function() {
@@ -374,6 +385,7 @@ foreach ($user_permission as $permission) {
     }
     
     function updateOtherDetails(){
+        changes = false;
         $("#loading").css("display", "inline-block");
         
         var other_details_name = $("#other_details_name").val(),

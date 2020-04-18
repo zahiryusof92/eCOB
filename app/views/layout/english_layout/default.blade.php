@@ -125,17 +125,6 @@
                 });
 
                 $('.select2').select2();
-                
-                var changes = false;
-                $('input, textarea, select').on('keypress change input', function () {
-                    changes = true;
-                });
-
-                $(window).on('beforeunload', function () {
-                    if (changes) {
-                        return "Data you have entered may not be saved, do you really want to leave?";
-                    }
-                });
             });
         </script>
     </body>

@@ -780,8 +780,12 @@ class AdminController extends BaseController {
             if ($check_file <= 0) {
                 $files = new Files();
                 $files->company_id = $company_id;
-                $files->file_no = $filename;
-                $files->year = $year;
+                $files->file_no = $filename;                
+                if (!empty($year)) {
+                    $files->year = $year;
+                } else {
+                    $files->year = '';
+                }
                 $files->is_active = 0;
                 $files->status = 0;
                 $files->created_by = Auth::user()->id;
@@ -1624,6 +1628,14 @@ class AdminController extends BaseController {
             $is_residential = $data['is_residential'];
             $is_commercial = $data['is_commercial'];
             $stratafile = $data['strata_file_url'];
+
+            if (!empty($year)) {
+                $files = Files::find($file_id);
+                if ($files) {
+                    $files->year = $year;
+                    $files->save();
+                }
+            }
 
             $strata = Strata::find($strata_id);
             if ($strata) {

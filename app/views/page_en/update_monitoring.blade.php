@@ -622,6 +622,17 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
+    var changes = false;
+    $('input, textarea, select').on('keypress change input', function () {
+        changes = true;
+    });
+
+    $(window).on('beforeunload', function () {
+        if (changes) {
+            return "Data you have entered may not be saved, do you really want to leave?";
+        }
+    });
+    
     function getAGMDetails(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@getAGMDetails') }}",
@@ -1042,6 +1053,7 @@ foreach ($user_permission as $permission) {
     }
 
     function updateMonitoring() {
+        changes = false;
         $("#loading").css("display", "inline-block");
 
         var precalculate_plan;
