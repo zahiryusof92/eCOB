@@ -190,7 +190,7 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Date Formed</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="Date Formed" id="jmb_date_formed_raw" value="{{ (!empty($management_jmb->date_formed) ? date('d-m-Y', strtotime($management_jmb->date_formed)) : '') }}"/>
+                                                                <input type="text" class="form-control" placeholder="Date Formed" id="jmb_date_formed_raw" value="{{ ($management_jmb->date_formed != '0000-00-00' ? date('d-m-Y', strtotime($management_jmb->date_formed)) : '') }}"/>
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
@@ -460,7 +460,7 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Date Formed</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="Date Formed" id="mc_date_formed_raw" value="{{ (!empty($management_mc->date_formed) ? date('d-m-Y', strtotime($management_mc->date_formed)) : '') }}"/>
+                                                                <input type="text" class="form-control" placeholder="Date Formed" id="mc_date_formed_raw" value="{{ ($management_mc->date_formed != '0000-00-00' ? date('d-m-Y', strtotime($management_mc->date_formed)) : '') }}"/>
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
@@ -482,7 +482,7 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>First AGM Date</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="First AGM Date" id="mc_first_agm_raw" value="{{ (!empty($management_mc->first_agm) ? date('d-m-Y', strtotime($management_mc->first_agm)) : '') }}"/>
+                                                                <input type="text" class="form-control" placeholder="First AGM Date" id="mc_first_agm_raw" value="{{ ($management_mc->first_agm != '0000-00-00' ? date('d-m-Y', strtotime($management_mc->first_agm)) : '') }}"/>
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
