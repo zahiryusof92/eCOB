@@ -195,7 +195,7 @@ class ImportController extends BaseController {
                                             $dev_status_raw = trim($row['17']);
 
                                             if (!empty($dev_status_raw)) {
-                                                if ($dev_status_raw == 'Aktif' || $dev_status_raw == 'Active') {
+                                                if (strtolower($dev_status_raw) == 'aktif' || strtolower($dev_status_raw) == 'active') {
                                                     $dev_status = 1;
                                                 }
                                             }
@@ -575,7 +575,7 @@ class ImportController extends BaseController {
                                         if (isset($row['47']) && !empty($row['47'])) {
                                             $is_residential_raw = trim($row['47']);
 
-                                            if ($is_residential_raw == 'Yes') {
+                                            if (strtolower($is_residential_raw) == 'yes') {
                                                 $is_residential = 1;
                                             }
                                         }
@@ -584,7 +584,7 @@ class ImportController extends BaseController {
                                         if (isset($row['53']) && !empty($row['53'])) {
                                             $is_commercial_raw = trim($row['53']);
 
-                                            if ($is_commercial_raw == 'Yes') {
+                                            if (strtolower($is_commercial_raw) == 'yes') {
                                                 $is_commercial = 1;
                                             }
                                         }
@@ -777,7 +777,7 @@ class ImportController extends BaseController {
                                         if (isset($row['60']) && !empty($row['60'])) {
                                             $is_jmb_raw = trim($row['60']);
 
-                                            if ($is_jmb_raw == 'Yes') {
+                                            if (strtolower($is_jmb_raw) == 'yes') {
                                                 $is_jmb = 1;
                                             }
                                         }
@@ -787,7 +787,7 @@ class ImportController extends BaseController {
                                         if (isset($row['75']) && !empty($row['75'])) {
                                             $is_mc_raw = trim($row['75']);
 
-                                            if ($is_mc_raw == 'Yes') {
+                                            if (strtolower($is_mc_raw) == 'yes') {
                                                 $is_mc = 1;
                                             }
                                         }
@@ -797,7 +797,7 @@ class ImportController extends BaseController {
                                         if (isset($row['90']) && !empty($row['90'])) {
                                             $is_agent_raw = trim($row['90']);
 
-                                            if ($is_agent_raw == 'Yes') {
+                                            if (strtolower($is_agent_raw) == 'yes') {
                                                 $is_agent = 1;
                                             }
                                         }
@@ -807,7 +807,7 @@ class ImportController extends BaseController {
                                         if (isset($row['104']) && !empty($row['104'])) {
                                             $is_others_raw = trim($row['104']);
 
-                                            if ($is_others_raw == 'Yes') {
+                                            if (strtolower($is_others_raw) == 'yes') {
                                                 $is_others = 1;
                                             }
                                         }

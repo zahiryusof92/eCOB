@@ -259,7 +259,7 @@ if (!Auth::user()->getAdmin()) {
                     @if ($access_permission3 == 1)
                     <li id="cob_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@fileList')}}">
-                            COB File List <span class="label left-menu-label label-danger">{{$pending}} pendings</span>
+                            COB File List
                         </a>
                     </li> 
                     @endif
