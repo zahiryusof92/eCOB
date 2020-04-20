@@ -12,6 +12,8 @@ class ReportController extends BaseController {
     }
 
     public function ownerTenant() {
+        $data = Input::all();
+
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
@@ -27,75 +29,52 @@ class ReportController extends BaseController {
                 $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
             }
         }
+        
+         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no')->get();
 
-        $race = Race::where('is_active', 1)->where('is_deleted', 0)->get();
+        if (isset($data['file_id']) && !empty($data['file_id'])) {
+            $file_id = $data['file_id'];            
+            $owner = Buyer::where('file_id', $file_id)->where('is_deleted', 0)->get();
+            $tenant = Tenant::where('file_id', $file_id)->where('is_deleted', 0)->get();
+        } else {
+            $file_id = '';
+            $owner = '';
+            $tenant = '';
+        }
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Owner / Tenant Report',
+                'title' => 'Status Kepenghunian',
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'owner_tenant_list',
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'race' => $race,
+                'file_id' => $file_id,
+                'owner' => $owner,
+                'tenant' => $tenant,
                 'image' => ''
             );
 
             return View::make('report_en.owner_tenant', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Owner / Tenant Report',
+                'title' => 'Status Kepenghunian',
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'owner_tenant_list',
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'race' => $race,
+                'file_id' => $file_id,
+                'owner' => $owner,
+                'tenant' => $tenant,
                 'image' => ''
             );
 
             return View::make('report_my.owner_tenant', $viewData);
         }
-    }
-
-    public function submitOwnerTenant() {
-        $data = Input::all();
-
-//        return $data['file_no'];
-//        if (Request::ajax()) {
-        $file_id = $data['file_no'];
-        $type = $data['type'];
-
-        if (!empty($file_id)) {
-            $files = Files::find($file_id);
-            if ($files) {
-                if ($type == 'all') {
-                    $owner = Buyer::where('file_id', $files->id)->where('is_deleted', 0)->get();
-                    $tenant = Tenant::where('file_id', $files->id)->where('is_deleted', 0)->get();
-                } else if ($type == 'owner') {
-                    $owner = Buyer::where('file_id', $files->id)->where('is_deleted', 0)->get();
-                    $tenant = '';
-                } else {
-                    $owner = '';
-                    $tenant = Tenant::where('file_id', $files->id)->where('is_deleted', 0)->get();
-                }
-
-                $viewData = array(
-                    'title' => 'Owner / Tenant Report',
-                    'files' => $files,
-                    'type' => $type,
-                    'owner' => $owner,
-                    'tenant' => $tenant
-                );
-
-                $pdf = PDF::loadView('print_en.owner_tenant', $viewData);
-//                    return View::make('print_en.owner_tenant', $viewData);
-
-                return $pdf->download('test.pdf');
-            }
-        }
-//        }
     }
 
     public function strataProfile() {

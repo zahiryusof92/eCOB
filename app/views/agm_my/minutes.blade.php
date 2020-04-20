@@ -65,62 +65,47 @@ foreach ($user_permission as $permission) {
             "aoColumnDefs": [
                 {
                     "bSortable": false,
-                    "aTargets": [1,2,3,4,5,6, -1]
+                    "aTargets": [1, 2, 3, 4, 5, 6, -1]
                 }
             ]
         });
+    });
 
-        function getAGMDetails(id) {
+    function deleteAGMDetails(id) {
+        swal({
+            title: "Are you sure?",
+            text: "Your will not be able to recover this file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-warning",
+            cancelButtonClass: "btn-default",
+            confirmButtonText: "Delete",
+            closeOnConfirm: true
+        }, function () {
             $.ajax({
-                url: "{{ URL::action('AgmController@getMinuteDetails') }}",
+                url: "{{ URL::action('AgmController@deleteMinutes') }}",
                 type: "POST",
                 data: {
                     id: id
                 },
                 success: function (data) {
-                    $("#agmEdit").html(data);
-                    $("#edit_agm_details").modal("show");
+                    if (data.trim() == "true") {
+                        $.notify({
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Deleted Successfully</p>'
+                        }, {
+                            type: 'success',
+                            placement: {
+                                align: "center"
+                            }
+                        });
+                        location.reload();
+                    } else {
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                    }
                 }
             });
-        }
-
-        function deleteAGMDetails(id) {
-            swal({
-                title: "Are you sure?",
-                text: "Your will not be able to recover this file!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonClass: "btn-warning",
-                cancelButtonClass: "btn-default",
-                confirmButtonText: "Delete",
-                closeOnConfirm: true
-            }, function () {
-                $.ajax({
-                    url: "{{ URL::action('AgmController@deleteMinutes') }}",
-                    type: "POST",
-                    data: {
-                        id: id
-                    },
-                    success: function (data) {
-                        if (data.trim() == "true") {
-                            $.notify({
-                                message: '<p style="text-align: center; margin-bottom: 0px;">Deleted Successfully</p>'
-                            }, {
-                                type: 'success',
-                                placement: {
-                                    align: "center"
-                                }
-                            });
-                            location.reload();
-                        } else {
-                            bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
-                        }
-                    }
-                });
-            });
-        }
-    });
-
+        });
+    }
 
     function editAGMDetail() {
         $("#loading").css("display", "inline-block");
@@ -222,8 +207,6 @@ foreach ($user_permission as $permission) {
             });
         }
     }
-
-
 
     function clearAuditFile() {
         $("#audit_report_file").val("");

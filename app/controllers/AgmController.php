@@ -1698,7 +1698,7 @@ class AgmController extends BaseController {
         }
     }
 
-    public function deleteMinuteDetails() {
+    public function deleteMinutes() {
         $data = Input::all();
         if (Request::ajax()) {
 

@@ -29,142 +29,165 @@ $company = Company::find(Auth::user()->company_id);
 
             <hr/>
 
-            @if ($type == 'all')
-            <table border="1" width="100%">
+            @if (!empty($file_id) && !empty($race))
+            <?php $file = Files::find($file_id); ?>
+            @if (!empty($owner))
+            <table border="1" id="owner_table" width="100%" style="font-size: 12px;">
                 <thead>
                     <tr>
-                        <th style="width:20%; text-align: center !important; vertical-align:middle !important;">FILE NO</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">UNIT NO</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">SHARE UNIT</th>
-                        <th style="width:15%; text-align: center !important; vertical-align:middle !important;">OWNER</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">NRIC</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">PHONE NO</th>
-                        <th style="width:15%; text-align: center !important; vertical-align:middle !important;">EMAIL</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">RACE</th>
+                        <th rowspan="2" style="width:25%; text-align: center !important; vertical-align:middle !important;">NO. FAIL</th>
+                        <th colspan="{{ count($race) }}" style="width:75%; text-align: center !important; vertical-align:middle !important;">DIDUDUKI PEMILIK</th>
+                    </tr>
+                    <tr>
+                        @foreach ($race as $rc)
+                        <th style="width:15%; text-align: center !important; vertical-align:middle !important;">{{ strtoupper($rc->name) }} (%)</th>
+                        @endforeach
                     </tr>
                 </thead>
                 <tbody>
-                    @if (!empty($owner))
-                    @foreach ($owner as $owners)
-                    <tr>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->file->file_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->unit_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->unit_share }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->owner_name }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->ic_company_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->phone_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->email }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->race->name }}</td>
+                    <tr>                                    
+                        <?php $total_all_owner = Buyer::where('file_id', $file->id)->where('is_deleted', 0)->count(); ?>
+
+                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>                               
+                        @foreach ($race as $rc)
+                        <?php $total_owner = Buyer::where('file_id', $file->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
+                        <?php $percentage_owner = 0; ?>
+                        <?php if ($total_owner > 0) { ?>
+                            <?php $percentage_owner = ($total_owner / $total_all_owner) * 100; ?>
+                        <?php } ?>
+                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $percentage_owner }}</td>                                    
+
+                        <?php
+                        $ownerData[] = array(
+                            'name' => $rc->name,
+                            'y' => $percentage_owner
+                        );
+                        ?>
+                        @endforeach
                     </tr>
-                    @endforeach
-                    @else
-                    <tr>
-                        <td colspan="8" style="text-align: center !important; vertical-align:middle !important;">No data found</td>
-                    </tr>
-                    @endif
                 </tbody>
             </table>
 
-            <table border="1" width="100%">
+            <div id="owner_chart"></div>
+            <script>
+                Highcharts.chart('owner_chart', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Diduduki Pemilik'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.name}<br/><b>{point.percentage:.1f} %</b>',
+                                distance: -50,
+                                filter: {
+                                    property: 'percentage',
+                                    operator: '>',
+                                    value: 4
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [{
+                            name: 'Jenis Pengurusan',
+                            colorByPoint: true,
+                            data: <?php echo json_encode($ownerData); ?>
+                        }]
+                });
+            </script>
+            @endif
+
+            <br/><br/>
+
+            @if (!empty($tenant))
+            <table border="1" id="tenant_table" width="100%" style="font-size: 12px;">
                 <thead>
                     <tr>
-                        <th style="width:25%; text-align: center !important; vertical-align:middle !important;">FILE NO</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">UNIT NO</th>
-                        <th style="width:20%; text-align: center !important; vertical-align:middle !important;">OWNER</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">NRIC</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">PHONE NO</th>
-                        <th style="width:15%; text-align: center !important; vertical-align:middle !important;">EMAIL</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">RACE</th>
+                        <th rowspan="2" style="width:25%; text-align: center !important; vertical-align:middle !important;">NO. FAIL</th>
+                        <th colspan="{{ count($race) }}" style="width:75%; text-align: center !important; vertical-align:middle !important;">DISEWA</th>
+                    </tr>
+                    <tr>
+                        @foreach ($race as $rc)
+                        <th style="width:15%; text-align: center !important; vertical-align:middle !important;">{{ strtoupper($rc->name) }} (%)</th>
+                        @endforeach
                     </tr>
                 </thead>
                 <tbody>
-                    @if (!empty($tenant))
-                    @foreach ($tenant as $tenants)
                     <tr>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->file->file_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->unit_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->tenant_name }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->ic_company_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->phone_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->email }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->race->name }}</td>
+                        <?php $total_all_tenant = Buyer::where('file_id', $file->id)->where('is_deleted', 0)->count(); ?>
+
+                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>                               
+                        @foreach ($race as $rc)
+                        <?php $total_tenant = Tenant::where('file_id', $file->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
+                        <?php $percentage_tenant = 0; ?>
+                        <?php if ($total_tenant > 0) { ?>
+                            <?php $percentage_tenant = ($total_tenant / $total_all_tenant) * 100; ?>
+                        <?php } ?>
+                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $percentage_tenant }}</td>
+
+                        <?php
+                        $tenantData[] = array(
+                            'name' => $rc->name,
+                            'y' => $percentage_tenant
+                        );
+                        ?>
+                        @endforeach
                     </tr>
-                    @endforeach
-                    @else
-                    <tr>
-                        <td colspan="7" style="text-align: center !important; vertical-align:middle !important;">No data found</td>
-                    </tr>
-                    @endif
                 </tbody>
             </table>
-            @elseif ($type == 'owner')           
-            <table border="1" width="100%">
-                <thead>
-                    <tr>
-                        <th style="width:20%; text-align: center !important; vertical-align:middle !important;">FILE NO</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">UNIT NO</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">SHARE UNIT</th>
-                        <th style="width:15%; text-align: center !important; vertical-align:middle !important;">OWNER</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">NRIC</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">PHONE NO</th>
-                        <th style="width:15%; text-align: center !important; vertical-align:middle !important;">EMAIL</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">RACE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!empty($owner))
-                    @foreach ($owner as $owners)
-                    <tr>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->file->file_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->unit_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->unit_share }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->owner_name }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->ic_company_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->phone_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->email }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $owners->race->name }}</td>
-                    </tr>
-                    @endforeach
-                    @else
-                    <tr>
-                        <td colspan="8" style="text-align: center !important; vertical-align:middle !important;">No data found</td>
-                    </tr>
-                    @endif
-                </tbody>
-            </table>
-            @else
-            <table border="1" width="100%">
-                <thead>
-                    <tr>
-                        <th style="width:25%; text-align: center !important; vertical-align:middle !important;">FILE NO</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">UNIT NO</th>
-                        <th style="width:20%; text-align: center !important; vertical-align:middle !important;">OWNER</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">NRIC</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">PHONE NO</th>
-                        <th style="width:15%; text-align: center !important; vertical-align:middle !important;">EMAIL</th>
-                        <th style="width:10%; text-align: center !important; vertical-align:middle !important;">RACE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!empty($tenant))
-                    @foreach ($tenant as $tenants)
-                    <tr>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->file->file_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->unit_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->tenant_name }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->ic_company_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->phone_no }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->email }}</td>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $tenants->race->name }}</td>
-                    </tr>
-                    @endforeach
-                    @else
-                    <tr>
-                        <td colspan="7" style="text-align: center !important; vertical-align:middle !important;">No data found</td>
-                    </tr>
-                    @endif
-                </tbody>
-            </table>
+
+            <div id="tenant_chart"></div>
+            <script>
+                Highcharts.chart('tenant_chart', {
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Disewa'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.name}<br/><b>{point.percentage:.1f} %</b>',
+                                distance: -50,
+                                filter: {
+                                    property: 'percentage',
+                                    operator: '>',
+                                    value: 4
+                                }
+                            },
+                            showInLegend: true
+                        }
+                    },
+                    series: [{
+                            name: 'Disewa',
+                            colorByPoint: true,
+                            data: <?php echo json_encode($tenantData); ?>
+                        }]
+                });
+            </script>
+            @endif
             @endif
 
             <hr/>

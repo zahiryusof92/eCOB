@@ -305,7 +305,7 @@ Route::post('/submitAddMinutes', 'AgmController@submitAddMinutes')->before('auth
 Route::get('/editMinutes/{id}', 'AgmController@editMinutes')->before('authMember');
 Route::post('/submitEditMinutes', 'AgmController@submitEditMinutes')->before('authMember');
 Route::post('/getMinuteDetails', 'AgmController@getMinuteDetails')->before('authMember');
-Route::post('/deleteMinutes/{id}', 'AgmController@deleteMinutes')->before('authMember');
+Route::post('/deleteMinutes', 'AgmController@deleteMinutes')->before('authMember');
 
 //document
 Route::get('/document', 'AgmController@document')->before('authMember');
@@ -531,7 +531,7 @@ Route::post('/reporting/submitStrataProfile', 'ReportController@submitStrataProf
 
 // owner tenant
 Route::get('/reporting/ownerTenant', 'ReportController@ownerTenant')->before('authMember');
-Route::post('/reporting/submitOwnerTenant', 'ReportController@submitOwnerTenant')->before('authMember');
+Route::get('/print/ownerTenant/file_id={id}', 'PrintController@printOwnerTenant')->before('authMember');
 
 // -- COB -- //
 Route::get('cob/get/{id}', 'CobController@get');
