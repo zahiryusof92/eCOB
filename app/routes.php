@@ -227,6 +227,7 @@ Route::post('/inactiveUser', 'AdminController@inactiveUser')->before('authMember
 Route::get('/updateUser/{id}', 'AdminController@updateUser')->before('authMember');
 Route::post('/submitUpdateUser', 'AdminController@submitUpdateUser')->before('authMember');
 Route::post('/deleteUser/{id}', 'AdminController@deleteUser')->before('authMember');
+Route::post('/findFile', 'AdminController@findFile')->before('authMember');
 
 //memo
 Route::get('/memo', 'AdminController@memo')->before('authMember');

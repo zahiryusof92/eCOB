@@ -79,7 +79,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> Access Group</label>
-                                    <select id="role" class="form-control select2">
+                                    <select id="role" class="form-control select2" onchange="showExpiryDate(this)">
                                         <option value="">Please Select</option>
                                         @foreach ($role as $roles)
                                         <option value="{{$roles->id}}">{{$roles->name}}</option>
@@ -89,17 +89,56 @@ foreach ($user_permission as $permission) {
                                 </div>
                             </div>
                         </div>
+                        <div class="row" id="expiry_date" style="display: none;">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label><span style="color: red;">*</span> Start Date</label>
+                                    <label class="input-group">
+                                        <input type="text" class="form-control" placeholder="Start Date" id="start_date_raw"/>
+                                        <span class="input-group-addon">
+                                            <i class="icmn-calendar"></i>
+                                        </span>
+                                    </label>
+                                    <input type="hidden" id="start_date" value=""/>
+                                    <div id="start_date_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label><span style="color: red;">*</span> End Date</label>
+                                    <label class="input-group">
+                                        <input type="text" class="form-control" placeholder="End Date" id="end_date_raw"/>
+                                        <span class="input-group-addon">
+                                            <i class="icmn-calendar"></i>
+                                        </span>
+                                    </label>
+                                    <input type="hidden" id="end_date" value=""/>
+                                    <div id="end_date_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Company</label>
-                                    <select id="company" class="form-control select2">
+                                    <label><span style="color: red;">*</span> COB</label>
+                                    <select id="company" class="form-control select2" onchange="findFile()">
                                         <option value="">Please Select</option>
                                         @foreach ($company as $companies)
                                         <option value="{{$companies->id}}">{{$companies->name}} ({{$companies->short_name}})</option>
                                         @endforeach
                                     </select>
                                     <div id="company_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="file_form" style="display: none;">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span style="color: red;">*</span> Files</label>
+                                    <select id="file_id" class="form-control select2">
+                                        <option value="">Please Select</option>
+                                    </select>
+                                    <div id="file_id_error" style="display:none;"></div>
                                 </div>
                             </div>
                         </div>
@@ -141,6 +180,62 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
+    function showExpiryDate(value) {
+        var role = value.options[value.selectedIndex].text;
+        role.toUpperCase();
+
+        if (role == 'JMB') {
+            $("#expiry_date").fadeIn();
+            $("#file_form").fadeIn();
+        } else {
+            $("#expiry_date").fadeOut();
+            $("#file_form").fadeOut();
+        }
+    }
+
+    function findFile() {
+        $.ajax({
+            url: "{{ URL::action('AdminController@findFile') }}",
+            type: "POST",
+            data: {
+                cob: $("#company").val()
+            },
+            success: function (data) {
+                $("#file_id").html(data);
+            }
+        });
+    }
+    $("#start_date_raw").datetimepicker({
+        widgetPositioning: {
+            horizontal: 'left'
+        },
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        },
+        format: 'DD-MM-YYYY'
+    }).on('dp.change', function () {
+        let currentDate = $(this).val().split('-');
+        $("#start_date").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
+    });
+
+    $("#end_date_raw").datetimepicker({
+        widgetPositioning: {
+            horizontal: 'left'
+        },
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        },
+        format: 'DD-MM-YYYY'
+    }).on('dp.change', function () {
+        let currentDate = $(this).val().split('-');
+        $("#end_date").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
+    });
 
     function addUser() {
         $("#loading").css("display", "inline-block");

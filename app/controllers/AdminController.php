@@ -780,7 +780,7 @@ class AdminController extends BaseController {
             if ($check_file <= 0) {
                 $files = new Files();
                 $files->company_id = $company_id;
-                $files->file_no = $filename;                
+                $files->file_no = $filename;
                 if (!empty($year)) {
                     $files->year = $year;
                 } else {
@@ -5721,6 +5721,44 @@ class AdminController extends BaseController {
                 print "true";
             } else {
                 print "false";
+            }
+        }
+    }
+
+    public function findFile() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $cob_id = $data['cob'];
+
+            if (!empty($cob_id)) {
+                $company = Company::find($cob_id);
+                if ($company) {
+                    if ($company->is_main) {
+                        $files = Files::where('is_deleted', 0)->orderBy('file_no', 'asc')->get();
+                    } else {
+                        $files = Files::where('company_id', $company->id)->where('is_deleted', 0)->orderBy('file_no', 'asc')->get();
+                    }
+                }
+            }
+
+            if ($files) {
+                if (Session::get('lang') == "en") {
+                    $result = "<option value=''>Please Select</option>";
+                } else {
+                    $result = "<option value=''>Sila pilih</option>";
+                }
+
+                foreach ($files as $file) {
+                    $result .= "<option value='" . $file->id . "'>" . $file->file_no . "</option>";
+                }
+
+                print $result;
+            } else {
+                if (Session::get('lang') == "en") {
+                    print "<option value=''>Please Select</option>";
+                } else {
+                    print "<option value=''>Sila pilih</option>";
+                }
             }
         }
     }
