@@ -354,8 +354,8 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Date CCC</label>
-                                                        <label class="input-group datepicker-only-init">
-                                                            <input type="text" class="form-control" placeholder="Date CCC" id="strata_ccc_date" value="{{ ($strata->ccc_date != '0000-00-00' ? date('d-m-Y', strtotime($strata->ccc_date)) : '') }}"/>
+                                                        <label class="input-group">
+                                                            <input type="text" class="form-control" placeholder="Date CCC" id="strata_ccc_date_raw" value="{{ ($strata->ccc_date != '0000-00-00' ? date('d-m-Y', strtotime($strata->ccc_date)) : '') }}"/>
                                                             <span class="input-group-addon">
                                                                 <i class="icmn-calendar"></i>
                                                             </span>
