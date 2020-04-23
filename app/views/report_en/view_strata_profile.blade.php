@@ -45,7 +45,7 @@
                         <table border="1" id="strata_table" width="100%">
                             <thead>
                                 <tr>
-                                    <th style="width:10%; text-align: center !important; vertical-align:middle !important;">PBT</th>
+                                    <th style="width:10%; text-align: center !important; vertical-align:middle !important;">PIHAK BERKUASA TEMPATAN</th>
                                     <th style="width:20%; text-align: center !important; vertical-align:middle !important;">NAMA PANGSAPURI</th>
                                     <th style="width:10%; text-align: center !important; vertical-align:middle !important;">JUMLAH UNIT</th>
                                     <th style="width:10%; text-align: center !important; vertical-align:middle !important;">JUMLAH BLOK</th>
@@ -80,8 +80,8 @@
                         <table border="1" id="fee_table" width="100%">
                             <thead>
                                 <tr>
-                                    <th style="width:35%; text-align: center !important; vertical-align:middle !important;">KADAR CAJ</th>
-                                    <th style="width:35%; text-align: center !important; vertical-align:middle !important;">KADAR SINKING FUND</th>
+                                    <th style="width:35%; text-align: center !important; vertical-align:middle !important;">KADAR CAJ (RM)</th>
+                                    <th style="width:35%; text-align: center !important; vertical-align:middle !important;">KADAR SINKING FUND (RM)</th>
                                     <th style="width:30%; text-align: center !important; vertical-align:middle !important;">% PURATA KUTIPAN TAHUNAN</th>
                                 </tr>
                                 <tr>
