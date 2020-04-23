@@ -53,56 +53,56 @@ foreach ($user_permission as $permission) {
                                         <tr>
                                             <th colspan="5">{{strtoupper($modules->name_en)}}</th>
                                         </tr>
-                                            <?php
-                                            $submodule = SubModule::where('module_id', $modules->id)->get();
-                                            ?>
-                                            @foreach($submodule as $submodules)
-                                            @if ($modules->id == 4)
-                                            <tr>
-                                                <td> - {{$submodules->name_en}}</td>
-                                                <td style="text-align: center;">
-                                                    <input type="checkbox" class="access" name="access[]" value="{{$submodules->id}}" />
-                                                </td>
-                                                <td style="text-align: center;"></td>
-                                                <td style="text-align: center;"></td>
-                                            </tr>
-                                            @elseif ($submodules->id == 2)
-                                            <tr>
-                                                <td> - {{$submodules->name_en}}</td>
-                                                <td style="text-align: center;">
-                                                    <input type="checkbox" class="access" name="access[]" value="{{$submodules->id}}" />
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    <input type="checkbox" class="insert" name="insert[]" value="{{$submodules->id}}" />
-                                                </td>
-                                                <td style="text-align: center;"></td>
-                                            </tr>
-                                            @elseif ($submodules->id == 3)
-                                            <tr>
-                                                <td> - {{$submodules->name_en}}</td>
-                                                <td style="text-align: center;">
-                                                    <input type="checkbox" class="access" name="access[]" value="{{$submodules->id}}" />
-                                                </td>
-                                                <td style="text-align: center;"></td>
-                                                <td style="text-align: center;">
-                                                    <input type="checkbox" class="update" name="update[]" value="{{$submodules->id}}" />
-                                                </td>
-                                            </tr>
-                                            @else
-                                            <tr>
-                                                <td> - {{$submodules->name_en}}</td>
-                                                <td style="text-align: center;">
-                                                    <input type="checkbox" class="access" name="access[]" value="{{$submodules->id}}" />
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    <input type="checkbox" class="insert" name="insert[]" value="{{$submodules->id}}" />
-                                                </td>
-                                                <td style="text-align: center;">
-                                                    <input type="checkbox" class="update" name="update[]" value="{{$submodules->id}}" />
-                                                </td>
-                                            </tr>
-                                            @endif
-                                            @endforeach
+                                        <?php
+                                        $submodule = SubModule::where('module_id', $modules->id)->get();
+                                        ?>
+                                        @foreach($submodule as $submodules)
+                                        @if ($modules->id == 4)
+                                        <tr>
+                                            <td> - {{$submodules->name_en}}</td>
+                                            <td style="text-align: center;">
+                                                <input type="checkbox" class="access" name="access[]" value="{{$submodules->id}}" />
+                                            </td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        @elseif ($submodules->id == 2)
+                                        <tr>
+                                            <td> - {{$submodules->name_en}}</td>
+                                            <td style="text-align: center;">
+                                                <input type="checkbox" class="access" name="access[]" value="{{$submodules->id}}" />
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <input type="checkbox" class="insert" name="insert[]" value="{{$submodules->id}}" />
+                                            </td>
+                                            <td style="text-align: center;"></td>
+                                        </tr>
+                                        @elseif ($submodules->id == 3)
+                                        <tr>
+                                            <td> - {{$submodules->name_en}}</td>
+                                            <td style="text-align: center;">
+                                                <input type="checkbox" class="access" name="access[]" value="{{$submodules->id}}" />
+                                            </td>
+                                            <td style="text-align: center;"></td>
+                                            <td style="text-align: center;">
+                                                <input type="checkbox" class="update" name="update[]" value="{{$submodules->id}}" />
+                                            </td>
+                                        </tr>
+                                        @else
+                                        <tr>
+                                            <td> - {{$submodules->name_en}}</td>
+                                            <td style="text-align: center;">
+                                                <input type="checkbox" class="access" name="access[]" value="{{$submodules->id}}" />
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <input type="checkbox" class="insert" name="insert[]" value="{{$submodules->id}}" />
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <input type="checkbox" class="update" name="update[]" value="{{$submodules->id}}" />
+                                            </td>
+                                        </tr>
+                                        @endif
+                                        @endforeach
 
                                         @endforeach
                                     </tbody>
@@ -110,6 +110,19 @@ foreach ($user_permission as $permission) {
                             </div>                            
                         </div>
                         <hr/>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><span style="color: red;">*</span> Admin Status</label>
+                                    <select id="is_admin" class="form-control">
+                                        <option value="">Please Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                    <div id="is_admin_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -133,9 +146,10 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-actions">
                             <?php if ($insert_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addAccessGroup()">Submit</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addAccessGroup()">Submit</button>
                             <?php } ?>
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AdminController@accessGroups") }}'">Cancel</button>
+                            <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
                 </div>                
@@ -147,12 +161,14 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-    
     function addAccessGroup() {
         $("#loading").css("display", "inline-block");
+        $("#submit_button").attr("disabled", "disabled");
+        $("#cancel_button").attr("disabled", "disabled");
 
         var description = $("#description").val(),
                 remarks = $("#remarks").val(),
+                is_admin = $("#is_admin").val(),
                 is_active = $("#is_active").val();
 
         var error = 0;
@@ -162,7 +178,13 @@ foreach ($user_permission as $permission) {
             $("#description_error").css("display", "block");
             error = 1;
         }
-               
+
+        if (is_admin.trim() == "") {
+            $("#is_admin_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Admin status</span>');
+            $("#is_admin_error").css("display", "block");
+            error = 1;
+        }
+
         if (is_active.trim() == "") {
             $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select status</span>');
             $("#is_active_error").css("display", "block");
@@ -179,6 +201,7 @@ foreach ($user_permission as $permission) {
                     selected_insert: $('.insert:checked').serialize(),
                     selected_update: $('.update:checked').serialize(),
                     remarks: remarks,
+                    is_admin: is_admin,
                     is_active: is_active
 
                 },
@@ -195,6 +218,10 @@ foreach ($user_permission as $permission) {
                     }
                 }
             });
+        } else {
+            $("#loading").css("display", "none");
+            $("#submit_button").removeAttr("disabled");
+            $("#cancel_button").removeAttr("disabled");
         }
     }
 </script>

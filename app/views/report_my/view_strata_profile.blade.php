@@ -1,4 +1,4 @@
-@extends('layout.english_layout.default')
+@extends('layout.malay_layout.default')
 
 @section('content')
 
@@ -28,7 +28,7 @@
                                 </h6>
                             </td>
                             <td class="text-center">
-                                <a href="{{URL::action('PrintController@printOwnerTenant', $file_id)}}" target="_blank">
+                                <a href="{{ URL::action('PrintController@printStrataProfile', $files->id) }}" target="_blank">
                                     <button type="button" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Print"><i class="fa fa-print"></i></button>
                                 </a>
                             </td>
@@ -38,37 +38,101 @@
 
                 <hr/>
 
+                @if (!empty($files))
+                @if (!empty($result))
                 <div class="row">
                     <div class="col-lg-12">
-                        <form action="{{ url('/reporting/ownerTenant') }}" method="GET" class="form-horizontal">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="form-group">                                        
-                                        <select class="form-control select2" id="file_id" name="file_id" required="">
-                                            <option value="">File No</option>
-                                            @foreach ($files as $file)
-                                            <option value="{{$file->id}}" {{ ($file->id == $file_id ? 'selected' : '') }}>{{$file->file_no}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <button type="submit" class="btn btn-primary" id="submit_button">Submit</button>
-                                    <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("ReportController@ownerTenant") }}'"">Cancel</button>
-                                    <img id="loading" style="display: none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
-                                </div>
-                            </div>
-                        </form>
+                        <table border="1" id="strata_table" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%; text-align: center !important; vertical-align:middle !important;">PBT</th>
+                                    <th style="width:20%; text-align: center !important; vertical-align:middle !important;">NAMA PANGSAPURI</th>
+                                    <th style="width:10%; text-align: center !important; vertical-align:middle !important;">JUMLAH UNIT</th>
+                                    <th style="width:10%; text-align: center !important; vertical-align:middle !important;">JUMLAH BLOK</th>
+                                    <th style="width:10%; text-align: center !important; vertical-align:middle !important;">BIL. TINGKAT</th>
+                                    <th style="width:10%; text-align: center !important; vertical-align:middle !important;">LIF</th>
+                                    <th style="width:10%; text-align: center !important; vertical-align:middle !important;">BIL. UNIT LIF</th>
+                                    <th style="width:10%; text-align: center !important; vertical-align:middle !important;">AKAUN METER AIR</th>
+                                    <th style="width:10%; text-align: center !important; vertical-align:middle !important;">ZON</th>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['pbt'] }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['strata_name'] }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['total_unit'] }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['total_block'] }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['total_floor'] }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['lif'] }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['lif_unit'] }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['type_meter'] }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['zone'] }}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>  
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                @if (!empty($file_id) && !empty($race))
-                <?php $file = Files::find($file_id); ?>
-                @if (!empty($owner))
-                <div class="row">
+                <div class="row" style="margin-top: 25px;">
                     <div class="col-lg-12">
-                        <p>DIDUDUKI PEMILIK</p>
-                        <table border="1" id="owner_table" width="100%" style="font-size: 12px;">
+                        <table border="1" id="fee_table" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="width:35%; text-align: center !important; vertical-align:middle !important;">KADAR CAJ</th>
+                                    <th style="width:35%; text-align: center !important; vertical-align:middle !important;">KADAR SINKING FUND</th>
+                                    <th style="width:30%; text-align: center !important; vertical-align:middle !important;">% PURATA KUTIPAN TAHUNAN</th>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['mf_rate'] }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['sf_rate'] }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $result['purata_dikutip'] }}</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>  
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endif
+
+                @if ($files->financeSupport)
+                <div class="row" style="margin-top: 25px;">
+                    <div class="col-lg-12">
+                        <table border="1" id="support_table" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="width:5%; text-align: center !important; vertical-align:middle !important;">BIL</th>
+                                    <th style="width:80%; text-align: center !important; vertical-align:middle !important;">JENIS BANTUAN</th>
+                                    <th style="width:15%; text-align: center !important; vertical-align:middle !important;">KOS (RM)</th>
+                                </tr>
+                                <?php $count = 1 ?>
+                                @foreach ($files->financeSupport as $support)
+                                <tr>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $count }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $support->name }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $support->amount }}</td>
+                                </tr>
+                                <?php $count = $count + 1 ?>
+                                @endforeach
+                            </thead>
+                            <tbody>
+                                <tr>  
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endif
+
+                @if (!empty($race))                
+                @if ($files->owner)
+                <div class="row" style="margin-top: 25px;">
+                    <div class="col-lg-12">
+                        <table border="1" id="owner_table" width="100%">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="width:25%; text-align: center !important; vertical-align:middle !important;">NO. FAIL</th>
@@ -82,11 +146,11 @@
                             </thead>
                             <tbody>
                                 <tr>                                    
-                                    <?php $total_all_owner = Buyer::where('file_id', $file->id)->where('is_deleted', 0)->count(); ?>
+                                    <?php $total_all_owner = Buyer::where('file_id', $files->id)->where('is_deleted', 0)->count(); ?>
 
-                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>                               
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $files->file_no }}</td>                               
                                     @foreach ($race as $rc)
-                                    <?php $total_owner = Buyer::where('file_id', $file->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
+                                    <?php $total_owner = Buyer::where('file_id', $files->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
                                     <?php $percentage_owner = 0; ?>
                                     <?php if ($total_owner > 0) { ?>
                                         <?php $percentage_owner = ($total_owner / $total_all_owner) * 100; ?>
@@ -149,11 +213,10 @@
 
                 <br/><br/>
 
-                @if (!empty($tenant))
+                @if ($files->tenant)
                 <div class="row">
                     <div class="col-lg-12">
-                        <p>DISEWA</p>
-                        <table border="1" id="tenant_table" width="100%" style="font-size: 12px;">
+                        <table border="1" id="tenant_table" width="100%">
                             <thead>
                                 <tr>
                                     <th rowspan="2" style="width:25%; text-align: center !important; vertical-align:middle !important;">NO. FAIL</th>
@@ -167,11 +230,11 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <?php $total_all_tenant = Buyer::where('file_id', $file->id)->where('is_deleted', 0)->count(); ?>
+                                    <?php $total_all_tenant = Buyer::where('file_id', $files->id)->where('is_deleted', 0)->count(); ?>
 
-                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>                               
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $files->file_no }}</td>                               
                                     @foreach ($race as $rc)
-                                    <?php $total_tenant = Tenant::where('file_id', $file->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
+                                    <?php $total_tenant = Tenant::where('file_id', $files->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
                                     <?php $percentage_tenant = 0; ?>
                                     <?php if ($total_tenant > 0) { ?>
                                         <?php $percentage_tenant = ($total_tenant / $total_all_tenant) * 100; ?>
@@ -188,7 +251,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        
+
                         <div id="tenant_chart"></div>
                         <script>
                             Highcharts.chart('tenant_chart', {
@@ -230,6 +293,7 @@
                         </script>
                     </div>
                 </div>
+                @endif
                 @endif
                 @endif
 

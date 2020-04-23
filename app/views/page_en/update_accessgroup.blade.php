@@ -181,6 +181,19 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
+                                    <label><span style="color: red;">*</span> Admin Status</label>
+                                    <select id="is_admin" class="form-control">
+                                        <option value="">Please Select</option>
+                                        <option value="1" {{($accessgroup->is_admin == 1 ? " selected" : "")}}>Yes</option>
+                                        <option value="0" {{($accessgroup->is_admin == 0 ? " selected" : "")}}>No</option>
+                                    </select>
+                                    <div id="is_admin_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label><span style="color: red;">*</span> Status</label>
                                     <select id="is_active" class="form-control">
                                         <option value="">Please Select</option>
@@ -201,9 +214,10 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-actions">
                             <?php if ($update_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="updateAccessGroup()">Submit</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="updateAccessGroup()">Submit</button>
                             <?php } ?>
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AdminController@accessGroups") }}'">Cancel</button>
+                            <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
                 </div>                
@@ -215,12 +229,14 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-
     function updateAccessGroup() {
         $("#loading").css("display", "inline-block");
+        $("#submit_button").attr("disabled", "disabled");
+        $("#cancel_button").attr("disabled", "disabled");
 
         var description = $("#description").val(),
                 remarks = $("#remarks").val(),
+                is_admin = $("#is_admin").val(),
                 is_active = $("#is_active").val();
 
         var error = 0;
@@ -228,6 +244,12 @@ foreach ($user_permission as $permission) {
         if (description.trim() == "") {
             $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter name</span>');
             $("#description_error").css("display", "block");
+            error = 1;
+        }
+
+        if (is_admin.trim() == "") {
+            $("#is_admin_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Admin status</span>');
+            $("#is_admin_error").css("display", "block");
             error = 1;
         }
 
@@ -247,6 +269,7 @@ foreach ($user_permission as $permission) {
                     selected_insert: $('.insert:checked').serialize(),
                     selected_update: $('.update:checked').serialize(),
                     remarks: remarks,
+                    is_admin: is_admin,
                     is_active: is_active,
                     role_id: '{{$accessgroup->id}}'
 
@@ -264,6 +287,10 @@ foreach ($user_permission as $permission) {
                     }
                 }
             });
+        } else {
+            $("#loading").css("display", "none");
+            $("#submit_button").removeAttr("disabled");
+            $("#cancel_button").removeAttr("disabled");
         }
     }
 </script>

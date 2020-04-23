@@ -41,12 +41,14 @@ $company = Company::find(Auth::user()->company_id);
                     @if (count($audit_trail) > 0)
                     @foreach ($audit_trail as $audit_trails)
                     <?php $user = User::find($audit_trails->audit_by); ?>
+                    @if ($user)
                     <tr>
                         <td>{{$audit_trails->module}}</td>
                         <td>{{$audit_trails->remarks}}</td>
                         <td>{{$user->full_name}}</td>
                         <td>{{date('d/m/Y H:i:s', strtotime($audit_trails->created_at))}}</td>
                     </tr>
+                    @endif
                     @endforeach
                     @else
                     <tr>

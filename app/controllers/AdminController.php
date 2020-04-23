@@ -4944,11 +4944,13 @@ class AdminController extends BaseController {
         if (Request::ajax()) {
 
             $description = $data['description'];
+            $is_admin = $data['is_admin'];
             $is_active = $data['is_active'];
             $remarks = $data['remarks'];
 
             $role = new Role();
             $role->name = $description;
+            $role->is_admin = $is_admin;
             $role->is_active = $is_active;
             $role->remarks = $remarks;
             $success = $role->save();
@@ -5079,6 +5081,11 @@ class AdminController extends BaseController {
             foreach ($accessgroup as $accessgroups) {
                 $button = "";
                 if (Session::get('lang') == "en") {
+                    $is_admin = 'No';
+                    if ($accessgroups->is_admin == 1) {
+                        $is_admin = "Yes";
+                    }
+                    
                     if ($accessgroups->is_active == 1) {
                         $status = "Active";
                         $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAccessGroup(\'' . $accessgroups->id . '\')">Inactive</button>&nbsp;';
@@ -5087,6 +5094,11 @@ class AdminController extends BaseController {
                         $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAccessGroup(\'' . $accessgroups->id . '\')">Active</button>&nbsp;';
                     }
                 } else {
+                    $is_admin = 'Tidak';
+                    if ($accessgroups->is_admin == 1) {
+                        $is_admin = "Ya";
+                    }
+                    
                     if ($accessgroups->is_active == 1) {
                         $status = "Aktif";
                         $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAccessGroup(\'' . $accessgroups->id . '\')">Tidak Aktif</button>&nbsp;';
@@ -5101,6 +5113,7 @@ class AdminController extends BaseController {
                 $data_raw = array(
                     $accessgroups->name,
                     $accessgroups->remarks,
+                    $is_admin,
                     $status,
                     $button
                 );
@@ -5252,11 +5265,13 @@ class AdminController extends BaseController {
 
             $role_id = $data['role_id'];
             $description = $data['description'];
+            $is_admin = $data['is_admin'];
             $is_active = $data['is_active'];
             $remarks = $data['remarks'];
 
             $role = Role::find($role_id);
             $role->name = $description;
+            $role->is_admin = $is_admin;
             $role->is_active = $is_active;
             $role->remarks = $remarks;
             $success = $role->save();

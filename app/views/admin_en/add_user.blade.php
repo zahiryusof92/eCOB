@@ -239,6 +239,8 @@ foreach ($user_permission as $permission) {
 
     function addUser() {
         $("#loading").css("display", "inline-block");
+        $("#submit_button").attr("disabled", "disabled");
+        $("#cancel_button").attr("disabled", "disabled");
 
         var username = $("#username").val(),
                 password = $("#password").val(),
@@ -321,6 +323,10 @@ foreach ($user_permission as $permission) {
                     }
                 }
             });
+        } else {
+            $("#loading").css("display", "none");
+            $("#submit_button").removeAttr("disabled");
+            $("#cancel_button").removeAttr("disabled");
         }
     }
 

@@ -67,7 +67,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Access Group</label>
-                                    <input type="text" class="form-control" id="role" value="{{$role->name}}" disabled="">
+                                    <input type="text" class="form-control" id="role" value="{{$user->getRole->name}}" disabled="">
                                 </div>
                             </div>
                         </div>

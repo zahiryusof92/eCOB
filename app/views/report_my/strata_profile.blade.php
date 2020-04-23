@@ -3,19 +3,10 @@
 @section('content')
 
 <?php
-$facilities = [
-    'management_office' => 'Management Office',
-    'pool' => 'Pool',
-    'surau' => 'Surau',
-    'hall' => 'Hall',
-    'gym' => 'Gym',
-    'lift' => 'Lift',
-    'playground' => 'Play Ground',
-    'guardhouse' => 'Guardhouse',
-    'kindergarten' => 'Kindergarten',
-    'openspace' => 'Openspace',
-    'rubbish_room' => 'Rubbish Room',
-    'gated' => 'Gated'
+$zone = [
+    'Biru' => 'Biru',
+    'Kuning' => 'Kuning',
+    'Merah' => 'Merah'
 ];
 ?>
 
@@ -26,144 +17,65 @@ $facilities = [
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-lg-12">
-                    <form id="formSubmit" class="form-horizontal">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Parliament</label>
-                                    <select class="form-control select2" id="parliament" onchange="findDUN()">
-                                        <option value="">Please Select</option>
-                                        @foreach ($parliament as $parliaments)
-                                        <option value="{{$parliaments->id}}">{{$parliaments->description}}</option>
-                                        @endforeach
-                                    </select>
-                                    <div id="parliament_error" style="display:none;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>DUN</label>
-                                    <select class="form-control select2" id="dun" onchange="findPark()">
-                                        <option value="">Please Select</option>   
-                                    </select>
-                                    <div id="dun_error" style="display:none;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Park</label>
-                                    <select class="form-control select2" id="park"> 
-                                        <option value="">Please Select</option> 
-                                    </select>
-                                    <div id="park_error" style="display:none;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Land Title</label>
-                                    <select class="form-control select2" id="land">
-                                        <option value="">Please Select</option>
-                                        @foreach ($land as $f)
-                                        <option value="{{$f->id}}">{{$f->description}}</option>
-                                        @endforeach
-                                    </select>
-                                    <div id="land_error" style="display:none;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Category</label>
-                                    <select class="form-control select2" id="category">
-                                        <option value="">Please Select</option>
-                                        @foreach ($category as $f)
-                                        <option value="{{$f->id}}">{{$f->description}}</option>
-                                        @endforeach
-                                    </select>
-                                    <div id="category_error" style="display:none;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Strata</label>
-                                    <input type="text" class="form-control" id="strata">
-                                    <div id="strata_error" style="display:none;"></div>
-                                </div>
-                            </div>  
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Export To</label>
-                                    <select class="form-control select2" id="export">
-                                        <option value="pdf">PDF</option>
-                                    </select>
-                                    <div id="export_error" style="display:none;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Bantuan LPHS</label>
-                                    <select class="form-control select2" id="bantuan_lhps">
-                                        <option value="all">- ALL - </option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
-                                    <div id="bantuan_lhps_error" style="display:none;"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="row">
+                        @if (Auth::user()->getAdmin())
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <div class="col-md-6">
-                                    <label>Facility</label>
-                                </div>
-                                <div class="col-md-12">
-                                    @foreach ($facilities as $value => $facility)
-                                    <div class="col-md-3">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" value="{{ $value }}" name="facility[]">{{ $facility }}
-                                        </label>
-                                    </div>
-                                    @endforeach
-                                </div>
+                                <label>COB</label>
+                                <select id="company" class="form-control select2">
+                                    <option value="">Please Select</option>
+                                    @foreach ($cob as $companies)
+                                    <option value="{{ $companies->short_name }}">{{ $companies->name }} ({{ $companies->short_name }})</option>
+                                    @endforeach                                    
+                                </select>
                             </div>
                         </div>
-                        <div class="form-actions">
-                            <!--<button type="button" class="btn btn-primary">Submit</button>-->
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("ReportController@strataProfile") }}'">Cancel</button>
-                            <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
+                        @endif
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Parliament</label>
+                                <select id="parliament" class="form-control select2">
+                                    <option value="">Please Select</option>
+                                    @foreach ($parliament as $parliaments)
+                                    <option value="{{$parliaments->description}}">{{$parliaments->description}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </form>
-                </div>                
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>ZON</label>
+                                <select id="zone" class="form-control select2">
+                                    <option value="">Please Select</option>
+                                    @foreach ($zone as $value => $zon)
+                                    <option value="{{$value}}">{{ ucwords($zon) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <hr/>
+
+            <div class="row">
+                <div class="col-lg-12"> 
+                    <table class="table table-hover nowrap" id="filelist" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th style="width:55%;">File No</th>
+                                <th style="width:15%;">COB</th>                                                           
+                                <th style="width:20%;">Parliament</th>
+                                <th style="width:10%;">ZON</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div> 
         </div>
     </section>
     <!-- End -->
@@ -171,65 +83,38 @@ $facilities = [
 
 <!-- Page Scripts -->
 <script>
-    $("#formSubmit").submit(function (e) {
-        e.preventDefault();
-        $("#loading").css("display", "inline-block");
-        $("#submit_button").attr("disabled", "disabled");
-        $("#cancel_button").attr("disabled", "disabled");
+    var oTable;
 
-        let error = 0;
+    $(document).ready(function () {
+        oTable = $('#filelist').DataTable({
+            "sAjaxSource": "{{URL::action('ReportController@getStrataProfile')}}",
+            "lengthMenu": [
+                [15, 30, 50, 100, -1],
+                [15, 30, 50, 100, "All"]
+            ],
+//            "aoColumnDefs": [
+//                {
+//                    "bSortable": false,
+//                    "aTargets": [-1]
+//                }
+//            ],
+            "sorting": [
+                [1, "asc"]
+            ],
+            "scrollX": true,
+            "responsive": false
+        });
 
-        if (error == 0) {
-            $.ajax({
-                url: "{{ URL::action('ReportController@submitStrataProfile') }}",
-                type: "POST",
-                data: $(this).serialize(),
-                success: function (data) {
-                    $("#loading").css("display", "none");
-                    $("#submit_button").removeAttr("disabled");
-                    $("#cancel_button").removeAttr("disabled");
-                    if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>File submitted successfully!</span>", function () {
-                            window.location = '{{URL::action("ReportController@strataProfile") }}';
-                        });
-                    } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
-                    }
-                }
-            });
-        } else {
-            $("#loading").css("display", "none");
-            $("#submit_button").removeAttr("disabled");
-            $("#cancel_button").removeAttr("disabled");
-        }
+        $('#company').on('change', function () {
+            oTable.columns(1).search(this.value).draw();
+        });
+        $('#parliament').on('change', function () {
+            oTable.columns(2).search(this.value).draw();
+        });
+        $('#zone').on('change', function () {
+            oTable.columns(3).search(this.value).draw();
+        });
     });
-
-    function findDUN() {
-        $.ajax({
-            url: "{{URL::action('AdminController@findDUN')}}",
-            type: "POST",
-            data: {
-                parliament_id: $("#parliament").val()
-            },
-            success: function (data) {
-                $("#dun").html(data);
-                $("#park").html("<option value=''>Please Select</option>");
-            }
-        });
-    }
-
-    function findPark() {
-        $.ajax({
-            url: "{{URL::action('AdminController@findPark')}}",
-            type: "POST",
-            data: {
-                dun_id: $("#dun").val()
-            },
-            success: function (data) {
-                $("#park").html(data);
-            }
-        });
-    }
 </script>
 <!-- End Page Scripts-->
 

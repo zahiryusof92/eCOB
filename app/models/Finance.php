@@ -28,16 +28,12 @@ class Finance extends Eloquent {
         return $this->hasMany('FinanceRepair', 'finance_file_id');
     }
     
-    public function financeReportMf() {
-        return $this->hasMany('FinanceReportMf', 'finance_file_id');
-    }
-    
     public function financeReportPerbelanjaan() {
         return $this->hasMany('FinanceReportPerbelanjaan', 'finance_file_id');
     }
-    
-    public function financeReportSf() {
-        return $this->hasMany('FinanceReportSf', 'finance_file_id');
+        
+    public function financeReport() {
+        return $this->hasMany('FinanceReport', 'finance_file_id');
     }
     
     public function financeStaff() {

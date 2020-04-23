@@ -1,27 +1,50 @@
 <?php
 
 class PrintController extends BaseController {
-    
+
     public function __construct() {
         if (empty(Session::get('lang'))) {
             Session::put('lang', 'en');
         }
-        
+
         $locale = Session::get('lang');
         App::setLocale($locale);
     }
 
     //audit trail
     public function printAuditTrail() {
-        
-        $audit_trail = AuditTrail::orderBy('id', 'desc')->get();
-        
+        $data = Input::all();
+
+        $start = $data['start'];
+        $end = $data['end'];
+
+        if (!empty($start) && !empty($end)) {
+            if ($start == $end) {
+                $audit_trail = AuditTrail::where('created_at', 'LIKE', $start . '%')->orderBy('id', 'desc')->get();
+            } else {
+                $audit_trail = AuditTrail::whereBetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+            }
+        } else if (!empty($start)) {
+            $end = date('Y-m-d');
+            if ($start == $end) {
+                $audit_trail = AuditTrail::where('created_at', 'LIKE', $start . '%')->orderBy('id', 'desc')->get();
+            } else {
+                $audit_trail = AuditTrail::whereBetween('created_at', [$start, $end])->orderBy('id', 'desc')->get();
+            }
+        } else if (!empty($end)) {
+            $audit_trail = AuditTrail::where('created_at', 'LIKE', $end . '%')->orderBy('id', 'desc')->get();
+        } else {
+            $audit_trail = AuditTrail::orderBy('id', 'desc')->get();
+        }
+
         if (Session::get('lang') == "en") {
             $viewData = array(
                 'title' => 'Audit Trail Report',
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
+                'start' => $start,
+                'end' => $end,
                 'audit_trail' => $audit_trail
             );
 
@@ -32,6 +55,8 @@ class PrintController extends BaseController {
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
+                'start' => $start,
+                'end' => $end,
                 'audit_trail' => $audit_trail
             );
 
@@ -64,7 +89,7 @@ class PrintController extends BaseController {
 
     //rating summary
     public function printRatingSummary() {
-        
+
         if (!Auth::user()->getAdmin()) {
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
@@ -106,7 +131,6 @@ class PrintController extends BaseController {
 //        $threeStar = Scoring::where('is_deleted', 0)->where('total_score', '<', 73)->where('total_score', '>=', 51)->count();
 //        $twoStar = Scoring::where('is_deleted', 0)->where('total_score', '<', 51)->where('total_score', '>=', 26)->count();
 //        $oneStar = Scoring::where('is_deleted', 0)->where('total_score', '<', 26)->where('total_score', '>=', 1)->count();
-        
 //        $fiveStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 100)->where('total_score', '>=', 86)->count();
 //        $fourStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 85)->where('total_score', '>=', 61)->count();
 //        $threeStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 60)->where('total_score', '>=', 41)->count();
@@ -152,7 +176,7 @@ class PrintController extends BaseController {
 
     //management summary
     public function printManagementSummary() {
-        
+
         if (!Auth::user()->getAdmin()) {
             $strata = DB::table('strata')
                     ->leftJoin('files', 'strata.file_id', '=', 'files.id')
@@ -160,10 +184,10 @@ class PrintController extends BaseController {
                     ->where('files.created_by', Auth::user()->id)
                     ->where('files.is_active', 1)
                     ->where('files.status', 1)
-                    ->where('files.is_deleted', 0)                    
+                    ->where('files.is_deleted', 0)
                     ->orderBy('strata.id')
                     ->get();
-            
+
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $strata = DB::table('strata')
@@ -171,10 +195,10 @@ class PrintController extends BaseController {
                     ->select('strata.*', 'files.id as file_id')
                     ->where('files.is_active', 1)
                     ->where('files.status', 1)
-                    ->where('files.is_deleted', 0)                    
+                    ->where('files.is_deleted', 0)
                     ->orderBy('strata.id')
                     ->get();
-            
+
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         }
 
@@ -188,12 +212,12 @@ class PrintController extends BaseController {
         $commercials = 0;
         $commercial_less10s = 0;
         $commercial_more10s = 0;
-        
+
         $developer = Developer::where('is_deleted', 0)->count();
 
         if (count($file) > 0) {
             foreach ($file as $files) {
-                
+
                 $jmb = ManagementJMB::where('file_id', $files->id)->count();
                 $mc = ManagementMC::where('file_id', $files->id)->count();
                 $agent = ManagementAgent::where('file_id', $files->id)->count();
@@ -266,8 +290,8 @@ class PrintController extends BaseController {
     }
 
     //cob file / management
-    public function printCobFileManagement() {  
-        
+    public function printCobFileManagement() {
+
         if (!Auth::user()->getAdmin()) {
             $strata = DB::table('strata')
                     ->leftJoin('files', 'strata.file_id', '=', 'files.id')
@@ -275,10 +299,10 @@ class PrintController extends BaseController {
                     ->where('files.created_by', Auth::user()->id)
                     ->where('files.is_active', 1)
                     ->where('files.status', 1)
-                    ->where('files.is_deleted', 0)                    
+                    ->where('files.is_deleted', 0)
                     ->orderBy('strata.id')
                     ->get();
-            
+
             $file = Files::where('created_by', Auth::user()->id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         } else {
             $strata = DB::table('strata')
@@ -286,25 +310,25 @@ class PrintController extends BaseController {
                     ->select('strata.*', 'files.id as file_id')
                     ->where('files.is_active', 1)
                     ->where('files.status', 1)
-                    ->where('files.is_deleted', 0)                    
+                    ->where('files.is_deleted', 0)
                     ->orderBy('strata.id')
                     ->get();
-            
+
             $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
         }
-        
+
         $jmbs = 0;
         $mcs = 0;
         $agents = 0;
         $otherss = 0;
         $residentials = 0;
         $commercials = 0;
-        
+
         $developer = Developer::where('is_deleted', 0)->count();
-        
+
         if (count($file) > 0) {
-            foreach ($file as $files) {                   
-                
+            foreach ($file as $files) {
+
                 $jmb = ManagementJMB::where('file_id', $files->id)->count();
                 $mc = ManagementMC::where('file_id', $files->id)->count();
                 $agent = ManagementAgent::where('file_id', $files->id)->count();
@@ -320,7 +344,7 @@ class PrintController extends BaseController {
                 $commercials += $commercial;
             }
         }
-        
+
         $totals = $developer + $jmbs + $mcs + $agents + $otherss;
         if ($totals == 0) {
             $total = 1;
@@ -368,10 +392,8 @@ class PrintController extends BaseController {
             return View::make('print_my.cob_file_management', $viewData);
         }
     }
-    
-    public function printOwnerTenant($id) {
-        $data = Input::all();
 
+    public function printOwnerTenant($id) {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
@@ -387,11 +409,11 @@ class PrintController extends BaseController {
                 $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
             }
         }
-        
-         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no')->get();
+
+        $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no')->get();
 
         if (isset($id) && !empty($id)) {
-            $file_id = $id;            
+            $file_id = $id;
             $owner = Buyer::where('file_id', $file_id)->where('is_deleted', 0)->get();
             $tenant = Tenant::where('file_id', $file_id)->where('is_deleted', 0)->get();
         } else {
@@ -432,6 +454,158 @@ class PrintController extends BaseController {
             );
 
             return View::make('print_my.owner_tenant', $viewData);
+        }
+    }
+
+    public function printStrataProfile($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $access_permission = 0;
+        foreach ($user_permission as $permission) {
+            if ($permission->submodule_id == 29) {
+                $access_permission = $permission->access_permission;
+            }
+        }
+
+        if ($access_permission) {
+            $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no')->get();
+
+            $files = Files::find($id);
+            if ($files) {
+                $pbt = '';
+                $strata_name = '';
+                $total_unit = 0;
+                $total_block = '';
+                $total_floor = '';
+                $mf_rate = 0;
+                $sf_rate = 0;
+                $berjaya_dikutip = 0;
+                $sepatut_dikutip = 0;
+                $purata_dikutip = 0;
+                $lif = 'TIADA';
+                $lif_unit = 0;
+                $type_meter = '';
+
+                if ($files) {
+                    $pbt = $files->company->short_name;
+                }
+
+                if ($files->strata) {
+                    $strata_name = $files->strata->name;
+                    $total_block = $files->strata->block_no;
+                    $total_floor = $files->strata->total_floor;
+                }
+
+                if ($files->resident) {
+                    $total_unit = $total_unit + $files->resident->unit_no;
+                }
+                if ($files->commercial) {
+                    $total_unit = $total_unit + $files->commercial->unit_no;
+                }
+
+                if ($files->facility) {
+                    $check_lif = $files->facility->lift;
+                    if ($check_lif) {
+                        $lif = 'ADA';
+                        $lif_unit = $files->facility->lift_unit;
+                    }
+                }
+
+                if ($files->other) {
+                    $type_meter = $files->other->water_meter;
+                }
+
+                if ($files->finance) {
+                    foreach ($files->finance as $finance) {
+                        if ($finance->year == date('Y')) {
+                            if ($finance->financeIncome) {
+                                foreach ($finance->financeReport as $report) {
+                                    if ($report->type == 'MF') {
+                                        $mf_rate = $report->fee_sebulan;
+                                    }
+                                    if ($report->type == 'SF') {
+                                        $sf_rate = $report->fee_sebulan;
+                                        $sepatut_dikutip = $sepatut_dikutip + $report->fee_semasa;
+                                    }
+                                }
+                                foreach ($finance->financeIncome as $income) {
+                                    if ($income->name == 'SINKING FUND') {
+                                        $berjaya_dikutip = $berjaya_dikutip + $income->semasa;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (!empty($berjaya_dikutip) && !empty($sepatut_dikutip)) {
+                    $purata_dikutip = round(($berjaya_dikutip / $sepatut_dikutip) * 100, 2);
+                }
+
+                if ($purata_dikutip >= 80) {
+                    $zone = 'BIRU';
+                } else if ($purata_dikutip < 79 && $purata_dikutip >= 50) {
+                    $zone = 'KUNING';
+                } else {
+                    $zone = 'MERAH';
+                }
+            }
+
+            $result = array(
+                'pbt' => $pbt,
+                'strata_name' => $strata_name,
+                'total_unit' => $total_unit,
+                'total_block' => $total_block,
+                'total_floor' => $total_floor,
+                'mf_rate' => $mf_rate,
+                'sf_rate' => $sf_rate,
+                'zone' => $zone,
+                'lif' => $lif,
+                'lif_unit' => $lif_unit,
+                'type_meter' => $type_meter,
+                'purata_dikutip' => $purata_dikutip
+            );
+
+//            return "<pre>" . print_r($result, true) . "</pre>";
+
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => 'Strata Profile',
+                    'panel_nav_active' => 'reporting_panel',
+                    'main_nav_active' => 'reporting_main',
+                    'sub_nav_active' => 'strata_profile_list',
+                    'user_permission' => $user_permission,
+                    'files' => $files,
+                    'race' => $race,
+                    'result' => $result,
+                    'image' => '',
+                );
+
+                return View::make('print_en.strata_profile', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => 'Strata Profile',
+                    'panel_nav_active' => 'reporting_panel',
+                    'main_nav_active' => 'reporting_main',
+                    'sub_nav_active' => 'strata_profile_list',
+                    'user_permission' => $user_permission,
+                    'files' => $files,
+                    'race' => $race,
+                    'result' => $result,
+                    'image' => '',
+                );
+
+                return View::make('print_my.strata_profile', $viewData);
+            }
+        } else {
+            $viewData = array(
+                'title' => "Page not found!",
+                'panel_nav_active' => '',
+                'main_nav_active' => '',
+                'sub_nav_active' => '',
+                'image' => ""
+            );
+            return View::make('404_en', $viewData);
         }
     }
 

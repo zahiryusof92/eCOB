@@ -32,7 +32,8 @@ foreach ($user_permission as $permission) {
                         <thead>
                             <tr>
                                 <th style="width:40%;">Name</th>
-                                <th style="width:40%;">Remarks</th>
+                                <th style="width:30%;">Remarks</th>
+                                <th style="width:10%;">Admin Status</th>
                                 <th style="width:10%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
                                 <th style="width:10%;">Action</th>

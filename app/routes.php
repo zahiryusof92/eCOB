@@ -435,7 +435,7 @@ Route::get('/parliment', 'SettingController@parliment')->before('authMember');
 Route::get('/addParliment', 'SettingController@addParliment')->before('authMember');
 Route::post('/submitParliment', 'SettingController@submitParliment')->before('authMember');
 Route::get('/getParliment', 'SettingController@getParliment')->before('authMember');
-Route::post('/activeParliment', 'SettingController@activeParliment')->before('authMemberauthMember');
+Route::post('/activeParliment', 'SettingController@activeParliment')->before('authMember');
 Route::post('/inactiveParliment', 'SettingController@inactiveParliment')->before('authMember');
 Route::get('/updateParliment/{id}', 'SettingController@updateParliment')->before('authMember');
 Route::post('/submitUpdateParliment', 'SettingController@submitUpdateParliment')->before('authMember');
@@ -458,7 +458,7 @@ Route::get('/addPark', 'SettingController@addPark')->before('authMember');
 Route::post('/submitPark', 'SettingController@submitPark')->before('authMember');
 Route::get('/getPark', 'SettingController@getPark')->before('authMember');
 Route::post('/activePark', 'SettingController@activePark')->before('authMember');
-Route::post('/inactivePark', 'SettingController@inactivePark')->before('authMemberauthMember');
+Route::post('/inactivePark', 'SettingController@inactivePark')->before('authMember');
 Route::get('/updatePark/{id}', 'SettingController@updatePark')->before('authMember');
 Route::post('/submitUpdatePark', 'SettingController@submitUpdatePark')->before('authMember');
 Route::post('/deletePark/{id}', 'SettingController@deletePark')->before('authMember');
@@ -470,7 +470,7 @@ Route::post('/submitMemoType', 'SettingController@submitMemoType')->before('auth
 Route::get('/getMemoType', 'SettingController@getMemoType')->before('authMember');
 Route::post('/activeMemoType', 'SettingController@activeMemoType')->before('authMember');
 Route::post('/inactiveMemoType', 'SettingController@inactiveMemoType')->before('authMember');
-Route::get('/updateMemoType/{id}', 'SettingController@updateMemoType')->before('authMemberauthMember');
+Route::get('/updateMemoType/{id}', 'SettingController@updateMemoType')->before('authMember');
 Route::post('/submitUpdateMemoType', 'SettingController@submitUpdateMemoType')->before('authMember');
 Route::post('/deleteMemoType/{id}', 'SettingController@deleteMemoType')->before('authMember');
 
@@ -528,7 +528,9 @@ Route::get('/reporting/cobFileManagement', 'AdminController@cobFileManagement')-
 
 // strata profile
 Route::get('/reporting/strataProfile', 'ReportController@strataProfile')->before('authMember');
-Route::post('/reporting/submitStrataProfile', 'ReportController@submitStrataProfile')->before('authMember');
+Route::get('/reporting/getStrataProfile', 'ReportController@getStrataProfile')->before('authMember');
+Route::get('/reporting/viewStrataProfile/{id}', 'ReportController@viewStrataProfile')->before('authMember');
+Route::get('/print/strataProfile/{id}', 'PrintController@printStrataProfile')->before('authMember');
 
 // owner tenant
 Route::get('/reporting/ownerTenant', 'ReportController@ownerTenant')->before('authMember');
@@ -544,7 +546,7 @@ Route::post('cob/update', 'CobController@update');
 
 // --- Printing --- //
 //audit trail
-Route::get('/print/AuditTrail', 'PrintController@printAuditTrail')->before('authMember');
+Route::post('/print/AuditTrail', 'PrintController@printAuditTrail')->before('authMember');
 
 //file by location
 Route::get('/print/FileByLocation', 'PrintController@printFileByLocation')->before('authMember');
