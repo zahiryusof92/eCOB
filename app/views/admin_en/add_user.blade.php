@@ -181,10 +181,10 @@ foreach ($user_permission as $permission) {
 <!-- Page Scripts -->
 <script>
     function showExpiryDate(value) {
-        var role = value.options[value.selectedIndex].text;
+        var role = $("#role").val();
         role.toUpperCase();
 
-        if (role == 'JMB') {
+        if (role.trim() == 'JMB' || role.trim() == 'MC') {
             $("#expiry_date").fadeIn();
             $("#file_form").fadeIn();
         } else {
@@ -205,6 +205,7 @@ foreach ($user_permission as $permission) {
             }
         });
     }
+
     $("#start_date_raw").datetimepicker({
         widgetPositioning: {
             horizontal: 'left'
@@ -246,6 +247,9 @@ foreach ($user_permission as $permission) {
                 password = $("#password").val(),
                 name = $("#name").val(),
                 role = $("#role").val(),
+                start_date = $("#start_date").val(),
+                end_date = $("#end_date").val(),
+                file_id = $("#file_id").val(),
                 company = $("#company").val(),
                 email = $("#email").val(),
                 phone_no = $("#phone_no").val(),
@@ -253,6 +257,24 @@ foreach ($user_permission as $permission) {
                 is_active = $("#is_active").val();
 
         var error = 0;
+
+        if (role == 'JMB' || role == 'MC') {
+            if (start_date.trim() == "") {
+                $("#start_date_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Start Date</span>');
+                $("#start_date_error").css("display", "block");
+                error = 1;
+            }
+            if (end_date.trim() == "") {
+                $("#end_date_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter End Date</span>');
+                $("#end_date_error").css("display", "block");
+                error = 1;
+            }
+            if (file_id.trim() == "") {
+                $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File</span>');
+                $("#file_id_error").css("display", "block");
+                error = 1;
+            }
+        }
 
         if (username.trim() == "") {
             $("#username_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Username</span>');
@@ -300,6 +322,9 @@ foreach ($user_permission as $permission) {
                     password: password,
                     name: name,
                     role: role,
+                    start_date: start_date,
+                    end_date: end_date,
+                    file_id: file_id,
                     company: company,
                     email: email,
                     phone_no: phone_no,

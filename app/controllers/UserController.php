@@ -185,6 +185,7 @@ class UserController extends BaseController {
         ));
 
         $cob = Input::get('cob');
+
         if (isset($cob) && !empty($cob)) {
             $cob_company = Company::where('short_name', $cob)->where('is_main', 0)->first();
 
@@ -207,20 +208,46 @@ class UserController extends BaseController {
 
                     if ($auth) {
                         $user_account = User::where('id', Auth::user()->id)->first();
-                        Session::put('id', $user_account['id']);
-                        Session::put('username', $user_account['username']);
-                        Session::put('full_name', $user_account['full_name']);
-                        Session::put('role', $user_account['role']);
+                        if ($user_account) {
+                            if ($user_account->getRole->name == 'JMB' || $user_account->getRole->name == 'MC') {
+                                $current = strtotime(date('Y-m-d'));
+                                $start = strtotime($user_account->start_date);
+                                $end = strtotime($user_account->end_date);
 
-                        # Audit Trail
-                        $remarks = 'User ' . Auth::user()->username . ' is signed.';
-                        $auditTrail = new AuditTrail();
-                        $auditTrail->module = "System Administration";
-                        $auditTrail->remarks = $remarks;
-                        $auditTrail->audit_by = Auth::user()->id;
-                        $auditTrail->save();
+                                if ($current >= $start && $current <= $end) {
+                                    Session::put('file_id', $user_account['file_id']);
+                                } else {
+                                    Auth::logout();
+                                    if (Session::get('lang') == "en") {
+                                        return Redirect::to('/' . $cob)->with('login_error', 'Account Expired');
+                                    } else {
+                                        return Redirect::to('/' . $cob)->with('login_error', 'Akaun Tamat Tempoh');
+                                    }
+                                }
+                            }
 
-                        return Redirect::to('/home');
+                            Session::put('id', $user_account['id']);
+                            Session::put('username', $user_account['username']);
+                            Session::put('full_name', $user_account['full_name']);
+                            Session::put('role', $user_account['role']);
+
+                            # Audit Trail
+                            $remarks = 'User ' . Auth::user()->username . ' is signed.';
+                            $auditTrail = new AuditTrail();
+                            $auditTrail->module = "System Administration";
+                            $auditTrail->remarks = $remarks;
+                            $auditTrail->audit_by = Auth::user()->id;
+                            $auditTrail->save();
+
+                            return Redirect::to('/home');
+                        } else {
+                            Auth::logout();
+                            if (Session::get('lang') == "en") {
+                                return Redirect::to('/' . $cob)->with('login_error', 'Wrong Username/Password');
+                            } else {
+                                return Redirect::to('/' . $cob)->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                            }
+                        }
                     } else {
                         if (Session::get('lang') == "en") {
                             return Redirect::to('/' . $cob)->with('login_error', 'Wrong Username/Password');
@@ -253,24 +280,33 @@ class UserController extends BaseController {
                                 ), $remember);
 
                 if ($auth) {
-
                     if (Auth::user()->getAdmin()) {
                         $user_account = User::where('id', Auth::user()->id)->first();
-                        Session::put('id', $user_account['id']);
-                        Session::put('username', $user_account['username']);
-                        Session::put('full_name', $user_account['full_name']);
-                        Session::put('role', $user_account['role']);
+                        if ($user_account) {
+                            Session::put('id', $user_account['id']);
+                            Session::put('username', $user_account['username']);
+                            Session::put('full_name', $user_account['full_name']);
+                            Session::put('role', $user_account['role']);
 
-                        # Audit Trail
-                        $remarks = 'User ' . Auth::user()->username . ' is signed.';
-                        $auditTrail = new AuditTrail();
-                        $auditTrail->module = "System Administration";
-                        $auditTrail->remarks = $remarks;
-                        $auditTrail->audit_by = Auth::user()->id;
-                        $auditTrail->save();
+                            # Audit Trail
+                            $remarks = 'User ' . Auth::user()->username . ' is signed.';
+                            $auditTrail = new AuditTrail();
+                            $auditTrail->module = "System Administration";
+                            $auditTrail->remarks = $remarks;
+                            $auditTrail->audit_by = Auth::user()->id;
+                            $auditTrail->save();
 
-                        return Redirect::to('/home');
+                            return Redirect::to('/home');
+                        } else {
+                            Auth::logout();
+                            if (Session::get('lang') == "en") {
+                                return Redirect::to('/login')->with('login_error', 'Wrong Username/Password');
+                            } else {
+                                return Redirect::to('/login')->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                            }
+                        }
                     } else {
+                        Auth::logout();
                         if (Session::get('lang') == "en") {
                             return Redirect::to('/login')->with('login_error', 'Wrong Username/Password');
                         } else {
@@ -420,6 +456,8 @@ class UserController extends BaseController {
         Session::forget('id');
         Session::forget('username');
         Session::forget('role');
+        Session::forget('admin_cob');
+        Session::forget('file_id');
         Auth::logout();
 
         if (!empty($cob)) {

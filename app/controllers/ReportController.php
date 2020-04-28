@@ -19,7 +19,12 @@ class ReportController extends BaseController {
 
         if (!Auth::user()->getAdmin()) {
             $cob = Company::where('id', Auth::user()->company_id)->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
-            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+
+            if (!empty(Auth::user()->file_id)) {
+                $files = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
                 $cob = Company::where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
@@ -132,7 +137,11 @@ class ReportController extends BaseController {
 
     public function getStrataProfile() {
         if (!Auth::user()->getAdmin()) {
-            $file = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->get();
+            if (!empty(Auth::user()->file_id)) {
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->get();
+            } else {
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
                 $file = Files::where('is_deleted', 0)->get();
@@ -223,7 +232,7 @@ class ReportController extends BaseController {
 
         if ($access_permission) {
             $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no')->get();
-            
+
             $files = Files::find($id);
             if ($files) {
                 $pbt = '';
@@ -239,7 +248,7 @@ class ReportController extends BaseController {
                 $lif = 'TIADA';
                 $lif_unit = 0;
                 $type_meter = '';
-                
+
                 if ($files) {
                     $pbt = $files->company->short_name;
                 }
@@ -268,7 +277,7 @@ class ReportController extends BaseController {
                 if ($files->other) {
                     $type_meter = $files->other->water_meter;
                 }
-                
+
                 if ($files->finance) {
                     foreach ($files->finance as $finance) {
                         if ($finance->year == date('Y')) {

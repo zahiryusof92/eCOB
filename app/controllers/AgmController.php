@@ -28,29 +28,56 @@ class AgmController extends BaseController {
 
                     if ($designation_final <= $currentMonth) {
                         if (!Auth::user()->getAdmin()) {
-                            if ($ajk_details->files->company->id == Auth::user()->company_id) {
-                                $designation = Designation::find($ajk_details->designation);
+                            if (!empty(Auth::user()->file_id)) {
+                                if ($ajk_details->files->id == Auth::user()->file_id) {
+                                    $designation = Designation::find($ajk_details->designation);
 
-                                $button = "";
-                                $button .= '<button type="button" class="btn btn-xs btn-success edit_ajk" title="Edit"  onclick="window.location=\'' . URL::action('AgmController@editAJK', $ajk_details->id) . '\'">';
-                                $button .= '<i class="fa fa-pencil"></i>';
-                                $button .= '</button>&nbsp;';
-                                $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAJKDetails(\'' . $ajk_details->id . '\')">';
-                                $button .= '<i class="fa fa-trash"></i>';
-                                $button .= '</button>&nbsp';
+                                    $button = "";
+                                    $button .= '<button type="button" class="btn btn-xs btn-success edit_ajk" title="Edit"  onclick="window.location=\'' . URL::action('AgmController@editAJK', $ajk_details->id) . '\'">';
+                                    $button .= '<i class="fa fa-pencil"></i>';
+                                    $button .= '</button>&nbsp;';
+                                    $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAJKDetails(\'' . $ajk_details->id . '\')">';
+                                    $button .= '<i class="fa fa-trash"></i>';
+                                    $button .= '</button>&nbsp';
 
-                                $data_raw = array(
-                                    $ajk_details->files->company->short_name,
-                                    $ajk_details->files->file_no,
-                                    $designation->description,
-                                    $ajk_details->name,
-                                    $ajk_details->phone_no,
-                                    $ajk_details->monthName(),
-                                    $ajk_details->year,
+                                    $data_raw = array(
+                                        $ajk_details->files->company->short_name,
+                                        $ajk_details->files->file_no,
+                                        $designation->description,
+                                        $ajk_details->name,
+                                        $ajk_details->phone_no,
+                                        $ajk_details->monthName(),
+                                        $ajk_details->year,
 //                                    $button
-                                );
+                                    );
 
-                                array_push($data, $data_raw);
+                                    array_push($data, $data_raw);
+                                }
+                            } else {
+                                if ($ajk_details->files->company->id == Auth::user()->company_id) {
+                                    $designation = Designation::find($ajk_details->designation);
+
+                                    $button = "";
+                                    $button .= '<button type="button" class="btn btn-xs btn-success edit_ajk" title="Edit"  onclick="window.location=\'' . URL::action('AgmController@editAJK', $ajk_details->id) . '\'">';
+                                    $button .= '<i class="fa fa-pencil"></i>';
+                                    $button .= '</button>&nbsp;';
+                                    $button .= '<button type="button" class="btn btn-xs btn-danger" title="Delete" onclick="deleteAJKDetails(\'' . $ajk_details->id . '\')">';
+                                    $button .= '<i class="fa fa-trash"></i>';
+                                    $button .= '</button>&nbsp';
+
+                                    $data_raw = array(
+                                        $ajk_details->files->company->short_name,
+                                        $ajk_details->files->file_no,
+                                        $designation->description,
+                                        $ajk_details->name,
+                                        $ajk_details->phone_no,
+                                        $ajk_details->monthName(),
+                                        $ajk_details->year,
+//                                    $button
+                                    );
+
+                                    array_push($data, $data_raw);
+                                }
                             }
                         } else {
                             if (empty(Session::get('admin_cob'))) {
@@ -130,7 +157,12 @@ class AgmController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         if (!Auth::user()->getAdmin()) {
             $cob = Company::where('id', Auth::user()->company_id)->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
-            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+
+            if (!empty(Auth::user()->file_id)) {
+                $files = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
                 $cob = Company::where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
@@ -238,12 +270,16 @@ class AgmController extends BaseController {
         $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
 
         if (!Auth::user()->getAdmin()) {
-            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            if (!empty(Auth::user()->file_id)) {
+                $files = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $files = Files::where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -338,12 +374,16 @@ class AgmController extends BaseController {
         $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
 
         if (!Auth::user()->getAdmin()) {
-            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            if (!empty(Auth::user()->file_id)) {
+                $files = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $files = Files::where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -1870,12 +1910,16 @@ class AgmController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         if (!Auth::user()->getAdmin()) {
-            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            if (!empty(Auth::user()->file_id)) {
+                $files = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $files = Files::where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
         $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
@@ -1944,12 +1988,16 @@ class AgmController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $document = Document::find($id);
         if (!Auth::user()->getAdmin()) {
-            $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+            if (!empty(Auth::user()->file_id)) {
+                $files = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
+            } else {
+                $files = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $files = Files::where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $files = Files::where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $files = Files::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
         $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->get();

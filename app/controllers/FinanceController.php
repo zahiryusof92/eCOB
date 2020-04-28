@@ -16,7 +16,11 @@ class FinanceController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         if (!Auth::user()->getAdmin()) {
-            $file_no = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            if (!empty(Auth::user()->file_id)) {
+                $file_no = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            } else {
+                $file_no = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
                 $file_no = Files::where('is_deleted', 0)->orderBy('year', 'asc')->get();
@@ -569,7 +573,11 @@ class FinanceController extends BaseController {
 
     public function getFinanceList() {
         if (!Auth::user()->getAdmin()) {
-            $filelist = Finance::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            if (!empty(Auth::user()->file_id)) {
+                $filelist = Finance::where('file_id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            } else {
+                $filelist = Finance::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
                 $filelist = Finance::where('is_deleted', 0)->orderBy('id', 'desc')->get();
@@ -1525,7 +1533,11 @@ class FinanceController extends BaseController {
 
     public function getFinanceSupportList() {
         if (!Auth::user()->getAdmin()) {
-            $filelist = FinanceSupport::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            if (!empty(Auth::user()->file_id)) {
+                $filelist = FinanceSupport::where('file_id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            } else {
+                $filelist = FinanceSupport::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
                 $filelist = FinanceSupport::where('is_deleted', 0)->orderBy('id', 'desc')->get();
@@ -1577,7 +1589,11 @@ class FinanceController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         if (!Auth::user()->getAdmin()) {
-            $file_no = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            if (!empty(Auth::user()->file_id)) {
+                $file_no = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            } else {
+                $file_no = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
                 $file_no = Files::where('is_deleted', 0)->orderBy('year', 'asc')->get();
@@ -1654,7 +1670,11 @@ class FinanceController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         if (!Auth::user()->getAdmin()) {
-            $file_no = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            if (!empty(Auth::user()->file_id)) {
+                $file_no = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            } else {
+                $file_no = Files::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('year', 'asc')->get();
+            }
         } else {
             if (empty(Session::get('admin_cob'))) {
                 $file_no = Files::where('is_deleted', 0)->orderBy('year', 'asc')->get();
