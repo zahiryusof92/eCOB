@@ -181,7 +181,7 @@ foreach ($user_permission as $permission) {
 <!-- Page Scripts -->
 <script>
     function showExpiryDate(value) {
-        var role = $("#role").val();
+         var role = value.options[value.selectedIndex].text;
         role.toUpperCase();
 
         if (role.trim() == 'JMB' || role.trim() == 'MC') {
