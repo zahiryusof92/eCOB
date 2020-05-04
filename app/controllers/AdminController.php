@@ -2,13 +2,6 @@
 
 class AdminController extends BaseController {
 
-    public function __construct() {
-        Session::put('lang', 'en');
-
-        $locale = Session::get('lang');
-        App::setLocale($locale);
-    }
-
     public function showView($name) {
         if (View::exists($name)) {
             return View::make($name);
@@ -96,53 +89,28 @@ class AdminController extends BaseController {
             }
         }
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'eCOB System',
-                'panel_nav_active' => 'home_panel',
-                'main_nav_active' => 'home_main',
-                'sub_nav_active' => 'home',
-                'user_permission' => $user_permission,
-                'strata' => $stratas,
-                'rating' => $ratings,
-                'fiveStar' => $fiveStars,
-                'fourStar' => $fourStars,
-                'threeStar' => $threeStars,
-                'twoStar' => $twoStars,
-                'oneStar' => $oneStars,
-                'developer' => $developer,
-                'jmb' => $jmbs,
-                'mc' => $mcs,
-                'agent' => $agents,
-                'others' => $otherss,
-                'image' => ""
-            );
+        $viewData = array(
+            'title' => 'eCOB System',
+            'panel_nav_active' => 'home_panel',
+            'main_nav_active' => 'home_main',
+            'sub_nav_active' => 'home',
+            'user_permission' => $user_permission,
+            'strata' => $stratas,
+            'rating' => $ratings,
+            'fiveStar' => $fiveStars,
+            'fourStar' => $fourStars,
+            'threeStar' => $threeStars,
+            'twoStar' => $twoStars,
+            'oneStar' => $oneStars,
+            'developer' => $developer,
+            'jmb' => $jmbs,
+            'mc' => $mcs,
+            'agent' => $agents,
+            'others' => $otherss,
+            'image' => ""
+        );
 
-            return View::make('home_en.index', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Sistem eCOB',
-                'panel_nav_active' => 'home_panel',
-                'main_nav_active' => 'home_main',
-                'sub_nav_active' => 'home',
-                'user_permission' => $user_permission,
-                'strata' => $stratas,
-                'rating' => $ratings,
-                'fiveStar' => $fiveStars,
-                'fourStar' => $fourStars,
-                'threeStar' => $threeStars,
-                'twoStar' => $twoStars,
-                'oneStar' => $oneStars,
-                'developer' => $developer,
-                'jmb' => $jmbs,
-                'mc' => $mcs,
-                'agent' => $agents,
-                'others' => $otherss,
-                'image' => ""
-            );
-
-            return View::make('home_my.index', $viewData);
-        }
+        return View::make('home_en.index', $viewData);
     }
 
     public function getAGMRemainder() {
@@ -926,15 +894,15 @@ class AdminController extends BaseController {
     public function getFileList() {
         if (!Auth::user()->getAdmin()) {
             if (!empty(Auth::user()->file_id)) {
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('status', '!=', 3)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', '!=', 2)->where('is_deleted', 0)->get();
             } else {
-                $file = Files::where('company_id', Auth::user()->company_id)->where('status', '!=', 3)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', '!=', 2)->where('is_deleted', 0)->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $file = Files::where('status', '!=', 3)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $file = Files::where('is_active', '!=', 2)->where('is_deleted', 0)->get();
             } else {
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('status', '!=', 3)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', '!=', 2)->where('is_deleted', 0)->get();
             }
         }
 
@@ -1043,15 +1011,15 @@ class AdminController extends BaseController {
     public function getFileListBeforeVP() {
         if (!Auth::user()->getAdmin()) {
             if (!empty(Auth::user()->file_id)) {
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('status', 3)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 2)->where('is_deleted', 0)->get();
             } else {
-                $file = Files::where('company_id', Auth::user()->company_id)->where('status', 3)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 2)->where('is_deleted', 0)->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $file = Files::where('status', 3)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $file = Files::where('is_active', 2)->where('is_deleted', 0)->get();
             } else {
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('status', 3)->where('is_deleted', 0)->orderBy('status', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 2)->where('is_deleted', 0)->get();
             }
         }
 
@@ -1241,7 +1209,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'developer' => $developer,
                 'house_scheme' => $house_scheme,
@@ -1258,7 +1226,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'developer' => $developer,
                 'house_scheme' => $house_scheme,
@@ -1290,7 +1258,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'developer' => $developer,
                 'house_scheme' => $house_scheme,
@@ -1307,7 +1275,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'developer' => $developer,
                 'house_scheme' => $house_scheme,
@@ -1342,36 +1310,47 @@ class AdminController extends BaseController {
             $is_active = $data['is_active'];
 
             $house_scheme = HouseScheme::find($id);
-            $house_scheme->name = $name;
-            $house_scheme->developer = $developer;
-            $house_scheme->address1 = $address1;
-            $house_scheme->address2 = $address2;
-            $house_scheme->address3 = $address3;
-            $house_scheme->city = $city;
-            $house_scheme->poscode = $poscode;
-            $house_scheme->state = $state;
-            $house_scheme->country = $country;
-            $house_scheme->phone_no = $phone_no;
-            $house_scheme->fax_no = $fax_no;
-            $house_scheme->remarks = $remarks;
-            $house_scheme->is_active = $is_active;
-            $success = $house_scheme->save();
+            if ($house_scheme) {
+                $files = Files::find($house_scheme->file_id);
 
-            if ($success) {
-                # Audit Trail
-                $file_name = Files::find($house_scheme->file_id);
-                $remarks = 'House Info (' . $file_name->file_no . ') has been updated.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "COB File";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
+                if ($files) {
+                    $files->is_active = $is_active;
+                    $updated = $files->save();
 
-                print "true";
-            } else {
-                print "false";
+                    if ($updated) {
+                        $house_scheme->name = $name;
+                        $house_scheme->developer = $developer;
+                        $house_scheme->address1 = $address1;
+                        $house_scheme->address2 = $address2;
+                        $house_scheme->address3 = $address3;
+                        $house_scheme->address4 = $address4;
+                        $house_scheme->city = $city;
+                        $house_scheme->poscode = $poscode;
+                        $house_scheme->state = $state;
+                        $house_scheme->country = $country;
+                        $house_scheme->phone_no = $phone_no;
+                        $house_scheme->fax_no = $fax_no;
+                        $house_scheme->remarks = $remarks;
+                        $house_scheme->is_active = $is_active;
+                        $success = $house_scheme->save();
+
+                        if ($success) {
+                            # Audit Trail
+                            $remarks = 'House Info (' . $files->file_no . ') has been updated.';
+                            $auditTrail = new AuditTrail();
+                            $auditTrail->module = "COB File";
+                            $auditTrail->remarks = $remarks;
+                            $auditTrail->audit_by = Auth::user()->id;
+                            $auditTrail->save();
+
+                            return "true";
+                        }
+                    }
+                }
             }
         }
+
+        return "false";
     }
 
     public function viewStrata($id) {
@@ -1412,7 +1391,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'strata' => $strata,
                 'city' => $city,
@@ -1441,7 +1420,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'strata' => $strata,
                 'city' => $city,
@@ -1506,7 +1485,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'strata' => $strata,
                 'city' => $city,
@@ -1535,7 +1514,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'strata' => $strata,
                 'city' => $city,
@@ -1885,7 +1864,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'city' => $city,
                 'country' => $country,
@@ -1906,7 +1885,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'city' => $city,
                 'country' => $country,
@@ -1946,7 +1925,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'city' => $city,
                 'country' => $country,
@@ -1967,7 +1946,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'city' => $city,
                 'country' => $country,
@@ -2240,7 +2219,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'file' => $file,
                 'designation' => $designation,
@@ -2254,7 +2233,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'file' => $file,
                 'designation' => $designation,
@@ -3307,7 +3286,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'file' => $file,
                 'other_details' => $other_details,
@@ -3320,7 +3299,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'file' => $file,
                 'other_details' => $other_details,
@@ -3464,7 +3443,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'image' => (!empty($image->image_url) ? $image->image_url : '')
@@ -3476,7 +3455,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'image' => (!empty($image->image_url) ? $image->image_url : '')
@@ -3822,7 +3801,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'Uploadmessage' => '',
@@ -3836,7 +3815,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'Uploadmessage' => '',
@@ -3851,14 +3830,18 @@ class AdminController extends BaseController {
     public function addBuyer($id) {
         $file = Files::find($id);
         $image = OtherDetails::where('file_id', $file->id)->first();
+        $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
+        $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'files' => $file,
+                'race' => $race,
+                'nationality' => $nationality,
                 'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
@@ -3868,8 +3851,10 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'files' => $file,
+                'race' => $race,
+                'nationality' => $nationality,
                 'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
 
@@ -3888,6 +3873,10 @@ class AdminController extends BaseController {
             $ic_company_no = $data['ic_company_no'];
             $address = $data['address'];
             $phone_no = $data['phone_no'];
+            $email = $data['email'];
+            $race = $data['race'];
+            $nationality = $data['nationality'];
+            $remark = $data['remarks'];
 
             $checkFile = Files::find($file_id);
 
@@ -3900,6 +3889,10 @@ class AdminController extends BaseController {
                 $buyer->ic_company_no = $ic_company_no;
                 $buyer->address = $address;
                 $buyer->phone_no = $phone_no;
+                $buyer->email = $email;
+                $buyer->race_id = $race;
+                $buyer->nationality_id = $nationality;
+                $buyer->remarks = $remark;
                 $success = $buyer->save();
 
                 if ($success) {
@@ -3928,6 +3921,8 @@ class AdminController extends BaseController {
         $buyer = Buyer::find($id);
         $files = Files::find($buyer->file_id);
         $image = OtherDetails::where('file_id', $files->id)->first();
+        $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
+        $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -3937,6 +3932,8 @@ class AdminController extends BaseController {
                 'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $files,
+                'race' => $race,
+                'nationality' => $nationality,
                 'buyer' => $buyer,
                 'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
@@ -3950,6 +3947,8 @@ class AdminController extends BaseController {
                 'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $files,
+                'race' => $race,
+                'nationality' => $nationality,
                 'buyer' => $buyer,
                 'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
@@ -3969,6 +3968,10 @@ class AdminController extends BaseController {
             $ic_company_no = $data['ic_company_no'];
             $address = $data['address'];
             $phone_no = $data['phone_no'];
+            $email = $data['email'];
+            $race = $data['race'];
+            $nationality = $data['nationality'];
+            $remark = $data['remarks'];
             $id = $data['id'];
 
             $checkFile = Files::find($file_id);
@@ -3983,6 +3986,10 @@ class AdminController extends BaseController {
                     $buyer->ic_company_no = $ic_company_no;
                     $buyer->address = $address;
                     $buyer->phone_no = $phone_no;
+                    $buyer->email = $email;
+                    $buyer->race_id = $race;
+                    $buyer->nationality_id = $nationality;
+                    $buyer->remarks = $remark;
                     $success = $buyer->save();
 
                     if ($success) {
@@ -4090,7 +4097,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'Uploadmessage' => '',
@@ -4104,7 +4111,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'Uploadmessage' => '',
@@ -4117,52 +4124,101 @@ class AdminController extends BaseController {
     }
 
     public function submitUploadBuyer($id) {
-        $files = Files::find($id);
-
         $data = Input::all();
         if (Request::ajax()) {
 
-            $getAllBuyer = $data['getAllBuyer'];
+            $files = Files::find($id);
 
-            foreach ($getAllBuyer as $buyerList) {
+            if ($files) {
+                $getAllBuyer = $data['getAllBuyer'];
 
-                $check_file_id = Files::where('file_no', $buyerList[0])->where('id', $files->id)->first();
-                if (count($check_file_id) > 0) {
-                    $files_id = $check_file_id->id;
+                foreach ($getAllBuyer as $buyerList) {
 
-                    $check_buyer = Buyer::where('file_id', $files_id)->where('unit_no', $buyerList[1])->where('is_deleted', 0)->first();
-                    if (count($check_buyer) <= 0) {
-                        $buyer = new Buyer();
-                        $buyer->file_id = $files_id;
-                        $buyer->unit_no = $buyerList[1];
-                        $buyer->unit_share = $buyerList[2];
-                        $buyer->owner_name = $buyerList[3];
-                        $buyer->ic_company_no = $buyerList[4];
-                        $buyer->address = $buyerList[5];
-                        $buyer->phone_no = $buyerList[6];
-                        $buyer->save();
+                    $check_file_id = Files::where('file_no', $buyerList[0])->where('id', $files->id)->first();
+                    if ($check_file_id) {
+                        $files_id = $check_file_id->id;
 
-                        # Audit Trail
-                        $file_name = Files::find($buyer->file_id);
-                        $remarks = 'COB Owner List (' . $file_name->file_no . ') for Unit ' . $buyer->unit_no . ' has been inserted.';
-                        $auditTrail = new AuditTrail();
-                        $auditTrail->module = "COB File";
-                        $auditTrail->remarks = $remarks;
-                        $auditTrail->audit_by = Auth::user()->id;
-                        $auditTrail->save();
+                        $check_buyer = Buyer::where('file_id', $files_id)->where('unit_no', $buyerList[1])->where('is_deleted', 0)->first();
+                        if ($check_buyer) {
+                            $race = '';
+                            if (isset($buyerList[8]) && !empty($buyerList[8])) {
+                                $race_raw = trim($buyerList[8]);
+
+                                if (!empty($race_raw)) {
+                                    $race_query = Race::where('name', $race_raw)->where('is_deleted', 0)->first();
+                                    if ($race_query) {
+                                        $race = $race_query->id;
+                                    } else {
+                                        $race_query = new Race();
+                                        $race_query->name = $race_raw;
+                                        $race_query->is_active = 1;
+                                        $race_query->save();
+
+                                        $race = $race_query->id;
+                                    }
+                                }
+                            }
+
+                            $nationality = '';
+                            if (isset($buyerList[9]) && !empty($buyerList[9])) {
+                                $nationality_raw = trim($buyerList[9]);
+
+                                if (!empty($nationality_raw)) {
+                                    $nationality_query = Nationality::where('name', $nationality_raw)->where('is_deleted', 0)->first();
+                                    if ($nationality_query) {
+                                        $nationality = $nationality_query->id;
+                                    } else {
+                                        $nationality_query = new Nationality();
+                                        $nationality_query->name = $nationality_raw;
+                                        $nationality_query->is_active = 1;
+                                        $nationality_query->save();
+
+                                        $nationality = $nationality_query->id;
+                                    }
+                                }
+                            }
+
+                            $buyer = new Buyer();
+                            $buyer->file_id = $files_id;
+                            $buyer->unit_no = $buyerList[1];
+                            $buyer->unit_share = $buyerList[2];
+                            $buyer->owner_name = $buyerList[3];
+                            $buyer->ic_company_no = $buyerList[4];
+                            $buyer->address = $buyerList[5];
+                            $buyer->phone_no = $buyerList[6];
+                            $buyer->email = $buyerList[7];
+                            $buyer->race_id = $race;
+                            $buyer->nationality_id = $nationality;
+                            $buyer->remarks = $buyerList[10];
+                            $success = $buyer->save();
+
+                            if ($success) {
+                                # Audit Trail
+                                $file_name = Files::find($buyer->file_id);
+                                $remarks = 'COB Owner List (' . $file_name->file_no . ') for Unit ' . $buyer->unit_no . ' has been inserted.';
+                                $auditTrail = new AuditTrail();
+                                $auditTrail->module = "COB File";
+                                $auditTrail->remarks = $remarks;
+                                $auditTrail->audit_by = Auth::user()->id;
+                                $auditTrail->save();
+                            }
+                        }
                     }
                 }
-            }
-            # Audit Trail
-            $file_name = Files::find($buyer->file_id);
-            $remarks = 'COB Owner List (' . $file_name->file_no . ') has been imported.';
-            $auditTrail = new AuditTrail();
-            $auditTrail->module = "COB File";
-            $auditTrail->remarks = $remarks;
-            $auditTrail->audit_by = Auth::user()->id;
-            $auditTrail->save();
 
-            print "true";
+                # Audit Trail
+                $file_name = Files::find($buyer->file_id);
+                $remarks = 'COB Owner List (' . $file_name->file_no . ') has been imported.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "COB File";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
         } else {
             print "false";
         }
@@ -4181,7 +4237,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'documentType' => $documentType,
@@ -4194,7 +4250,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'documentType' => $documentType,
@@ -4325,7 +4381,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'documentType' => $documentType,
@@ -4338,7 +4394,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'documentType' => $documentType,
@@ -4394,7 +4450,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'document' => $document,
@@ -4408,7 +4464,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($file->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $file,
                 'document' => $document,
@@ -6733,6 +6789,7 @@ class AdminController extends BaseController {
                     $button .= '<button class="btn btn-xs btn-danger" onclick="deleteForm(\'' . $forms->id . '\')">Delete <i class="fa fa-trash"></i></button>';
 
                     $data_raw = array(
+                        ($forms->company ? $forms->company->short_name : '<i>(not set)</i>'),
                         $formtype->name_en,
                         $forms->name_en,
                         $forms->sort_no,
@@ -6890,6 +6947,17 @@ class AdminController extends BaseController {
     public function addForm() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (!Auth::user()->getAdmin()) {
+            $cob = Company::where('id', Auth::user()->company_id)->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $cob = Company::where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+            } else {
+                $cob = Company::where('id', Session::get('admin_cob'))->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+            }
+        }
+
         $formtype = FormType::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no')->get();
 
         if (Session::get('lang') == "en") {
@@ -6899,6 +6967,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'form_list',
                 'user_permission' => $user_permission,
+                'cob' => $cob,
                 'formtype' => $formtype,
                 'image' => ""
             );
@@ -6911,6 +6980,7 @@ class AdminController extends BaseController {
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'form_list',
                 'user_permission' => $user_permission,
+                'cob' => $cob,
                 'formtype' => $formtype,
                 'image' => ""
             );
@@ -6924,6 +6994,7 @@ class AdminController extends BaseController {
         if (Request::ajax()) {
 
             $form = new AdminForm();
+            $form->company_id = $data['company_id'];
             $form->form_type_id = $data['form_type'];
             $form->name_en = $data['name_en'];
             $form->name_my = $data['name_my'];
@@ -6952,6 +7023,17 @@ class AdminController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $form = AdminForm::find($id);
+        
+        if (!Auth::user()->getAdmin()) {
+            $cob = Company::where('id', Auth::user()->company_id)->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $cob = Company::where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+            } else {
+                $cob = Company::where('id', Session::get('admin_cob'))->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
+            }
+        }
+        
         $formtype = FormType::where('is_active', 1)->where('is_deleted', 0)->get();
 
         if (Session::get('lang') == "en") {
@@ -6962,6 +7044,7 @@ class AdminController extends BaseController {
                 'sub_nav_active' => 'form_list',
                 'user_permission' => $user_permission,
                 'form' => $form,
+                'cob' => $cob,
                 'formtype' => $formtype,
                 'image' => ""
             );
@@ -6975,6 +7058,7 @@ class AdminController extends BaseController {
                 'sub_nav_active' => 'form_list',
                 'user_permission' => $user_permission,
                 'form' => $form,
+                'cob' => $cob,
                 'formtype' => $formtype,
                 'image' => ""
             );
@@ -6990,6 +7074,7 @@ class AdminController extends BaseController {
 
             $form = AdminForm::find($id);
             if ($form) {
+                $form->company_id = $data['company_id'];
                 $form->form_type_id = $data['form_type'];
                 $form->name_en = $data['name_en'];
                 $form->name_my = $data['name_my'];

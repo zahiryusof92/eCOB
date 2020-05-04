@@ -291,9 +291,14 @@ foreach ($user_permission as $permission) {
                                             <div class="form-actions">
                                                 <input type="hidden" id="others_image_url" value="{{$other_details->image_url}}"/>
                                                 <?php if ($update_permission == 1) { ?>
-                                                <button type="button" class="btn btn-primary" id="submit_button" onclick="updateOtherDetails()">Submit</button>
+                                                    <button type="button" class="btn btn-primary" id="submit_button" onclick="updateOtherDetails()">Submit</button>
                                                 <?php } ?>
+
+                                                @if ($file->is_active != 2)
                                                 <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">Cancel</button>
+                                                @else
+                                                <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileListBeforeVP')}}'">Cancel</button>
+                                                @endif
                                             </div>
                                         </form>
                                     </div>

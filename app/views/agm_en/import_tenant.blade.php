@@ -6,7 +6,7 @@
 $insert_permission = 0;
 
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 31) {
+    if ($permission->submodule_id == 43) {
         $insert_permission = $permission->insert_permission;
     }
 }
@@ -21,7 +21,7 @@ foreach ($user_permission as $permission) {
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Buyer Form -->
-                    {{ Form::open( array('url' => 'uploadPurchaserCSVAction', 'files' => true, 'class' => 'form-horizontal', 'role' => 'form') ) }}
+                    {{ Form::open( array('url' => 'uploadTenantCSVAction', 'files' => true, 'class' => 'form-horizontal', 'role' => 'form') ) }}
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -40,7 +40,7 @@ foreach ($user_permission as $permission) {
                                         Upload
                                     </button>
                                 <?php } ?>
-                                <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AgmController@purchaser')}}'">
+                                <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AgmController@tenant')}}'">
                                     Cancel
                                 </button>
                             </div>
@@ -58,13 +58,12 @@ foreach ($user_permission as $permission) {
                     @else                                        
                     <br /><br/>
                     <div class="table-responsive">
-                        <table class="table table-hover nowrap" id="purchaser" style="width: 100%;">
+                        <table class="table table-hover nowrap" id="tenant" style="width: 100%;">
                             <thead>
                                 <tr>
                                     <th style="width:10%;">File No</th>
-                                    <th style="width:5%;">Unit No</th>
-                                    <th style="width:5%;">Unit Share</th>
-                                    <th style="width:10%;">Owner Name</th>
+                                    <th style="width:10%;">Unit No</th>
+                                    <th style="width:10%;">Tenant Name</th>
                                     <th style="width:10%;">IC No / Company No</th>
                                     <th style="width:10%;">Address</th>
                                     <th style="width:10%;">Phone Number</th>
@@ -75,12 +74,12 @@ foreach ($user_permission as $permission) {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($csvData as $buyer)
+                                @foreach($csvData as $tenant)
                                 <tr>
                                     <?php
-                                    for ($i = 0; $i < count($buyer) - 1; $i++) {
-                                        if (end($buyer) == "Success") {
-                                            print '<td>' . $buyer[$i] . '</td>';
+                                    for ($i = 0; $i < count($tenant) - 1; $i++) {
+                                        if (end($tenant) == "Success") {
+                                            print '<td>' . $tenant[$i] . '</td>';
                                         }
                                     }
                                     ?>
@@ -91,7 +90,7 @@ foreach ($user_permission as $permission) {
                     </div>
                     <?php if ($insert_permission == 1) { ?>
                         <br/>
-                        <button id="submit_buyer_button" type="button" class="btn btn-primary" onclick="submitUploadPurchaser()">Submit</button>
+                        <button id="submit_buyer_button" type="button" class="btn btn-primary" onclick="submitUploadTenant()">Submit</button>
                         <img id="loading" src="{{ asset('assets/common/img/input-spinner.gif') }}" style="display:none;"/>
                     <?php } ?>
                     @endif
@@ -115,10 +114,10 @@ foreach ($user_permission as $permission) {
 <script>
     var oTable;
     $(function () {
-        oTable = $('#purchaser').editableTableWidget();
+        oTable = $('#tenant').editableTableWidget();
     });
 
-    function submitUploadPurchaser() {
+    function submitUploadTenant() {
         $("#upload_button").attr('disabled', 'disabled');
         $("#submit_buyer_button").attr('disabled', 'disabled');
         $("#loading").css('display', 'inline-block');
@@ -135,7 +134,7 @@ foreach ($user_permission as $permission) {
 
 
         $.ajax({
-            url: "{{ URL::action('AgmController@submitUploadPurchaser') }}",
+            url: "{{ URL::action('AgmController@submitUploadTenant') }}",
             type: "POST",
             data: {
                 getAllBuyer: getAllBuyer
@@ -143,8 +142,8 @@ foreach ($user_permission as $permission) {
             success: function (data) {
                 console.log(data);
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Purchaser imported successfully!</span>", function () {
-                        window.location = '{{URL::action("AgmController@purchaser") }}';
+                    bootbox.alert("<span style='color:green;'>Tenant imported successfully!</span>", function () {
+                        window.location = '{{URL::action("AgmController@tenant") }}';
                     });
                 }
             }

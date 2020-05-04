@@ -28,6 +28,25 @@ foreach ($user_permission as $permission) {
                                 </div>
                             </div>
                         </div>
+                        
+                        @if (Auth::user()->getAdmin())
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label"><span style="color: red; font-style: italic;">*</span> COB</label>
+                                    <select id="company" class="form-control select2">
+                                        <option value="">Please Select</option>
+                                        @foreach ($cob as $companies)
+                                        <option value="{{ $companies->id }}" {{ ($form->company_id == $companies->id ? 'selected' : '') }}>{{ $companies->name }} ({{ $companies->short_name }})</option>
+                                        @endforeach                                    
+                                    </select>
+                                    <div id="company_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @else
+                        <input type="hidden" id="company" value="{{ Auth::user()->company_id }}">
+                        @endif
 
                         <div class="row">
                             <div class="col-md-6">
@@ -179,8 +198,10 @@ foreach ($user_permission as $permission) {
         $("#loading").css("display", "inline-block");
         $("#submit_button").attr("disabled", "disabled");
         $("#cancel_button").attr("disabled", "disabled");
+        $("#company_error").css("display", "none");
         
-        var form_type = $("#form_type").val(),
+        var company_id = $("#company").val(),
+                form_type = $("#form_type").val(),
                 name_en = $("#name_en").val(),
                 name_my = $("#name_my").val(),
                 form_url = $("#form_file_url").val(),
@@ -188,6 +209,12 @@ foreach ($user_permission as $permission) {
                 is_active = $("#is_active").val();
                 
         var error = 0;
+        
+        if (company_id.trim() == "") {
+            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select COB</span>');
+            $("#company_error").css("display", "block");
+            error = 1;
+        }
         
         if (form_type.trim() == "") {
             $("#form_type_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Form Type</span>');
@@ -230,6 +257,7 @@ foreach ($user_permission as $permission) {
                 url: "{{ URL::action('AdminController@submitUpdateForm') }}",
                 type: "POST",
                 data: {
+                    company_id: company_id,
                     form_type: form_type,
                     name_en: name_en,
                     name_my: name_my,

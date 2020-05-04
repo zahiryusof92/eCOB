@@ -27,14 +27,26 @@
                                     <div class="col-lg-12">
                                         <div class="row">
                                             <table class="table table-bordered">
-                                                <?php $formFile = AdminForm::where('form_type_id', $ft->id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no')->get(); ?>
+
+                                                <?php
+                                                if (!Auth::user()->getAdmin()) {
+                                                    $formFile = AdminForm::where('company_id', Auth::user()->company_id)->where('form_type_id', $ft->id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no')->get();
+                                                } else {
+                                                    if (empty(Session::get('admin_cob'))) {
+                                                        $formFile = AdminForm::where('form_type_id', $ft->id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no')->get();
+                                                    } else {
+                                                        $formFile = AdminForm::where('company_id', Session::get('admin_cob'))->where('form_type_id', $ft->id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no')->get();
+                                                    }
+                                                }
+                                                ?>
+
                                                 <tbody>
                                                     <?php foreach ($formFile as $files) { ?>
-                                                    <tr>
-                                                        <td>
-                                                            <a href="{{ asset($files->file_url) }}" target="_blank">{{ $files->name_en }}</a>
-                                                        </td>
-                                                    </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="{{ asset($files->file_url) }}" target="_blank">{{ $files->name_en }}</a>
+                                                            </td>
+                                                        </tr>
                                                     <?php } ?>
                                                 </tbody>
                                             </table>

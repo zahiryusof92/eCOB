@@ -50,6 +50,7 @@ $access_permission40 = 0;
 $access_permission41 = 0;
 $access_permission42 = 0;
 $access_permission43 = 0;
+$access_permission44 = 0;
 
 $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
@@ -194,6 +195,9 @@ if ($user_permission) {
         if ($permission->submodule_id == 43) {
             $access_permission43 = $permission->access_permission;
         }
+        if ($permission->submodule_id == 44) {
+            $access_permission44 = $permission->access_permission;
+        }
     }
 }
 
@@ -231,7 +235,7 @@ if (!Auth::user()->getAdmin()) {
             <li class="left-menu-list-link hidden-md-up">
                 <a class="left-menu-link" href="{{ URL::action('AdminController@home') }}">
                     <i class="left-menu-link-icon fa fa-home"><!-- --></i>
-                    Home
+                    {{ trans('navigation.home') }}
                 </a>
             </li>
 
@@ -239,7 +243,7 @@ if (!Auth::user()->getAdmin()) {
             <li class="left-menu-list-submenu" id="cob_panel">
                 <a class="left-menu-link" href="javascript: void(0);">
                     <i class="left-menu-link-icon fa fa-file"><!-- --></i>
-                    COB Maintenance
+                    {{ trans('navigation.cob_maintenance') }}                    
                 </a>
                 <ul class="left-menu-list list-unstyled" id="cob_main">
                     @if ($access_permission1 == 1)
@@ -473,6 +477,13 @@ if (!Auth::user()->getAdmin()) {
                     <li id="race_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@race')}}">
                             Race
+                        </a>
+                    </li>
+                    @endif
+                    @if ($access_permission44 == 1)
+                    <li id="nationality_list">
+                        <a class="left-menu-link" href="{{URL::action('SettingController@nationality')}}">
+                            Nationality
                         </a>
                     </li>
                     @endif

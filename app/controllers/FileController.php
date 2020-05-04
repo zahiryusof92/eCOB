@@ -2,15 +2,6 @@
 
 class FileController extends BaseController {
 
-    public function __construct() {
-        if (empty(Session::get('lang'))) {
-            Session::put('lang', 'en');
-        }
-
-        $locale = Session::get('lang');
-        App::setLocale($locale);
-    }
-
     public function uploadFormFile() {
         $file = Input::file('form_file');
         if ($file) {
@@ -304,10 +295,10 @@ class FileController extends BaseController {
                     if (!empty($csvData)) {
                         if (Session::get('lang') == "en") {
                             $viewData = array(
-                                'title' => 'Update COB File',
-                                'panel_nav_active' => 'cob_panel',
-                                'main_nav_active' => 'cob_main',
-                                'sub_nav_active' => 'cob_list',
+                                'title' => 'Import Purchaser',
+                                'panel_nav_active' => 'agm_panel',
+                                'main_nav_active' => 'agm_main',
+                                'sub_nav_active' => 'agmpurchasesub_list',
                                 'user_permission' => $user_permission,
                                 'Uploadmessage' => 'success',
                                 'csvData' => $csvData,
@@ -317,10 +308,10 @@ class FileController extends BaseController {
                             return View::make('agm_en.import_purchaser', $viewData);
                         } else {
                             $viewData = array(
-                                'title' => 'Kemaskini COB Fail',
-                                'panel_nav_active' => 'cob_panel',
-                                'main_nav_active' => 'cob_main',
-                                'sub_nav_active' => 'cob_list',
+                                'title' => 'Import Purchaser',
+                                'panel_nav_active' => 'agm_panel',
+                                'main_nav_active' => 'agm_main',
+                                'sub_nav_active' => 'agmpurchasesub_list',
                                 'user_permission' => $user_permission,
                                 'Uploadmessage' => 'success',
                                 'csvData' => $csvData,
@@ -332,10 +323,10 @@ class FileController extends BaseController {
                     } else {
                         if (Session::get('lang') == "en") {
                             $viewData = array(
-                                'title' => 'Update COB File',
-                                'panel_nav_active' => 'cob_panel',
-                                'main_nav_active' => 'cob_main',
-                                'sub_nav_active' => 'cob_list',
+                                'title' => 'Import Purchaser',
+                                'panel_nav_active' => 'agm_panel',
+                                'main_nav_active' => 'agm_main',
+                                'sub_nav_active' => 'agmpurchasesub_list',
                                 'user_permission' => $user_permission,
                                 'Uploadmessage' => 'success',
                                 'csvData' => "No Data",
@@ -345,10 +336,10 @@ class FileController extends BaseController {
                             return View::make('agm_en.import_purchaser', $viewData);
                         } else {
                             $viewData = array(
-                                'title' => 'Kemaskini COB Fail',
-                                'panel_nav_active' => 'cob_panel',
-                                'main_nav_active' => 'cob_main',
-                                'sub_nav_active' => 'cob_list',
+                                'title' => 'Import Purchaser',
+                                'panel_nav_active' => 'agm_panel',
+                                'main_nav_active' => 'agm_main',
+                                'sub_nav_active' => 'agmpurchasesub_list',
                                 'user_permission' => $user_permission,
                                 'Uploadmessage' => 'success',
                                 'csvData' => "No Data",
@@ -361,10 +352,10 @@ class FileController extends BaseController {
                 } else {
                     if (Session::get('lang') == "en") {
                         $viewData = array(
-                            'title' => 'Update COB File',
-                            'panel_nav_active' => 'cob_panel',
-                            'main_nav_active' => 'cob_main',
-                            'sub_nav_active' => 'cob_list',
+                            'title' => 'Import Purchaser',
+                            'panel_nav_active' => 'agm_panel',
+                            'main_nav_active' => 'agm_main',
+                            'sub_nav_active' => 'agmpurchasesub_list',
                             'user_permission' => $user_permission,
                             'Uploadmessage' => 'error',
                             'upload' => "true",
@@ -374,10 +365,10 @@ class FileController extends BaseController {
                         return View::make('agm_en.import_purchaser', $viewData);
                     } else {
                         $viewData = array(
-                            'title' => 'Kemaskini COB Fail',
-                            'panel_nav_active' => 'cob_panel',
-                            'main_nav_active' => 'cob_main',
-                            'sub_nav_active' => 'cob_list',
+                            'title' => 'Import Purchaser',
+                            'panel_nav_active' => 'agm_panel',
+                            'main_nav_active' => 'agm_main',
+                            'sub_nav_active' => 'agmpurchasesub_list',
                             'user_permission' => $user_permission,
                             'Uploadmessage' => 'error',
                             'upload' => "true",
@@ -390,10 +381,10 @@ class FileController extends BaseController {
             } else {
                 if (Session::get('lang') == "en") {
                     $viewData = array(
-                        'title' => 'Update COB File',
-                        'panel_nav_active' => 'cob_panel',
-                        'main_nav_active' => 'cob_main',
-                        'sub_nav_active' => 'cob_list',
+                        'title' => 'Import Purchaser',
+                        'panel_nav_active' => 'agm_panel',
+                        'main_nav_active' => 'agm_main',
+                        'sub_nav_active' => 'agmpurchasesub_list',
                         'user_permission' => $user_permission,
                         'Uploadmessage' => 'Please upload CSV file',
                         'upload' => "true",
@@ -403,10 +394,10 @@ class FileController extends BaseController {
                     return View::make('agm_en.import_purchaser', $viewData);
                 } else {
                     $viewData = array(
-                        'title' => 'Kemaskini COB Fail',
-                        'panel_nav_active' => 'cob_panel',
-                        'main_nav_active' => 'cob_main',
-                        'sub_nav_active' => 'cob_list',
+                        'title' => 'Import Purchaser',
+                        'panel_nav_active' => 'agm_panel',
+                        'main_nav_active' => 'agm_main',
+                        'sub_nav_active' => 'agmpurchasesub_list',
                         'user_permission' => $user_permission,
                         'Uploadmessage' => 'Sila muat naik CSV fail',
                         'upload' => "true",
@@ -419,10 +410,10 @@ class FileController extends BaseController {
         } else {
             if (Session::get('lang') == "en") {
                 $viewData = array(
-                    'title' => 'Update COB File',
-                    'panel_nav_active' => 'cob_panel',
-                    'main_nav_active' => 'cob_main',
-                    'sub_nav_active' => 'cob_list',
+                    'title' => 'Import Purchaser',
+                    'panel_nav_active' => 'agm_panel',
+                    'main_nav_active' => 'agm_main',
+                    'sub_nav_active' => 'agmpurchasesub_list',
                     'user_permission' => $user_permission,
                     'Uploadmessage' => 'Please upload CSV file',
                     'upload' => "true",
@@ -432,10 +423,10 @@ class FileController extends BaseController {
                 return View::make('agm_en.import_purchaser', $viewData);
             } else {
                 $viewData = array(
-                    'title' => 'Kemaskini COB Fail',
-                    'panel_nav_active' => 'cob_panel',
-                    'main_nav_active' => 'cob_main',
-                    'sub_nav_active' => 'cob_list',
+                    'title' => 'Import Purchaser',
+                    'panel_nav_active' => 'agm_panel',
+                    'main_nav_active' => 'agm_main',
+                    'sub_nav_active' => 'agmpurchasesub_list',
                     'user_permission' => $user_permission,
                     'Uploadmessage' => 'Sila muat naik CSV fail',
                     'upload' => "true",
@@ -447,6 +438,180 @@ class FileController extends BaseController {
         }
     }
 
+    public function uploadTenantCSVAction() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        $file = Input::file('uploadedCSV');
+
+        if ($file) {
+            $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
+
+            $file_ext = explode(".", $filename);
+            $ext = end($file_ext);
+
+            if (strtolower($ext) == "csv") {
+                if ($file->move('files', $filename)) {
+                    if (($handle = fopen(url('/') . '/files/' . $filename, "r")) !== FALSE) {
+                        while (($data = fgetcsv($handle, 200000, ",")) !== FALSE) {
+                            $file_check = Files::where('file_no', $data[0])->get();
+                            if (count($file_check) > 0) {
+                                array_push($data, "Success");
+                                $csvData[] = $data;
+                            } else {
+                                array_push($data, "Error");
+                                $csvData[] = "";
+                            }
+                        }
+                        fclose($handle);
+                    }
+
+                    if (!empty($csvData)) {
+                        if (Session::get('lang') == "en") {
+                            $viewData = array(
+                                'title' => 'Import Tenant',
+                                'panel_nav_active' => 'agm_panel',
+                                'main_nav_active' => 'agm_main',
+                                'sub_nav_active' => 'agmtenantsub_list',
+                                'user_permission' => $user_permission,
+                                'Uploadmessage' => 'success',
+                                'csvData' => $csvData,
+                                'upload' => "true",
+                                'image' => ""
+                            );
+                            return View::make('agm_en.import_tenant', $viewData);
+                        } else {
+                            $viewData = array(
+                                'title' => 'Import Tenant',
+                                'panel_nav_active' => 'agm_panel',
+                                'main_nav_active' => 'agm_main',
+                                'sub_nav_active' => 'agmtenantsub_list',
+                                'user_permission' => $user_permission,
+                                'Uploadmessage' => 'success',
+                                'csvData' => $csvData,
+                                'upload' => "true",
+                                'image' => ""
+                            );
+                            return View::make('agm_my.import_tenant', $viewData);
+                        }
+                    } else {
+                        if (Session::get('lang') == "en") {
+                            $viewData = array(
+                                'title' => 'Import Tenant',
+                                'panel_nav_active' => 'agm_panel',
+                                'main_nav_active' => 'agm_main',
+                                'sub_nav_active' => 'agmtenantsub_list',
+                                'user_permission' => $user_permission,
+                                'Uploadmessage' => 'success',
+                                'csvData' => "No Data",
+                                'upload' => "true",
+                                'image' => ""
+                            );
+                            return View::make('agm_en.import_tenant', $viewData);
+                        } else {
+                            $viewData = array(
+                                'title' => 'Import Tenant',
+                                'panel_nav_active' => 'agm_panel',
+                                'main_nav_active' => 'agm_main',
+                                'sub_nav_active' => 'agmtenantsub_list',
+                                'user_permission' => $user_permission,
+                                'Uploadmessage' => 'success',
+                                'csvData' => "No Data",
+                                'upload' => "true",
+                                'image' => ""
+                            );
+                            return View::make('agm_my.import_tenant', $viewData);
+                        }
+                    }
+                } else {
+                    if (Session::get('lang') == "en") {
+                        $viewData = array(
+                            'title' => 'Import Tenant',
+                            'panel_nav_active' => 'agm_panel',
+                            'main_nav_active' => 'agm_main',
+                            'sub_nav_active' => 'agmtenantsub_list',
+                            'user_permission' => $user_permission,
+                            'Uploadmessage' => 'error',
+                            'upload' => "true",
+                            'image' => ""
+                        );
+
+                        return View::make('agm_en.import_tenant', $viewData);
+                    } else {
+                        $viewData = array(
+                            'title' => 'Import Tenant',
+                            'panel_nav_active' => 'agm_panel',
+                            'main_nav_active' => 'agm_main',
+                            'sub_nav_active' => 'agmtenantsub_list',
+                            'user_permission' => $user_permission,
+                            'Uploadmessage' => 'error',
+                            'upload' => "true",
+                            'image' => ""
+                        );
+
+                        return View::make('agm_my.import_tenant', $viewData);
+                    }
+                }
+            } else {
+                if (Session::get('lang') == "en") {
+                    $viewData = array(
+                        'title' => 'Import Tenant',
+                        'panel_nav_active' => 'agm_panel',
+                        'main_nav_active' => 'agm_main',
+                        'sub_nav_active' => 'agmtenantsub_list',
+                        'user_permission' => $user_permission,
+                        'Uploadmessage' => 'Please upload CSV file',
+                        'upload' => "true",
+                        'image' => ""
+                    );
+
+                    return View::make('agm_en.import_tenant', $viewData);
+                } else {
+                    $viewData = array(
+                        'title' => 'Import Tenant',
+                        'panel_nav_active' => 'agm_panel',
+                        'main_nav_active' => 'agm_main',
+                        'sub_nav_active' => 'agmtenantsub_list',
+                        'user_permission' => $user_permission,
+                        'Uploadmessage' => 'Sila muat naik CSV fail',
+                        'upload' => "true",
+                        'image' => ""
+                    );
+
+                    return View::make('agm_my.import_tenant', $viewData);
+                }
+            }
+        } else {
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => 'Import Tenant',
+                    'panel_nav_active' => 'agm_panel',
+                    'main_nav_active' => 'agm_main',
+                    'sub_nav_active' => 'agmtenantsub_list',
+                    'user_permission' => $user_permission,
+                    'Uploadmessage' => 'Please upload CSV file',
+                    'upload' => "true",
+                    'image' => ""
+                );
+
+                return View::make('agm_en.import_tenant', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => 'Import Tenant',
+                    'panel_nav_active' => 'agm_panel',
+                    'main_nav_active' => 'agm_main',
+                    'sub_nav_active' => 'agmtenantsub_list',
+                    'user_permission' => $user_permission,
+                    'Uploadmessage' => 'Sila muat naik CSV fail',
+                    'upload' => "true",
+                    'image' => ""
+                );
+
+                return View::make('agm_my.import_tenant', $viewData);
+            }
+        }
+    }
+
     public function uploadAGMFile() {
         $file = Input::file('agm_file');
         if ($file) {
@@ -454,13 +619,13 @@ class FileController extends BaseController {
             $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
             $file->move($destinationPath, $filename);
             $output = $destinationPath . "/" . $filename;
-            
+
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
             return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
         }
     }
-    
+
     public function uploadEGMFile() {
         $file = Input::file('egm_file');
         if ($file) {
@@ -468,27 +633,27 @@ class FileController extends BaseController {
             $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
             $file->move($destinationPath, $filename);
             $output = $destinationPath . "/" . $filename;
-            
+
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
             return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
         }
     }
-    
-     public function uploadMinutesMeetingFile() {
+
+    public function uploadMinutesMeetingFile() {
         $file = Input::file('minutes_meeting_file');
         if ($file) {
             $destinationPath = 'uploads/minutes_meeting_files';
             $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
             $file->move($destinationPath, $filename);
             $output = $destinationPath . "/" . $filename;
-            
+
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
             return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
         }
     }
-    
+
     public function uploadJMCFile() {
         $file = Input::file('jmc_file');
         if ($file) {
@@ -496,13 +661,13 @@ class FileController extends BaseController {
             $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
             $file->move($destinationPath, $filename);
             $output = $destinationPath . "/" . $filename;
-            
+
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
             return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
         }
     }
-    
+
     public function uploadICFile() {
         $file = Input::file('ic_file');
         if ($file) {
@@ -510,13 +675,13 @@ class FileController extends BaseController {
             $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
             $file->move($destinationPath, $filename);
             $output = $destinationPath . "/" . $filename;
-            
+
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
             return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
         }
     }
-    
+
     public function uploadAttendanceFile() {
         $file = Input::file('attendance_file');
         if ($file) {
@@ -524,13 +689,13 @@ class FileController extends BaseController {
             $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
             $file->move($destinationPath, $filename);
             $output = $destinationPath . "/" . $filename;
-            
+
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
             return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
         }
     }
-    
+
     public function uploadAuditedFinancialFile() {
         $file = Input::file('audited_financial_file');
         if ($file) {
@@ -538,7 +703,7 @@ class FileController extends BaseController {
             $filename = date('YmdHis') . "_" . $file->getClientOriginalName();
             $file->move($destinationPath, $filename);
             $output = $destinationPath . "/" . $filename;
-            
+
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
             return Response::json(['success' => false, 'msg' => 'Please upload valid file']);

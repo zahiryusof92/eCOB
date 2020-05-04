@@ -90,16 +90,20 @@ foreach ($user_permission as $permission) {
                                         @else                                        
                                         <br /><br/>
                                         <div class="table-responsive">
-                                            <table class="table table-hover nowrap" id="buyerList">
+                                            <table class="table table-hover nowrap" id="buyerList" style="width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width:50px;">File No</th>
-                                                        <th style="width:10px;">Unit No</th>
-                                                        <th style="width:10px;">Unit Share</th>
-                                                        <th style="width:100px;">Owner Name</th>
-                                                        <th style="width:100px;">IC No / Company No</th>
-                                                        <th style="width:100px;">Address</th>
-                                                        <th style="width:50px;">Phone Number</th>
+                                                        <th style="width:10%;">File No</th>
+                                                        <th style="width:5%;">Unit No</th>
+                                                        <th style="width:5%;">Unit Share</th>
+                                                        <th style="width:10%;">Owner Name</th>
+                                                        <th style="width:10%;">IC No / Company No</th>
+                                                        <th style="width:10%;">Address</th>
+                                                        <th style="width:10%;">Phone Number</th>
+                                                        <th style="width:10%;">Email</th>
+                                                        <th style="width:10%;">Race</th>
+                                                        <th style="width:10%;">Nationality</th>
+                                                        <th style="width:10%;">Remarks</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>

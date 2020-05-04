@@ -2,15 +2,6 @@
 
 class SettingController extends BaseController {
 
-    public function __construct() {
-        if (empty(Session::get('lang'))) {
-            Session::put('lang', 'en');
-        }
-
-        $locale = Session::get('lang');
-        App::setLocale($locale);
-    }
-
     public function showView($name) {
         if (View::exists($name)) {
             return View::make($name);
@@ -4820,4 +4811,275 @@ class SettingController extends BaseController {
         }
     }
 
+    // nationality
+    public function nationality() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Nationality Maintenance',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_en.nationality', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Pengurusan Bandar',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.nationality', $viewData);
+        }
+    }
+
+    public function addNationality() {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Nationality',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_en.add_nationality', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Bandar',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_nationality', $viewData);
+        }
+    }
+
+    public function submitNationality() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $is_active = $data['is_active'];
+
+            $nationality = new Nationality();
+            $nationality->name = $data['name'];
+            $nationality->sort_no = $data['sort_no'];
+            $nationality->is_active = $is_active;
+            $success = $nationality->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Nationality: ' . $nationality->name . ' has been inserted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function getNationality() {
+        $nationality = Nationality::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+
+        if (count($nationality) > 0) {
+            $data = Array();
+            foreach ($nationality as $cities) {
+                $button = "";
+                if (Session::get('lang') == "en") {
+                    if ($cities->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveNationality(\'' . $cities->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeNationality(\'' . $cities->id . '\')">Active</button>&nbsp;';
+                    }
+                } else {
+                    if ($cities->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveNationality(\'' . $cities->id . '\')">Tidak Aktif</button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeNationality(\'' . $cities->id . '\')">Aktif</button>&nbsp;';
+                    }
+                }
+                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateNationality', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteNationality(\'' . $cities->id . '\')"><i class="fa fa-trash"></i></button>';
+
+                $data_raw = array(
+                    $cities->name,
+                    $cities->sort_no,
+                    $status,
+                    $button
+                );
+
+                array_push($data, $data_raw);
+            }
+            $output_raw = array(
+                "aaData" => $data
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        } else {
+            $output_raw = array(
+                "aaData" => []
+            );
+
+            $output = json_encode($output_raw);
+            return $output;
+        }
+    }
+
+    public function inactiveNationality() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $nationality = Nationality::find($id);
+            $nationality->is_active = 0;
+            $updated = $nationality->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'Nationality: ' . $nationality->name . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function activeNationality() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $nationality = Nationality::find($id);
+            $nationality->is_active = 1;
+            $updated = $nationality->save();
+            if ($updated) {
+                # Audit Trail
+                $remarks = 'Nationality: ' . $nationality->name . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function deleteNationality() {
+        $data = Input::all();
+        if (Request::ajax()) {
+
+            $id = $data['id'];
+
+            $nationality = Nationality::find($id);
+            $nationality->is_deleted = 1;
+            $deleted = $nationality->save();
+            if ($deleted) {
+                # Audit Trail
+                $remarks = 'Nationality: ' . $nationality->id . ' has been deleted.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
+
+    public function updateNationality($id) {
+        //get user permission
+        $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
+        $nationality = Nationality::find($id);
+
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update Nationality',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'nationality' => $nationality,
+                'image' => ""
+            );
+
+            return View::make('setting_en.update_nationality', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Bandar',
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'nationality' => $nationality,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_nationality', $viewData);
+        }
+    }
+
+    public function submitUpdateNationality() {
+        $data = Input::all();
+        if (Request::ajax()) {
+            $id = $data['id'];
+
+            $nationality = Nationality::find($id);
+            $nationality->name = $data['name'];
+            $nationality->sort_no = $data['sort_no'];
+            $nationality->is_active = $data['is_active'];
+            $success = $nationality->save();
+
+            if ($success) {
+                # Audit Trail
+                $remarks = 'Nationality: ' . $nationality->name . ' has been updated.';
+                $auditTrail = new AuditTrail();
+                $auditTrail->module = "Master Setup";
+                $auditTrail->remarks = $remarks;
+                $auditTrail->audit_by = Auth::user()->id;
+                $auditTrail->save();
+
+                print "true";
+            } else {
+                print "false";
+            }
+        }
+    }
 }

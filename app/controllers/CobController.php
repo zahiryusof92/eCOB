@@ -2,15 +2,6 @@
 
 class CobController extends BaseController {
 
-    public function __construct() {
-        if (empty(Session::get('lang'))) {
-            Session::put('lang', 'en');
-        }
-        
-        $locale = Session::get('lang');
-        App::setLocale($locale);
-    }
-
     public function get($id) {
         $company = Company::find($id);
 

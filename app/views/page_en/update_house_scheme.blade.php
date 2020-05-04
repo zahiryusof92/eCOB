@@ -184,8 +184,9 @@ foreach ($user_permission as $permission) {
                                                         <label><span style="color: red;">*</span> Status</label>
                                                         <select id="is_active" class="form-control">
                                                             <option value="">Please Select</option>
-                                                            <option value="1" {{($house_scheme->is_active == '1' ? " selected" : "")}}>Active</option>
-                                                            <option value="0" {{($house_scheme->is_active == '0' ? " selected" : "")}}>Inactive</option>
+                                                            <option value="1" {{($file->is_active == '1' ? " selected" : "")}}>Active</option>
+                                                            <option value="0" {{($file->is_active == '0' ? " selected" : "")}}>Inactive</option>
+                                                            <option value="2" {{($file->is_active == '2' ? " selected" : "")}}>Before VP</option>
                                                         </select>
                                                         <div id="is_active_error" style="display:none;"></div>
                                                     </div>
@@ -203,7 +204,12 @@ foreach ($user_permission as $permission) {
                                                 <?php if ($update_permission == 1) { ?>
                                                     <button type="button" class="btn btn-primary" id="submit_button" onclick="updateHouseScheme()">Submit</button>
                                                 <?php } ?>
+                                                    
+                                                @if ($file->is_active != 2)
                                                 <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">Cancel</button>
+                                                @else
+                                                <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileListBeforeVP')}}'">Cancel</button>
+                                                @endif
                                             </div>
                                         </form>
                                         <!-- End House Form -->

@@ -27,15 +27,19 @@ foreach ($user_permission as $permission) {
                             Add Purchaser
                         </button>
                         &nbsp;
+                        
+                        @if (strtoupper(Auth::user()->getRole->name) != 'JMB')
                         <button onclick="window.location = '{{ URL::action('AgmController@importPurchaser') }}'" type="button" class="btn btn-primary">
                             Import CSV
                         </button>
-                        &nbsp;
+                        &nbsp;                        
                         <a href="{{asset('files/buyer_template.csv')}}" target="_blank">
                             <button type="button" class="btn btn-success pull-right">
                                 Download CSV Template
                             </button>
-                        </a> 
+                        </a>
+                        @endif
+                        
                         <br/><br/>
                     <?php } ?>
                     <div class="table-responsive">

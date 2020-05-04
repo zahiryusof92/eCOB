@@ -58,6 +58,8 @@ foreach ($user_permission as $permission) {
                                                 Add Buyer
                                             </button>
                                             &nbsp;
+                                            
+                                            @if (strtoupper(Auth::user()->getRole->name) != 'JMB')
                                             <button onclick="window.location = '{{ URL::action('AdminController@importBuyer', $files->id) }}'" type="button" class="btn btn-primary">
                                                 Import CSV
                                             </button>
@@ -66,7 +68,9 @@ foreach ($user_permission as $permission) {
                                                 <button type="button" class="btn btn-success pull-right">
                                                     Download CSV Template
                                                 </button>
-                                            </a> 
+                                            </a>
+                                            @endif
+                                            
                                             <br/><br/>
                                             <?php } ?>
                                             <table class="table table-hover nowrap" id="buyer_list">

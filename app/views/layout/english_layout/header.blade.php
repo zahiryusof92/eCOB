@@ -27,8 +27,8 @@ $swith_lang = false;
                     <span class="caret"></span>
                 </a>               
                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                    <a class="dropdown-item" href="{{URL::action('UserController@changeLanguage',['my'])}}">Bahasa Melayu</a>
-                    <a class="dropdown-item active" href="{{URL::action('UserController@changeLanguage',['en'])}}">English</a>                    
+                    <a class="dropdown-item" href="{{ url('/changeLanguage/ms') }}">Bahasa Melayu</a>
+                    <a class="dropdown-item active" href="{{ url('/changeLanguage/en') }}">English</a>                    
                 </ul>                
             </div>
             @endif

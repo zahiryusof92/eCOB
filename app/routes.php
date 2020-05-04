@@ -507,6 +507,17 @@ Route::get('/updateRace/{id}', 'SettingController@updateRace')->before('authMemb
 Route::post('/submitUpdateRace', 'SettingController@submitUpdateRace')->before('authMember');
 Route::post('/deleteRace/{id}', 'SettingController@deleteRace')->before('authMember');
 
+//nationality
+Route::get('/nationality', 'SettingController@nationality')->before('authMember');
+Route::get('/addNationality', 'SettingController@addNationality')->before('authMember');
+Route::post('/submitNationality', 'SettingController@submitNationality')->before('authMember');
+Route::get('/getNationality', 'SettingController@getNationality')->before('authMember');
+Route::post('/activeNationality', 'SettingController@activeNationality')->before('authMember');
+Route::post('/inactiveNationality', 'SettingController@inactiveNationality')->before('authMember');
+Route::get('/updateNationality/{id}', 'SettingController@updateNationality')->before('authMember');
+Route::post('/submitUpdateNationality', 'SettingController@submitUpdateNationality')->before('authMember');
+Route::post('/deleteNationality/{id}', 'SettingController@deleteNationality')->before('authMember');
+
 // --- Reporting --- //
 //audit trail
 Route::get('/reporting/auditTrail', 'AdminController@auditTrail')->before('authMember');

@@ -6,7 +6,7 @@
 $update_permission = 0;
 
 foreach ($user_permission as $permission) {
-    if ($permission->submodule_id == 42) {
+    if ($permission->submodule_id == 8) {
         $update_permission = $permission->update_permission;
     }
 }
@@ -20,7 +20,7 @@ foreach ($user_permission as $permission) {
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <form id="update_race" class="form-horizontal">
+                    <form id="update_nationality" class="form-horizontal">
                         <div class="form-group row">
                             <div class="col-md-2">
                                 <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields.</label>
@@ -29,10 +29,10 @@ foreach ($user_permission as $permission) {
                         
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Race Name</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Nationality Name</label>
                             </div>
                             <div class="col-md-4">
-                                <input id="name" class="form-control" placeholder="Race" type="text" value="{{ $race->name }}">
+                                <input id="name" class="form-control" placeholder="Nationality" type="text" value="{{ $nationality->name }}">
                                 <div id="name_error" style="display:none;"></div>
                             </div>
                         </div>
@@ -42,7 +42,7 @@ foreach ($user_permission as $permission) {
                                 <label class="form-label"><span style="color: red; font-style: italic;">*</span> Sort No</label>
                             </div>
                             <div class="col-md-4">
-                                <input id="sort_no" class="form-control" placeholder="Sort No" type="text" value="{{ $race->sort_no }}">
+                                <input id="sort_no" class="form-control" placeholder="Sort No" type="text" value="{{ $nationality->sort_no }}">
                                 <div id="sort_no_error" style="display:none;"></div>
                             </div>
                         </div>
@@ -54,17 +54,17 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-4">
                                 <select id="is_active" class="form-control">
                                     <option value="">Please Select</option>
-                                    <option value="1" {{($race->is_active==1 ? " selected" : "")}}>Active</option>
-                                    <option value="0" {{($race->is_active==0 ? " selected" : "")}}>Inactive</option>
+                                    <option value="1" {{($nationality->is_active==1 ? " selected" : "")}}>Active</option>
+                                    <option value="0" {{($nationality->is_active==0 ? " selected" : "")}}>Inactive</option>
                                 </select>
                                 <div id="is_active_error" style="display:none;"></div>
                             </div>                            
                         </div>                                               
                         <div class="form-actions">
                             <?php if ($update_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="updateRace()">Save</button>
+                            <button type="button" class="btn btn-primary" id="submit_button" onclick="updateNationality()">Save</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("SettingController@race") }}'" >Cancel</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("SettingController@nationality") }}'" >Cancel</button>
                         </div>
                     </form>
                 </div>                
@@ -77,7 +77,7 @@ foreach ($user_permission as $permission) {
 <!-- Page Scripts -->
 <script>
     
-    function updateRace() {
+    function updateNationality() {
         $("#loading").css("display", "inline-block");
 
         var name = $("#name").val(),
@@ -87,7 +87,7 @@ foreach ($user_permission as $permission) {
         var error = 0;
         
         if (name.trim() == "") {
-            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Race Name</span>');
+            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Nationality Name</span>');
             $("#name_error").css("display", "block");
             error = 1;
         }
@@ -106,21 +106,21 @@ foreach ($user_permission as $permission) {
         
         if (error == 0) {
             $.ajax({
-                url: "{{ URL::action('SettingController@submitUpdateRace') }}",
+                url: "{{ URL::action('SettingController@submitUpdateNationality') }}",
                 type: "POST",
                 data: {
                     name: name,
                     sort_no : sort_no,
                     is_active: is_active,
-                    id: "{{$race->id}}"
+                    id: "{{$nationality->id}}"
                 },
                 success: function (data) {
                     $("#loading").css("display", "none");
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>Race updated successfully!</span>", function () {
-                            window.location = '{{URL::action("SettingController@race") }}';
+                        bootbox.alert("<span style='color:green;'>Nationality updated successfully!</span>", function () {
+                            window.location = '{{URL::action("SettingController@nationality") }}';
                         });
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");

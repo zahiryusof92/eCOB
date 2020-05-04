@@ -36,7 +36,7 @@ foreach ($user_permission as $permission) {
                                     <select id="file_id" class="form-control">
                                         <option value="">Please select</option>
                                         @foreach ($files as $file) 
-                                        <option value="{{$file->id}}" {{($file->id == $buyer->file_id ? " selected" : "")}}>{{$file->file_no}}</option>
+                                        <option value="{{$file->id}}" {{($file->id == $tenant->file_id ? " selected" : "")}}>{{$file->file_no}}</option>
                                         @endforeach
                                     </select>
                                     <div id="file_id_error" style="display:none;"></div>
@@ -47,7 +47,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> Unit Number</label>
-                                    <input type="text" class="form-control" placeholder="Unit Number" id="unit_no" value="{{$buyer->unit_no}}">
+                                    <input type="text" class="form-control" placeholder="Unit Number" id="unit_no" value="{{$tenant->unit_no}}">
                                     <div id="unit_no_error" style="display:none;"></div>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> Tenant Name</label>
-                                    <input type="text" class="form-control" placeholder="Tenant Name" id="tenant_name" value="{{$buyer->tenant_name}}">
+                                    <input type="text" class="form-control" placeholder="Tenant Name" id="tenant_name" value="{{$tenant->tenant_name}}">
                                     <div id="tenant_name_error" style="display:none;"></div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>IC No / Company Number</label>
-                                    <input type="text" class="form-control" placeholder="IC No / Company Number" id="ic_company_no" value="{{$buyer->ic_company_no}}">
+                                    <input type="text" class="form-control" placeholder="IC No / Company Number" id="ic_company_no" value="{{$tenant->ic_company_no}}">
                                     <div id="ic_company_no_error" style="display:none;"></div>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Address</label>
-                                    <textarea class="form-control" placeholder="Address" rows="3" id="address">{{$buyer->address}}</textarea>
+                                    <textarea class="form-control" placeholder="Address" rows="3" id="address">{{$tenant->address}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Phone Number</label>
-                                    <input type="text" class="form-control" placeholder="Phone Number" id="phone_no" value="{{$buyer->phone_no}}">
+                                    <input type="text" class="form-control" placeholder="Phone Number" id="phone_no" value="{{$tenant->phone_no}}">
                                 </div>
                             </div>                            
                         </div>
@@ -90,7 +90,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="email" class="form-control" placeholder="Email" id="email" value="{{$buyer->email}}">
+                                    <input type="email" class="form-control" placeholder="Email" id="email" value="{{$tenant->email}}">
                                 </div>
                             </div>                            
                         </div>
@@ -101,7 +101,7 @@ foreach ($user_permission as $permission) {
                                     <select id="race" class="form-control select2">
                                         <option value="">Please select</option>
                                         @foreach ($race as $races) 
-                                        <option value="{{ $races->id }}" {{($buyer->race_id == $races->id ? " selected" : "")}}>{{ $races->name }}</option>
+                                        <option value="{{ $races->id }}" {{($tenant->race_id == $races->id ? " selected" : "")}}>{{ $races->name }}</option>
                                         @endforeach
                                     </select>
                                     <div id="race_error" style="display:none;"></div>
@@ -109,10 +109,24 @@ foreach ($user_permission as $permission) {
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><span style="color: red;">*</span> Nationality</label>
+                                    <select id="nationality" class="form-control select2">
+                                        <option value="">Please select</option>
+                                        @foreach ($nationality as $national) 
+                                        <option value="{{ $national->id }}" {{($tenant->nationality_id == $national->id ? " selected" : "")}}>{{ $national->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div id="nationality_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Remarks</label>
-                                    <textarea class="form-control" placeholder="Remarks" rows="3" id="remarks">{{$buyer->remarks}}</textarea>
+                                    <textarea class="form-control" placeholder="Remarks" rows="3" id="remarks">{{$tenant->remarks}}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -142,6 +156,7 @@ foreach ($user_permission as $permission) {
         $("#unit_no_error").css("display", "none");
         $("#tenant_name_error").css("display", "none");
         $("#race_error").css("display", "none");
+        $("#nationality_error").css("display", "none");
 
         var file_id = $("#file_id").val(),
                 unit_no = $("#unit_no").val(),
@@ -151,6 +166,7 @@ foreach ($user_permission as $permission) {
                 phone_no = $("#phone_no").val(),
                 email = $("#email").val(),
                 race = $("#race").val(),
+                nationality = $("#nationality").val(),
                 remarks = $("#remarks").val();
 
         var error = 0;
@@ -175,6 +191,11 @@ foreach ($user_permission as $permission) {
             $("#race_error").css("display", "block");
             error = 1;
         }
+        if (nationality.trim() == "") {
+            $("#nationality_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Nationality</span>');
+            $("#nationality_error").css("display", "block");
+            error = 1;
+        }
 
         if (error == 0) {
             $.ajax({
@@ -189,8 +210,9 @@ foreach ($user_permission as $permission) {
                     email: email,
                     remarks: remarks,
                     race: race,
+                    nationality: nationality,
                     file_id: file_id,
-                    id: '{{$buyer->id}}'
+                    id: '{{$tenant->id}}'
                 },
                 success: function (data) {
                     $("#loading").css("display", "none");

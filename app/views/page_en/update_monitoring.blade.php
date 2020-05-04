@@ -187,7 +187,12 @@ foreach ($user_permission as $permission) {
                                         <?php if ($update_permission == 1) { ?>
                                             <button type="button" class="btn btn-primary" id="submit_button" onclick="updateMonitoring()">Submit</button>
                                         <?php } ?>
+
+                                        @if ($file->is_active != 2)
                                         <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">Cancel</button>
+                                        @else
+                                        <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileListBeforeVP')}}'">Cancel</button>
+                                        @endif
                                     </div>
                                 </form>
                             </div>

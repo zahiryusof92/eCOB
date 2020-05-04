@@ -27,6 +27,8 @@ foreach ($user_permission as $permission) {
                             Add Tenant
                         </button>
                         &nbsp;
+                        
+                        @if (strtoupper(Auth::user()->getRole->name) != 'JMB')
                         <button onclick="window.location = '{{ URL::action('AgmController@importTenant') }}'" type="button" class="btn btn-primary">
                             Import CSV
                         </button>
@@ -36,6 +38,8 @@ foreach ($user_permission as $permission) {
                                 Download CSV Template
                             </button>
                         </a> 
+                        @endif
+                        
                         <br/><br/>
                     <?php } ?>
                     <div class="table-responsive">

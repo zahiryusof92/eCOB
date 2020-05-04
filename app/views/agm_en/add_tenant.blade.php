@@ -109,6 +109,20 @@ foreach ($user_permission as $permission) {
                             </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><span style="color: red;">*</span> Nationality</label>
+                                    <select id="nationality" class="form-control select2">
+                                        <option value="">Please select</option>
+                                        @foreach ($nationality as $national) 
+                                        <option value="{{ $national->id }}">{{ $national->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div id="nationality_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Remarks</label>
@@ -142,6 +156,7 @@ foreach ($user_permission as $permission) {
         $("#unit_no_error").css("display", "none");
         $("#tenant_name_error").css("display", "none");
         $("#race_error").css("display", "none");
+        $("#nationality_error").css("display", "none");
 
         var file_id = $("#file_id").val(),
                 unit_no = $("#unit_no").val(),
@@ -151,6 +166,7 @@ foreach ($user_permission as $permission) {
                 phone_no = $("#phone_no").val(),
                 email = $("#email").val(),
                 race = $("#race").val(),
+                nationality = $("#nationality").val(),
                 remarks = $("#remarks").val();
 
         var error = 0;
@@ -175,6 +191,11 @@ foreach ($user_permission as $permission) {
             $("#race_error").css("display", "block");
             error = 1;
         }
+        if (nationality.trim() == "") {
+            $("#nationality_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Nationality</span>');
+            $("#nationality_error").css("display", "block");
+            error = 1;
+        }
 
         if (error == 0) {
             $.ajax({
@@ -189,6 +210,7 @@ foreach ($user_permission as $permission) {
                     email: email,
                     remarks: remarks,
                     race: race,
+                    nationality: nationality,
                     file_id: file_id
                 },
                 success: function (data) {

@@ -101,7 +101,51 @@
                                                         <input type="text" class="form-control" placeholder="Phone Number" id="phone_no" value="{{$buyer->phone_no}}">
                                                     </div>
                                                 </div>                            
-                                            </div>                         
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Email</label>
+                                                        <input type="email" class="form-control" placeholder="Email" id="email" value="{{$buyer->email}}">
+                                                    </div>
+                                                </div>                            
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label><span style="color: red;">*</span> Race</label>
+                                                        <select id="race" class="form-control select2">
+                                                            <option value="">Please select</option>
+                                                            @foreach ($race as $races) 
+                                                            <option value="{{ $races->id }}" {{($buyer->race_id == $races->id ? " selected" : "")}}>{{ $races->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <div id="race_error" style="display:none;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label><span style="color: red;">*</span> Nationality</label>
+                                                        <select id="nationality" class="form-control select2">
+                                                            <option value="">Please select</option>
+                                                            @foreach ($nationality as $national) 
+                                                            <option value="{{ $national->id }}" {{($buyer->nationality_id == $national->id ? " selected" : "")}}>{{ $national->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <div id="nationality_error" style="display:none;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="form-group">
+                                                        <label>Remarks</label>
+                                                        <textarea class="form-control" placeholder="Remarks" rows="3" id="remarks">{{$buyer->remarks}}</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="form-actions">
                                                 <button type="button" class="btn btn-primary" id="submit_button" onclick="editBuyer()">Submit</button>
                                                 <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@buyer', $files->id)}}'">Cancel</button>
@@ -125,13 +169,21 @@
 <script>
     function editBuyer() {
         $("#submit_button").attr("disabled", "disabled");
+        $("#unit_no_error").css("display", "none");
+        $("#owner_name_error").css("display", "none");
+        $("#race_error").css("display", "none");
+        $("#nationality_error").css("display", "none");
 
         var unit_no = $("#unit_no").val(),
                 unit_share = $("#unit_share").val(),
                 owner_name = $("#owner_name").val(),
                 ic_company_no = $("#ic_company_no").val(),
                 address = $("#address").val(),
-                phone_no = $("#phone_no").val();
+                phone_no = $("#phone_no").val(),
+                email = $("#email").val(),
+                race = $("#race").val(),
+                nationality = $("#nationality").val(),
+                remarks = $("#remarks").val();
 
         var error = 0;
 
@@ -145,11 +197,16 @@
             $("#owner_name_error").css("display", "block");
             error = 1;
         }
-//        if (ic_company_no.trim() == "") {
-//            $("#ic_company_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter IC / Company Number</span>');
-//            $("#ic_company_no_error").css("display", "block");
-//            error = 1;
-//        }
+        if (race.trim() == "") {
+            $("#race_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Race</span>');
+            $("#race_error").css("display", "block");
+            error = 1;
+        }
+        if (nationality.trim() == "") {
+            $("#nationality_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Nationality</span>');
+            $("#nationality_error").css("display", "block");
+            error = 1;
+        }
 
         if (error == 0) {
             $.ajax({
@@ -162,6 +219,10 @@
                     ic_company_no: ic_company_no,
                     address: address,
                     phone_no: phone_no,
+                    email: email,
+                    remarks: remarks,
+                    race: race,
+                    nationality: nationality,
                     file_id: '{{$files->id}}',
                     id: '{{$buyer->id}}'
                 },
@@ -184,6 +245,9 @@
                     }
                 }
             });
+        } else {
+            $("#loading").css("display", "none");
+            $("#submit_button").removeAttr("disabled");
         }
     }
 

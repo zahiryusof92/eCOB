@@ -2,15 +2,6 @@
 
 class AgmController extends BaseController {
 
-    public function __construct() {
-        if (empty(Session::get('lang'))) {
-            Session::put('lang', 'en');
-        }
-
-        $locale = Session::get('lang');
-        App::setLocale($locale);
-    }
-
     public function getDesignationRemainder() {
         $currentMonth = strtotime(date('Y-m-d'));
 
@@ -595,6 +586,7 @@ class AgmController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
+        $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -605,6 +597,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'race' => $race,
+                'nationality' => $nationality,
                 'image' => ''
             );
 
@@ -618,6 +611,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'race' => $race,
+                'nationality' => $nationality,
                 'image' => ''
             );
 
@@ -638,7 +632,8 @@ class AgmController extends BaseController {
             $phone_no = $data['phone_no'];
             $email = $data['email'];
             $race = $data['race'];
-            $remarks = $data['remarks'];
+            $nationality = $data['nationality'];
+            $remark = $data['remarks'];
 
             $checkFile = Files::find($file_id);
 
@@ -653,7 +648,8 @@ class AgmController extends BaseController {
                 $buyer->phone_no = $phone_no;
                 $buyer->email = $email;
                 $buyer->race_id = $race;
-                $buyer->remarks = $remarks;
+                $buyer->nationality_id = $nationality;
+                $buyer->remarks = $remark;
                 $success = $buyer->save();
 
                 if ($success) {
@@ -682,6 +678,7 @@ class AgmController extends BaseController {
         $buyer = Buyer::find($id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
+        $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -693,6 +690,7 @@ class AgmController extends BaseController {
                 'files' => $files,
                 'buyer' => $buyer,
                 'race' => $race,
+                'nationality' => $nationality,
                 'image' => ''
             );
 
@@ -707,6 +705,7 @@ class AgmController extends BaseController {
                 'files' => $files,
                 'buyer' => $buyer,
                 'race' => $race,
+                'nationality' => $nationality,
                 'image' => ''
             );
 
@@ -727,7 +726,8 @@ class AgmController extends BaseController {
             $phone_no = $data['phone_no'];
             $email = $data['email'];
             $race = $data['race'];
-            $remarks = $data['remarks'];
+            $nationality = $data['nationality'];
+            $remark = $data['remarks'];
             $id = $data['id'];
 
             $checkFile = Files::find($file_id);
@@ -744,7 +744,8 @@ class AgmController extends BaseController {
                     $buyer->phone_no = $phone_no;
                     $buyer->email = $email;
                     $buyer->race_id = $race;
-                    $buyer->remarks = $remarks;
+                    $buyer->nationality_id = $nationality;
+                    $buyer->remarks = $remark;
                     $success = $buyer->save();
 
                     if ($success) {
@@ -838,11 +839,11 @@ class AgmController extends BaseController {
             foreach ($getAllBuyer as $buyerList) {
 
                 $check_file_id = Files::where('file_no', $buyerList[0])->first();
-                if (count($check_file_id) > 0) {
+                if ($check_file_id) {
                     $files_id = $check_file_id->id;
 
                     $check_buyer = Buyer::where('file_id', $files_id)->where('unit_no', $buyerList[1])->where('is_deleted', 0)->first();
-                    if (count($check_buyer) <= 0) {
+                    if ($check_buyer) {
                         $race = '';
                         if (isset($buyerList[8]) && !empty($buyerList[8])) {
                             $race_raw = trim($buyerList[8]);
@@ -862,6 +863,25 @@ class AgmController extends BaseController {
                             }
                         }
 
+                        $nationality = '';
+                        if (isset($buyerList[9]) && !empty($buyerList[9])) {
+                            $nationality_raw = trim($buyerList[9]);
+
+                            if (!empty($nationality_raw)) {
+                                $nationality_query = Nationality::where('name', $nationality_raw)->where('is_deleted', 0)->first();
+                                if ($nationality_query) {
+                                    $nationality = $nationality_query->id;
+                                } else {
+                                    $nationality_query = new Nationality();
+                                    $nationality_query->name = $nationality_raw;
+                                    $nationality_query->is_active = 1;
+                                    $nationality_query->save();
+
+                                    $nationality = $nationality_query->id;
+                                }
+                            }
+                        }
+
                         $buyer = new Buyer();
                         $buyer->file_id = $files_id;
                         $buyer->unit_no = $buyerList[1];
@@ -872,20 +892,32 @@ class AgmController extends BaseController {
                         $buyer->phone_no = $buyerList[6];
                         $buyer->email = $buyerList[7];
                         $buyer->race_id = $race;
-                        $buyer->remarks = $buyerList[9];
-                        $buyer->save();
+                        $buyer->nationality_id = $nationality;
+                        $buyer->remarks = $buyerList[10];
+                        $success = $buyer->save();
 
-                        # Audit Trail
-                        $file_name = Files::find($buyer->file_id);
-                        $remarks = 'COB Owner List (' . $file_name->file_no . ') for Unit ' . $buyer->unit_no . ' has been inserted.';
-                        $auditTrail = new AuditTrail();
-                        $auditTrail->module = "COB File";
-                        $auditTrail->remarks = $remarks;
-                        $auditTrail->audit_by = Auth::user()->id;
-                        $auditTrail->save();
+                        if ($success) {
+                            # Audit Trail
+                            $file_name = Files::find($buyer->file_id);
+                            $remarks = 'COB Owner List (' . $file_name->file_no . ') for Unit ' . $buyer->unit_no . ' has been inserted.';
+                            $auditTrail = new AuditTrail();
+                            $auditTrail->module = "COB File";
+                            $auditTrail->remarks = $remarks;
+                            $auditTrail->audit_by = Auth::user()->id;
+                            $auditTrail->save();
+                        }
                     }
                 }
             }
+
+            # Audit Trail
+            $file_name = Files::find($buyer->file_id);
+            $remarks = 'COB Owner List (' . $file_name->file_no . ') has been imported.';
+            $auditTrail = new AuditTrail();
+            $auditTrail->module = "COB File";
+            $auditTrail->remarks = $remarks;
+            $auditTrail->audit_by = Auth::user()->id;
+            $auditTrail->save();
 
             print "true";
         } else {
@@ -980,6 +1012,7 @@ class AgmController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
+        $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -990,6 +1023,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'race' => $race,
+                'nationality' => $nationality,
                 'image' => ''
             );
 
@@ -1003,6 +1037,7 @@ class AgmController extends BaseController {
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'race' => $race,
+                'nationality' => $nationality,
                 'image' => ''
             );
 
@@ -1022,7 +1057,8 @@ class AgmController extends BaseController {
             $phone_no = $data['phone_no'];
             $email = $data['email'];
             $race = $data['race'];
-            $remarks = $data['remarks'];
+            $nationality = $data['nationality'];
+            $remark = $data['remarks'];
 
             $checkFile = Files::find($file_id);
 
@@ -1036,7 +1072,8 @@ class AgmController extends BaseController {
                 $tenant->phone_no = $phone_no;
                 $tenant->email = $email;
                 $tenant->race_id = $race;
-                $tenant->remarks = $remarks;
+                $tenant->nationality_id = $nationality;
+                $tenant->remarks = $remark;
                 $success = $tenant->save();
 
                 if ($success) {
@@ -1065,6 +1102,7 @@ class AgmController extends BaseController {
         $tenant = Tenant::find($id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
+        $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -1076,6 +1114,7 @@ class AgmController extends BaseController {
                 'files' => $files,
                 'tenant' => $tenant,
                 'race' => $race,
+                'nationality' => $nationality,
                 'image' => ''
             );
 
@@ -1090,6 +1129,7 @@ class AgmController extends BaseController {
                 'files' => $files,
                 'tenant' => $tenant,
                 'race' => $race,
+                'nationality' => $nationality,
                 'image' => ''
             );
 
@@ -1109,7 +1149,8 @@ class AgmController extends BaseController {
             $phone_no = $data['phone_no'];
             $email = $data['email'];
             $race = $data['race'];
-            $remarks = $data['remarks'];
+            $nationality = $data['nationality'];
+            $remark = $data['remarks'];
             $id = $data['id'];
 
             $checkFile = Files::find($file_id);
@@ -1125,7 +1166,8 @@ class AgmController extends BaseController {
                     $tenant->phone_no = $phone_no;
                     $tenant->email = $email;
                     $tenant->race_id = $race;
-                    $tenant->remarks = $remarks;
+                    $tenant->nationality_id = $nationality;
+                    $tenant->remarks = $remark;
                     $success = $tenant->save();
 
                     if ($success) {
@@ -1243,6 +1285,25 @@ class AgmController extends BaseController {
                             }
                         }
 
+                        $nationality = '';
+                        if (isset($tenantList[8]) && !empty($tenantList[8])) {
+                            $nationality_raw = trim($tenantList[8]);
+
+                            if (!empty($nationality_raw)) {
+                                $nationality_query = Nationality::where('name', $nationality_raw)->where('is_deleted', 0)->first();
+                                if ($nationality_query) {
+                                    $nationality = $nationality_query->id;
+                                } else {
+                                    $nationality_query = new Nationality();
+                                    $nationality_query->name = $nationality_raw;
+                                    $nationality_query->is_active = 1;
+                                    $nationality_query->save();
+
+                                    $nationality = $nationality_query->id;
+                                }
+                            }
+                        }
+
                         $tenant = new Tenant();
                         $tenant->file_id = $files_id;
                         $tenant->unit_no = $tenantList[1];
@@ -1252,20 +1313,32 @@ class AgmController extends BaseController {
                         $tenant->phone_no = $tenantList[5];
                         $tenant->email = $tenantList[6];
                         $tenant->race_id = $race;
-                        $tenant->remarks = $tenantList[8];
-                        $tenant->save();
+                        $tenant->nationality_id = $nationality;
+                        $tenant->remarks = $tenantList[9];
+                        $success = $tenant->save();
 
-                        # Audit Trail
-                        $file_name = Files::find($tenant->file_id);
-                        $remarks = 'COB Tenant List (' . $file_name->file_no . ') for Unit ' . $tenant->unit_no . ' has been inserted.';
-                        $auditTrail = new AuditTrail();
-                        $auditTrail->module = "COB File";
-                        $auditTrail->remarks = $remarks;
-                        $auditTrail->audit_by = Auth::user()->id;
-                        $auditTrail->save();
+                        if ($success) {
+                            # Audit Trail
+                            $file_name = Files::find($tenant->file_id);
+                            $remarks = 'COB Tenant List (' . $file_name->file_no . ') for Unit ' . $tenant->unit_no . ' has been inserted.';
+                            $auditTrail = new AuditTrail();
+                            $auditTrail->module = "COB File";
+                            $auditTrail->remarks = $remarks;
+                            $auditTrail->audit_by = Auth::user()->id;
+                            $auditTrail->save();
+                        }
                     }
                 }
             }
+
+            # Audit Trail
+            $file_name = Files::find($tenant->file_id);
+            $remarks = 'COB Tenant List (' . $file_name->file_no . ') has been imported.';
+            $auditTrail = new AuditTrail();
+            $auditTrail->module = "COB File";
+            $auditTrail->remarks = $remarks;
+            $auditTrail->audit_by = Auth::user()->id;
+            $auditTrail->save();
 
             print "true";
         } else {
@@ -1820,7 +1893,7 @@ class AgmController extends BaseController {
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteDocument(\'' . $documents->id . '\')"><i class="fa fa-trash"></i></button>';
 
                 $data_raw = array(
-                    $documents->file->file_no,
+                    ($documents->file ? $documents->file->file_no : '-'),
                     $documents->type->name,
                     $documents->name,
                     $is_hidden,

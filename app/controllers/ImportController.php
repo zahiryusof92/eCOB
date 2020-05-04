@@ -2,15 +2,6 @@
 
 class ImportController extends BaseController {
 
-    public function __construct() {
-        if (empty(Session::get('lang'))) {
-            Session::put('lang', 'en');
-        }
-
-        $locale = Session::get('lang');
-        App::setLocale($locale);
-    }
-
     public function showView($name) {
         if (View::exists($name)) {
             return View::make($name);
@@ -84,7 +75,7 @@ class ImportController extends BaseController {
                                     $files->year = $year;
                                     $files->is_active = $is_active;
                                     $files->status = $status;
-                                    if ($status == 1) {
+                                    if ($status == 1 || $status == '1') {
                                         $files->approved_by = Auth::user()->id;
                                         $files->approved_at = date('Y-m-d H:i:s');
                                     }
