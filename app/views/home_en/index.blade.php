@@ -19,21 +19,21 @@ foreach ($user_permission as $permission) {
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-lg-12">                    
-                    <h4>AGM</h4>
+                <div class="col-lg-12">
+                    <h4>{ trans('app.forms.agm') }}</h4>
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab">AGM Reminder</a>
+                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab">{{ trans('app.forms.agm_reminder') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab2" role="tab">Never Has AGM</a>
+                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab2" role="tab">{{ trans('app.forms.never_has_agm') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab3" role="tab">> 12 Months</a>
+                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab3" role="tab">{{ trans('app.forms.more_than_12_months') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab4" role="tab">> 15 Months</a>
+                                <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#tab4" role="tab">{{ trans('app.forms.more_than_15_months') }}</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
@@ -41,11 +41,11 @@ foreach ($user_permission as $permission) {
                                 <table class="table table-hover nowrap" id="agm_remainder" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:10%;">COB</th> 
-                                            <th style="width:50%;">File Number</th>
-                                            <th style="width:30%;">Last AGM Date</th>
+                                            <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
+                                            <th style="width:50%;">{{ trans('app.forms.file_number') }}</th>
+                                            <th style="width:30%;">{{ trans('app.forms.last_agm_date') }}</th>
                                             <?php if ($update_permission == 1) { ?>
-                                                <th style="width:10%;">Action</th>
+                                                <th style="width:10%;">{{ trans('app.forms.action') }}</th>
                                             <?php } ?>
                                         </tr>
                                     </thead>
@@ -57,10 +57,10 @@ foreach ($user_permission as $permission) {
                                 <table class="table table-hover nowrap" id="never_agm" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:10%;">COB</th> 
-                                            <th style="width:80%;">File Number</th>
+                                            <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
+                                            <th style="width:80%;">{{ trans('app.forms.file_number') }}</th>
                                             <?php if ($update_permission == 1) { ?>
-                                                <th style="width:10%;">Action</th>
+                                                <th style="width:10%;">{{ trans('app.forms.action') }}</th>
                                             <?php } ?>
                                         </tr>
                                     </thead>
@@ -72,11 +72,11 @@ foreach ($user_permission as $permission) {
                                 <table class="table table-hover nowrap" id="more_12months" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:10%;">COB</th> 
-                                            <th style="width:50%;">File Number</th>
-                                            <th style="width:30%;">Last AGM Date</th>
+                                            <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
+                                            <th style="width:50%;">{{ trans('app.forms.file_number') }}</th>
+                                            <th style="width:30%;">{{ trans('app.forms.last_agm_date') }}</th>
                                             <?php if ($update_permission == 1) { ?>
-                                                <th style="width:10%;">Action</th>
+                                                <th style="width:10%;">{{ trans('app.forms.action') }}</th>
                                             <?php } ?>
                                         </tr>
                                     </thead>
@@ -88,11 +88,11 @@ foreach ($user_permission as $permission) {
                                 <table class="table table-hover nowrap" id="more_15months" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:10%;">COB</th> 
-                                            <th style="width:50%;">File Number</th>
-                                            <th style="width:30%;">Last AGM Date</th>
+                                            <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
+                                            <th style="width:50%;">{{ trans('app.forms.file_number') }}</th>
+                                            <th style="width:30%;">{{ trans('app.forms.last_agm_date') }}</th>
                                             <?php if ($update_permission == 1) { ?>
-                                                <th style="width:10%;">Action</th>
+                                                <th style="width:10%;">{{ trans('app.forms.action') }}</th>
                                             <?php } ?>
                                         </tr>
                                     </thead>
@@ -108,12 +108,12 @@ foreach ($user_permission as $permission) {
             <hr/>
 
             <div class="row">
-                <div class="col-lg-12">                    
-                    <h4>Designation</h4>
+                <div class="col-lg-12">
+                    <h4>{{ trans('app.forms.designation') }}</h4>
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tabDesignation1" role="tab">Designation Reminder</a>
+                                <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tabDesignation1" role="tab">{{ trans('app.forms.designation_reminder') }}</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
@@ -121,19 +121,19 @@ foreach ($user_permission as $permission) {
                                 <table class="table table-hover nowrap" id="designation_remainder" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:10%;">COB</th> 
-                                            <th style="width:25%;">File No</th>
-                                            <th style="width:10%;">Designation</th>
-                                            <th style="width:25%;">Name</th>
-                                            <th style="width:10%;">Phone No</th>
-                                            <th style="width:10%;">Month</th>
-                                            <th style="width:10%;">Year</th>
+                                            <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
+                                            <th style="width:25%;">{{ trans('app.forms.file_no') }}</th>
+                                            <th style="width:10%;">{{ trans('app.forms.designation') }}</th>
+                                            <th style="width:25%;">{{ trans('app.forms.name') }}</th>
+                                            <th style="width:10%;">{{ trans('app.forms.phone_number') }}</th>
+                                            <th style="width:10%;">{{ trans('app.forms.month') }}</th>
+                                            <th style="width:10%;">{{ trans('app.forms.year') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
                                 </table>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -143,13 +143,13 @@ foreach ($user_permission as $permission) {
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h4>Memo</h4>
+                    <h4>{{ trans('app.forms.memo') }}</h4>
                     <table class="table table-hover nowrap" id="memo" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:70%;">Subject</th>
-                                <th style="width:20%;">Memo Date</th>
-                                <th style="width:10%;">Action</th>
+                                <th style="width:70%;">{{ trans('app.forms.subject') }}</th>
+                                <th style="width:20%;">{{ trans('app.forms.memo_date') }}</th>
+                                <th style="width:10%;">{{ trans('app.forms.action') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -163,19 +163,19 @@ foreach ($user_permission as $permission) {
             <div class="row">
                 <div class="col-lg-6">
                     <div class="margin-bottom-50">
-                        <!--<h4 class="text-center">Star Rating of Development Area</h4>-->                            
+                        <!--<h4 class="text-center">Star Rating of Development Area</h4>-->
                         <!--<div class="chart-pie-chart"></div>-->
                         <div id="rating_star"></div>
                         <br/>
-                        <span>Total Development Area : {{$strata}}</span>
+                        <span>{{ trans('app.forms.total_development_area', ['total' => $strata]) }}</span>
                         <br/>
                         @if ($strata == 0)
-                        <span>Total Sample & Percentage : {{$rating}} (0%)</span>
+                        <span>{{ trans('app.forms.total_sample_percentage', ['total' => $rating]) }} (0%)</span>
                         @else
-                        <span>Total Sample & Percentage : {{$rating}} ({{number_format((($rating/$strata)*100), 2)}}%)</span>
+                        <span>{{ trans('app.forms.total_sample_percentage', ['total' => $rating]) }} ({{number_format((($rating/$strata)*100), 2)}}%)</span>
                         @endif
                         <br/>
-                        <span>No Information : {{$strata - $rating}}</span>
+                        <span>{{ trans('app.forms.total_no_information', ['total' => ($strata - $rating)]) }}</span>
                     </div>
                 </div>
                 <div class="col-lg-6">

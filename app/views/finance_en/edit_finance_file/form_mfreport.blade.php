@@ -97,17 +97,17 @@ $prefix = 'mfr_';
                 <tbody>
                     <tr>
                         <td class="padding-table" width="20%">
-                            <span style="color: red;">*</span> NO AKAUN
+                            <span style="color: red;">*</span> {{ trans('app.forms.no') }} AKAUN
                         </td>
                         <td width="35%">
                             <input id="{{ $prefix }}no_akaun" name="{{ $prefix }}no_akaun" class="form-control form-control-sm" type="text" value="{{ $mfreport['no_akaun'] }}">
                             <small id="{{ $prefix }}no_akaun_err" style="display: none;"></small>
                         </td>
                         <td width="5%">&nbsp;</td>
-                        <td class="padding-table" width="25%">  
+                        <td class="padding-table" width="25%">
                             <span style="color: red;">*</span> BAKI BANK (AWAL)
                         </td>
-                        <td width="15%">  
+                        <td width="15%">
                             <input type="number" step="any" name="{{ $prefix }}baki_bank_awal" class="form-control form-control-sm text-right" value="{{ $mfreport['baki_bank_awal'] }}">
                         </td>
                     </tr>

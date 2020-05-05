@@ -25,28 +25,28 @@ foreach ($user_permission as $permission) {
                     <div class="table-responsive">
                         <?php if ($insert_permission == 1) { ?>
                             <button type="button" class="btn btn-primary margin-bottom-25" onclick="window.location = '{{ URL::action('AgmController@addMinutes') }}'">
-                                Add
+                                {{ trans('app.forms.add') }}
                             </button>
-                        <?php } ?>                                                                       
+                        <?php } ?>
                         <table class="table table-hover nowrap" id="financial_report_list" width="100%">
                             <thead>
                                 <tr>
-                                    <th style="width:15%;text-align: center !important;">AGM Date</th>
-                                    <th style="width:20%;">Meeting</th>
+                                    <th style="width:15%;text-align: center !important;">{{ trans('app.forms.agm_date') }}</th>
+                                    <th style="width:20%;">{{ trans('app.forms.meeting') }}</th>
                                     <th style="width:5%;"></th>
-                                    <th style="width:20%;">Copy & List</th>
+                                    <th style="width:20%;">{{ trans('app.forms.copy_list') }}</th>
                                     <th style="width:5%;"></th>
-                                    <th style="width:20%;">Financial Report</th>
+                                    <th style="width:20%;">{{ trans('app.forms.financial_report') }}</th>
                                     <th style="width:5%;"></th>
                                     <?php if ($update_permission == 1) { ?>
-                                        <th style="width:5%;">Action</th>
+                                        <th style="width:5%;">{{ trans('app.forms.action') }}</th>
                                         <?php } ?>
                                 </tr>
                             </thead>
-                            <tbody>                                                    
+                            <tbody>
                             </tbody>
                         </table>
-                    </div>                                                                                      
+                    </div>
                 </div>
             </div>
         </div>
@@ -73,8 +73,8 @@ foreach ($user_permission as $permission) {
 
     function deleteAGMDetails(id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -91,7 +91,7 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Deleted Successfully</p>'
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.deleted_successfully") }}</p>'
                         }, {
                             type: 'success',
                             placement: {
@@ -100,7 +100,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
@@ -192,7 +192,7 @@ foreach ($user_permission as $permission) {
                     $('#edit_agm_details').modal('hide');
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
                         }, {
                             type: 'success',
                             placement: {
@@ -201,13 +201,13 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
         }
     }
-    
+
     function clearAuditFile() {
         $("#audit_report_file").val("");
         $("#audit_report_file_url").val("");

@@ -14,7 +14,7 @@ $company = Company::find(Auth::user()->company_id);
                     <td class="text-center">
                         <h4 class="margin-bottom-0">
                             <img src="{{asset($company->image_url)}}" height="100px;" alt="">
-                        </h4> 
+                        </h4>
                     </td>
                     <td>
                         <h5 class="margin-bottom-10">
@@ -23,7 +23,7 @@ $company = Company::find(Auth::user()->company_id);
                         <h6 class="margin-bottom-0">
                             {{$title}}
                         </h6>
-                    </td>                            
+                    </td>
                 </tr>
             </table>
 
@@ -31,10 +31,10 @@ $company = Company::find(Auth::user()->company_id);
             <table border="1" id="audit_trail" width="100%" style="font-size: 11px;">
                 <thead>
                     <tr>
-                        <th style="width:20%; text-align: center !important;">Modul</th>
-                        <th style="width:40%; text-align: center !important;">Aktiviti</th>
-                        <th style="width:20%; text-align: center !important;">Tindakan Daripada</th>
-                        <th style="width:20%; text-align: center !important;">Tarikh Tindakan</th>
+                        <th style="width:20%; text-align: center !important;">{{ trans('app.forms.module') }}</th>
+                        <th style="width:40%; text-align: center !important;">{{ trans('app.forms.activity') }}</th>
+                        <th style="width:20%; text-align: center !important;">{{ trans('app.forms.action_from') }}</th>
+                        <th style="width:20%; text-align: center !important;">{{ trans('app.forms.date_of_action') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,10 +59,10 @@ $company = Company::find(Auth::user()->company_id);
             <table width="100%">
                 <tr>
                     <td>
-                        <p><b>CONFIDENTIAL</b></p>
+                        <p><b>{{ trans('app.forms.confidential') }}</b></p>
                     </td>
                     <td class="pull-right">
-                        <p>Print On: {{date('d/m/Y h:i:s A', strtotime("now"))}}</p>
+                        <p>{{ trans('app.forms.print_on', ['print'=>date('d/m/Y h:i:s A', strtotime("now"))]) }}</p>
                     </td>
                 </tr>
             </table>

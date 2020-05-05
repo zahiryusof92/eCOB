@@ -23,13 +23,13 @@ $swith_lang = false;
             <div class="dropdown">
                 <a href="javascript: void(0);" class="dropdown-toggle dropdown-inline-button" data-toggle="dropdown" aria-expanded="false">
                     <i class="dropdown-inline-button-icon fa fa-globe"></i>
-                    <span class="hidden-lg-down">English</span>
+                    <span class="hidden-lg-down">{{ trans('app.language.en') }}</span>
                     <span class="caret"></span>
-                </a>               
+                </a>
                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                    <a class="dropdown-item" href="{{ url('/changeLanguage/ms') }}">Bahasa Melayu</a>
-                    <a class="dropdown-item active" href="{{ url('/changeLanguage/en') }}">English</a>                    
-                </ul>                
+                    <a class="dropdown-item" href="{{ url('/changeLanguage/ms') }}">{{ trans('app.language.my') }}</a>
+                    <a class="dropdown-item active" href="{{ url('/changeLanguage/en') }}">{{ trans('app.language.en') }}</a>
+                </ul>
             </div>
             @endif
             <div class="menu-user-block">
@@ -40,15 +40,15 @@ $swith_lang = false;
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                        <a class="dropdown-item" href="{{URL::action('AdminController@home')}}"><i class="dropdown-icon icmn-home2"></i> Home</a>
+                        <a class="dropdown-item" href="{{URL::action('AdminController@home')}}"><i class="dropdown-icon icmn-home2"></i> {{ trans('app.menus.home') }}</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{URL::action('UserController@editProfile')}}"><i class="dropdown-icon icmn-profile"></i> Edit Profile</a>
-                        <a class="dropdown-item" href="{{URL::action('UserController@changePassword')}}"><i class="dropdown-icon fa fa-key"></i> Change Password</a>
+                        <a class="dropdown-item" href="{{URL::action('UserController@editProfile')}}"><i class="dropdown-icon icmn-profile"></i> {{ trans('app.menus.edit_profile') }}</a>
+                        <a class="dropdown-item" href="{{URL::action('UserController@changePassword')}}"><i class="dropdown-icon fa fa-key"></i> {{ trans('app.menus.change_password') }}</a>
                         <div class="dropdown-divider"></div>
                         @if (!empty($cob_logout))
-                        <a class="dropdown-item" href="{{ url('/' . $cob_logout . '/logout') }}"><i class="dropdown-icon icmn-exit"></i> Logout</a>
+                        <a class="dropdown-item" href="{{ url('/' . $cob_logout . '/logout') }}"><i class="dropdown-icon icmn-exit"></i> {{ trans('app.menus.logout') }}</a>
                         @else
-                        <a class="dropdown-item" href="{{ url('/logout') }}"><i class="dropdown-icon icmn-exit"></i> Logout</a>
+                        <a class="dropdown-item" href="{{ url('/logout') }}"><i class="dropdown-icon icmn-exit"></i> {{ trans('app.menus.logout') }}</a>
                         @endif
                     </ul>
                 </div>
@@ -61,10 +61,10 @@ $swith_lang = false;
                                         <img src="{{$company->image_url}}" alt="" style="width: 40px;"/>
                                     </div>
                                 </div>          -->
-                <h6 class="margin-top-10">eCOB System - {{$company->name}}</h6>
+                <h6 class="margin-top-10">{{ trans('app.app_sub_title', ['title' => $company->name]) }}</h6>
             </div>
         </div>
-    </div>    
+    </div>
 </nav>
 <!-- END TOP NAVIGATION -->
 

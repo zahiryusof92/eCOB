@@ -14,7 +14,7 @@ $company = Company::find(Auth::user()->company_id);
                     <td class="text-center">
                         <h4 class="margin-bottom-0">
                             <img src="{{asset($company->image_url)}}" height="100px;" alt="">
-                        </h4> 
+                        </h4>
                     </td>
                     <td>
                         <h5 class="margin-bottom-10">
@@ -23,7 +23,7 @@ $company = Company::find(Auth::user()->company_id);
                         <h6 class="margin-bottom-0">
                             {{$title}}
                         </h6>
-                    </td>                            
+                    </td>
                 </tr>
             </table>
             <hr/>
@@ -64,7 +64,7 @@ $company = Company::find(Auth::user()->company_id);
             <table id="" width="100%">
 <!--                <tr>
                     <td class="text-center">
-                        <h4>Rumusan Penakrifan Bintang Kawasan Pemajuan</h4>  
+                        <h4>Rumusan Penakrifan Bintang Kawasan Pemajuan</h4>
                     </td>
                 </tr>-->
                 <tr>
@@ -75,10 +75,10 @@ $company = Company::find(Auth::user()->company_id);
             <table width="100%">
                 <tr>
                     <td>
-                        <p><b>CONFIDENTIAL</b></p>
+                        <p><b>{{ trans('app.forms.confidential') }}</b></p>
                     </td>
                     <td class="pull-right">
-                        <p>Print On: {{date('d/m/Y h:i:s A', strtotime("now"))}}</p>
+                        <p>{{ trans('app.forms.print_on', ['print'=>date('d/m/Y h:i:s A', strtotime("now"))]) }}</p>
                     </td>
                 </tr>
             </table>

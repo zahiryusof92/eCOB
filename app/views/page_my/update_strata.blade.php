@@ -45,15 +45,15 @@ foreach ($user_permission as $permission) {
                                 <a class="nav-link" href="{{URL::action('AdminController@buyer', $file->id)}}">Senarai Pembeli</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@document', $file->id)}}">Document</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $file->id)}}">{{ trans('app.forms.document') }}</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
-                            <div class="tab-pane active" id="strata" role="tabpanel">                                
-                                <!-- strata Form -->                                
+                            <div class="tab-pane active" id="strata" role="tabpanel">
+                                <!-- strata Form -->
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h4>Butiran</h4>   
+                                        <h4>Butiran</h4>
                                         <form id="strata">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -65,12 +65,12 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <div class="form-group">
-                                                        <label><span style="color: red; font-style: italic;">* </span>Strata Title</label>
+                                                        <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.strata_title') }}</label>
                                                         <select class="form-control" id="strata_title">
-                                                            <option value="1" {{($strata->title == "1" ? " selected" : "")}}>Yes</option>
-                                                            <option value="0" {{($strata->title == "0" ? " selected" : "")}}>No</option>
+                                                            <option value="1" {{($strata->title == "1" ? " selected" : "")}}>{{ trans("app.forms.yes") }}</option>
+                                                            <option value="0" {{($strata->title == "0" ? " selected" : "")}}>{{ trans("app.forms.no") }}</option>
                                                         </select>
-                                                        <div id="strata_title_error" style="display:none;"></div> 
+                                                        <div id="strata_title_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -98,12 +98,12 @@ foreach ($user_permission as $permission) {
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label><span style="color: red; font-style: italic;">* </span>DUN</label>
+                                                        <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.dun') }}</label>
                                                         <select class="form-control" id="strata_dun" onchange="findPark()">
-                                                            <option value="">Sila pilih</option>                                                             
+                                                            <option value="">Sila pilih</option>
                                                             @foreach ($dun as $duns)
                                                             <option value="{{$duns->id}}" {{($strata->dun == $duns->id ? " selected" : "")}}>{{$duns->description}}</option>
-                                                            @endforeach  
+                                                            @endforeach
                                                         </select>
                                                         <div id="strata_dun_error" style="display:none;"></div>
                                                     </div>
@@ -113,16 +113,16 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label><span style="color: red; font-style: italic;">* </span>Taman</label>
-                                                        <select class="form-control" id="strata_park"> 
-                                                            <option value="">Sila pilih</option>  
+                                                        <select class="form-control" id="strata_park">
+                                                            <option value="">Sila pilih</option>
                                                             @foreach ($park as $parks)
                                                             <option value="{{$parks->id}}" {{($strata->park == $parks->id ? " selected" : "")}}>{{$parks->description}}</option>
-                                                            @endforeach 
+                                                            @endforeach
                                                         </select>
                                                         <div id="strata_park_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>                                      
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
@@ -148,7 +148,7 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" placeholder="Address 4" id="strata_address4" value="{{$strata->address4}}">
+                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.address4') }}" id="strata_address4" value="{{$strata->address4}}">
                                                         <div id="strata_address_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
@@ -173,7 +173,7 @@ foreach ($user_permission as $permission) {
                                                         <div id="strata_poscode_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -199,7 +199,7 @@ foreach ($user_permission as $permission) {
                                                         <div id="starta_country_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>        
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -210,8 +210,8 @@ foreach ($user_permission as $permission) {
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Floor</label>
-                                                        <input type="text" class="form-control" placeholder="Floor" id="strata_floor" value="{{$strata->total_floor}}">
+                                                        <label>{{ trans('app.forms.floor') }}</label>
+                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.floor') }}" id="strata_floor" value="{{$strata->total_floor}}">
                                                         <div id="floor_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
@@ -219,8 +219,8 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Year</label>
-                                                        <input type="text" class="form-control" placeholder="Year" id="strata_year" value="{{$strata->year}}">
+                                                        <label>{{ trans('app.forms.year') }}</label>
+                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.year') }}" id="strata_year" value="{{$strata->year}}">
                                                         <div id="year_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
@@ -231,7 +231,7 @@ foreach ($user_permission as $permission) {
                                                         <div id="strata_ownership_no_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -263,22 +263,22 @@ foreach ($user_permission as $permission) {
                                                     <div class="form-group">
                                                         <label>Luas Tanah</label>
                                                         <div class="form-inline">
-                                                            <input type="text" class="form-control" placeholder="Luas Tanah" id="strata_land_area" value="{{$strata->land_area}}">                               
+                                                            <input type="text" class="form-control" placeholder="Luas Tanah" id="strata_land_area" value="{{$strata->land_area}}">
                                                             <select class="form-control" id="strata_land_area_unit">
                                                                 @foreach ($unit as $units)
                                                                 <option value="{{$units->id}}" {{($strata->land_area_unit == $units->id ? " selected" : "")}}>{{$units->description}} &nbsp;&nbsp;</option>
                                                                 @endforeach
                                                             </select>
-                                                            <div id="strata_land_area_error" style="display:none;"></div> 
-                                                        </div> 
+                                                            <div id="strata_land_area_error" style="display:none;"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>No. Lot</label>
-                                                        <input type="text" class="form-control" placeholder="No. Lot" id="strata_lot_no" value="{{$strata->lot_no}}">   
+                                                        <input type="text" class="form-control" placeholder="No. Lot" id="strata_lot_no" value="{{$strata->lot_no}}">
                                                         <div id="starta_lot_no_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
@@ -326,35 +326,35 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Perimeter</label>
+                                                        <label>{{ trans('app.forms.perimeter') }}</label>
                                                         <select class="form-control" id="strata_perimeter">
                                                             <option value="">Sila pilih</option>
                                                             @foreach ($perimeter as $perimeters)
                                                             <option value="{{$perimeters->id}}" {{($strata->perimeter == $perimeters->id ? " selected" : "")}}>{{$perimeters->description_my}}</option>
                                                             @endforeach
                                                         </select>
-                                                        <div id="starta_perimeter_error" style="display:none;"></div>                                                        
+                                                        <div id="starta_perimeter_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Total Share Unit</label>
-                                                        <input type="text" class="form-control" placeholder="Total Share Unit" id="strata_total_share_unit" value="{{$strata->total_share_unit}}">                                                        
+                                                        <label>{{ trans('app.forms.total_share_unit') }}</label>
+                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.total_share_unit') }}" id="strata_total_share_unit" value="{{$strata->total_share_unit}}">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>CCC No.</label>
-                                                        <input type="text" class="form-control" placeholder="CCC No" id="strata_ccc_no" value="{{$strata->ccc_no}}">                                                        
+                                                        <label>{{ trans('app.forms.ccc_no') }}</label>
+                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.ccc_no') }}" id="strata_ccc_no" value="{{$strata->ccc_no}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Date CCC</label>
+                                                        <label>{{ trans('app.forms.date_ccc') }}</label>
                                                         <label class="input-group datepicker-only-init">
-                                                            <input type="text" class="form-control" placeholder="Date CCC" id="strata_ccc_date" value="{{ ($strata->ccc_date != '0000-00-00' ? $strata->ccc_date : '') }}"/>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.date_ccc') }}" id="strata_ccc_date" value="{{ ($strata->ccc_date != '0000-00-00' ? $strata->ccc_date : '') }}"/>
                                                             <span class="input-group-addon">
                                                                 <i class="icmn-calendar"></i>
                                                             </span>
@@ -363,26 +363,26 @@ foreach ($user_permission as $permission) {
                                                 </div>
                                             </div>
                                         </form>
-                                        <form id="upload_strata_file" enctype="multipart/form-data" method="post" action="{{ url('uploadStrataFile') }}" autocomplete="off">                                           
+                                        <form id="upload_strata_file" enctype="multipart/form-data" method="post" action="{{ url('uploadStrataFile') }}" autocomplete="off">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Muat Naik Fail</label>
                                                         <br/>
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                                        <button type="button" id="clear_strata_file" class="btn btn-xs btn-danger" onclick="clearStrataFile()" style="display: none;"><i class="fa fa-times"></i></button>                                                        
-                                                        &nbsp;<input type="file" name="strata_file" id="strata_file" /> 
+                                                        <button type="button" id="clear_strata_file" class="btn btn-xs btn-danger" onclick="clearStrataFile()" style="display: none;"><i class="fa fa-times"></i></button>
+                                                        &nbsp;<input type="file" name="strata_file" id="strata_file" />
                                                         <div id="validation-errors_strata_file"></div>
                                                         @if ($strata->file_url != "")
                                                         <br/>
-                                                        <a href="{{asset($strata->file_url)}}" target="_blank"><button button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>
+                                                        <a href="{{asset($strata->file_url)}}" target="_blank"><button button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> {{ trans("app.forms.download") }}</button></a>
                                                         <?php if ($update_permission == 1) { ?>
                                                             <button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteStrataFile('{{$strata->id}}')"><i class="fa fa-times"></i></button>
                                                         <?php } ?>
                                                         @endif
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -408,7 +408,7 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Caj Selenggaran (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Caj Selenggaran (RM)" id="residential_maintenance_fee">                               
+                                                                <input type="text" class="form-control" placeholder="Caj Selenggaran (RM)" id="residential_maintenance_fee">
                                                                 <select class="form-control" id="residential_maintenance_fee_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}">{{$unitoptions->description}}</option>
@@ -421,9 +421,9 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Sinking Fund (RM)</label>
+                                                            <label>{{ trans('app.forms.sinking_fund') }}</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="residential_sinking_fund">                              
+                                                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.sinking_fund') }}" id="residential_sinking_fund">
                                                                 <select class="form-control" id="residential_sinking_fund_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}">{{$unitoptions->description}}</option>
@@ -433,7 +433,7 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     <hr/>
@@ -457,7 +457,7 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Caj Selenggaran (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Caj Selenggaran (RM)" id="residential_maintenance_fee" value="{{$residential->maintenance_fee}}">                               
+                                                                <input type="text" class="form-control" placeholder="Caj Selenggaran (RM)" id="residential_maintenance_fee" value="{{$residential->maintenance_fee}}">
                                                                 <select class="form-control" id="residential_maintenance_fee_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}" {{($residential->maintenance_fee_option == $unitoptions->id ? " selected" : "")}}>{{$unitoptions->description}}</option>
@@ -470,9 +470,9 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Sinking Fund (RM)</label>
+                                                            <label>{{ trans('app.forms.sinking_fund') }}</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="residential_sinking_fund" value="{{$residential->sinking_fund}}">                              
+                                                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.sinking_fund') }}" id="residential_sinking_fund" value="{{$residential->sinking_fund}}">
                                                                 <select class="form-control" id="residential_sinking_fund_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}" {{($residential->sinking_fund_option == $unitoptions->id ? " selected" : "")}}>{{$unitoptions->description}}</option>
@@ -484,7 +484,7 @@ foreach ($user_permission as $permission) {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                     <hr/>
                                     @endif
                                     @if (count($commercial) <= 0)
@@ -507,7 +507,7 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Caj Selenggaran (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Caj Selenggaran (RM)" id="commercial_maintenance_fee">                               
+                                                                <input type="text" class="form-control" placeholder="Caj Selenggaran (RM)" id="commercial_maintenance_fee">
                                                                 <select class="form-control" id="commercial_maintenance_fee_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}">{{$unitoptions->description}}</option>
@@ -520,9 +520,9 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Sinking Fund (RM)</label>
+                                                            <label>{{ trans('app.forms.sinking_fund') }}</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="commercial_sinking_fund">                              
+                                                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.sinking_fund') }}" id="commercial_sinking_fund">
                                                                 <select class="form-control" id="commercial_sinking_fund_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}">{{$unitoptions->description}}</option>
@@ -556,7 +556,7 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Caj Selenggaran (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Caj Selenggaran (RM)" id="commercial_maintenance_fee" value="{{$commercial->maintenance_fee}}">                               
+                                                                <input type="text" class="form-control" placeholder="Caj Selenggaran (RM)" id="commercial_maintenance_fee" value="{{$commercial->maintenance_fee}}">
                                                                 <select class="form-control" id="commercial_maintenance_fee_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}" {{($commercial->maintenance_fee_option == $unitoptions->id ? " selected" : "")}}>{{$unitoptions->description}}</option>
@@ -569,9 +569,9 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Sinking Fund (RM)</label>
+                                                            <label>{{ trans('app.forms.sinking_fund') }}</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="commercial_sinking_fund" value="{{$commercial->sinking_fund}}">                              
+                                                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.sinking_fund') }}" id="commercial_sinking_fund" value="{{$commercial->sinking_fund}}">
                                                                 <select class="form-control" id="commercial_sinking_fund_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}" {{($commercial->sinking_fund_option == $unitoptions->id ? " selected" : "")}}>{{$unitoptions->description}}</option>
@@ -631,7 +631,7 @@ foreach ($user_permission as $permission) {
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-2">
-                                                    <label class="form-control-label">Surau</label>
+                                                    <label class="form-control-label">{{ trans('app.forms.surau') }}</label>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <input type="radio" id="surau" name="surau" value="1" {{($facility->surau == 1 ? " checked" : "")}}>
@@ -671,7 +671,7 @@ foreach ($user_permission as $permission) {
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-2">
-                                                    <label class="form-control-label">Gym</label>
+                                                    <label class="form-control-label">{{ trans('app.forms.gym') }}</label>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <input type="radio" id="gym" name="gym" value="1" {{($facility->gym == 1 ? " checked" : "")}}>
@@ -851,7 +851,7 @@ foreach ($user_permission as $permission) {
                             <!-- End Form -->
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -878,7 +878,7 @@ foreach ($user_permission as $permission) {
         $("#validation-errors_strata_file").hide().empty();
         return true;
     }
-    
+
     function showResponse(response, statusText, xhr, $form) {
         if (response.success == false)
         {
@@ -1020,9 +1020,9 @@ foreach ($user_permission as $permission) {
         }
 
         var error = 0;
-        
+
         if (strata_title.trim() == "") {
-            $("#strata_title_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Strata Title</span>');
+            $("#strata_title_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Strata Title"]) }}</span>');
             $("#strata_title_error").css("display", "block");
             error = 1;
         }
@@ -1086,13 +1086,13 @@ foreach ($user_permission as $permission) {
                     is_commercial: is_commercial,
                     strata_file_url: strata_file_url,
                     strata_id: '{{$strata->id}}',
-                    //residential                    
+                    //residential
                     residential_unit_no: residential_unit_no,
                     residential_maintenance_fee: residential_maintenance_fee,
                     residential_maintenance_fee_option: residential_maintenance_fee_option,
                     residential_sinking_fund: residential_sinking_fund,
                     residential_sinking_fund_option: residential_sinking_fund_option,
-                    //commercial                    
+                    //commercial
                     commercial_unit_no: commercial_unit_no,
                     commercial_maintenance_fee: commercial_maintenance_fee,
                     commercial_maintenance_fee_option: commercial_maintenance_fee_option,
@@ -1139,7 +1139,7 @@ foreach ($user_permission as $permission) {
                                 align: "center"
                             }
                         });
-                        window.location = "{{URL::action('AdminController@management', $file->id)}}";                        
+                        window.location = "{{URL::action('AdminController@management', $file->id)}}";
                     } else {
                         bootbox.alert("<span style='color:red;'>Terdapat masalah ketika prosess. Sila cuba lagi.</span>");
                     }
@@ -1147,7 +1147,7 @@ foreach ($user_permission as $permission) {
             });
         }
     }
-    
+
     function findDUN() {
         $.ajax({
             url: "{{URL::action('AdminController@findDUN')}}",
@@ -1161,7 +1161,7 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-    
+
     function findPark() {
         $.ajax({
             url: "{{URL::action('AdminController@findPark')}}",
@@ -1174,13 +1174,13 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-    
+
     function deleteStrataFile(id) {
         swal({
             title: "Anda pasti?",
-            text: "Your will not be able to recover this file!",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -1209,7 +1209,7 @@ foreach ($user_permission as $permission) {
             });
         });
     }
-    
+
     function clearStrataFile() {
         $("#strata_file").val("");
         $("#clear_strata_file").hide();

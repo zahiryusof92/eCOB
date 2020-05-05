@@ -23,7 +23,7 @@ foreach ($user_permission as $permission) {
             <div class="row">
                 <div class="col-lg-12">
                     <button class="btn btn-success" data-toggle="modal" data-target="#importForm">
-                        Import COB Files Before VP &nbsp;<i class="fa fa-upload"></i>
+                        {{ trans('app.buttons.import_cob_files_before_vp') }} &nbsp;<i class="fa fa-upload"></i>
                     </button>
                 </div>
             </div>
@@ -34,26 +34,26 @@ foreach ($user_permission as $permission) {
                 <div class="modal-dialog">
                     <form id="form_import" enctype="multipart/form-data" class="form-horizontal" data-parsley-validate>
                         <div class="modal-content">
-                            <div class="modal-header">                    
-                                <h4 class="modal-title">Import COB File Before VP</h4>
+                            <div class="modal-header">
+                                <h4 class="modal-title">{{ trans('app.forms.import_cob_files_before_vp') }}</h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                            <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label><span style="color: red;">*</span> COB</label>
+                                            <label><span style="color: red;">*</span> {{ trans('app.forms.cob') }}</label>
                                             <select name="import_company" id="import_company" class="form-control">
-                                                <option value="">Please Select</option>
+                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                 @foreach ($cob as $companies)
                                                 <option value="{{ $companies->id }}">{{ $companies->name }} ({{ $companies->short_name }})</option>
-                                                @endforeach                                    
+                                                @endforeach
                                             </select>
                                             <div id="import_company_error" style="display: none;"></div>
                                         </div>
@@ -62,7 +62,7 @@ foreach ($user_permission as $permission) {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label><span style="color: red;">*</span> Excel File</label>
+                                            <label><span style="color: red;">*</span> {{ trans('app.forms.excel_file') }}</label>
                                             <input type="file" name="import_file" id="import_file" class="form-control form-control-file"/>
                                             <div id="import_file_error" style="display: none;"></div>
                                         </div>
@@ -73,10 +73,10 @@ foreach ($user_permission as $permission) {
                                 <input type="hidden" name="status" id="status" value="3"/>
                                 <img id="loading_import" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                                 <button id="submit_button_import" class="btn btn-primary" type="submit">
-                                    Submit
+                                    {{ trans('app.forms.submit') }}
                                 </button>
                                 <button data-dismiss="modal" id="cancel_button_import" class="btn btn-default" type="button">
-                                    Cancel
+                                    {{ trans('app.forms.cancel') }}
                                 </button>
                             </div>
                         </div>
@@ -101,12 +101,12 @@ foreach ($user_permission as $permission) {
                     var error = 0;
 
                     if (import_company.trim() == "") {
-                        $("#import_company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select COB</span>');
+                        $("#import_company_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"COB"]) }}</span>');
                         $("#import_company_error").css("display", "block");
                         error = 1;
                     }
                     if (import_file.trim() == "") {
-                        $("#import_file_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please upload Excel File</span>');
+                        $("#import_file_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.file", ["attribute"=>"Excel File"]) }}</span>');
                         $("#import_file_error").css("display", "block");
                         error = 1;
                     }
@@ -130,21 +130,21 @@ foreach ($user_permission as $permission) {
 
                                 if (data.trim() === "true") {
                                     $("#importForm").modal("hide");
-                                    bootbox.alert("<span style='color:green;'>Import successfully!</span>", function () {
+                                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.import_successfully') }}</span>", function () {
                                         window.location.reload();
                                     });
                                 } else if (data.trim() === "empty_file") {
                                     $("#importForm").modal("hide");
-                                    $("#import_file_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please upload Excel File</span>');
+                                    $("#import_file_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.file", ["attribute"=>"Excel File"]) }}</span>');
                                     $("#import_file_error").css("display", "block");
                                 } else if (data.trim() === "empty_data") {
                                     $("#importForm").modal("hide");
-                                    bootbox.alert("<span style='color:red;'>Error, empty file or all data already exist.</span>", function () {
+                                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.empty_or_exist') }}</span>", function () {
                                         window.location.reload();
                                     });
                                 } else {
                                     $("#importForm").modal("hide");
-                                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>", function () {
+                                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>", function () {
                                         window.location.reload();
                                     });
                                 }
@@ -167,28 +167,28 @@ foreach ($user_permission as $permission) {
                             @if (Auth::user()->getAdmin())
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>COB</label>
+                                    <label>{{ trans('app.forms.cob') }}</label>
                                     <select id="company" class="form-control select2">
-                                        <option value="">Please Select</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
                                         @foreach ($cob as $companies)
                                         <option value="{{ $companies->short_name }}">{{ $companies->name }} ({{ $companies->short_name }})</option>
-                                        @endforeach                                    
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             @endif
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Year</label>
+                                    <label>{{ trans('app.forms.year') }}</label>
                                     <select id="year" class="form-control select2">
-                                        <option value="">Please Select</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
                                         @for ($i = 2012; $i <= date('Y'); $i++)
                                         <option value="{{ $i }}">{{ $i}}</option>
                                         @endfor
                                     </select>
                                 </div>
-                            </div>                            
-                        </div>  
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -196,17 +196,17 @@ foreach ($user_permission as $permission) {
             <hr/>
 
             <div class="row">
-                <div class="col-lg-12"> 
+                <div class="col-lg-12">
                     <table class="table table-hover nowrap" id="filelist" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:20%;">File Number</th>                                
-                                <th style="width:30%;">Name</th>
-                                <th style="width:10%;">COB</th>
-                                <th style="width:10%;">Year</th>
-                                <th style="width:10%;">Active</th>
+                                <th style="width:20%;">{{ trans('app.forms.file_number') }}</th>
+                                <th style="width:30%;">{{ trans('app.forms.name') }}</th>
+                                <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
+                                <th style="width:10%;">{{ trans('app.forms.year') }}</th>
+                                <th style="width:10%;">{{ trans('app.forms.active') }}</th>
                                 <?php if ($update_permission == 1) { ?>
-                                    <th style="width:20%;">Action</th>
+                                    <th style="width:20%;">{{ trans('app.forms.action') }}</th>
                                     <?php } ?>
                             </tr>
                         </thead>
@@ -214,9 +214,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>            
+            </div>
         </div>
-    </section>    
+    </section>
     <!-- End  -->
 </div>
 
@@ -229,7 +229,7 @@ foreach ($user_permission as $permission) {
             "lengthMenu": [
                 [15, 30, 50, 100, -1],
                 [15, 30, 50, 100, "All"]
-            ],            
+            ],
             "aoColumnDefs": [
                 {
                     "bSortable": false,
@@ -261,11 +261,11 @@ foreach ($user_permission as $permission) {
             },
             success: function (data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function () {
+                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function () {
                         window.location.reload();
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                 }
             }
         });
@@ -280,18 +280,18 @@ foreach ($user_permission as $permission) {
             },
             success: function (data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function () {
+                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function () {
                         window.location.reload();
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                 }
             }
         });
     }
 
     function deleteFileList(id) {
-        bootbox.confirm("Are you sure want to delete this file?", function (result) {
+        bootbox.confirm("{{ trans('app.confirmation.are_you_sure_delete_file') }}", function (result) {
             if (result) {
                 $.ajax({
                     url: "{{ URL::action('AdminController@deleteFileList') }}",
@@ -301,11 +301,11 @@ foreach ($user_permission as $permission) {
                     },
                     success: function (data) {
                         if (data.trim() == "true") {
-                            bootbox.alert("<span style='color:green;'>Delete successfully!</span>", function () {
+                            bootbox.alert("<span style='color:green;'>{{ trans('app.successes.deleted_successfully') }}</span>", function () {
                                 window.location.reload();
                             });
                         } else {
-                            bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                            bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                         }
                     }
                 });

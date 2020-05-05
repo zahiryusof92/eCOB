@@ -28,30 +28,30 @@ foreach ($user_permission as $permission) {
                         </button>
                         &nbsp;
                         <button onclick="window.location = '{{ URL::action('AgmController@importTenant') }}'" type="button" class="btn btn-primary">
-                            Import CSV
+                            {{ trans('app.forms.import_csv_file') }}
                         </button>
                         &nbsp;
                         <a href="{{asset('files/tenant_template.csv')}}" target="_blank">
                             <button type="button" class="btn btn-success pull-right">
-                                Download CSV Template
+                                {{ trans('app.forms.download_csv_template') }}
                             </button>
-                        </a> 
+                        </a>
                         <br/><br/>
                     <?php } ?>
                     <div class="table-responsive">
                         <table class="table table-hover nowrap" id="tenant" width="100%">
                             <thead>
                                 <tr>
-                                    <th style="width:10%;">Unit No</th>                                    
-                                    <th style="width:20%;">Tenant</th>
-                                    <th style="width:15%;">NRIC</th>
-                                    <th style="width:15%;">Phone No</th>
-                                    <th style="width:20%;">Email</th>
-                                    <th style="width:10%;">Race</th>
-                                    <th style="width:10%;">Action</th>
+                                    <th style="width:10%;">{{ trans('app.forms.unit_number') }}</th>
+                                    <th style="width:20%;">{{ trans('app.forms.tenant') }}</th>
+                                    <th style="width:15%;">{{ trans('app.forms.nric') }}</th>
+                                    <th style="width:15%;">{{ trans('app.forms.phone_number') }}</th>
+                                    <th style="width:20%;">{{ trans('app.forms.email') }}</th>
+                                    <th style="width:10%;">{{ trans('app.forms.race') }}</th>
+                                    <th style="width:10%;">{{ trans('app.forms.action') }}</th>
                                 </tr>
                             </thead>
-                            <tbody>  
+                            <tbody>
                             </tbody>
                         </table>
                     </div>
@@ -80,8 +80,8 @@ foreach ($user_permission as $permission) {
 
     function deleteTenant(id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -98,7 +98,7 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Deleted Successfully</p>'
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.deleted_successfully") }}</p>'
                         }, {
                             type: 'success',
                             placement: {
@@ -107,7 +107,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
