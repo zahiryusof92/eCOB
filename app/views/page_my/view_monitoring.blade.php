@@ -48,8 +48,8 @@ foreach ($user_permission as $permission) {
                                 <a class="nav-link" href="{{URL::action('AdminController@fileApproval', $file->id)}}">Pengesahan</a>
                             </li>
                         </ul>
-                        <div class="tab-content padding-vertical-20">                            
-                            <div class="tab-pane active" id="monitoring" role="tabpanel">                                
+                        <div class="tab-content padding-vertical-20">
+                            <div class="tab-pane active" id="monitoring" role="tabpanel">
                                 <form id="monitoring">
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -106,18 +106,18 @@ foreach ($user_permission as $permission) {
                                                             <option value="1">Januari</option>
                                                             <option value="2">Februari</option>
                                                             <option value="3">Mac</option>
-                                                            <option value="4">April</option>
+                                                            <option value="4">{{ trans('app.forms.april') }}</option>
                                                             <option value="5">Mei</option>
                                                             <option value="6">Jun</option>
                                                             <option value="7">Julai</option>
                                                             <option value="8">Ogos</option>
-                                                            <option value="9">September</option>
+                                                            <option value="9">{{ trans('app.forms.september') }}</option>
                                                             <option value="10">Oktober</option>
-                                                            <option value="11">November</option>
+                                                            <option value="11">{{ trans('app.forms.november') }}</option>
                                                             <option value="12">Disember</option>
                                                         </select>
                                                     </div>
-                                                </div>                                                 
+                                                </div>
                                                 <table class="table table-hover nowrap" id="financial_report_list" width="100%">
                                                     <thead>
                                                         <tr>
@@ -130,16 +130,16 @@ foreach ($user_permission as $permission) {
                                                             <th style="width:5%;"></th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>                                                    
+                                                    <tbody>
                                                     </tbody>
                                                 </table>
-                                            </div>                                                                                      
+                                            </div>
                                         </div>
                                     </div>
                                     <hr/>
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h6>Maklumat Tambahan</h6>   
+                                            <h6>Maklumat Tambahan</h6>
                                             <div class="table-responsive">
                                                 <table class="table table-hover nowrap" id="ajk_details_list" width="100%">
                                                     <thead>
@@ -150,7 +150,7 @@ foreach ($user_permission as $permission) {
                                                             <th style="width:10%;">Tahun</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>                                                    
+                                                    <tbody>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -169,7 +169,7 @@ foreach ($user_permission as $permission) {
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -295,7 +295,7 @@ foreach ($user_permission as $permission) {
             success: showResponse3,
             dataType: 'json'
         };
-        //edit        
+        //edit
         var options4 = {
             beforeSubmit: showRequest4,
             success: showResponse4,

@@ -24,18 +24,18 @@ foreach ($user_permission as $permission) {
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                    <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> File No</label>
+                                <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.file_no') }}</label>
                             </div>
                             <div class="col-md-6">
                                 <select id="file_id" class="form-control">
-                                    <option value="">Please select</option>
-                                    @foreach ($files as $file) 
+                                    <option value="">{{ trans('app.forms.please_select') }}</option>
+                                    @foreach ($files as $file)
                                     <option value="{{$file->id}}" {{($file->id == $meeting_doc->file_id ? " selected" : "")}}>{{$file->file_no}}</option>
                                     @endforeach
                                 </select>
@@ -44,11 +44,11 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">AGM Date</label>
+                                <label class="form-control-label">{{ trans('app.forms.agm_date') }}</label>
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
-                                    <input type="text" class="form-control datepicker" placeholder="AGM Date" id="agm_date" value="{{ $meeting_doc->agm_date }}"/>
+                                    <input type="text" class="form-control datepicker" placeholder="{{ trans('app.forms.agm_date') }}" id="agm_date" value="{{ $meeting_doc->agm_date }}"/>
                                     <span class="input-group-addon">
                                         <i class="icmn-calendar"></i>
                                     </span>
@@ -57,84 +57,84 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Anual General Meeting (AGM)</label>
+                                <label class="form-control-label">{{ trans('app.forms.annual_general_meeting') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="agm" name="agm" value="1" {{($meeting_doc->agm == 1 ? " checked" : "")}}> Yes
+                                <input type="radio" id="agm" name="agm" value="1" {{($meeting_doc->agm == 1 ? " checked" : "")}}> {{ trans('app.forms.yes') }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="agm" name="agm" value="0" {{($meeting_doc->agm == 0 ? " checked" : "")}}> No
+                                <input type="radio" id="agm" name="agm" value="0" {{($meeting_doc->agm == 0 ? " checked" : "")}}> {{ trans('app.forms.no') }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Extraordinary General Meeting (EGM)</label>
+                                <label class="form-control-label">{{ trans('app.forms.extra_general_meeting') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="egm" name="egm" value="1" {{($meeting_doc->egm == 1 ? " checked" : "")}}> Yes
+                                <input type="radio" id="egm" name="egm" value="1" {{($meeting_doc->egm == 1 ? " checked" : "")}}> {{ trans('app.forms.yes') }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="egm" name="egm" value="0" {{($meeting_doc->egm == 0 ? " checked" : "")}}> No
+                                <input type="radio" id="egm" name="egm" value="0" {{($meeting_doc->egm == 0 ? " checked" : "")}}> {{ trans('app.forms.no') }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Minit Meeting</label>
+                                <label class="form-control-label">{{ trans('app.forms.meeting_minutes') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="minit_meeting" name="minit_meeting" value="1" {{($meeting_doc->minit_meeting == 1 ? " checked" : "")}}> Yes
+                                <input type="radio" id="minit_meeting" name="minit_meeting" value="1" {{($meeting_doc->minit_meeting == 1 ? " checked" : "")}}> {{ trans('app.forms.yes') }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="minit_meeting" name="minit_meeting" value="0" {{($meeting_doc->minit_meeting == 0 ? " checked" : "")}}> No
+                                <input type="radio" id="minit_meeting" name="minit_meeting" value="0" {{($meeting_doc->minit_meeting == 0 ? " checked" : "")}}> {{ trans('app.forms.no') }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">JMC SPA Copy</label>
+                                <label class="form-control-label">{{ trans('app.forms.jmc_spa_copy') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="jmc_copy" name="jmc_copy" value="1" {{($meeting_doc->jmc_spa == 1 ? " checked" : "")}}> Yes
+                                <input type="radio" id="jmc_copy" name="jmc_copy" value="1" {{($meeting_doc->jmc_spa == 1 ? " checked" : "")}}> {{ trans('app.forms.yes') }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="jmc_copy" name="jmc_copy" value="0" {{($meeting_doc->jmc_spa == 0 ? " checked" : "")}}> No
+                                <input type="radio" id="jmc_copy" name="jmc_copy" value="0" {{($meeting_doc->jmc_spa == 0 ? " checked" : "")}}> {{ trans('app.forms.no') }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Identity Card List</label>
+                                <label class="form-control-label">{{ trans('app.forms.identity_card_list') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="ic_list" name="ic_list" value="1" {{($meeting_doc->identity_card == 1 ? " checked" : "")}}> Yes
+                                <input type="radio" id="ic_list" name="ic_list" value="1" {{($meeting_doc->identity_card == 1 ? " checked" : "")}}> {{ trans('app.forms.yes') }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="ic_list" name="ic_list" value="0" {{($meeting_doc->identity_card == 0 ? " checked" : "")}}> No
+                                <input type="radio" id="ic_list" name="ic_list" value="0" {{($meeting_doc->identity_card == 0 ? " checked" : "")}}> {{ trans('app.forms.no') }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Attendance List</label>
+                                <label class="form-control-label">{{ trans('app.forms.attendance_list') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="attendance_list" name="attendance_list" value="1" {{($meeting_doc->attendance == 1 ? " checked" : "")}}> Yes
+                                <input type="radio" id="attendance_list" name="attendance_list" value="1" {{($meeting_doc->attendance == 1 ? " checked" : "")}}> {{ trans('app.forms.yes') }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="attendance_list" name="attendance_list" value="0" {{($meeting_doc->attendance == 0 ? " checked" : "")}}> No
+                                <input type="radio" id="attendance_list" name="attendance_list" value="0" {{($meeting_doc->attendance == 0 ? " checked" : "")}}> {{ trans('app.forms.no') }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Audited Financial Report</label>
+                                <label class="form-control-label">{{ trans('app.forms.audited_financial_report') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="audited_financial_report" name="audited_financial_report" value="1" {{($meeting_doc->financial_report == 1 ? " checked" : "")}}> Yes
+                                <input type="radio" id="audited_financial_report" name="audited_financial_report" value="1" {{($meeting_doc->financial_report == 1 ? " checked" : "")}}> {{ trans('app.forms.yes') }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="audited_financial_report" name="audited_financial_report" value="0" {{($meeting_doc->financial_report == 0 ? " checked" : "")}}> No
+                                <input type="radio" id="audited_financial_report" name="audited_financial_report" value="0" {{($meeting_doc->financial_report == 0 ? " checked" : "")}}> {{ trans('app.forms.no') }}
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Financial Audit Start Date</label>
+                                <label class="form-control-label">{{ trans('app.forms.financial_audit_start_date') }}</label>
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
@@ -147,7 +147,7 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Financial Audit End Date</label>
+                                <label class="form-control-label">{{ trans('app.forms.financial_audit_end_date') }}</label>
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
@@ -160,25 +160,25 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Financial Audit Report</label>
+                                <label class="form-control-label">{{ trans('app.forms.financial_audit_report') }}</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" placeholder="Financial Audit Report" id="audit_report" value="{{ $meeting_doc->audit_report }}"/>                            
+                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.financial_audit_report') }}" id="audit_report" value="{{ $meeting_doc->audit_report }}"/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Remarks</label>
+                                <label class="form-control-label">{{ trans('app.forms.remarks') }}</label>
                             </div>
                             <div class="col-md-6">
-                                <textarea class="form-control" placeholder="Remarks" id="remarks" rows="5">{{ $meeting_doc->remarks }}</textarea>                           
+                                <textarea class="form-control" placeholder="{{ trans('app.forms.remarks') }}" id="remarks" rows="5">{{ $meeting_doc->remarks }}</textarea>
                             </div>
                         </div>
                         <div class="form-actions">
                             <?php if ($update_permission == 1) { ?>
-                                <button type="button" class="btn btn-primary" id="submit_button" onclick="editMinutes()">Submit</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="editMinutes()">{{ trans('app.forms.submit') }}</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AgmController@minutes')}}'">Cancel</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AgmController@minutes')}}'">{{ trans('app.forms.cancel') }}</button>
                             <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
@@ -252,7 +252,7 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (file_id.trim() == "") {
-            $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File</span>');
+            $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"File"]) }}</span>');
             $("#file_id").focus();
             $("#file_id_error").css("display", "block");
             error = 1;
@@ -294,7 +294,7 @@ foreach ($user_permission as $permission) {
                         });
                         location = '{{ URL::action("AgmController@minutes") }}';
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

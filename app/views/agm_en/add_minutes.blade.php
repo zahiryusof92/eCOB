@@ -24,18 +24,18 @@ foreach ($user_permission as $permission) {
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                    <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> File No</label>
+                                <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.file_no') }}</label>
                             </div>
                             <div class="col-md-6">
                                 <select id="file_id" class="form-control select2">
-                                    <option value="">Please select</option>
-                                    @foreach ($files as $file) 
+                                    <option value="">{{ trans('app.forms.please_select') }}</option>
+                                    @foreach ($files as $file)
                                     <option value="{{$file->id}}">{{$file->file_no}}</option>
                                     @endforeach
                                 </select>
@@ -44,11 +44,11 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">AGM Date</label>
+                                <label class="form-control-label">{{ trans('app.forms.agm_date') }}</label>
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
-                                    <input type="text" class="form-control datepicker" placeholder="AGM Date" id="agm_date"/>
+                                    <input type="text" class="form-control datepicker" placeholder="{{ trans('app.forms.agm_date') }}" id="agm_date"/>
                                     <span class="input-group-addon">
                                         <i class="icmn-calendar"></i>
                                     </span>
@@ -57,17 +57,17 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Anual General Meeting (AGM)</label>
+                                <label class="form-control-label">{{ trans('app.forms.annual_general_meeting') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="agm" name="agm" value="1"> Yes
+                                <input type="radio" id="agm" name="agm" value="1"> {{ trans("app.forms.yes") }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="agm" name="agm" value="0"> No
+                                <input type="radio" id="agm" name="agm" value="0"> {{ trans("app.forms.no") }}
                             </div>
                         </div>
                     </form>
-                    <form id="upload_agm_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAGMFile') }}" autocomplete="off">  
+                    <form id="upload_agm_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAGMFile') }}" autocomplete="off">
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label class="form-control-label">&nbsp;</label>
@@ -82,17 +82,17 @@ foreach ($user_permission as $permission) {
                     <form>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Extraordinary General Meeting (EGM)</label>
+                                <label class="form-control-label">{{ trans('app.forms.extra_general_meeting') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="egm" name="egm" value="1"> Yes
+                                <input type="radio" id="egm" name="egm" value="1"> {{ trans("app.forms.yes") }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="egm" name="egm" value="0"> No
+                                <input type="radio" id="egm" name="egm" value="0"> {{ trans("app.forms.no") }}
                             </div>
                         </div>
                     </form>
-                    <form id="upload_egm_file" enctype="multipart/form-data" method="post" action="{{ url('uploadEGMFile') }}" autocomplete="off">  
+                    <form id="upload_egm_file" enctype="multipart/form-data" method="post" action="{{ url('uploadEGMFile') }}" autocomplete="off">
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label class="form-control-label">&nbsp;</label>
@@ -107,17 +107,17 @@ foreach ($user_permission as $permission) {
                     <form>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Minit Meeting</label>
+                                <label class="form-control-label">{{ trans('app.forms.meeting_minutes') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="minit_meeting" name="minit_meeting" value="1"> Yes
+                                <input type="radio" id="minit_meeting" name="minit_meeting" value="1"> {{ trans("app.forms.yes") }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="minit_meeting" name="minit_meeting" value="0"> No
+                                <input type="radio" id="minit_meeting" name="minit_meeting" value="0"> {{ trans("app.forms.no") }}
                             </div>
                         </div>
                     </form>
-                    <form id="upload_minutes_meeting_file" enctype="multipart/form-data" method="post" action="{{ url('uploadMinutesMeetingFile') }}" autocomplete="off">  
+                    <form id="upload_minutes_meeting_file" enctype="multipart/form-data" method="post" action="{{ url('uploadMinutesMeetingFile') }}" autocomplete="off">
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label class="form-control-label">&nbsp;</label>
@@ -132,17 +132,17 @@ foreach ($user_permission as $permission) {
                     <form>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">JMC SPA Copy</label>
+                                <label class="form-control-label">{{ trans('app.forms.jmc_spa_copy') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="jmc_copy" name="jmc_copy" value="1"> Yes
+                                <input type="radio" id="jmc_copy" name="jmc_copy" value="1"> {{ trans("app.forms.yes") }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="jmc_copy" name="jmc_copy" value="0"> No
+                                <input type="radio" id="jmc_copy" name="jmc_copy" value="0"> {{ trans("app.forms.no") }}
                             </div>
                         </div>
                     </form>
-                    <form id="upload_jmc_file" enctype="multipart/form-data" method="post" action="{{ url('uploadJMCFile') }}" autocomplete="off">  
+                    <form id="upload_jmc_file" enctype="multipart/form-data" method="post" action="{{ url('uploadJMCFile') }}" autocomplete="off">
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label class="form-control-label">&nbsp;</label>
@@ -157,17 +157,17 @@ foreach ($user_permission as $permission) {
                     <form>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Identity Card List</label>
+                                <label class="form-control-label">{{ trans('app.forms.identity_card_list') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="ic_list" name="ic_list" value="1"> Yes
+                                <input type="radio" id="ic_list" name="ic_list" value="1"> {{ trans("app.forms.yes") }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="ic_list" name="ic_list" value="0"> No
+                                <input type="radio" id="ic_list" name="ic_list" value="0"> {{ trans("app.forms.no") }}
                             </div>
                         </div>
                     </form>
-                    <form id="upload_ic_file" enctype="multipart/form-data" method="post" action="{{ url('uploadICFile') }}" autocomplete="off">  
+                    <form id="upload_ic_file" enctype="multipart/form-data" method="post" action="{{ url('uploadICFile') }}" autocomplete="off">
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label class="form-control-label">&nbsp;</label>
@@ -182,17 +182,17 @@ foreach ($user_permission as $permission) {
                     <form>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Attendance List</label>
+                                <label class="form-control-label">{{ trans('app.forms.attendance_list') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="attendance_list" name="attendance_list" value="1"> Yes
+                                <input type="radio" id="attendance_list" name="attendance_list" value="1"> {{ trans("app.forms.yes") }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="attendance_list" name="attendance_list" value="0"> No
+                                <input type="radio" id="attendance_list" name="attendance_list" value="0"> {{ trans("app.forms.no") }}
                             </div>
                         </div>
                     </form>
-                    <form id="upload_attendance_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAttendanceFile') }}" autocomplete="off">  
+                    <form id="upload_attendance_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAttendanceFile') }}" autocomplete="off">
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label class="form-control-label">&nbsp;</label>
@@ -207,17 +207,17 @@ foreach ($user_permission as $permission) {
                     <form>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Audited Financial Report</label>
+                                <label class="form-control-label">{{ trans('app.forms.audited_financial_report') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="audited_financial_report" name="audited_financial_report" value="1"> Yes
+                                <input type="radio" id="audited_financial_report" name="audited_financial_report" value="1"> {{ trans("app.forms.yes") }}
                             </div>
                             <div class="col-md-2">
-                                <input type="radio" id="audited_financial_report" name="audited_financial_report" value="0"> No
+                                <input type="radio" id="audited_financial_report" name="audited_financial_report" value="0"> {{ trans("app.forms.no") }}
                             </div>
                         </div>
                     </form>
-                    <form id="upload_audited_financial_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditedFinancialFile') }}" autocomplete="off">  
+                    <form id="upload_audited_financial_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditedFinancialFile') }}" autocomplete="off">
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label class="form-control-label">&nbsp;</label>
@@ -232,14 +232,14 @@ foreach ($user_permission as $permission) {
                     <form>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Financial Audit Report</label>
+                                <label class="form-control-label">{{ trans('app.forms.financial_audit_report') }}</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control" placeholder="Financial Audit Report" id="audit_report"/>                            
+                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.financial_audit_report') }}" id="audit_report"/>
                             </div>
                         </div>
                     </form>
-                    <form id="upload_audit_report_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditReportFile') }}" autocomplete="off">  
+                    <form id="upload_audit_report_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditReportFile') }}" autocomplete="off">
                         <div class="form-group row">
                             <div class="col-md-6">
                                 <label class="form-control-label">&nbsp;</label>
@@ -253,10 +253,10 @@ foreach ($user_permission as $permission) {
                         </div>
                     </form>
 
-                    <form id="upload_letter_integrity" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterIntegrity') }}" autocomplete="off">  
+                    <form id="upload_letter_integrity" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterIntegrity') }}" autocomplete="off">
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Pledge letter of integrity JMC</label>
+                                <label class="form-control-label">{{ trans('app.forms.pledge_letter_of_integrity') }}</label>
                             </div>
                             <div class="col-md-6">
                                 <button type="button" id="clear_letter_integrity" class="btn btn-xs btn-danger" onclick="clearLetterIntegrity()" style="display: none;"><i class="fa fa-times"></i></button>
@@ -267,10 +267,10 @@ foreach ($user_permission as $permission) {
                         </div>
                     </form>
 
-                    <form id="upload_letter_bankruptcy" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterBankruptcy') }}" autocomplete="off">  
+                    <form id="upload_letter_bankruptcy" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterBankruptcy') }}" autocomplete="off">
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Declaration letter of non-bankruptcy</label>
+                                <label class="form-control-label">{{ trans('app.forms.declaration_letter_of_non_bankruptcy') }}</label>
                             </div>
                             <div class="col-md-6">
                                 <button type="button" id="clear_letter_bankruptcy" class="btn btn-xs btn-danger" onclick="clearLetterBankruptcy()" style="display: none;"><i class="fa fa-times"></i></button>
@@ -284,7 +284,7 @@ foreach ($user_permission as $permission) {
                     <form>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Financial Audit Start Date</label>
+                                <label class="form-control-label">{{ trans('app.forms.financial_audit_start_date') }}</label>
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
@@ -297,7 +297,7 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Financial Audit End Date</label>
+                                <label class="form-control-label">{{ trans('app.forms.financial_audit_end_date') }}</label>
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
@@ -310,10 +310,10 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Remarks</label>
+                                <label class="form-control-label">{{ trans('app.forms.remarks') }}</label>
                             </div>
                             <div class="col-md-6">
-                                <textarea class="form-control" placeholder="Remarks" id="remarks" rows="5"></textarea>                           
+                                <textarea class="form-control" placeholder="{{ trans('app.forms.remarks') }}" id="remarks" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="form-actions">
@@ -324,13 +324,13 @@ foreach ($user_permission as $permission) {
                                 <input type="hidden" id="jmc_file_url"/>
                                 <input type="hidden" id="ic_file_url"/>
                                 <input type="hidden" id="attendance_file_url"/>
-                                <input type="hidden" id="audited_financial_file_url"/>                                
+                                <input type="hidden" id="audited_financial_file_url"/>
                                 <input type="hidden" id="audit_report_file_url"/>
                                 <input type="hidden" id="letter_integrity_url"/>
                                 <input type="hidden" id="letter_bankruptcy_url"/>
-                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addMinutes()">Submit</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addMinutes()">{{ trans('app.forms.submit') }}</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AgmController@minutes')}}'">Cancel</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AgmController@minutes')}}'">{{ trans('app.forms.cancel') }}</button>
                             <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
@@ -395,7 +395,7 @@ foreach ($user_permission as $permission) {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $("#agm_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearAGMFile()'><i class='fa fa-times'></i> Clear</button>").show();
+                        $("#agm_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearAGMFile()'><i class='fa fa-times'></i> {{ trans('app.forms.clear') }}</button>").show();
                         $("#agm_file_clear").show();
                         $("#agm_file").css("color", "green");
                         $("#agm_file_url").val(result.file);
@@ -417,7 +417,7 @@ foreach ($user_permission as $permission) {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $("#egm_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearEGMFile()'><i class='fa fa-times'></i> Clear</button>").show();
+                        $("#egm_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearEGMFile()'><i class='fa fa-times'></i> {{ trans('app.forms.clear') }}</button>").show();
                         $("#egm_file_clear").show();
                         $("#egm_file").css("color", "green");
                         $("#egm_file_url").val(result.file);
@@ -439,7 +439,7 @@ foreach ($user_permission as $permission) {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $("#minutes_meeting_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearMinutesMeetingFile()'><i class='fa fa-times'></i> Clear</button>").show();
+                        $("#minutes_meeting_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearMinutesMeetingFile()'><i class='fa fa-times'></i> {{ trans('app.forms.clear') }}</button>").show();
                         $("#minutes_meeting_file_clear").show();
                         $("#minutes_meeting_file").css("color", "green");
                         $("#minutes_meeting_file_url").val(result.file);
@@ -461,7 +461,7 @@ foreach ($user_permission as $permission) {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $("#jmc_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearMinutesMeetingFile()'><i class='fa fa-times'></i> Clear</button>").show();
+                        $("#jmc_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearMinutesMeetingFile()'><i class='fa fa-times'></i> {{ trans('app.forms.clear') }}</button>").show();
                         $("#jmc_file_clear").show();
                         $("#jmc_file").css("color", "green");
                         $("#jmc_file_url").val(result.file);
@@ -483,7 +483,7 @@ foreach ($user_permission as $permission) {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $("#ic_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearMinutesMeetingFile()'><i class='fa fa-times'></i> Clear</button>").show();
+                        $("#ic_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearMinutesMeetingFile()'><i class='fa fa-times'></i> {{ trans('app.forms.clear') }}</button>").show();
                         $("#ic_file_clear").show();
                         $("#ic_file").css("color", "green");
                         $("#ic_file_url").val(result.file);
@@ -505,7 +505,7 @@ foreach ($user_permission as $permission) {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $("#attendance_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearMinutesMeetingFile()'><i class='fa fa-times'></i> Clear</button>").show();
+                        $("#attendance_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearMinutesMeetingFile()'><i class='fa fa-times'></i> {{ trans('app.forms.clear') }}</button>").show();
                         $("#attendance_file_clear").show();
                         $("#attendance_file").css("color", "green");
                         $("#attendance_file_url").val(result.file);
@@ -527,7 +527,7 @@ foreach ($user_permission as $permission) {
                 },
                 success: function (result) {
                     if (result.success) {
-                        $("#audited_financial_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearMinutesMeetingFile()'><i class='fa fa-times'></i> Clear</button>").show();
+                        $("#audited_financial_file_error").html("<i class='fa fa-check' style='color:green;'></i>&nbsp;&nbsp;<button class='btn btn-xs btn-danger' onclick='clearMinutesMeetingFile()'><i class='fa fa-times'></i> {{ trans('app.forms.clear') }}</button>").show();
                         $("#audited_financial_file_clear").show();
                         $("#audited_financial_file").css("color", "green");
                         $("#audited_financial_file_url").val(result.file);
@@ -765,7 +765,7 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (file_id.trim() == "") {
-            $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File</span>');
+            $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"File"]) }}</span>');
             $("#file_id").focus();
             $("#file_id_error").css("display", "block");
             error = 1;
@@ -792,13 +792,13 @@ foreach ($user_permission as $permission) {
                     attendance_file_url: attendance_file_url,
                     audited_financial_report: audited_financial_report,
                     audited_financial_file_url: audited_financial_file_url,
-                    audit_report: audit_report,                    
+                    audit_report: audit_report,
                     audit_report_file_url: audit_report_file_url,
                     letter_integrity_url: letter_integrity_url,
                     letter_bankruptcy_url: letter_bankruptcy_url,
                     audit_start: audit_start,
                     audit_end: audit_end,
-                    remarks: remarks                    
+                    remarks: remarks
                 },
                 success: function (data) {
                     $("#loading").css("display", "none");
@@ -806,11 +806,11 @@ foreach ($user_permission as $permission) {
                     $("#cancel_button").removeAttr("disabled");
 
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>Minutes added successfully!</span>", function () {
+                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.minutes.store') }}</span>", function () {
                             window.location = '{{URL::action("AgmController@minutes") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

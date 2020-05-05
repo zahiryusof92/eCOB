@@ -14,15 +14,15 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                    <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label"><span style="color: red; font-style: italic;">*</span> Name</label>                            
-                                    <input id="description" class="form-control" placeholder="Name" type="text">
+                                    <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.name') }}</label>
+                                    <input id="description" class="form-control" placeholder="{{ trans('app.forms.name') }}" type="text">
                                     <div id="description_error" style="display:none;"></div>
                                 </div>
                             </div>
@@ -33,10 +33,10 @@
                                 <table class="table margin-bottom-0" border="0">
                                     <thead>
                                         <tr>
-                                            <th width="600" class="text-center">Description</th>
-                                            <th width="100" class="text-center">Access</th>
-                                            <th width="100" class="text-center">Insert</th>
-                                            <th width="100" class="text-center">Update</th>
+                                            <th width="600" class="text-center">{{ trans('app.forms.description') }}</th>
+                                            <th width="100" class="text-center">{{ trans('app.forms.access') }}</th>
+                                            <th width="100" class="text-center">{{ trans('app.forms.insert') }}</th>
+                                            <th width="100" class="text-center">{{ trans('app.forms.update') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -80,7 +80,7 @@
                                             <td scope="row" class="text-center">
                                                <input type="checkbox" id="update_cob_list" value="0"/>
                                             </td>
-                                        </tr> 
+                                        </tr>
                                         <tr>
                                             <th colspan="4"><h6 class="margin-top-20 margin-bottom-0">Administration</h6></th>
                                         </tr>
@@ -364,36 +364,36 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>                            
+                            </div>
                         </div>
                         <hr/>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Status</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.admin_status') }}</label>
                                     <select id="is_active" class="form-control">
-                                        <option value="">Please Select</option>
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="1">{{ trans('app.forms.active') }}</option>
+                                        <option value="0">{{ trans('app.forms.inactive') }}</option>
                                     </select>
                                     <div id="is_active_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>   
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Remarks</label>
+                                    <label>{{ trans('app.forms.remarks') }}</label>
                                     <textarea class="form-control" rows="3" id="remarks"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="form-actions">
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addAccessGroup()">Save</button>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AdminController@accessGroup") }}'">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addAccessGroup()">{{ trans('app.forms.save') }}</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AdminController@accessGroup") }}'">{{ trans('app.forms.cancel') }}</button>
                         </div>
                     </form>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -402,14 +402,14 @@
 
 <!-- Page Scripts -->
 <script>
-    
-    $(document).ready(function(){        
-        $("input[type=checkbox]").change(function() { 
-            var access_cob_prefix = $("#access_cob_prefix").is(":checked") ? 1:0; 
+
+    $(document).ready(function(){
+        $("input[type=checkbox]").change(function() {
+            var access_cob_prefix = $("#access_cob_prefix").is(":checked") ? 1:0;
             $("#access_cob_prefix").val(access_cob_prefix);
-        });        
+        });
     });
-    
+
     function addAccessGroup() {
         $("#loading").css("display", "inline-block");
 
@@ -479,13 +479,13 @@
         var error = 0;
 
         if (description.trim() == "") {
-            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter name</span>');
+            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Name"]) }}</span>');
             $("#description_error").css("display", "block");
             error = 1;
         }
-               
+
         if (is_active.trim() == "") {
-            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select status</span>');
+            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Status"]) }}</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
@@ -564,11 +564,11 @@
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>Access Group added successfully!</span>", function () {
+                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.access_group.store') }}</span>", function () {
                             window.location = '{{URL::action("AdminController@accessGroup") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

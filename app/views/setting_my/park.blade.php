@@ -34,20 +34,20 @@ foreach ($user_permission as $permission) {
                             <div class="col-sm-3">
                                 <select id="duns" class="form-control">
                                     <option value="">Semua</option>
-                                    @foreach ($dun as $duns) 
+                                    @foreach ($dun as $duns)
                                     <option value="{{$duns->description}}">{{$duns->description}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                    </div> 
-                    
+                    </div>
+
                     <table class="table table-hover nowrap" id="park" width="100%">
                         <thead>
                             <tr>
                                 <th style="width:40%;">Penerangan</th>
-                                <th style="width:40%;">DUN</th>
-                                <th style="width:10%;">Status</th>
+                                <th style="width:40%;">{{ trans('app.forms.dun') }}</th>
+                                <th style="width:10%;">{{ trans('app.forms.status') }}</th>
                                 <?php if ($update_permission == 1) { ?>
                                 <th style="width:10%;">Aksi</th>
                                 <?php } ?>
@@ -57,9 +57,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>            
+            </div>
         </div>
-    </section>    
+    </section>
     <!-- End  -->
 </div>
 
@@ -80,11 +80,11 @@ foreach ($user_permission as $permission) {
             ]
         });
     });
-    
+
     $('#duns').on('change', function (){
         oTable.columns(1).search(this.value).draw();
     });
-    
+
     function inactivePark(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@inactivePark') }}",
@@ -122,13 +122,13 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-    
+
     function deletePark(id) {
         swal({
              title: "Anda pasti?",
-            text: "Your will not be able to recover this file!",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             cancelButtonText: "Batal",

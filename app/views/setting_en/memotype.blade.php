@@ -24,17 +24,17 @@ foreach ($user_permission as $permission) {
                 <div class="col-lg-12">
                     <?php if ($insert_permission == 1) { ?>
                     <button onclick="window.location = '{{ URL::action('SettingController@addMemoType') }}'" type="button" class="btn btn-primary">
-                        Add Memo Type
+                        {{ trans('app.buttons.add_memo_type') }}
                     </button>
                     <br/><br/>
                     <?php } ?>
                     <table class="table table-hover nowrap" id="memotype" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:70%;">Memo Type</th>
-                                <th style="width:20%;">Status</th>
+                                <th style="width:70%;">{{ trans('app.forms.memo_type') }}</th>
+                                <th style="width:20%;">{{ trans('app.forms.status') }}</th>
                                 <?php if ($update_permission == 1) { ?>
-                                <th style="width:10%;">Action</th>
+                                <th style="width:10%;">{{ trans('app.forms.action') }}</th>
                                 <?php } ?>
                             </tr>
                         </thead>
@@ -42,9 +42,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>            
+            </div>
         </div>
-    </section>    
+    </section>
     <!-- End  -->
 </div>
 
@@ -64,8 +64,8 @@ foreach ($user_permission as $permission) {
                 }
             ]
         });
-    });    
-    
+    });
+
     function inactiveMemoType(id) {
         $.ajax({
             url: "{{ URL::action('SettingController@inactiveMemoType') }}",
@@ -75,11 +75,11 @@ foreach ($user_permission as $permission) {
             },
             success: function(data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
+                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function() {
                         window.location = "{{URL::action('SettingController@memoType')}}";
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                 }
             }
         });
@@ -94,22 +94,22 @@ foreach ($user_permission as $permission) {
             },
             success: function(data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
+                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function() {
                         window.location = "{{URL::action('SettingController@memoType')}}";
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                 }
             }
         });
     }
-    
+
     function deleteMemoType (id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -125,15 +125,15 @@ foreach ($user_permission as $permission) {
                 success: function(data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "Deleted!",
-                            text: "File has been deleted",
+                            title: "{{ trans('app.successes.deleted_title') }}",
+                            text: "{{ trans('app.successes.deleted_text_file') }}",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

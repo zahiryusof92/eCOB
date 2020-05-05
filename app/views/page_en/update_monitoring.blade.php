@@ -20,73 +20,73 @@ foreach ($user_permission as $permission) {
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <h6>File No: {{$file->file_no}}</h6>
+                    <h6>{{ trans('app.forms.file_no') }}: {{$file->file_no}}</h6>
                     <div id="update_files_lists">
                         <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@house', $file->id)}}">Housing Scheme</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@house', $file->id)}}">{{ trans('app.forms.housing_scheme') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@strata', $file->id)}}">Developed Area (STRATA)</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@strata', $file->id)}}">{{ trans('app.forms.developed_area') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@management', $file->id)}}">Management</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@management', $file->id)}}">{{ trans('app.forms.management') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active">Monitoring</a>
+                                <a class="nav-link active">{{ trans('app.forms.monitoring') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@others', $file->id)}}">Others</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@others', $file->id)}}">{{ trans('app.forms.others') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@scoring', $file->id)}}">Scoring Component Value</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@scoring', $file->id)}}">{{ trans('app.forms.scoring_component_value') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@buyer', $file->id)}}">Buyer List</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@buyer', $file->id)}}">{{ trans('app.forms.buyer_list') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@document', $file->id)}}">Document</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $file->id)}}">{{ trans('app.forms.document') }}</a>
                             </li>
                         </ul>
-                        <div class="tab-content padding-vertical-20">                            
-                            <div class="tab-pane active" id="monitoring" role="tabpanel">                                
+                        <div class="tab-content padding-vertical-20">
+                            <div class="tab-pane active" id="monitoring" role="tabpanel">
                                 <form id="monitoring">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h4>Detail</h4>
-                                            <h6>1. Delivery Document of Development Area</h6>
+                                            <h4>{{ trans('app.forms.detail') }}</h4>
+                                            <h6>1. {{ trans('app.forms.delivery_document_of_development_area') }}</h6>
                                             <div class="form-group row">
                                                 <div class="col-md-3">
-                                                    <label class="form-control-label">Pre-Calculate Plan</label>
+                                                    <label class="form-control-label">{{ trans('app.forms.pre_calculate_plan') }}</label>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <input type="radio" id="precalculate_plan" name="precalculate_plan" value="1" {{($monitoring->pre_calculate == 1 ? " checked" : "")}}>
-                                                    Yes
+                                                    {{ trans('app.forms.yes') }}
                                                 </div>
                                                 <div class="col-md-1">
                                                     <input type="radio" id="precalculate_plan" name="precalculate_plan" value="0" {{($monitoring->pre_calculate == 0 ? " checked" : "")}}>
-                                                    No
+                                                    {{ trans('app.forms.no') }}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-3">
-                                                    <label class="form-control-label">Buyer Registration</label>
+                                                    <label class="form-control-label">{{ trans('app.forms.buyer_registration') }}</label>
                                                 </div>
                                                 <div class="col-md-1">
                                                     <input type="radio" id="buyer_registration" name="buyer_registration" value="1" {{($monitoring->buyer_registration == 1 ? " checked" : "")}}>
-                                                    Yes
+                                                    {{ trans('app.forms.yes') }}
                                                 </div>
                                                 <div class="col-md-1">
                                                     <input type="radio" id="buyer_registration" name="buyer_registration" value="0" {{($monitoring->buyer_registration == 0 ? " checked" : "")}}>
-                                                    No
+                                                    {{ trans('app.forms.no') }}
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-3">
-                                                    <label class="form-control-label">Certificate Series Number</label>
+                                                    <label class="form-control-label">{{ trans('app.forms.certificate_series_number') }}</label>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <input type="text" class="form-control" placeholder="Certificate Series Number" id="certificate_series_no" value="{{$monitoring->certificate_no}}"/>
+                                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.certificate_series_number') }}" id="certificate_series_no" value="{{$monitoring->certificate_no}}"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,81 +94,81 @@ foreach ($user_permission as $permission) {
                                     <hr/>
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h6>2. Delivery Document for Each Meeting</h6>
+                                            <h6>2. {{ trans('app.forms.delivery_document_of_each_meeting') }}</h6>
                                             <div class="table-responsive">
                                                 <?php if ($update_permission == 1) { ?>
                                                     <button type="button" class="btn btn-primary pull-right margin-bottom-25" onclick="addAGMDetails()">
-                                                        Add
+                                                        {{ trans('app.forms.add') }}
                                                     </button>
                                                     <br/><br/>
                                                 <?php } ?>
                                                 <div class="form-group row">
                                                     <div class="col-md-3">
-                                                        <label class="form-control-label">Financial Report Start Month</label>
+                                                        <label class="form-control-label">{{ trans('app.forms.financial_report_start_month') }}</label>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <select class="form-control" id="commercial_sinking_fund_option">
-                                                            <option value="0" selected="">All</option>
-                                                            <option value="1">January</option>
-                                                            <option value="2">February</option>
-                                                            <option value="3">March</option>
-                                                            <option value="4">April</option>
-                                                            <option value="5">May</option>
-                                                            <option value="6">June</option>
-                                                            <option value="7">July</option>
-                                                            <option value="8">Augusts</option>
-                                                            <option value="9">September</option>
-                                                            <option value="10">October</option>
-                                                            <option value="11">November</option>
-                                                            <option value="12">December</option>
+                                                            <option value="0" selected="">{{ trans('app.forms.all') }}</option>
+                                                            <option value="1">{{ trans('app.forms.january') }}</option>
+                                                            <option value="2">{{ trans('app.forms.february') }}</option>
+                                                            <option value="3">{{ trans('app.forms.march') }}</option>
+                                                            <option value="4">{{ trans('app.forms.april') }}</option>
+                                                            <option value="5">{{ trans('app.forms.may') }}</option>
+                                                            <option value="6">{{ trans('app.forms.june') }}</option>
+                                                            <option value="7">{{ trans('app.forms.july') }}</option>
+                                                            <option value="8">{{ trans('app.forms.august') }}</option>
+                                                            <option value="9">{{ trans('app.forms.september') }}</option>
+                                                            <option value="10">{{ trans('app.forms.october') }}</option>
+                                                            <option value="11">{{ trans('app.forms.november') }}</option>
+                                                            <option value="12">{{ trans('app.forms.december') }}</option>
                                                         </select>
                                                     </div>
-                                                </div>                                                 
+                                                </div>
                                                 <table class="table table-hover nowrap" id="financial_report_list" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width:15%;text-align: center !important;">AGM Date</th>
-                                                            <th style="width:20%;">Meeting</th>
+                                                            <th style="width:15%;text-align: center !important;">{{ trans('app.forms.agm_date') }}</th>
+                                                            <th style="width:20%;">{{ trans('app.forms.meeting') }}</th>
                                                             <th style="width:5%;"></th>
-                                                            <th style="width:20%;">Copy & List</th>
+                                                            <th style="width:20%;">{{ trans('app.forms.copy_list') }}</th>
                                                             <th style="width:5%;"></th>
-                                                            <th style="width:20%;">Financial Report</th>
+                                                            <th style="width:20%;">{{ trans('app.forms.financial_report') }}</th>
                                                             <th style="width:5%;"></th>
                                                             <?php if ($update_permission == 1) { ?>
-                                                                <th style="width:5%;">Action</th>
+                                                                <th style="width:5%;">{{ trans('app.forms.action') }}</th>
                                                             <?php } ?>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>                                                    
+                                                    <tbody>
                                                     </tbody>
                                                 </table>
-                                            </div>                                                                                      
+                                            </div>
                                         </div>
                                     </div>
                                     <hr/>
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h6>Additional Info</h6>   
+                                            <h6>{{ trans('app.forms.additional_info') }}</h6>
                                             <div class="table-responsive">
                                                 <?php if ($update_permission == 1) { ?>
                                                     <button type="button" class="btn btn-primary pull-right margin-bottom-25" onclick="addAJKDetails()">
-                                                        Add
+                                                        {{ trans('app.forms.add') }}
                                                     </button>
                                                     <br/><br/>
                                                 <?php } ?>
                                                 <table class="table table-hover nowrap" id="ajk_details_list" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width:30%;text-align: center !important;">Designation</th>
-                                                            <th style="width:30%;">Name</th>
-                                                            <th style="width:20%;">Phone Number</th>
-                                                            <th style="width:10%;">Year</th>
+                                                            <th style="width:30%;text-align: center !important;">{{ trans('app.forms.designation') }}</th>
+                                                            <th style="width:30%;">{{ trans('app.forms.name') }}</th>
+                                                            <th style="width:20%;">{{ trans('app.forms.phone_number') }}</th>
+                                                            <th style="width:10%;">{{ trans('app.forms.year') }}</th>
                                                             <?php if ($update_permission == 1) { ?>
-                                                                <th style="width:10%;">Action</th>
+                                                                <th style="width:10%;">{{ trans('app.forms.action') }}</th>
                                                             <?php } ?>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>                                                    
+                                                    <tbody>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -177,7 +177,7 @@ foreach ($user_permission as $permission) {
                                     <hr/>
                                     <div class="form-group row">
                                         <div class="col-md-3">
-                                            <label class="form-control-label">Remarks</label>
+                                            <label class="form-control-label">{{ trans('app.forms.remarks') }}</label>
                                         </div>
                                         <div class="col-md-4">
                                             <textarea class="form-control" rows="3" id="monitoring_remarks">{{$monitoring->remarks}}</textarea>
@@ -185,20 +185,20 @@ foreach ($user_permission as $permission) {
                                     </div>
                                     <div class="form-actions">
                                         <?php if ($update_permission == 1) { ?>
-                                            <button type="button" class="btn btn-primary" id="submit_button" onclick="updateMonitoring()">Submit</button>
+                                            <button type="button" class="btn btn-primary" id="submit_button" onclick="updateMonitoring()">{{ trans('app.forms.submit') }}</button>
                                         <?php } ?>
 
                                         @if ($file->is_active != 2)
-                                        <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">Cancel</button>
+                                        <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">{{ trans('app.forms.cancel') }}</button>
                                         @else
-                                        <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileListBeforeVP')}}'">Cancel</button>
+                                        <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileListBeforeVP')}}'">{{ trans('app.forms.cancel') }}</button>
                                         @endif
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -212,17 +212,17 @@ foreach ($user_permission as $permission) {
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Add AGM Details</h4>
-            </div>            
+                <h4 class="modal-title" id="myModalLabel">{{ trans('app.buttons.add_agm_details') }}</h4>
+            </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">AGM Date</label>
+                            <label class="form-control-label">{{ trans('app.forms.agm_date') }}</label>
                         </div>
                         <div class="col-md-4">
                             <label class="input-group datepicker-only-init">
-                                <input type="text" class="form-control" placeholder="AGM Date" id="agm_date_raw"/>
+                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.agm_date') }}" id="agm_date_raw"/>
                                 <span class="input-group-addon">
                                     <i class="icmn-calendar"></i>
                                 </span>
@@ -232,91 +232,91 @@ foreach ($user_permission as $permission) {
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">Anual General Meeting (AGM)</label>
+                            <label class="form-control-label">{{ trans('app.forms.annual_general_meeting') }}</label>
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="agm" name="agm" value="1"> Yes
+                            <input type="radio" id="agm" name="agm" value="1"> {{ trans("app.forms.yes") }}
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="agm" name="agm" value="0"> No
+                            <input type="radio" id="agm" name="agm" value="0"> {{ trans("app.forms.no") }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">Extraordinary General Meeting (EGM)</label>
+                            <label class="form-control-label">{{ trans('app.forms.extra_general_meeting') }}</label>
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="egm" name="egm" value="1"> Yes
+                            <input type="radio" id="egm" name="egm" value="1"> {{ trans("app.forms.yes") }}
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="egm" name="egm" value="0"> No
+                            <input type="radio" id="egm" name="egm" value="0"> {{ trans("app.forms.no") }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">Minit Meeting</label>
+                            <label class="form-control-label">{{ trans('app.forms.meeting_minutes') }}</label>
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="minit_meeting" name="minit_meeting" value="1"> Yes
+                            <input type="radio" id="minit_meeting" name="minit_meeting" value="1"> {{ trans("app.forms.yes") }}
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="minit_meeting" name="minit_meeting" value="0"> No
+                            <input type="radio" id="minit_meeting" name="minit_meeting" value="0"> {{ trans("app.forms.no") }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">JMC SPA Copy</label>
+                            <label class="form-control-label">{{ trans('app.forms.jmc_spa_copy') }}</label>
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="jmc_copy" name="jmc_copy" value="1"> Yes
+                            <input type="radio" id="jmc_copy" name="jmc_copy" value="1"> {{ trans("app.forms.yes") }}
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="jmc_copy" name="jmc_copy" value="0"> No
+                            <input type="radio" id="jmc_copy" name="jmc_copy" value="0"> {{ trans("app.forms.no") }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">Identity Card List</label>
+                            <label class="form-control-label">{{ trans('app.forms.identity_card_list') }}</label>
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="ic_list" name="ic_list" value="1"> Yes
+                            <input type="radio" id="ic_list" name="ic_list" value="1"> {{ trans("app.forms.yes") }}
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="ic_list" name="ic_list" value="0"> No
+                            <input type="radio" id="ic_list" name="ic_list" value="0"> {{ trans("app.forms.no") }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">Attendance List</label>
+                            <label class="form-control-label">{{ trans('app.forms.attendance_list') }}</label>
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="attendance_list" name="attendance_list" value="1"> Yes
+                            <input type="radio" id="attendance_list" name="attendance_list" value="1"> {{ trans("app.forms.yes") }}
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="attendance_list" name="attendance_list" value="0"> No
+                            <input type="radio" id="attendance_list" name="attendance_list" value="0"> {{ trans("app.forms.no") }}
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">Audited Financial Report</label>
+                            <label class="form-control-label">{{ trans('app.forms.audited_financial_report') }}</label>
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="audited_financial_report" name="audited_financial_report" value="1"> Yes
+                            <input type="radio" id="audited_financial_report" name="audited_financial_report" value="1"> {{ trans("app.forms.yes") }}
                         </div>
                         <div class="col-md-2">
-                            <input type="radio" id="audited_financial_report" name="audited_financial_report" value="0"> No
+                            <input type="radio" id="audited_financial_report" name="audited_financial_report" value="0"> {{ trans("app.forms.no") }}
                         </div>
-                    </div>                    
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">Financial Audit Report</label>
+                            <label class="form-control-label">{{ trans('app.forms.financial_audit_report') }}</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Financial Audit Report" id="audit_report"/>                            
+                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.financial_audit_report') }}" id="audit_report"/>
                         </div>
                     </div>
                 </form>
-                <form id="upload_audit_report_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditReportFile') }}" autocomplete="off">  
+                <form id="upload_audit_report_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditReportFile') }}" autocomplete="off">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="form-control-label">&nbsp;</label>
@@ -329,10 +329,10 @@ foreach ($user_permission as $permission) {
                         </div>
                     </div>
                 </form>
-                <form id="upload_letter_integrity" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterIntegrity') }}" autocomplete="off">  
+                <form id="upload_letter_integrity" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterIntegrity') }}" autocomplete="off">
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">Pledge letter of integrity JMC</label>
+                            <label class="form-control-label">{{ trans('app.forms.pledge_letter_of_integrity') }}</label>
                         </div>
                         <div class="col-md-6">
                             <button type="button" id="clear_letter_integrity" class="btn btn-xs btn-danger" onclick="clearLetterIntegrity()" style="display: none;"><i class="fa fa-times"></i></button>
@@ -342,10 +342,10 @@ foreach ($user_permission as $permission) {
                         </div>
                     </div>
                 </form>
-                <form id="upload_letter_bankruptcy" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterBankruptcy') }}" autocomplete="off">  
+                <form id="upload_letter_bankruptcy" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterBankruptcy') }}" autocomplete="off">
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">Declaration letter of non-bankruptcy</label>
+                            <label class="form-control-label">{{ trans('app.forms.declaration_letter_of_non_bankruptcy') }}</label>
                         </div>
                         <div class="col-md-6">
                             <button type="button" id="clear_letter_bankruptcy" class="btn btn-xs btn-danger" onclick="clearLetterBankruptcy()" style="display: none;"><i class="fa fa-times"></i></button>
@@ -358,7 +358,7 @@ foreach ($user_permission as $permission) {
                 <form>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">Financial Audit Start Date</label>
+                            <label class="form-control-label">{{ trans('app.forms.financial_audit_start_date') }}</label>
                         </div>
                         <div class="col-md-4">
                             <label class="input-group datepicker-only-init">
@@ -372,7 +372,7 @@ foreach ($user_permission as $permission) {
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
-                            <label class="form-control-label">Financial Audit End Date</label>
+                            <label class="form-control-label">{{ trans('app.forms.financial_audit_end_date') }}</label>
                         </div>
                         <div class="col-md-4">
                             <label class="input-group datepicker-only-init">
@@ -385,17 +385,17 @@ foreach ($user_permission as $permission) {
                         </div>
                     </div>
                 </form>
-            </div> 
+            </div>
             <div class="modal-footer">
                 <form>
                     <input type="hidden" id="audit_report_file_url"/>
                     <input type="hidden" id="letter_integrity_url"/>
                     <input type="hidden" id="letter_bankruptcy_url"/>
                     <button type="button" class="btn" data-dismiss="modal">
-                        Close
+                        {{ trans('app.forms.close') }}
                     </button>
                     <button type="button" class="btn btn-primary" onclick="addAGMDetail()">
-                        Submit
+                        {{ trans('app.forms.submit') }}
                     </button>
                 </form>
             </div>
@@ -410,18 +410,18 @@ foreach ($user_permission as $permission) {
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Edit AGM Details</h4>
+                <h4 class="modal-title" id="myModalLabel">{{ trans('app.buttons.edit_agm_details') }}</h4>
             </div>
             <div class="modal-body">
                 <form>
                     <div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">AGM Date</label>
+                                <label class="form-control-label">{{ trans('app.forms.agm_date') }}</label>
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
-                                    <input type="text" class="form-control" placeholder="AGM Date" id="agm_date_edit_raw"/>
+                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.agm_date') }}" id="agm_date_edit_raw"/>
                                     <span class="input-group-addon">
                                         <i class="icmn-calendar"></i>
                                     </span>
@@ -436,7 +436,7 @@ foreach ($user_permission as $permission) {
                     <div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Financial Audit Start Date</label>
+                                <label class="form-control-label">{{ trans('app.forms.financial_audit_start_date') }}</label>
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
@@ -450,7 +450,7 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-6">
-                                <label class="form-control-label">Financial Audit End Date</label>
+                                <label class="form-control-label">{{ trans('app.forms.financial_audit_end_date') }}</label>
                             </div>
                             <div class="col-md-4">
                                 <label class="input-group datepicker-only-init">
@@ -472,10 +472,10 @@ foreach ($user_permission as $permission) {
                     <input type="hidden" id="letter_integrity_url_edit"/>
                     <input type="hidden" id="letter_bankruptcy_url_edit"/>
                     <button type="button" class="btn" data-dismiss="modal">
-                        Close
+                        {{ trans('app.forms.close') }}
                     </button>
                     <button type="button" class="btn btn-primary" onclick="editAGMDetail()">
-                        Submit
+                        {{ trans('app.forms.submit') }}
                     </button>
                 </form>
             </div>
@@ -490,23 +490,23 @@ foreach ($user_permission as $permission) {
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Add AJK Details</h4>
+                <h4 class="modal-title" id="myModalLabel">{{ trans('app.buttons.add_ajk_details') }}</h4>
             </div>
             <form id="add_ajk">
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields.</label>
+                            <label class="form-control-label" style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Designation</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.designation') }}</label>
                         </div>
                         <div class="col-md-6">
                             <select id="ajk_designation" class="form-control">
-                                <option value="">Please select</option>
-                                @foreach ($designation as $designations) 
+                                <option value="">{{ trans('app.forms.please_select') }}</option>
+                                @foreach ($designation as $designations)
                                 <option value="{{$designations->id}}">{{$designations->description}}</option>
                                 @endforeach
                             </select>
@@ -515,40 +515,40 @@ foreach ($user_permission as $permission) {
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Name</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.name') }}</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" placeholder="Name" id="ajk_name"/>
+                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="ajk_name"/>
                             <div id="ajk_name_error" style="display:none;"></div>
-                        </div>                    
-                    </div> 
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Phone Number</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.phone_number') }}</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Phone Number" id="ajk_phone_no"/>
+                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="ajk_phone_no"/>
                             <div id="ajk_phone_no_error" style="display:none;"></div>
                             <div id="ajk_phone_no_invalid_error" style="display:none;"></div>
-                        </div>                    
-                    </div> 
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Year</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.year') }}</label>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" placeholder="Year" id="ajk_year"/>
+                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.year') }}" id="ajk_year"/>
                             <div id="ajk_year_error" style="display:none;"></div>
                             <div id="ajk_year_invalid_error" style="display:none;"></div>
-                        </div>                    
-                    </div> 
-                </div>                
+                        </div>
+                    </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" data-dismiss="modal">
-                        Close
+                        {{ trans('app.forms.close') }}
                     </button>
                     <button id="submit_button" onclick="addAJKDetail()" type="button" class="btn btn-primary">
-                        Submit
+                        {{ trans('app.forms.submit') }}
                     </button>
                 </div>
             </form>
@@ -563,23 +563,23 @@ foreach ($user_permission as $permission) {
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Edit AJK Details</h4>
+                <h4 class="modal-title" id="myModalLabel">{{ trans('app.buttons.edit_ajk_details') }}</h4>
             </div>
             <form id="edit_ajk">
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields.</label>
+                            <label class="form-control-label" style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Designation</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.designation') }}</label>
                         </div>
                         <div class="col-md-6">
                             <select id="ajk_designation_edit" class="form-control">
-                                <option value="">Please select</option>
-                                @foreach ($designation as $designations) 
+                                <option value="">{{ trans('app.forms.please_select') }}</option>
+                                @foreach ($designation as $designations)
                                 <option value="{{$designations->id}}">{{$designations->description}}</option>
                                 @endforeach
                             </select>
@@ -588,36 +588,36 @@ foreach ($user_permission as $permission) {
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Name</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.name') }}</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" placeholder="Name" id="ajk_name_edit"/>
-                        </div>                    
-                    </div> 
+                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="ajk_name_edit"/>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Phone Number</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.phone_number') }}</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Phone Number" id="ajk_phone_no_edit"/>
-                        </div>                    
-                    </div> 
+                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="ajk_phone_no_edit"/>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Year</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.year') }}</label>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" placeholder="Year" id="ajk_year_edit"/>
-                        </div>                    
-                    </div> 
+                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.year') }}" id="ajk_year_edit"/>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="ajk_id_edit"/>
                     <button type="button" class="btn" data-dismiss="modal">
-                        Close
+                        {{ trans('app.forms.close') }}
                     </button>
                     <button id="submit_button" onclick="editAJK()" type="button" class="btn btn-primary">
-                        Submit
+                        {{ trans('app.forms.submit') }}
                     </button>
                 </div>
             </form>
@@ -634,10 +634,10 @@ foreach ($user_permission as $permission) {
 
     $(window).on('beforeunload', function () {
         if (changes) {
-            return "Data you have entered may not be saved, do you really want to leave?";
+            return "{{ trans('app.confirmation.want_to_leave') }}";
         }
     });
-    
+
     function getAGMDetails(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@getAGMDetails') }}",
@@ -794,7 +794,7 @@ foreach ($user_permission as $permission) {
             success: showResponse3,
             dataType: 'json'
         };
-        //edit        
+        //edit
         var options4 = {
             beforeSubmit: showRequest4,
             success: showResponse4,
@@ -1096,7 +1096,7 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
                         }, {
                             type: 'success',
                             placement: {
@@ -1105,7 +1105,7 @@ foreach ($user_permission as $permission) {
                         });
                         window.location = "{{URL::action('AdminController@others', $file->id)}}";
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
@@ -1197,7 +1197,7 @@ foreach ($user_permission as $permission) {
                     $('#add_agm_details').modal('hide');
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
                         }, {
                             type: 'success',
                             placement: {
@@ -1206,7 +1206,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
@@ -1299,7 +1299,7 @@ foreach ($user_permission as $permission) {
                     $('#edit_agm_details').modal('hide');
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
                         }, {
                             type: 'success',
                             placement: {
@@ -1308,7 +1308,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
@@ -1327,40 +1327,40 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (ajk_designation.trim() == "") {
-            $("#ajk_designation_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Designation</span>');
+            $("#ajk_designation_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Designation"]) }}</span>');
             $("#ajk_designation_error").css("display", "block");
             error = 1;
         }
 
         if (ajk_name.trim() == "") {
-            $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Name</span>');
+            $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Name"]) }}</span>');
             $("#ajk_name_error").css("display", "block");
             error = 1;
         }
 
         if (ajk_phone_no.trim() == "") {
-            $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Phone Number</span>');
+            $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Phone Number"]) }}</span>');
             $("#ajk_phone_no_error").css("display", "block");
             $("#ajk_phone_no_invalid_error").css("display", "none");
             error = 1;
         }
 
         if (isNaN(ajk_phone_no)) {
-            $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Phone Number</span>');
+            $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required_valid", ["attribute"=>"Phone Number"]) }}</span>');
             $("#ajk_phone_no_invalid_error").css("display", "block");
             $("#ajk_phone_no_error").css("display", "none");
             error = 1;
         }
 
         if (ajk_year.trim() == "") {
-            $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Year</span>');
+            $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Year"]) }}</span>');
             $("#ajk_year_error").css("display", "block");
             $("#ajk_year_invalid_error").css("display", "none");
             error = 1;
         }
 
         if (isNaN(ajk_year)) {
-            $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Year</span>');
+            $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required_valid", ["attribute"=>"Year"]) }}</span>');
             $("#ajk_year_invalid_error").css("display", "block");
             $("#ajk_year_error").css("display", "none");
             error = 1;
@@ -1383,7 +1383,7 @@ foreach ($user_permission as $permission) {
                     $('#add_ajk_details').modal('hide');
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
                         }, {
                             type: 'success',
                             placement: {
@@ -1392,7 +1392,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
@@ -1412,40 +1412,40 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (ajk_designation.trim() == "") {
-            $("#ajk_designation_edit_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Designation</span>');
+            $("#ajk_designation_edit_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Designation"]) }}</span>');
             $("#ajk_designation_edit_error").css("display", "block");
             error = 1;
         }
 
         if (ajk_name.trim() == "") {
-            $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Name</span>');
+            $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Name"]) }}</span>');
             $("#ajk_name_error").css("display", "block");
             error = 1;
         }
 
         if (ajk_phone_no.trim() == "") {
-            $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Phone Number</span>');
+            $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Phone Number"]) }}</span>');
             $("#ajk_phone_no_error").css("display", "block");
             $("#ajk_phone_no_invalid_error").css("display", "none");
             error = 1;
         }
 
         if (isNaN(ajk_phone_no)) {
-            $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Phone Number</span>');
+            $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required_valid", ["attribute"=>"Phone Number"]) }}</span>');
             $("#ajk_phone_no_invalid_error").css("display", "block");
             $("#ajk_phone_no_error").css("display", "none");
             error = 1;
         }
 
         if (ajk_year.trim() == "") {
-            $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Year</span>');
+            $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Year"]) }}</span>');
             $("#ajk_year_error").css("display", "block");
             $("#ajk_year_invalid_error").css("display", "none");
             error = 1;
         }
 
         if (isNaN(ajk_year)) {
-            $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Year</span>');
+            $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required_valid", ["attribute"=>"Year"]) }}</span>');
             $("#ajk_year_invalid_error").css("display", "block");
             $("#ajk_year_error").css("display", "none");
             error = 1;
@@ -1468,7 +1468,7 @@ foreach ($user_permission as $permission) {
                     $('#edit_ajk_details').modal('hide');
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
                         }, {
                             type: 'success',
                             placement: {
@@ -1477,7 +1477,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
@@ -1486,8 +1486,8 @@ foreach ($user_permission as $permission) {
 
     function deleteAGMDetails(id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -1504,7 +1504,7 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Deleted Successfully</p>'
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.deleted_successfully") }}</p>'
                         }, {
                             type: 'success',
                             placement: {
@@ -1513,7 +1513,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
@@ -1522,8 +1522,8 @@ foreach ($user_permission as $permission) {
 
     function deleteAJKDetails(id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -1540,7 +1540,7 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Deleted Successfully</p>'
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.deleted_successfully") }}</p>'
                         }, {
                             type: 'success',
                             placement: {
@@ -1549,7 +1549,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
@@ -1558,8 +1558,8 @@ foreach ($user_permission as $permission) {
 
     function deleteAuditReport(id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -1576,15 +1576,15 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "Deleted!",
-                            text: "File has been deleted",
+                            title: "{{ trans('app.successes.deleted_title') }}",
+                            text: "{{ trans('app.successes.deleted_text_file') }}",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
@@ -1593,8 +1593,8 @@ foreach ($user_permission as $permission) {
 
     function deleteLetterIntegrity(id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -1611,15 +1611,15 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "Deleted!",
-                            text: "File has been deleted",
+                            title: "{{ trans('app.successes.deleted_title') }}",
+                            text: "{{ trans('app.successes.deleted_text_file') }}",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
@@ -1628,8 +1628,8 @@ foreach ($user_permission as $permission) {
 
     function deleteLetterBankruptcy(id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -1646,15 +1646,15 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "Deleted!",
-                            text: "File has been deleted",
+                            title: "{{ trans('app.successes.deleted_title') }}",
+                            text: "{{ trans('app.successes.deleted_text_file') }}",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

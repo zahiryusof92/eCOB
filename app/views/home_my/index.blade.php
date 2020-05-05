@@ -19,8 +19,8 @@ foreach ($user_permission as $permission) {
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-lg-12">                    
-                    <h4>AGM</h4>
+                <div class="col-lg-12">
+                    <h4>{ trans('app.forms.agm') }}</h4>
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
@@ -41,7 +41,7 @@ foreach ($user_permission as $permission) {
                                 <table class="table table-hover nowrap" id="agm_remainder" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:10%;">COB</th> 
+                                            <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
                                             <th style="width:50%;">No. Fail</th>
                                             <th style="width:30%;">Tarikh Akhir AGM</th>
                                             <?php if ($update_permission == 1) { ?>
@@ -57,7 +57,7 @@ foreach ($user_permission as $permission) {
                                 <table class="table table-hover nowrap" id="never_agm" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:10%;">COB</th> 
+                                            <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
                                             <th style="width:80%;">No. Fail</th>
                                             <?php if ($update_permission == 1) { ?>
                                                 <th style="width:10%;">Aksi</th>
@@ -72,7 +72,7 @@ foreach ($user_permission as $permission) {
                                 <table class="table table-hover nowrap" id="more_12months" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:10%;">COB</th> 
+                                            <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
                                             <th style="width:50%;">No. Fail</th>
                                             <th style="width:30%;">Tarikh Akhir AGM</th>
                                             <?php if ($update_permission == 1) { ?>
@@ -88,7 +88,7 @@ foreach ($user_permission as $permission) {
                                 <table class="table table-hover nowrap" id="more_15months" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:10%;">COB</th> 
+                                            <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
                                             <th style="width:50%;">No. Fail</th>
                                             <th style="width:30%;">Tarikh Akhir AGM</th>
                                             <?php if ($update_permission == 1) { ?>
@@ -108,8 +108,8 @@ foreach ($user_permission as $permission) {
             <hr/>
 
             <div class="row">
-                <div class="col-lg-12">                    
-                    <h4>Designation</h4>
+                <div class="col-lg-12">
+                    <h4>{{ trans('app.forms.designation') }}</h4>
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
@@ -121,19 +121,19 @@ foreach ($user_permission as $permission) {
                                 <table class="table table-hover nowrap" id="designation_remainder" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width:10%;">COB</th> 
-                                            <th style="width:25%;">File No</th>
-                                            <th style="width:10%;">Designation</th>
-                                            <th style="width:25%;">Name</th>
-                                            <th style="width:10%;">Phone No</th>
-                                            <th style="width:10%;">Month</th>
-                                            <th style="width:10%;">Year</th>
+                                            <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
+                                            <th style="width:25%;">{{ trans('app.forms.file_no') }}</th>
+                                            <th style="width:10%;">{{ trans('app.forms.designation') }}</th>
+                                            <th style="width:25%;">{{ trans('app.forms.name') }}</th>
+                                            <th style="width:10%;">{{ trans('app.forms.phone_number') }}</th>
+                                            <th style="width:10%;">{{ trans('app.forms.month') }}</th>
+                                            <th style="width:10%;">{{ trans('app.forms.year') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
                                 </table>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -143,7 +143,7 @@ foreach ($user_permission as $permission) {
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h4>Memo</h4>
+                    <h4>{{ trans('app.forms.memo') }}</h4>
                     <table class="table table-hover nowrap" id="memo" width="100%">
                         <thead>
                             <tr>
@@ -163,7 +163,7 @@ foreach ($user_permission as $permission) {
             <div class="row">
                 <div class="col-lg-6">
                     <div class="margin-bottom-50">
-                        <!--<h4 class="text-center">Maklumat Penakrifan Bintang Kawasan Pemajuan</h4>-->                            
+                        <!--<h4 class="text-center">Maklumat Penakrifan Bintang Kawasan Pemajuan</h4>-->
                         <!--<div class="chart-pie-chart"></div>-->
                         <div id="rating_star"></div>
                         <br/>

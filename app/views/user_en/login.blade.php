@@ -22,7 +22,7 @@ if (isset($cob) && !empty($cob)) {
 
                 </a>
             </div>
-        </div>            
+        </div>
     </div>
 
 
@@ -32,12 +32,12 @@ if (isset($cob) && !empty($cob)) {
             <div class="single-page-block-form">
                 <div class="row">
                     <div class="col-md-3 text-center">
-                        <img src="{{asset($company->image_url)}}" style="width: 100px;" alt="" /> 
+                        <img src="{{asset($company->image_url)}}" style="width: 100px;" alt="" />
                     </div>
                     <div class="col-md-9">
                         <div class="vertical-align margin-top-20">
                             <div class="vertical-align-middle">
-                                <h5>eCOB Management System</h5>
+                                <h5>{{ trans('app.app_name') }}</h5>
                                 <h4 style="color: darkblue;">{{$company->name}}</h4>
                             </div>
                         </div>
@@ -58,15 +58,15 @@ if (isset($cob) && !empty($cob)) {
                 @endif
 
                 <div class="form-group">
-                    <input id="email" class="form-control" placeholder="Username" name="username" type="text" value="{{ Input::old('username') }}"/>
+                    <input id="email" class="form-control" placeholder="{{ trans('app.forms.username') }}" name="username" type="text" value="{{ Input::old('username') }}"/>
                     @if($errors->has('username'))
                     <span style="color:red;font-style:italic;font-size:13px;">{{$errors->first('username')}}</span>
                     <br />
                     @endif
                 </div>
 
-                <div class="form-group">                        
-                    <input id="password" class="form-control password" placeholder="Password" name="password" type="password"/>
+                <div class="form-group">
+                    <input id="password" class="form-control password" placeholder="{{ trans('app.forms.password') }}" name="password" type="password"/>
                     @if($errors->has('password'))
                     <span style="color:red;font-style:italic;font-size:13px;">{{$errors->first('password')}}</span>
                     <br />
@@ -76,22 +76,22 @@ if (isset($cob) && !empty($cob)) {
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" value="remember" name="remember" id="remember" checked="">
-                            Remember Me
+                            {{ trans('app.forms.remember_me') }}
                         </label>
                     </div>
                 </div>
                 <div class="form-actions text-center">
                     <input type="hidden" name="cob" value="{{ $cob }}"/>
-                    <button type="submit" class="btn btn-primary width-150">Login</button>
+                    <button type="submit" class="btn btn-primary width-150">{{ trans('app.forms.login') }}</button>
                 </div>
-                
+
                 {{Form::close()}}
             </div>
         </div>
     </div>
     <div class="single-page-block-footer text-center">
 
-    </div>    
+    </div>
     <!-- End Login Page -->
 </div>
 
