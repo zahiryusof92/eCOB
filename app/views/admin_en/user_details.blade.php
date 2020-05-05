@@ -27,13 +27,20 @@ foreach ($user_permission as $permission) {
                 <dd>{{($user->email != "" ? $user->email : "-")}}</dd>
                 <dt>Phone No.</dt>
                 <dd>{{($user->phone_no != "" ? $user->phone_no : "-")}}</dd>
+                <dt>COB</dt>
+                <dd>{{($user->getCOB->name != "" ? $user->getCOB->name : "-")}}</dd>
+                <dt>Access Group</dt>
+                <dd>{{($user->getRole->name != "" ? $user->getRole->name : "-")}}</dd>                
+                @if ($user->getRole->name == 'JMB' || $user->getRole->name == 'MC')
+                <dt>Start Date</dt>
+                <dd>{{($user->start_date != "" ? date('d-m-Y', strtotime($user->start_date)) : "-")}}</dd>
+                <dt>End Date</dt>
+                <dd>{{($user->end_date != "" ? date('d-m-Y', strtotime($user->end_date)) : "-")}}</dd>
+                <dt>File No</dt>
+                <dd>{{($user->getFile->file_no != "" ? $user->getFile->file_no : "-")}}</dd>
+                @endif                
                 <dt>Is Active</dt>
-                @if ($user->is_active == 1)
-                <dd>Yes</dd>
-                @else
-                <dd>No</dd>
-                @endif
-
+                <dd>{{ ($user->is_active == '1' ? 'Yes' : 'No') }}</dd>
                 @if ($user->status == 0)
                 <dt>Status</dt>
                 <dd>
@@ -77,7 +84,7 @@ foreach ($user_permission as $permission) {
                 <dt>Approved By</dt>
                 <dd>{{($admin->full_name != "" ? $admin->full_name : "-")}}</dd>
                 <dt>Approved Date</dt>
-                <dd>{{(date('Y-m-d', strtotime($user->approved_at)) != "" ? date('Y-m-d', strtotime($user->approved_at)) : "-")}}</dd>
+                <dd>{{($user->approved_at != "" ? date('d-m-Y', strtotime($user->approved_at)) : "-")}}</dd>
                 <dt>Remarks</dt>
                 <dd>{{($user->remarks != "" ? $user->remarks : "-")}}</dd>
                 @else
@@ -86,7 +93,7 @@ foreach ($user_permission as $permission) {
                 <dt>Rejected By</dt>
                 <dd>{{($admin->full_name != "" ? $admin->full_name : "-")}}</dd>
                 <dt>Rejected Date</dt>
-                <dd>{{(date('Y-m-d', strtotime($user->approved_at)) != "" ? date('Y-m-d', strtotime($user->approved_at)) : "-")}}</dd>
+                <dd>{{($user->approved_at != "" ? date('d-m-Y', strtotime($user->approved_at)) : "-")}}</dd>
                 <dt>Catatan</dt>
                 <dd>{{($user->remarks != "" ? $user->remarks : "-")}}</dd>
                 @endif

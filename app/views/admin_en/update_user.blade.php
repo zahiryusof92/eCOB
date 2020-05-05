@@ -113,7 +113,7 @@ foreach ($user_permission as $permission) {
                                     <select id="company" class="form-control select2" onchange="findFile()">
                                         <option value="">Please Select</option>
                                         @foreach ($company as $companies)
-                                        <option value="{{$companies->id}}" {{ $user->company_id == $companies->id ? 'selected' : '' }}>{{$companies->name}} - {{$companies->short_name}}</option>
+                                        <option value="{{$companies->id}}" {{ $user->company_id == $companies->id ? 'selected' : '' }}>{{$companies->name}} ({{$companies->short_name}})</option>
                                         @endforeach
                                     </select>
                                     <div id="company_error" style="display:none;"></div>
@@ -137,8 +137,8 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">*</span> Status</label>
-                                    <select id="is_active" class="form-control" {{($user->status == 0 ? " disabled" : "")}}>
+                                    <label><span style="color: red;">*</span> Status</label>
+                                    <select id="is_active" class="form-control">
                                         <option value="">Please Select</option>
                                         <option value="1" {{($user->is_active == 1 ? " selected" : "")}}>Active</option>
                                         <option value="0" {{($user->is_active == 0 ? " selected" : "")}}>Inactive</option>
@@ -191,7 +191,6 @@ foreach ($user_permission as $permission) {
     }
 
     function showExpiryDate(value) {
-//        var role = value.options[value.selectedIndex].text;
         var role = $("#role").val();
         role.toUpperCase();
 

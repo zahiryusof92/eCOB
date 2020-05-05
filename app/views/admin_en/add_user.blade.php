@@ -82,7 +82,7 @@ foreach ($user_permission as $permission) {
                                     <select id="role" class="form-control select2" onchange="showExpiryDate(this)">
                                         <option value="">Please Select</option>
                                         @foreach ($role as $roles)
-                                        <option value="{{$roles->id}}">{{$roles->name}}</option>
+                                        <option value="{{$roles->name}}">{{$roles->name}}</option>
                                         @endforeach
                                     </select>
                                     <div id="role_error" style="display:none;"></div>
@@ -159,7 +159,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Remarks</label>
-                                    <textarea class="form-control" rows="3" id="remarks"></textarea>
+                                    <textarea class="form-control" rows="3" placeholder="Remarks" id="remarks"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -332,6 +332,8 @@ foreach ($user_permission as $permission) {
                     is_active: is_active
                 },
                 success: function (data) {
+                    console.log(data);
+                    
                     $("#loading").css("display", "none");
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
