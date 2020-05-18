@@ -22,7 +22,7 @@ foreach ($user_permission as $permission) {
                 <div class="col-lg-12">
                     <h6>File No: {{$files->file_no}}</h6>
                     <div id="update_files_lists">
-                        <ul class="nav nav-tabs" role="tablist">
+                        <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{URL::action('AdminController@house', $files->id)}}">Housing Scheme</a>
                             </li>

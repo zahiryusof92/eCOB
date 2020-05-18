@@ -3471,6 +3471,7 @@ class AdminController extends BaseController {
 
             $file_id = $data['file_id'];
             $survey = $data['survey'];
+            $date = $data['date'];
             $score1 = $data['score1'];
             $score2 = $data['score2'];
             $score3 = $data['score3'];
@@ -3504,6 +3505,7 @@ class AdminController extends BaseController {
             $scoring = new Scoring();
             $scoring->file_id = $file_id;
             $scoring->survey = $survey;
+            $scoring->date = $date;
             $scoring->score1 = $score1;
             $scoring->score2 = $score2;
             $scoring->score3 = $score3;
@@ -3550,6 +3552,7 @@ class AdminController extends BaseController {
         if (Request::ajax()) {
 
             $id = $data['id'];
+            $date = $data['date'];
             $score1 = $data['score1'];
             $score2 = $data['score2'];
             $score3 = $data['score3'];
@@ -3581,41 +3584,46 @@ class AdminController extends BaseController {
             $total_score = $scorings_A + $scorings_B + $scorings_C + $scorings_D + $scorings_E;
 
             $scoring = Scoring::find($id);
-            $scoring->score1 = $score1;
-            $scoring->score2 = $score2;
-            $scoring->score3 = $score3;
-            $scoring->score4 = $score4;
-            $scoring->score5 = $score5;
-            $scoring->score6 = $score6;
-            $scoring->score7 = $score7;
-            $scoring->score8 = $score8;
-            $scoring->score9 = $score9;
-            $scoring->score10 = $score10;
-            $scoring->score11 = $score11;
-            $scoring->score12 = $score12;
-            $scoring->score13 = $score13;
-            $scoring->score14 = $score14;
-            $scoring->score15 = $score15;
-            $scoring->score16 = $score16;
-            $scoring->score17 = $score17;
-            $scoring->score18 = $score18;
-            $scoring->score19 = $score19;
-            $scoring->score20 = $score20;
-            $scoring->score21 = $score21;
-            $scoring->total_score = $total_score;
-            $success = $scoring->save();
+            if ($scoring) {
+                $scoring->date = $date;
+                $scoring->score1 = $score1;
+                $scoring->score2 = $score2;
+                $scoring->score3 = $score3;
+                $scoring->score4 = $score4;
+                $scoring->score5 = $score5;
+                $scoring->score6 = $score6;
+                $scoring->score7 = $score7;
+                $scoring->score8 = $score8;
+                $scoring->score9 = $score9;
+                $scoring->score10 = $score10;
+                $scoring->score11 = $score11;
+                $scoring->score12 = $score12;
+                $scoring->score13 = $score13;
+                $scoring->score14 = $score14;
+                $scoring->score15 = $score15;
+                $scoring->score16 = $score16;
+                $scoring->score17 = $score17;
+                $scoring->score18 = $score18;
+                $scoring->score19 = $score19;
+                $scoring->score20 = $score20;
+                $scoring->score21 = $score21;
+                $scoring->total_score = $total_score;
+                $success = $scoring->save();
 
-            if ($success) {
-                # Audit Trail
-                $file_name = Files::find($scoring->file_id);
-                $remarks = 'COB Rating (' . $file_name->file_no . ') dated ' . date('d/m/Y', strtotime($scoring->created_at)) . ' has been updated.';
-                $auditTrail = new AuditTrail();
-                $auditTrail->module = "COB File";
-                $auditTrail->remarks = $remarks;
-                $auditTrail->audit_by = Auth::user()->id;
-                $auditTrail->save();
+                if ($success) {
+                    # Audit Trail
+                    $file_name = Files::find($scoring->file_id);
+                    $remarks = 'COB Rating (' . $file_name->file_no . ') dated ' . date('d/m/Y', strtotime($scoring->created_at)) . ' has been updated.';
+                    $auditTrail = new AuditTrail();
+                    $auditTrail->module = "COB File";
+                    $auditTrail->remarks = $remarks;
+                    $auditTrail->audit_by = Auth::user()->id;
+                    $auditTrail->save();
 
-                print "true";
+                    print "true";
+                } else {
+                    print "false";
+                }
             } else {
                 print "false";
             }
@@ -3631,7 +3639,7 @@ class AdminController extends BaseController {
                 $button = "";
 
                 $button .= '<button type="button" class="btn btn-xs btn-success edit_survey" title="Edit" onclick="editSurveyForm(\'' . $scorings->survey . '\')"'
-                        . 'data-score1="' . $scorings->score1 . '" data-score2="' . $scorings->score2 . '" data-score3="' . $scorings->score3 . '"'
+                        . 'data-date="' . (!empty($scorings->date) ? $scorings->date : '') . '" data-score1="' . $scorings->score1 . '" data-score2="' . $scorings->score2 . '" data-score3="' . $scorings->score3 . '"'
                         . 'data-score4="' . $scorings->score4 . '" data-score5="' . $scorings->score5 . '" data-score6="' . $scorings->score6 . '"'
                         . 'data-score7="' . $scorings->score7 . '" data-score8="' . $scorings->score8 . '" data-score9="' . $scorings->score9 . '"'
                         . 'data-score10="' . $scorings->score10 . '" data-score11="' . $scorings->score11 . '" data-score12="' . $scorings->score12 . '"'
@@ -5626,7 +5634,15 @@ class AdminController extends BaseController {
     }
 
     public function getUser() {
-        $user = User::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+        if (!Auth::user()->getAdmin()) {
+            $user = User::where('company_id', Auth::user()->company_id)->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $user = User::where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            } else {
+                $user = User::where('company_id', Session::get('admin_cob'))->where('is_deleted', 0)->orderBy('id', 'desc')->get();
+            }
+        }
 
         if (count($user) > 0) {
             $data = Array();
@@ -7023,7 +7039,7 @@ class AdminController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $form = AdminForm::find($id);
-        
+
         if (!Auth::user()->getAdmin()) {
             $cob = Company::where('id', Auth::user()->company_id)->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
         } else {
@@ -7033,7 +7049,7 @@ class AdminController extends BaseController {
                 $cob = Company::where('id', Session::get('admin_cob'))->where('is_active', 1)->where('is_main', 0)->where('is_deleted', 0)->orderBy('name')->get();
             }
         }
-        
+
         $formtype = FormType::where('is_active', 1)->where('is_deleted', 0)->get();
 
         if (Session::get('lang') == "en") {

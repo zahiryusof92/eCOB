@@ -22,7 +22,7 @@ foreach ($user_permission as $permission) {
                 <div class="col-lg-12">
                     <h6>File No: {{$file->file_no}}</h6>
                     <div id="update_files_lists">
-                        <ul class="nav nav-tabs" role="tablist">
+                        <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{URL::action('AdminController@house', $file->id)}}">Housing Scheme</a>
                             </li>
@@ -72,9 +72,10 @@ foreach ($user_permission as $permission) {
                                                         <br />
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                                         <button type="button" id="clear_image" data-toggle="tooltip" data-placement="top" title="Clear" class="btn btn-xs btn-danger" onclick="clearImage()" style="display: none;"><i class="fa fa-times"></i></button>
-                                                        &nbsp;<input type="file" name="image" id="image" />
-<!--                                                        <br />
-                                                        <small>Max image size: MB</small>-->
+                                                        &nbsp;
+                                                        <input type="file" name="image" id="image" />
+                                                        <br />
+                                                        <small class="text-danger">File uploaded should be below 2MB</small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -333,13 +334,18 @@ foreach ($user_permission as $permission) {
                 $("#validation-errors").empty(); // To remove the previous error message
                 var file = this.files[0];
                 var imagefile = file.type;
+                var size = file.size;
+                
                 var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
                 if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
                     $("#validation-errors").html("<span id='error'>Please Select a valid Image File</span><br/>" + "<span id='error_message'>Only .jpeg, .jpg, .png and .gif images type allowed</span>");
                     $("#validation-errors").css("color", "red");
                     return false;
-                }
-                else {
+                } else if (size > 2000000) {
+                    $("#validation-errors").html("<span id='error_message'>Image size is exceeding 2MB</span>");
+                    $("#validation-errors").css("color", "red");
+                    return false;
+                } else {
                     var reader = new FileReader();
                     reader.onload = imageIsLoaded;
                     reader.readAsDataURL(this.files[0]);

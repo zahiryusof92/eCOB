@@ -12,7 +12,7 @@
                 <div class="col-lg-12">
                     <h6>File No: {{$file->file_no}}</h6>
                     <div id="update_files_lists">
-                        <ul class="nav nav-tabs" role="tablist">
+                        <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link" href="#house_scheme" data-toggle="tab" role="tab">Housing Scheme</a>
                             </li>

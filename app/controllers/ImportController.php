@@ -49,26 +49,27 @@ class ImportController extends BaseController {
                             if (isset($row['1']) && !empty($row['1'])) {
                                 $file_no = trim($row['1']);
                             }
-                            // 3. Year
-                            $year = '';
-                            if (isset($row['3']) && !empty($row['3'])) {
-                                $year = trim($row['3']);
-                            }
-                            // 124. Status
-                            $is_active = 0;
-                            if (isset($row['124']) && !empty($row['124'])) {
-                                $is_active_raw = trim($row['124']);
-
-                                if (!empty($is_active_raw)) {
-                                    if (strtolower($is_active_raw) == 'aktif' || strtolower($is_active_raw == 'active')) {
-                                        $is_active = 1;
-                                    }
-                                }
-                            }
 
                             if (!empty($file_no)) {
-                                $check_file = Files::where('company_id', $company_id)->where('file_no', $file_no)->where('is_deleted', 0)->count();
-                                if ($check_file <= 0) {
+                                $exist_file = Files::where('company_id', $company_id)->where('file_no', $file_no)->where('is_deleted', 0)->first();
+                                if (!$exist_file) {
+                                    // 3. Year
+                                    $year = '';
+                                    if (isset($row['3']) && !empty($row['3'])) {
+                                        $year = trim($row['3']);
+                                    }
+                                    // 124. Status
+                                    $is_active = 0;
+                                    if (isset($row['124']) && !empty($row['124'])) {
+                                        $is_active_raw = trim($row['124']);
+
+                                        if (!empty($is_active_raw)) {
+                                            if (strtolower($is_active_raw) == 'aktif' || strtolower($is_active_raw) == 'active') {
+                                                $is_active = 1;
+                                            }
+                                        }
+                                    }
+
                                     $files = new Files();
                                     $files->company_id = $company_id;
                                     $files->file_no = $file_no;
@@ -1407,12 +1408,33 @@ class ImportController extends BaseController {
                                         $auditTrail->audit_by = Auth::user()->id;
                                         $auditTrail->save();
                                     }
+                                } else {
+                                    // 125. New File No
+                                    $new_file_no = '';
+                                    if (isset($row['125']) && !empty($row['125'])) {
+                                        $new_file_no = trim($row['125']);
+                                    }
+
+                                    if (!empty($new_file_no)) {
+                                        $exist_file->file_no = $new_file_no;
+                                        $update_file = $exist_file->save();
+
+                                        if ($update_file) {
+                                            # Audit Trail
+                                            $remarks = $exist_file->file_no . ' has been updated.';
+                                            $auditTrail = new AuditTrail();
+                                            $auditTrail->module = "COB File";
+                                            $auditTrail->remarks = $remarks;
+                                            $auditTrail->audit_by = Auth::user()->id;
+                                            $auditTrail->save();
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
 
-                    if (!empty($create_file)) {
+                    if (!empty($create_file) || !empty($update_file)) {
                         print 'true';
                     } else {
                         print 'empty_data';

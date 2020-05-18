@@ -22,7 +22,7 @@ foreach ($user_permission as $permission) {
                 <div class="col-lg-12">
                     <h6>File No: {{$files->file_no}}</h6>
                     <div id="update_files_lists">
-                        <ul class="nav nav-tabs" role="tablist">
+                        <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{URL::action('AdminController@house', $files->id)}}">Housing Scheme</a>
                             </li>
@@ -118,8 +118,24 @@ foreach ($user_permission as $permission) {
             </div>            
             <div class="modal-body">
                 <form>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><span style="color: red;">*</span> Date</label>
+                                <label class="input-group datepicker-only-init">
+                                    <input type="text" class="form-control" placeholder="Date" id="date"/>
+                                    <span class="input-group-addon">
+                                        <i class="icmn-calendar"></i>
+                                    </span>
+                                </label>
+                                <div id="date_error" style="display:none;"></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <p><b>BAHAGIAN A (PENUBUHAN DAN PENGURUSAN) - Wajaran 25%</b></p>
                     <p>Pegawai penilai dikehendaki memberikan penilaian berdasarkan penjelasan setiap kriteria seperti yang disenaraikan.</p>                    
+
                     <table class="table table-hover nowrap" id="quality_survey1" width="100%">
                         <thead>
                             <tr>
@@ -529,6 +545,21 @@ foreach ($user_permission as $permission) {
             </div>            
             <div class="modal-body">
                 <form>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label><span style="color: red;">*</span> Date</label>
+                                <label class="input-group datepicker-only-init">
+                                    <input type="text" class="form-control" placeholder="Date" id="date_edit"/>
+                                    <span class="input-group-addon">
+                                        <i class="icmn-calendar"></i>
+                                    </span>
+                                </label>
+                                <div id="date_edit_error" style="display:none;"></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <p><b>BAHAGIAN A (PENUBUHAN DAN PENGURUSAN) - Wajaran 25%</b></p>
                     <p>Pegawai penilai dikehendaki memberikan penilaian berdasarkan penjelasan setiap kriteria seperti yang disenaraikan.</p>                    
                     <table class="table table-hover nowrap" id="quality_survey1" width="100%">
@@ -932,6 +963,21 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
+    $(function () {
+        $('#date, #date_edit').datetimepicker({
+            widgetPositioning: {
+                horizontal: 'left'
+            },
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            format: 'YYYY-MM-DD'
+        });
+    });
+
     var changes = false;
     $('input, textarea, select').on('keypress change input', function () {
         changes = true;
@@ -971,8 +1017,10 @@ foreach ($user_permission as $permission) {
     function addScoring() {
         changes = false;
         $("#loading").css("display", "inline-block");
+        $("#date_error").css("display", "none");
 
-        var score1 = $("#score1").val(),
+        var date = $("#date").val(),
+                score1 = $("#score1").val(),
                 score2 = $("#score2").val(),
                 score3 = $("#score3").val(),
                 score4 = $("#score4").val(),
@@ -997,11 +1045,19 @@ foreach ($user_permission as $permission) {
 
         var error = 0;
 
+        if (date.trim() == "") {
+            $("#date_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Date</span>');
+            $("#date_error").css("display", "block");
+            $("#date").focus();
+            error = 1;
+        }
+
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@addScoring') }}",
                 type: "POST",
                 data: {
+                    date: date,
                     score1: score1,
                     score2: score2,
                     score3: score3,
@@ -1057,7 +1113,8 @@ foreach ($user_permission as $permission) {
     }
 
     $(document).on("click", '.edit_survey', function (e) {
-        var score1 = $(this).data('score1'),
+        var date = $(this).data('date'),
+                score1 = $(this).data('score1'),
                 score2 = $(this).data('score2'),
                 score3 = $(this).data('score3'),
                 score4 = $(this).data('score4'),
@@ -1080,6 +1137,7 @@ foreach ($user_permission as $permission) {
                 score21 = $(this).data('score21'),
                 id = $(this).data('id');
 
+        $("#date_edit").val(date);
         $("#score1_edit").val(score1);
         $("#score2_edit").val(score2);
         $("#score3_edit").val(score3);
@@ -1106,8 +1164,10 @@ foreach ($user_permission as $permission) {
 
     function editScoring() {
         $("#loading").css("display", "inline-block");
+        $("#date_edit_error").css("display", "none");
 
-        var score1 = $("#score1_edit").val(),
+        var date = $("#date_edit").val(),
+                score1 = $("#score1_edit").val(),
                 score2 = $("#score2_edit").val(),
                 score3 = $("#score3_edit").val(),
                 score4 = $("#score4_edit").val(),
@@ -1132,11 +1192,19 @@ foreach ($user_permission as $permission) {
 
         var error = 0;
 
+        if (date.trim() == "") {
+            $("#date_edit_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Date</span>');
+            $("#date_edit_error").css("display", "block");
+            $("#date_edit").focus();
+            error = 1;
+        }
+
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@editScoring') }}",
                 type: "POST",
                 data: {
+                    date: date,
                     score1: score1,
                     score2: score2,
                     score3: score3,
@@ -1191,30 +1259,29 @@ foreach ($user_permission as $permission) {
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
             closeOnConfirm: true
-        },
-                function () {
-                    $.ajax({
-                        url: "{{ URL::action('AdminController@deleteScoring') }}",
-                        type: "POST",
-                        data: {
-                            id: id
-                        },
-                        success: function (data) {
-                            if (data.trim() == "true") {
-                                swal({
-                                    title: "Deleted!",
-                                    text: "File has been deleted",
-                                    type: "success",
-                                    confirmButtonClass: "btn-success",
-                                    closeOnConfirm: false
-                                });
-                                location.reload();
-                            } else {
-                                bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
-                            }
-                        }
-                    });
-                });
+        }, function () {
+            $.ajax({
+                url: "{{ URL::action('AdminController@deleteScoring') }}",
+                type: "POST",
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.trim() == "true") {
+                        swal({
+                            title: "Deleted!",
+                            text: "File has been deleted",
+                            type: "success",
+                            confirmButtonClass: "btn-success",
+                            closeOnConfirm: false
+                        });
+                        location.reload();
+                    } else {
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                    }
+                }
+            });
+        });
     }
 </script>
 
