@@ -8,7 +8,7 @@ class AdminController extends BaseController {
         } else {
             if (Session::get('lang') == "en") {
                 $viewData = array(
-                    'title' => "Page not found!",
+                    'title' => trans('app.errors.page_not_found'),
                     'panel_nav_active' => '',
                     'main_nav_active' => '',
                     'sub_nav_active' => '',
@@ -17,7 +17,7 @@ class AdminController extends BaseController {
                 return View::make('404_en', $viewData);
             } else {
                 $viewData = array(
-                    'title' => "Halaman tidak dijumpai!",
+                    'title' => trans('app.errors.page_not_found'),
                     'panel_nav_active' => '',
                     'main_nav_active' => '',
                     'sub_nav_active' => '',
@@ -91,7 +91,7 @@ class AdminController extends BaseController {
         }
 
         $viewData = array(
-            'title' => 'eCOB System',
+            'title' => trans('app.app_name_short'),
             'panel_nav_active' => 'home_panel',
             'main_nav_active' => 'home_main',
             'sub_nav_active' => 'home',
@@ -139,9 +139,9 @@ class AdminController extends BaseController {
                     if ($agm_remainder->agm_date <= date('Y-m-d', $oneyear) && $agm_remainder->agm_date != "0000-00-00") {
                         $button = "";
                         if (Session::get('lang') == "en") {
-                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">View</button>&nbsp;';
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
                         } else {
-                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">Papar</button>&nbsp;';
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
                         }
                         $data_raw = array(
                             $files->company->short_name,
@@ -192,9 +192,9 @@ class AdminController extends BaseController {
 
                 $button = "";
                 if (Session::get('lang') == "en") {
-                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">View</button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
                 } else {
-                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">Papar</button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
                 }
                 if (count($never_agm) > 0) {
                     if ($never_agm->agm_date == "0000-00-00") {
@@ -257,9 +257,9 @@ class AdminController extends BaseController {
                     if ($agm_more12months->agm_date <= date('Y-m-d', $twelveMonths) && $agm_more12months->agm_date != "0000-00-00") {
                         $button = "";
                         if (Session::get('lang') == "en") {
-                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">View</button>&nbsp;';
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
                         } else {
-                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">Papar</button>&nbsp;';
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
                         }
                         $data_raw = array(
                             $files->company->short_name,
@@ -313,9 +313,9 @@ class AdminController extends BaseController {
                     if ($agm_more15months->agm_date <= date('Y-m-d', $fifthteenMonths) && $agm_more15months->agm_date != "0000-00-00") {
                         $button = "";
                         if (Session::get('lang') == "en") {
-                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">View</button>&nbsp;';
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
                         } else {
-                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">Papar</button>&nbsp;';
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
                         }
                         $data_raw = array(
                             $files->company->short_name,
@@ -352,9 +352,9 @@ class AdminController extends BaseController {
             foreach ($memo as $memos) {
                 $button = "";
                 if (Session::get('lang') == "en") {
-                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="getMemoDetails(\'' . $memos->id . '\')">View</button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="getMemoDetails(\'' . $memos->id . '\')">'.trans('app.forms.view').'</button>&nbsp;';
                 } else {
-                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="getMemoDetails(\'' . $memos->id . '\')">Papar</button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="getMemoDetails(\'' . $memos->id . '\')">'.trans('app.forms.view').'</button>&nbsp;';
                 }
                 $data_raw = array(
                     $memos->subject,
@@ -400,7 +400,7 @@ class AdminController extends BaseController {
                 $result .= "<p>" . ($memo->description != "" ? $memo->description : "-") . "</p>";
                 $result .= "</div>";
             } else {
-                $result = "No Data Found";
+                $result = trans('app.errors.no_data_found');
             }
 
             print $result;
@@ -415,7 +415,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'COB File Prefix Maintenance',
+                'title' => trans('app.menus.cob.file_prefix_maintenance'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'prefix_file',
@@ -426,7 +426,7 @@ class AdminController extends BaseController {
             return View::make('cob_en.fileprefix', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Awalan Fail COB',
+                'title' => trans('app.menus.cob.file_prefix_maintenance'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'prefix_file',
@@ -453,7 +453,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add COB File Prefix',
+                'title' => trans('app.menus.cob.add_cob_file_prefix'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'prefix_file',
@@ -465,7 +465,7 @@ class AdminController extends BaseController {
             return View::make('cob_en.add_fileprefix', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Awalan Fail COB',
+                'title' => trans('app.menus.cob.add_cob_file_prefix'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'prefix_file',
@@ -526,21 +526,21 @@ class AdminController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($fileprefixs->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFilePrefix(\'' . $fileprefixs->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFilePrefix(\'' . $fileprefixs->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFilePrefix(\'' . $fileprefixs->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFilePrefix(\'' . $fileprefixs->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                     $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateFilePrefix', $fileprefixs->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                     $button .= '<button class="btn btn-xs btn-danger" onclick="deleteFilePrefix(\'' . $fileprefixs->id . '\')"><i class="fa fa-trash"></i></button>';
                 } else {
                     if ($fileprefixs->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFilePrefix(\'' . $fileprefixs->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFilePrefix(\'' . $fileprefixs->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFilePrefix(\'' . $fileprefixs->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFilePrefix(\'' . $fileprefixs->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                     $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateFilePrefix', $fileprefixs->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                     $button .= '<button class="btn btn-xs btn-danger" onclick="deleteFilePrefix(\'' . $fileprefixs->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -652,7 +652,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File Prefix',
+                'title' => trans('app.menus.cob.update_cob_file_prefix'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'prefix_file',
@@ -664,7 +664,7 @@ class AdminController extends BaseController {
             return View::make('cob_en.update_fileprefix', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Awalan Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file_prefix'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'prefix_file',
@@ -707,7 +707,7 @@ class AdminController extends BaseController {
         }
     }
 
-    // add file    
+    // add file
     public function addFile() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
@@ -727,7 +727,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add COB File',
+                'title' => trans('app.menus.cob.add_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'add_cob',
@@ -740,7 +740,7 @@ class AdminController extends BaseController {
             return View::make('page_en.add_file', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Fail COB',
+                'title' => trans('app.menus.cob.add_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'add_cob',
@@ -867,7 +867,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'COB File List',
+                'title' => trans('app.menus.cob.file_list'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_list',
@@ -880,7 +880,7 @@ class AdminController extends BaseController {
             return View::make('page_en.file_list', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Senarai Fail COB',
+                'title' => trans('app.menus.cob.file_list'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_list',
@@ -921,26 +921,26 @@ class AdminController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($files->is_active == 1) {
-                        $is_active = "Yes";
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Inactive</button>&nbsp;';
+                        $is_active = trans('app.forms.yes');
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $is_active = "No";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Active</button>&nbsp;';
+                        $is_active = trans('app.forms.no');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
 
 //                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Delete <i class="fa fa-trash"></i></button>';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
                 } else {
                     if ($files->is_active == 1) {
-                        $is_active = "Ya";
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $is_active = trans('app.forms.yes');
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $is_active = "Tidak";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Aktif</button>&nbsp;';
+                        $is_active = trans('app.forms.no');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
 
 //                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Padam <i class="fa fa-trash"></i></button>';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
                 }
 
                 $data_raw = array(
@@ -984,7 +984,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'COB File List Before VP',
+                'title' => trans('app.menus.cob.file_list_before_vp'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_before_vp_list',
@@ -997,7 +997,7 @@ class AdminController extends BaseController {
             return View::make('page_en.file_list_before_vp', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Senarai Fail COB Sebelum VP',
+                'title' => trans('app.menus.cob.file_list_before_vp'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_before_vp_list',
@@ -1038,26 +1038,26 @@ class AdminController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($files->is_active == 1) {
-                        $is_active = "Yes";
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Inactive</button>&nbsp;';
+                        $is_active = trans('app.forms.yes');
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $is_active = "No";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Active</button>&nbsp;';
+                        $is_active = trans('app.forms.no');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
 
 //                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Delete <i class="fa fa-trash"></i></button>';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
                 } else {
                     if ($files->is_active == 1) {
-                        $is_active = "Ya";
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $is_active = trans('app.forms.yes');
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $is_active = "Tidak";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Aktif</button>&nbsp;';
+                        $is_active = trans('app.forms.no');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
 
 //                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Padam <i class="fa fa-trash"></i></button>';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
                 }
 
                 $data_raw = array(
@@ -1209,7 +1209,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -1226,7 +1226,7 @@ class AdminController extends BaseController {
             return View::make('page_en.view_house_scheme', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -1258,7 +1258,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -1275,7 +1275,7 @@ class AdminController extends BaseController {
             return View::make('page_en.update_house_scheme', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -1393,7 +1393,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -1422,7 +1422,7 @@ class AdminController extends BaseController {
             return View::make('page_en.view_strata', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -1487,7 +1487,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -1516,7 +1516,7 @@ class AdminController extends BaseController {
             return View::make('page_en.update_strata', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -1554,9 +1554,9 @@ class AdminController extends BaseController {
             $dun = Dun::where('is_deleted', 0)->where('parliament', $parliament_id)->orderBy('description', 'asc')->get();
             if (count($dun) > 0) {
                 if (Session::get('lang') == "en") {
-                    $result = "<option value=''>Please Select</option>";
+                    $result = "<option value=''>".trans('app.forms.please_select')."</option>";
                 } else {
-                    $result = "<option value=''>Sila pilih</option>";
+                    $result = "<option value=''>".trans('app.forms.please_select')."</option>";
                 }
 
                 foreach ($dun as $duns) {
@@ -1566,9 +1566,9 @@ class AdminController extends BaseController {
                 print $result;
             } else {
                 if (Session::get('lang') == "en") {
-                    print "<option value=''>Please Select</option>";
+                    print "<option value=''>".trans('app.forms.please_select')."</option>";
                 } else {
-                    print "<option value=''>Sila pilih</option>";
+                    print "<option value=''>".trans('app.forms.please_select')."</option>";
                 }
             }
         }
@@ -1582,9 +1582,9 @@ class AdminController extends BaseController {
             $park = Park::where('is_deleted', 0)->where('dun', $dun_id)->orderBy('description', 'asc')->get();
             if (count($park) > 0) {
                 if (Session::get('lang') == "en") {
-                    $result = "<option value=''>Please Select</option>";
+                    $result = "<option value=''>".trans('app.forms.please_select')."</option>";
                 } else {
-                    $result = "<option value=''>Sila pilih</option>";
+                    $result = "<option value=''>".trans('app.forms.please_select')."</option>";
                 }
 
                 foreach ($park as $parks) {
@@ -1593,9 +1593,9 @@ class AdminController extends BaseController {
                 print $result;
             } else {
                 if (Session::get('lang') == "en") {
-                    print "<option value=''>Please Select</option>";
+                    print "<option value=''>".trans('app.forms.please_select')."</option>";
                 } else {
-                    print "<option value=''>Sila pilih</option>";
+                    print "<option value=''>".trans('app.forms.please_select')."</option>";
                 }
             }
         }
@@ -1686,14 +1686,14 @@ class AdminController extends BaseController {
                 $success = $strata->save();
 
                 if ($success) {
-                    //residential               
+                    //residential
                     $residential_unit_no = $data['residential_unit_no'];
                     $residential_maintenance_fee = $data['residential_maintenance_fee'];
                     $residential_maintenance_fee_option = $data['residential_maintenance_fee_option'];
                     $residential_sinking_fund = $data['residential_sinking_fund'];
                     $residential_sinking_fund_option = $data['residential_sinking_fund_option'];
 
-                    //commercial                          
+                    //commercial
                     $commercial_unit_no = $data['commercial_unit_no'];
                     $commercial_maintenance_fee = $data['commercial_maintenance_fee'];
                     $commercial_maintenance_fee_option = $data['commercial_maintenance_fee_option'];
@@ -1866,7 +1866,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -1887,7 +1887,7 @@ class AdminController extends BaseController {
             return View::make('page_en.view_management', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -1927,7 +1927,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -1948,7 +1948,7 @@ class AdminController extends BaseController {
             return View::make('page_en.update_management', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -2021,7 +2021,7 @@ class AdminController extends BaseController {
             $agent_fax_no = $data['agent_fax_no'];
             $agent_email = $data['agent_email'];
 
-            //others            
+            //others
             $is_others = $data['is_others'];
             $others_name = $data['others_name'];
             $others_address1 = $data['others_address1'];
@@ -2182,7 +2182,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -2196,7 +2196,7 @@ class AdminController extends BaseController {
             return View::make('page_en.view_monitoring', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -2221,7 +2221,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -2235,7 +2235,7 @@ class AdminController extends BaseController {
             return View::make('page_en.update_monitoring', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -2406,86 +2406,86 @@ class AdminController extends BaseController {
                 $result .= '<form>';
                 if (Session::get('lang') == "en") {
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Anual General Meeting (AGM)</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.annual_general_meeting').'</label></div>';
                     if ($agm->agm == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1" checked> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0"> No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0"> '.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1"> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0" checked> No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1"> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0" checked> '.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Extraordinary General Meeting (EGM)</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.extra_general_meeting').'</label></div>';
                     if ($agm->egm == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1" checked> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0"> No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0"> '.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1"> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0" checked> No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1"> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0" checked> '.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Minit Meeting</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.meeting_minutes').'</label></div>';
                     if ($agm->minit_meeting == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1" checked> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0"> No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0"> '.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1"> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0" checked> No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1"> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0" checked> '.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">JMC SPA Copy</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.jmc_spa_copy').'</label></div>';
                     if ($agm->jmc_spa == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1" checked>Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0">No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1" checked>'.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0">'.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1">Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0" checked>No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1">'.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0" checked>'.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Identity Card List</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.identity_card_list').'</label></div>';
                     if ($agm->identity_card == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1" checked> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0"> No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0"> '.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1"> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0" checked> No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1"> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0" checked> '.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Attendance List</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.attendance_list').'</label></div>';
                     if ($agm->attendance == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1" checked> Yes </div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0"> No </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1" checked> '.trans('app.forms.yes').' </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0"> '.trans('app.forms.no').' </div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1"> Yes </div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0" checked> No </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1"> '.trans('app.forms.yes').' </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0" checked> '.trans('app.forms.no').' </div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Audited Financial Report</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.audited_financial_report').'</label></div>';
                     if ($agm->financial_report == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1" checked> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0"> No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0"> '.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1"> Yes</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0" checked> No</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1"> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0" checked> '.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Financial Audit Report</label></div>';
-                    $result .= '<div class="col-md-6"><input type="text" class="form-control" placeholder="Financial Audit Report" id="audit_report_edit" value=' . "$agm->audit_report" . '></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.financial_audit_report').'</label></div>';
+                    $result .= '<div class="col-md-6"><input type="text" class="form-control" placeholder="'.trans('app.forms.financial_audit_report').'" id="audit_report_edit" value=' . "$agm->audit_report" . '></div>';
                     $result .= '</div>';
 
                     $result .= '</form>';
@@ -2498,7 +2498,7 @@ class AdminController extends BaseController {
                     $result .= '<input type="file" name="audit_report_file_edit" id="audit_report_file_edit">';
                     $result .= '<div id="validation-errors_audit_report_file_edit"></div><div id="view_audit_report_file_edit"></div>';
                     if ($agm->audit_report_url != "") {
-                        $result .= '<div id="report_edit"><a href="' . asset($agm->audit_report_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<div id="report_edit"><a href="' . asset($agm->audit_report_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> '.trans('app.forms.download').'</button></a>&nbsp;';
                         $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteAuditReport(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
                     }
                     $result .= '</div>';
@@ -2507,13 +2507,13 @@ class AdminController extends BaseController {
 
                     $result .= '<form id="upload_letter_integrity_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterIntegrityEdit") . '" autocomplete="off">';
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Pledge letter of integrity JMC</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.pledge_letter_of_integrity').'</label></div>';
                     $result .= '<div class="col-md-6">';
                     $result .= '<button type="button" id="clear_letter_integrity_edit" class="btn btn-xs btn-danger" onclick="clearLetterIntegrityEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
                     $result .= '<input type="file" name="letter_integrity_edit" id="letter_integrity_edit">';
                     $result .= '<div id="validation-errors_letter_integrity_edit"></div>';
                     if ($agm->letter_integrity_url != "") {
-                        $result .= '<div id="integrity_edit"><a href="' . asset($agm->letter_integrity_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<div id="integrity_edit"><a href="' . asset($agm->letter_integrity_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> '.trans('app.forms.download').'</button></a>&nbsp;';
                         $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteLetterIntegrity(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
                     }
                     $result .= '</div>';
@@ -2522,99 +2522,99 @@ class AdminController extends BaseController {
 
                     $result .= '<form id="upload_letter_bankruptcy_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterBankruptcyEdit") . '" autocomplete="off">';
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Declaration letter of non-bankruptcy</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.declaration_letter_of_non_bankruptcy').'</label></div>';
                     $result .= '<div class="col-md-6">';
                     $result .= '<button type="button" id="clear_letter_bankruptcy_edit" class="btn btn-xs btn-danger" onclick="clearLetterBankruptcyEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
                     $result .= '<input type="file" name="letter_bankruptcy_edit" id="letter_bankruptcy_edit">';
                     $result .= '<div id="validation-errors_letter_bankruptcy_edit"></div>';
                     if ($agm->letter_bankruptcy_url != "") {
-                        $result .= '<div id="bankruptcy_edit"><a href="' . asset($agm->letter_bankruptcy_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<div id="bankruptcy_edit"><a href="' . asset($agm->letter_bankruptcy_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> '.trans('app.forms.download').'</button></a>&nbsp;';
                         $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteLetterBankruptcy(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
                     }
                     $result .= '</div>';
                     $result .= '</div>';
                 } else {
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Mesyuarat Agung Tahunan (AGM)</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.annual_general_meeting').'</label></div>';
                     if ($agm->agm == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1" checked> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0"> Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0"> '.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1"> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0" checked> Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1"> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0" checked> '.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Mesyuarat Agung Luarbiasa (EGM)</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.extra_general_meeting').'</label></div>';
                     if ($agm->egm == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1" checked> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0"> Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0"> '.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1"> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0" checked> Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1"> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0" checked> '.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Minit Mesyuarat</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.meeting_minutes').'</label></div>';
                     if ($agm->minit_meeting == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1" checked> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0"> Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0"> '.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1"> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0" checked> Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1"> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0" checked> '.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Salinan Perjanjian Jualbeli JMC</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.jmc_spa_copy').'</label></div>';
                     if ($agm->jmc_spa == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1" checked>Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0">Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1" checked>'.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0">'.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1">Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0" checked>Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1">'.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0" checked>'.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Salinan Kad Pengenalan</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.identity_card_list').'</label></div>';
                     if ($agm->identity_card == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1" checked> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0"> Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0"> '.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1"> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0" checked> Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1"> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0" checked> '.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Senarai Kehadiran</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.attendance_list').'</label></div>';
                     if ($agm->attendance == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1" checked> Ada </div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0"> Tiada </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1" checked> '.trans('app.forms.yes').' </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0"> '.trans('app.forms.no').' </div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1"> Ada </div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0" checked> Tiada </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1"> '.trans('app.forms.yes').' </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0" checked> '.trans('app.forms.no').' </div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Laporan Kew Teraudit</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.audited_financial_report').'</label></div>';
                     if ($agm->financial_report == 1) {
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1" checked> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0"> Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0"> '.trans('app.forms.no').'</div>';
                     } else {
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1"> Ada</div>';
-                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0" checked> Tiada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1"> '.trans('app.forms.yes').'</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0" checked> '.trans('app.forms.no').'</div>';
                     }
                     $result .= '</div>';
 
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Laporan Kewangan Audit</label></div>';
-                    $result .= '<div class="col-md-6"><input type="text" class="form-control" placeholder="Laporan Kewangan Audit" id="audit_report_edit" value=' . "$agm->audit_report" . '></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.financial_audit_report').'</label></div>';
+                    $result .= '<div class="col-md-6"><input type="text" class="form-control" placeholder="'.trans('app.forms.financial_audit_report').'" id="audit_report_edit" value=' . "$agm->audit_report" . '></div>';
                     $result .= '</div>';
 
                     $result .= '</form>';
@@ -2627,7 +2627,7 @@ class AdminController extends BaseController {
                     $result .= '<input type="file" name="audit_report_file_edit" id="audit_report_file_edit">';
                     $result .= '<div id="validation-errors_audit_report_file_edit"></div><div id="view_audit_report_file_edit"></div>';
                     if ($agm->audit_report_url != "") {
-                        $result .= '<div id="report_edit"><a href="' . asset($agm->audit_report_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<div id="report_edit"><a href="' . asset($agm->audit_report_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> '.trans('app.forms.download').'</button></a>&nbsp;';
                         $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteAuditReport(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
                     }
                     $result .= '</div>';
@@ -2636,13 +2636,13 @@ class AdminController extends BaseController {
 
                     $result .= '<form id="upload_letter_integrity_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterIntegrityEdit") . '" autocomplete="off">';
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Surat ikrar integriti JMC</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.pledge_letter_of_integrity').'</label></div>';
                     $result .= '<div class="col-md-6">';
                     $result .= '<button type="button" id="clear_letter_integrity_edit" class="btn btn-xs btn-danger" onclick="clearLetterIntegrityEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
                     $result .= '<input type="file" name="letter_integrity_edit" id="letter_integrity_edit">';
                     $result .= '<div id="validation-errors_letter_integrity_edit"></div>';
                     if ($agm->letter_integrity_url != "") {
-                        $result .= '<div id="integrity_edit"><a href="' . asset($agm->letter_integrity_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<div id="integrity_edit"><a href="' . asset($agm->letter_integrity_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> '.trans('app.forms.download').'</button></a>&nbsp;';
                         $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteLetterIntegrity(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
                     }
                     $result .= '</div>';
@@ -2651,13 +2651,13 @@ class AdminController extends BaseController {
 
                     $result .= '<form id="upload_letter_bankruptcy_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterBankruptcyEdit") . '" autocomplete="off">';
                     $result .= '<div class="form-group row">';
-                    $result .= '<div class="col-md-6"><label class="form-control-label">Surat akuan tidak muflis</label></div>';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.declaration_letter_of_non_bankruptcy').'</label></div>';
                     $result .= '<div class="col-md-6">';
                     $result .= '<button type="button" id="clear_letter_bankruptcy_edit" class="btn btn-xs btn-danger" onclick="clearLetterBankruptcyEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
                     $result .= '<input type="file" name="letter_bankruptcy_edit" id="letter_bankruptcy_edit">';
                     $result .= '<div id="validation-errors_letter_bankruptcy_edit"></div>';
                     if ($agm->letter_bankruptcy_url != "") {
-                        $result .= '<div id="bankruptcy_edit"><a href="' . asset($agm->letter_bankruptcy_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<div id="bankruptcy_edit"><a href="' . asset($agm->letter_bankruptcy_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> '.trans('app.forms.download').'</button></a>&nbsp;';
                         $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteLetterBankruptcy(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
                     }
                     $result .= '</div>';
@@ -2665,7 +2665,7 @@ class AdminController extends BaseController {
                 }
                 $result .= '</form>';
             } else {
-                $result = "No Data Found";
+                $result = trans('app.errors.no_data_found');
             }
             print $result;
         }
@@ -2679,7 +2679,7 @@ class AdminController extends BaseController {
             foreach ($agm_detail as $agm_details) {
                 $button = "";
                 $button .= '<button type="button" class="btn btn-xs btn-success edit_agm" title="Edit" onclick="getAGMDetails(\'' . $agm_details->id . '\')"
-                            data-agm_id="' . $agm_details->id . '" data-agm_date="' . $agm_details->agm_date . '"                          
+                            data-agm_id="' . $agm_details->id . '" data-agm_date="' . $agm_details->agm_date . '"
                             data-audit_start_date="' . $agm_details->audit_start_date . '" data-audit_end_date="' . $agm_details->audit_end_date . '"
                             data-audit_report_file_url="' . $agm_details->audit_report_url . '" data-letter_integrity_url="' . $agm_details->letter_integrity_url . '" data-letter_bankruptcy_url="' . $agm_details->letter_bankruptcy_url . '">
                                 <i class="fa fa-pencil"></i>
@@ -2758,40 +2758,40 @@ class AdminController extends BaseController {
                 if (Session::get('lang') == "en") {
                     $data_raw = array(
                         $date_agm,
-                        'Anual General Meeting (AGM)<br/>'
-                        . 'Extraordinary General Meeting (EGM)<br/>'
-                        . 'Minit Meeting<br/>'
-                        . 'Pledge letter of integrity JMC<br>'
-                        . 'Declaration letter of non-bankruptcy',
+                        trans('app.forms.annual_general_meeting').'<br/>'
+                        . trans('app.forms.extra_general_meeting').'<br/>'
+                        . trans('app.forms.meeting_minutes').'<br/>'
+                        . trans('app.forms.pledge_letter_of_integrity').'<br>'
+                        . trans('app.forms.declaration_letter_of_non_bankruptcy'),
                         $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
-                        'JMC SPA Copy<br/>'
-                        . 'Identity Card List<br/>'
-                        . 'Attendance List',
+                        trans('app.forms.jmc_spa_copy').'<br/>'
+                        . trans('app.forms.identity_card_list').'<br/>'
+                        . trans('app.forms.attendance_list'),
                         $status6 . '<br/>' . $status7 . '<br/>' . $status8,
-                        'Audited Financial Report<br/>'
-                        . 'Financial Audit Start Date<br/>'
-                        . 'Financial Audit End Date<br/>'
-                        . 'Financial Audit Report',
+                        trans('app.forms.audited_financial_report').'<br/>'
+                        . trans('app.forms.financial_audit_start_date').'<br/>'
+                        . trans('app.forms.financial_audit_end_date').'<br/>'
+                        . trans('app.forms.financial_audit_report'),
                         $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
                         $button
                     );
                 } else {
                     $data_raw = array(
                         $date_agm,
-                        'Mesyuarat Agung Tahunan (AGM)<br/>'
-                        . 'Mesyuarat Agung Luarbiasa (EGM)<br/>'
-                        . 'Minit Mesyuarat<br/>'
-                        . 'Surat ikrar integriti JMC<br>'
-                        . 'Surat akuan tidak muflis',
+                        trans('app.forms.annual_general_meeting').'<br/>'
+                        . trans('app.forms.extra_general_meeting').'<br/>'
+                        . trans('app.forms.meeting_minutes').'<br/>'
+                        . trans('app.forms.pledge_letter_of_integrity').'<br>'
+                        . trans('app.forms.declaration_letter_of_non_bankruptcy'),
                         $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
-                        'Salinan Perjanjian Jualbeli JMC<br/>'
-                        . 'Salinan Kad Pengenalan<br/>'
-                        . 'Senarai Kehadiran',
+                        trans('app.forms.jmc_spa_copy').'<br/>'
+                        . trans('app.forms.identity_card_list').'<br/>'
+                        . trans('app.forms.attendance_list'),
                         $status6 . '<br/>' . $status7 . '<br/>' . $status8,
-                        'Laporan Kew Teraudit<br/>'
-                        . 'Tarikh Mula Kewangan Audit<br/>'
-                        . 'Tarikh Akhir Kewangan Audit<br/>'
-                        . 'Laporan Kewangan Audit',
+                        trans('app.forms.audited_financial_report').'<br/>'
+                        . trans('app.forms.financial_audit_start_date').'<br/>'
+                        . trans('app.forms.financial_audit_end_date').'<br/>'
+                        . trans('app.forms.financial_audit_report'),
                         $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
                         $button
                     );
@@ -3252,7 +3252,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3265,7 +3265,7 @@ class AdminController extends BaseController {
             return View::make('page_en.view_others', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3288,7 +3288,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3301,7 +3301,7 @@ class AdminController extends BaseController {
             return View::make('page_en.update_others', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3412,7 +3412,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3424,7 +3424,7 @@ class AdminController extends BaseController {
             return View::make('page_en.view_scoring', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3445,7 +3445,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3457,7 +3457,7 @@ class AdminController extends BaseController {
             return View::make('page_en.update_scoring', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3774,7 +3774,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3788,7 +3788,7 @@ class AdminController extends BaseController {
             return View::make('page_en.view_buyer', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3811,7 +3811,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3825,7 +3825,7 @@ class AdminController extends BaseController {
             return View::make('page_en.update_buyer', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3848,7 +3848,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3861,7 +3861,7 @@ class AdminController extends BaseController {
             return View::make('page_en.add_buyer', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3939,7 +3939,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -3954,7 +3954,7 @@ class AdminController extends BaseController {
             return View::make('page_en.edit_buyer', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -4107,7 +4107,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -4121,7 +4121,7 @@ class AdminController extends BaseController {
             return View::make('page_en.import_buyer', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -4247,7 +4247,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -4260,7 +4260,7 @@ class AdminController extends BaseController {
             return View::make('page_en.update_document', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -4284,13 +4284,13 @@ class AdminController extends BaseController {
                 if ($documents->is_hidden == 1) {
                     $is_hidden = 'Yes';
                 } else {
-                    $is_hidden = 'No';
+                    $is_hidden = trans('app.forms.no');
                 }
 
                 if ($documents->is_readonly == 1) {
                     $is_readonly = 'Yes';
                 } else {
-                    $is_readonly = 'No';
+                    $is_readonly = trans('app.forms.no');
                 }
 
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@editDocument', $documents->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -4391,7 +4391,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -4404,7 +4404,7 @@ class AdminController extends BaseController {
             return View::make('page_en.add_document', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -4460,7 +4460,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -4474,7 +4474,7 @@ class AdminController extends BaseController {
             return View::make('page_en.edit_document', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -4532,18 +4532,18 @@ class AdminController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::find($id);
         if ($files->status == 1) {
-            $status = "Approved";
+            $status = trans('app.forms.approved');
         } else if ($files->status == 2) {
-            $status = "Rejected";
+            $status = trans('app.forms.rejected');
         } else {
-            $status = "Pending";
+            $status = trans('app.forms.pending');
         }
         $approveBy = User::find($files->approved_by);
         $image = OtherDetails::where('file_id', $files->id)->first();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -4560,7 +4560,7 @@ class AdminController extends BaseController {
             return View::make('page_en.file_approval', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
@@ -4620,7 +4620,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Organization Profile',
+                'title' => trans('app.menus.administration.organization_profile'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'profile_list',
@@ -4631,7 +4631,7 @@ class AdminController extends BaseController {
             return View::make('admin_en.company', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Organization Profile',
+                'title' => trans('app.menus.administration.organization_profile'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'profile_list',
@@ -4656,26 +4656,26 @@ class AdminController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($companies->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveCompany(\'' . $companies->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveCompany(\'' . $companies->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCompany(\'' . $companies->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCompany(\'' . $companies->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
 
-                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@editCompany', $companies->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteCompany(\'' . $companies->id . '\')">Delete <i class="fa fa-trash"></i></button>';
+                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@editCompany', $companies->id) . '\'">'.trans('app.forms.edit').' <i class="fa fa-pencil"></i></button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteCompany(\'' . $companies->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
                 } else {
                     if ($companies->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveCompany(\'' . $companies->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveCompany(\'' . $companies->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCompany(\'' . $companies->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCompany(\'' . $companies->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     }
 
-                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@editCompany', $companies->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteCompany(\'' . $companies->id . '\')">Padam <i class="fa fa-trash"></i></button>';
+                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@editCompany', $companies->id) . '\'">'.trans('app.forms.edit').' <i class="fa fa-pencil"></i></button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteCompany(\'' . $companies->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
                 }
 
                 $data_raw = array(
@@ -4788,7 +4788,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Organization Profile',
+                'title' => trans('app.menus.administration.add_organization_profile'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'profile_list',
@@ -4802,7 +4802,7 @@ class AdminController extends BaseController {
             return View::make('admin_en.add_company', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Add Profil Organisasi',
+                'title' => trans('app.menus.administration.add_organization_profile'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'profile_list',
@@ -4882,7 +4882,7 @@ class AdminController extends BaseController {
 
             if (Session::get('lang') == "en") {
                 $viewData = array(
-                    'title' => 'Edit Organization Profile',
+                    'title' => trans('app.menus.administration.edit_organization_profile'),
                     'panel_nav_active' => 'admin_panel',
                     'main_nav_active' => 'admin_main',
                     'sub_nav_active' => 'profile_list',
@@ -4897,7 +4897,7 @@ class AdminController extends BaseController {
                 return View::make('admin_en.edit_company', $viewData);
             } else {
                 $viewData = array(
-                    'title' => 'Edit Profil Organisasi',
+                    'title' => trans('app.menus.administration.edit_organization_profile'),
                     'panel_nav_active' => 'admin_panel',
                     'main_nav_active' => 'admin_main',
                     'sub_nav_active' => 'profile_list',
@@ -4980,7 +4980,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Access Group Management',
+                'title' => trans('app.menus.administration.access_group_management'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'access_group_list',
@@ -4991,7 +4991,7 @@ class AdminController extends BaseController {
             return View::make('page_en.accessgroup', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Akses Kumpulan',
+                'title' => trans('app.menus.administration.access_group_management'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'access_group_list',
@@ -5010,7 +5010,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Access Group',
+                'title' => trans('app.buttons.add_access_group'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'access_group_list',
@@ -5022,7 +5022,7 @@ class AdminController extends BaseController {
             return View::make('page_en.add_accessgroup', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Akses Kumpulan',
+                'title' => trans('app.buttons.add_access_group'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'access_group_list',
@@ -5178,30 +5178,30 @@ class AdminController extends BaseController {
             foreach ($accessgroup as $accessgroups) {
                 $button = "";
                 if (Session::get('lang') == "en") {
-                    $is_admin = 'No';
+                    $is_admin = trans('app.forms.no');
                     if ($accessgroups->is_admin == 1) {
-                        $is_admin = "Yes";
+                        $is_admin = trans('app.forms.yes');
                     }
 
                     if ($accessgroups->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAccessGroup(\'' . $accessgroups->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAccessGroup(\'' . $accessgroups->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAccessGroup(\'' . $accessgroups->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAccessGroup(\'' . $accessgroups->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
-                    $is_admin = 'Tidak';
+                    $is_admin = trans('app.forms.no');
                     if ($accessgroups->is_admin == 1) {
-                        $is_admin = "Ya";
+                        $is_admin = trans('app.forms.yes');
                     }
 
                     if ($accessgroups->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAccessGroup(\'' . $accessgroups->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAccessGroup(\'' . $accessgroups->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAccessGroup(\'' . $accessgroups->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAccessGroup(\'' . $accessgroups->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateAccessGroup', $accessgroups->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -5328,7 +5328,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Access Group',
+                'title' => trans('app.buttons.update_access_group'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'access_group_list',
@@ -5341,7 +5341,7 @@ class AdminController extends BaseController {
             return View::make('page_en.update_accessgroup', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Akses Kumpulan',
+                'title' => trans('app.buttons.update_access_group'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'access_group_list',
@@ -5501,7 +5501,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'User Management',
+                'title' => trans('app.menus.administration.user_management'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'user_list',
@@ -5512,7 +5512,7 @@ class AdminController extends BaseController {
             return View::make('admin_en.user', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Pengguna',
+                'title' => trans('app.menus.administration.user_management'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'user_list',
@@ -5543,7 +5543,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add User',
+                'title' => trans('app.buttons.add_user'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'user_list',
@@ -5556,7 +5556,7 @@ class AdminController extends BaseController {
             return View::make('admin_en.add_user', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Pengguna',
+                'title' => trans('app.buttons.add_user'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'user_list',
@@ -5665,43 +5665,43 @@ class AdminController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($users->is_active == 1) {
-                        $is_active = "Yes";
+                        $is_active = trans('app.forms.yes');
                         if ($users->status == 1) {
-                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUser(\'' . $users->id . '\')">Inactive</button>&nbsp;';
+                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUser(\'' . $users->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                         }
                     } else {
-                        $is_active = "No";
+                        $is_active = trans('app.forms.no');
                         if ($users->status == 1) {
-                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUser(\'' . $users->id . '\')">Active</button>&nbsp;';
+                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUser(\'' . $users->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                         }
                     }
 
                     if ($users->status == 0) {
-                        $status = "Pending";
+                        $status = trans('app.forms.pending');
                     } else if ($users->status == 1) {
-                        $status = "Approved";
+                        $status = trans('app.forms.approved');
                     } else {
-                        $status = "Rejected";
+                        $status = trans('app.forms.rejected');
                     }
                 } else {
                     if ($users->is_active == 1) {
-                        $is_active = "Ya";
+                        $is_active = trans('app.forms.yes');
                         if ($users->status == 1) {
-                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUser(\'' . $users->id . '\')">Tidak Aktif</button>&nbsp;';
+                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUser(\'' . $users->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                         }
                     } else {
-                        $is_active = "Tidak";
+                        $is_active = trans('app.forms.no');
                         if ($users->status == 1) {
-                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUser(\'' . $users->id . '\')">Aktif</button>&nbsp;';
+                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUser(\'' . $users->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                         }
                     }
 
                     if ($users->status == 0) {
-                        $status = "Menunggu";
+                        $status = trans('app.forms.pending');
                     } else if ($users->status == 1) {
-                        $status = "Diterima";
+                        $status = trans('app.forms.approved');
                     } else {
-                        $status = "Ditolak";
+                        $status = trans('app.forms.rejected');
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateUser', $users->id) . '\'" title="Edit"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -5744,7 +5744,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'User Details',
+                'title' => trans('app.menus.administration.user_details'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'user_list',
@@ -5757,7 +5757,7 @@ class AdminController extends BaseController {
             return View::make('admin_en.user_details', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Maklumat Pengguna',
+                'title' => trans('app.menus.administration.user_details'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'user_list',
@@ -5897,9 +5897,9 @@ class AdminController extends BaseController {
 
                 if ($files) {
                     if (Session::get('lang') == "en") {
-                        $result = "<option value=''>Please Select</option>";
+                        $result = "<option value=''>".trans('app.forms.please_select')."</option>";
                     } else {
-                        $result = "<option value=''>Sila pilih</option>";
+                        $result = "<option value=''>".trans('app.forms.please_select')."</option>";
                     }
 
                     foreach ($files as $file) {
@@ -5909,16 +5909,16 @@ class AdminController extends BaseController {
                     print $result;
                 } else {
                     if (Session::get('lang') == "en") {
-                        print "<option value=''>Please Select</option>";
+                        print "<option value=''>".trans('app.forms.please_select')."</option>";
                     } else {
-                        print "<option value=''>Sila pilih</option>";
+                        print "<option value=''>".trans('app.forms.please_select')."</option>";
                     }
                 }
             } else {
                 if (Session::get('lang') == "en") {
-                    print "<option value=''>Please Select</option>";
+                    print "<option value=''>".trans('app.forms.please_select')."</option>";
                 } else {
-                    print "<option value=''>Sila pilih</option>";
+                    print "<option value=''>".trans('app.forms.please_select')."</option>";
                 }
             }
         }
@@ -5946,7 +5946,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update User',
+                'title' => trans('app.menus.administration.update_user'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'user_list',
@@ -5961,7 +5961,7 @@ class AdminController extends BaseController {
             return View::make('admin_en.update_user', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Pengguna',
+                'title' => trans('app.menus.administration.update_user'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'user_list',
@@ -6051,7 +6051,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Memo Management',
+                'title' => trans('app.menus.administration.memo_management'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'memo_maintenence_list',
@@ -6063,7 +6063,7 @@ class AdminController extends BaseController {
             return View::make('page_en.memo', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Memo',
+                'title' => trans('app.menus.administration.memo_management'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'memo_maintenence_list',
@@ -6083,7 +6083,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Memo',
+                'title' => trans('app.buttons.add_memo'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'memo_maintenence_list',
@@ -6095,7 +6095,7 @@ class AdminController extends BaseController {
             return View::make('page_en.add_memo', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Memo',
+                'title' => trans('app.buttons.add_memo'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'memo_maintenence_list',
@@ -6159,19 +6159,19 @@ class AdminController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($memos->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemo(\'' . $memos->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemo(\'' . $memos->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemo(\'' . $memos->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemo(\'' . $memos->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($memos->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemo(\'' . $memos->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemo(\'' . $memos->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemo(\'' . $memos->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemo(\'' . $memos->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateMemo', $memos->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -6294,7 +6294,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Memo',
+                'title' => trans('app.buttons.update_memo'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'memo_maintenence_list',
@@ -6307,7 +6307,7 @@ class AdminController extends BaseController {
             return View::make('page_en.update_memo', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Memo',
+                'title' => trans('app.buttons.update_memo'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'memo_maintenence_list',
@@ -6368,7 +6368,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Rating',
+                'title' => trans('app.menus.administration.rating'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'rating_list',
@@ -6379,7 +6379,7 @@ class AdminController extends BaseController {
             return View::make('admin_en.rating', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Rating',
+                'title' => trans('app.menus.administration.rating'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'rating_list',
@@ -6508,7 +6508,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Rating',
+                'title' => trans('app.menus.administration.add_rating'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'rating_list',
@@ -6520,7 +6520,7 @@ class AdminController extends BaseController {
             return View::make('admin_en.add_rating', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Add Rating',
+                'title' => trans('app.menus.administration.add_rating'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'rating_list',
@@ -6636,7 +6636,7 @@ class AdminController extends BaseController {
         if ($rating) {
             if (Session::get('lang') == "en") {
                 $viewData = array(
-                    'title' => 'Edit Rating',
+                    'title' => trans('app.menus.administration.edit_rating'),
                     'panel_nav_active' => 'admin_panel',
                     'main_nav_active' => 'admin_main',
                     'sub_nav_active' => 'rating_list',
@@ -6649,7 +6649,7 @@ class AdminController extends BaseController {
                 return View::make('admin_en.edit_rating', $viewData);
             } else {
                 $viewData = array(
-                    'title' => 'Edit Rating',
+                    'title' => trans('app.menus.administration.edit_rating'),
                     'panel_nav_active' => 'admin_panel',
                     'main_nav_active' => 'admin_main',
                     'sub_nav_active' => 'rating_list',
@@ -6783,7 +6783,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Form',
+                'title' => trans('app.menus.administration.form'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'form_list',
@@ -6795,7 +6795,7 @@ class AdminController extends BaseController {
             return View::make('admin_en.form', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Borang',
+                'title' => trans('app.menus.administration.form'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'form_list',
@@ -6819,15 +6819,15 @@ class AdminController extends BaseController {
 
                     $button = "";
                     if ($forms->is_active == 1) {
-                        $status = 'Active';
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveForm(\'' . $forms->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveForm(\'' . $forms->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = 'Inactive';
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeForm(\'' . $forms->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeForm(\'' . $forms->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
 
-                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateForm', $forms->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
-                    $button .= '<button class="btn btn-xs btn-danger" onclick="deleteForm(\'' . $forms->id . '\')">Delete <i class="fa fa-trash"></i></button>';
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateForm', $forms->id) . '\'">'.trans('app.forms.edit').' <i class="fa fa-pencil"></i></button>&nbsp;';
+                    $button .= '<button class="btn btn-xs btn-danger" onclick="deleteForm(\'' . $forms->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
 
                     $data_raw = array(
                         ($forms->company ? $forms->company->short_name : '<i>(not set)</i>'),
@@ -6846,15 +6846,15 @@ class AdminController extends BaseController {
 
                     $button = "";
                     if ($forms->is_active == 1) {
-                        $status = 'Aktif';
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveForm(\'' . $forms->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveForm(\'' . $forms->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = 'Tidak Aktif';
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeForm(\'' . $forms->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeForm(\'' . $forms->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
 
-                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateForm', $forms->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
-                    $button .= '<button class="btn btn-xs btn-danger" onclick="deleteForm(\'' . $forms->id . '\')">Padam <i class="fa fa-trash"></i></button>';
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateForm', $forms->id) . '\'">'.trans('app.forms.edit').' <i class="fa fa-pencil"></i></button>&nbsp;';
+                    $button .= '<button class="btn btn-xs btn-danger" onclick="deleteForm(\'' . $forms->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
 
                     $data_raw = array(
                         $formtype->name_my,
@@ -7003,7 +7003,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Form',
+                'title' => trans('app.menus.administration.add_form'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'form_list',
@@ -7016,7 +7016,7 @@ class AdminController extends BaseController {
             return View::make('admin_en.add_form', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Add Form',
+                'title' => trans('app.menus.administration.add_form'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'form_list',
@@ -7079,7 +7079,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Edit Form',
+                'title' => trans('app.menus.administration.edit_form'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'form_list',
@@ -7093,7 +7093,7 @@ class AdminController extends BaseController {
             return View::make('admin_en.edit_form', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Form',
+                'title' => trans('app.menus.administration.edit_form'),
                 'panel_nav_active' => 'admin_panel',
                 'main_nav_active' => 'admin_main',
                 'sub_nav_active' => 'form_list',
@@ -7151,7 +7151,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Audit Trail Report',
+                'title' => trans('app.menus.reporting.audit_trail_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'audit_trail_list',
@@ -7161,7 +7161,7 @@ class AdminController extends BaseController {
             return View::make('report_en.audit_trail', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Laporan Audit Trail',
+                'title' => trans('app.menus.reporting.audit_trail_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'audit_trail_list',
@@ -7332,7 +7332,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'File By Location & Facilities Report',
+                'title' => trans('app.menus.reporting.file_by_location_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'file_by_location_list',
@@ -7343,7 +7343,7 @@ class AdminController extends BaseController {
             return View::make('report_en.file_by_location', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Laporan Fail Mengikut Lokasi & Kemudahan',
+                'title' => trans('app.menus.reporting.file_by_location_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'file_by_location_list',
@@ -7537,7 +7537,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Rating Summary Report',
+                'title' => trans('app.menus.reporting.rating_summary_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'rating_summary_list',
@@ -7558,7 +7558,7 @@ class AdminController extends BaseController {
             return View::make('report_en.rating_summary', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Laporan Penakrifan Bintang',
+                'title' => trans('app.menus.reporting.rating_summary_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'rating_summary_list',
@@ -7669,7 +7669,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Management Summary Report',
+                'title' => trans('app.menus.reporting.management_summary_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'management_summary_list',
@@ -7691,7 +7691,7 @@ class AdminController extends BaseController {
             return View::make('report_en.management_summary', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Laporan Rumusan Pengurusan',
+                'title' => trans('app.menus.reporting.management_summary_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'management_summary_list',
@@ -7803,7 +7803,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'COB File / Management (%) Report',
+                'title' => trans('app.menus.reporting.cob_file_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'cob_file_management_list',
@@ -7822,7 +7822,7 @@ class AdminController extends BaseController {
             return View::make('report_en.cob_file_management', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Laporan Fail COB / Pengurusan (%)',
+                'title' => trans('app.menus.reporting.cob_file_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'cob_file_management_list',
@@ -7850,7 +7850,7 @@ class AdminController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Form Download',
+                'title' => trans('app.menus.form.download'),
                 'panel_nav_active' => 'form_panel',
                 'main_nav_active' => 'form_main',
                 'sub_nav_active' => 'form_download_list',
@@ -7862,7 +7862,7 @@ class AdminController extends BaseController {
             return View::make('form_en.index', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Form Download',
+                'title' => trans('app.menus.form.download'),
                 'panel_nav_active' => 'form_panel',
                 'main_nav_active' => 'form_main',
                 'sub_nav_active' => 'form_download_list',
