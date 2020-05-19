@@ -20,7 +20,7 @@ foreach ($user_permission as $permission) {
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <h4>{ trans('app.forms.agm') }}</h4>
+                    <h4>{{ trans('app.forms.agm') }}</h4>
                     <div>
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
