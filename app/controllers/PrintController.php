@@ -82,15 +82,15 @@ class PrintController extends BaseController {
     public function printRatingSummary() {
         if (!Auth::user()->getAdmin()) {
             if (!empty(Auth::user()->file_id)) {
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -106,12 +106,13 @@ class PrintController extends BaseController {
             foreach ($file as $files) {
                 $strata = Strata::where('file_id', $files->id)->count();
                 $rating = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->count();
-                $fiveStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<=', 100)->where('total_score', '>=', 87)->count();
-                $fourStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 87)->where('total_score', '>=', 73)->count();
-                $threeStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 73)->where('total_score', '>=', 51)->count();
-                $twoStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 51)->where('total_score', '>=', 26)->count();
-                $oneStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 26)->where('total_score', '>=', 1)->count();
 
+                $fiveStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 81)->where('total_score', '<=', 100)->count();
+                $fourStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 61)->where('total_score', '<=', 80)->count();
+                $threeStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 41)->where('total_score', '<=', 60)->count();
+                $twoStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 21)->where('total_score', '<=', 40)->count();
+                $oneStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 1)->where('total_score', '<=', 20)->count();
+                
                 $stratas += $strata;
                 $ratings += $rating;
                 $fiveStars += $fiveStar;
@@ -121,19 +122,6 @@ class PrintController extends BaseController {
                 $oneStars += $oneStar;
             }
         }
-
-//        $strata = Strata::count();
-//        $rating = Scoring::where('is_deleted', 0)->count();
-//        $fiveStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 100)->where('total_score', '>=', 87)->count();
-//        $fourStar = Scoring::where('is_deleted', 0)->where('total_score', '<', 87)->where('total_score', '>=', 73)->count();
-//        $threeStar = Scoring::where('is_deleted', 0)->where('total_score', '<', 73)->where('total_score', '>=', 51)->count();
-//        $twoStar = Scoring::where('is_deleted', 0)->where('total_score', '<', 51)->where('total_score', '>=', 26)->count();
-//        $oneStar = Scoring::where('is_deleted', 0)->where('total_score', '<', 26)->where('total_score', '>=', 1)->count();
-//        $fiveStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 100)->where('total_score', '>=', 86)->count();
-//        $fourStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 85)->where('total_score', '>=', 61)->count();
-//        $threeStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 60)->where('total_score', '>=', 41)->count();
-//        $twoStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 40)->where('total_score', '>=', 21)->count();
-//        $oneStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 20)->where('total_score', '>=', 1)->count();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -182,24 +170,22 @@ class PrintController extends BaseController {
                         ->where('files.id', Auth::user()->file_id)
                         ->where('files.company_id', Auth::user()->company_id)
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
                 $strata = DB::table('files')
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.company_id', Auth::user()->company_id)
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
@@ -207,24 +193,22 @@ class PrintController extends BaseController {
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
                 $strata = DB::table('files')
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.company_id', Session::get('admin_cob'))
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -325,24 +309,22 @@ class PrintController extends BaseController {
                         ->where('files.id', Auth::user()->file_id)
                         ->where('files.company_id', Auth::user()->company_id)
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
                 $strata = DB::table('files')
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.company_id', Auth::user()->company_id)
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
@@ -350,24 +332,22 @@ class PrintController extends BaseController {
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
                 $strata = DB::table('files')
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.company_id', Session::get('admin_cob'))
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 

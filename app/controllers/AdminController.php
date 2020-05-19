@@ -33,15 +33,15 @@ class AdminController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         if (!Auth::user()->getAdmin()) {
             if (!empty(Auth::user()->file_id)) {
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -63,11 +63,12 @@ class AdminController extends BaseController {
             foreach ($file as $files) {
                 $strata = Strata::where('file_id', $files->id)->count();
                 $rating = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->count();
-                $fiveStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<=', 100)->where('total_score', '>=', 87)->count();
-                $fourStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 87)->where('total_score', '>=', 73)->count();
-                $threeStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 73)->where('total_score', '>=', 51)->count();
-                $twoStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 51)->where('total_score', '>=', 26)->count();
-                $oneStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 26)->where('total_score', '>=', 1)->count();
+
+                $fiveStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 81)->where('total_score', '<=', 100)->count();
+                $fourStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 61)->where('total_score', '<=', 80)->count();
+                $threeStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 41)->where('total_score', '<=', 60)->count();
+                $twoStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 21)->where('total_score', '<=', 40)->count();
+                $oneStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 1)->where('total_score', '<=', 20)->count();
 
                 $stratas += $strata;
                 $ratings += $rating;
@@ -118,15 +119,15 @@ class AdminController extends BaseController {
 
         if (!Auth::user()->getAdmin()) {
             if (!empty(Auth::user()->file_id)) {
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -172,15 +173,15 @@ class AdminController extends BaseController {
     public function getNeverAGM() {
         if (!Auth::user()->getAdmin()) {
             if (!empty(Auth::user()->file_id)) {
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -236,15 +237,15 @@ class AdminController extends BaseController {
 
         if (!Auth::user()->getAdmin()) {
             if (!empty(Auth::user()->file_id)) {
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -292,15 +293,15 @@ class AdminController extends BaseController {
 
         if (!Auth::user()->getAdmin()) {
             if (!empty(Auth::user()->file_id)) {
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -775,7 +776,9 @@ class AdminController extends BaseController {
                     $files->year = '';
                 }
                 $files->is_active = 0;
-                $files->status = 0;
+                $files->status = 1;
+                $files->approved_by = Auth::user()->id;
+                $files->approved_at = date('Y-m-d H:i:s');
                 $files->created_by = Auth::user()->id;
                 $success = $files->save();
 
@@ -1331,7 +1334,9 @@ class AdminController extends BaseController {
                         $house_scheme->phone_no = $phone_no;
                         $house_scheme->fax_no = $fax_no;
                         $house_scheme->remarks = $remarks;
-                        $house_scheme->is_active = $is_active;
+                        if ($is_active != 2) {
+                            $house_scheme->is_active = $is_active;
+                        }
                         $success = $house_scheme->save();
 
                         if ($success) {
@@ -2180,7 +2185,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'file' => $files,
                 'designation' => $designation,
@@ -2194,7 +2199,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'file' => $files,
                 'designation' => $designation,
@@ -3250,7 +3255,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'file' => $files,
                 'other_details' => $other_details,
@@ -3263,7 +3268,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'file' => $files,
                 'other_details' => $other_details,
@@ -3410,7 +3415,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'image' => (!empty($image->image_url) ? $image->image_url : '')
@@ -3422,7 +3427,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'image' => (!empty($image->image_url) ? $image->image_url : '')
@@ -3655,7 +3660,7 @@ class AdminController extends BaseController {
                 $scorings_D = ((($scorings->score15 + $scorings->score16 + $scorings->score17 + $scorings->score18) / 16) * 20);
                 $scorings_E = ((($scorings->score19 + $scorings->score20 + $scorings->score21) / 12) * 10);
 
-                if ($scorings->total_score >= 86) {
+                if ($scorings->total_score >= 81) {
                     $rating = '<span style="color: orange;">'
                             . '<i class="fa fa-star"></i>'
                             . '<i class="fa fa-star"></i>'
@@ -3772,7 +3777,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'Uploadmessage' => '',
@@ -3786,7 +3791,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'Uploadmessage' => '',
@@ -3937,7 +3942,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'race' => $race,
@@ -3952,7 +3957,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'race' => $race,
@@ -4541,7 +4546,7 @@ class AdminController extends BaseController {
                 'title' => 'Update COB File',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'status' => $status,
@@ -4558,7 +4563,7 @@ class AdminController extends BaseController {
                 'title' => 'Edit Fail COB',
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
-                'sub_nav_active' => ($files->status == 3 ? 'cob_before_vp_list' : 'cob_list'),
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'files' => $files,
                 'status' => $status,
@@ -5522,9 +5527,19 @@ class AdminController extends BaseController {
     public function addUser() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
-        $company = Company::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
-        $role = Role::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
-        $files = Files::where('is_deleted', 0)->orderBy('file_no')->get();
+
+        if (!Auth::user()->getAdmin()) {
+            $role = Role::where('is_admin', 0)->where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+            $company = Company::where('id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $role = Role::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+                $company = Company::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+            } else {
+                $role = Role::where('is_admin', 0)->where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+                $company = Company::where('id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+            }
+        }
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -5535,7 +5550,6 @@ class AdminController extends BaseController {
                 'user_permission' => $user_permission,
                 'company' => $company,
                 'role' => $role,
-                'files' => $files,
                 'image' => ""
             );
 
@@ -5549,7 +5563,6 @@ class AdminController extends BaseController {
                 'user_permission' => $user_permission,
                 'company' => $company,
                 'role' => $role,
-                'files' => $files,
                 'image' => ""
             );
 
@@ -5915,8 +5928,20 @@ class AdminController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $user = User::find($id);
-        $role = Role::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
-        $company = Company::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+        
+        if (!Auth::user()->getAdmin()) {
+            $role = Role::where('is_admin', 0)->where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+            $company = Company::where('id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $role = Role::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+                $company = Company::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+            } else {
+                $role = Role::where('is_admin', 0)->where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+                $company = Company::where('id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
+            }
+        }
+        
         $files = Files::where('company_id', $user->company_id)->where('is_deleted', 0)->orderBy('file_no')->get();
 
         if (Session::get('lang') == "en") {
@@ -6382,7 +6407,7 @@ class AdminController extends BaseController {
                 $ratings_D = ((($ratings->score15 + $ratings->score16 + $ratings->score17 + $ratings->score18) / 16) * 20);
                 $ratings_E = ((($ratings->score19 + $ratings->score20 + $ratings->score21) / 12) * 10);
 
-                if ($ratings->total_score >= 86) {
+                if ($ratings->total_score >= 81) {
                     $rating = '<span style="color: orange;">'
                             . '<i class="fa fa-star"></i>'
                             . '<i class="fa fa-star"></i>'
@@ -7335,15 +7360,15 @@ class AdminController extends BaseController {
 
         if (!Auth::user()->getAdmin()) {
             if (!empty(Auth::user()->file_id)) {
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -7470,15 +7495,15 @@ class AdminController extends BaseController {
     public function ratingSummary() {
         if (!Auth::user()->getAdmin()) {
             if (!empty(Auth::user()->file_id)) {
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -7494,11 +7519,11 @@ class AdminController extends BaseController {
             foreach ($file as $files) {
                 $strata = Strata::where('file_id', $files->id)->count();
                 $rating = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->count();
-                $fiveStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<=', 100)->where('total_score', '>=', 87)->count();
-                $fourStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 87)->where('total_score', '>=', 73)->count();
-                $threeStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 73)->where('total_score', '>=', 51)->count();
-                $twoStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 51)->where('total_score', '>=', 26)->count();
-                $oneStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '<', 26)->where('total_score', '>=', 1)->count();
+                $fiveStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 81)->where('total_score', '<=', 100)->count();
+                $fourStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 61)->where('total_score', '<=', 80)->count();
+                $threeStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 41)->where('total_score', '<=', 60)->count();
+                $twoStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 21)->where('total_score', '<=', 40)->count();
+                $oneStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 1)->where('total_score', '<=', 20)->count();
 
                 $stratas += $strata;
                 $ratings += $rating;
@@ -7509,19 +7534,6 @@ class AdminController extends BaseController {
                 $oneStars += $oneStar;
             }
         }
-
-//        $strata = Strata::count();
-//        $rating = Scoring::where('is_deleted', 0)->count();
-//        $fiveStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 100)->where('total_score', '>=', 87)->count();
-//        $fourStar = Scoring::where('is_deleted', 0)->where('total_score', '<', 87)->where('total_score', '>=', 73)->count();
-//        $threeStar = Scoring::where('is_deleted', 0)->where('total_score', '<', 73)->where('total_score', '>=', 51)->count();
-//        $twoStar = Scoring::where('is_deleted', 0)->where('total_score', '<', 51)->where('total_score', '>=', 26)->count();
-//        $oneStar = Scoring::where('is_deleted', 0)->where('total_score', '<', 26)->where('total_score', '>=', 1)->count();
-//        $fiveStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 100)->where('total_score', '>=', 86)->count();
-//        $fourStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 85)->where('total_score', '>=', 61)->count();
-//        $threeStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 60)->where('total_score', '>=', 41)->count();
-//        $twoStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 40)->where('total_score', '>=', 21)->count();
-//        $oneStar = Scoring::where('is_deleted', 0)->where('total_score', '<=', 20)->where('total_score', '>=', 1)->count();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -7574,24 +7586,22 @@ class AdminController extends BaseController {
                         ->where('files.id', Auth::user()->file_id)
                         ->where('files.company_id', Auth::user()->company_id)
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
                 $strata = DB::table('files')
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.company_id', Auth::user()->company_id)
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
@@ -7599,24 +7609,22 @@ class AdminController extends BaseController {
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
                 $strata = DB::table('files')
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.company_id', Session::get('admin_cob'))
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
@@ -7716,24 +7724,22 @@ class AdminController extends BaseController {
                         ->where('files.id', Auth::user()->file_id)
                         ->where('files.company_id', Auth::user()->company_id)
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('id', Auth::user()->file_id)->where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
                 $strata = DB::table('files')
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.company_id', Auth::user()->company_id)
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         } else {
             if (empty(Session::get('admin_cob'))) {
@@ -7741,24 +7747,22 @@ class AdminController extends BaseController {
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             } else {
                 $strata = DB::table('files')
                         ->leftJoin('strata', 'strata.file_id', '=', 'files.id')
                         ->select('strata.*', 'files.id as file_id')
                         ->where('files.company_id', Session::get('admin_cob'))
                         ->where('files.is_active', 1)
-                        ->where('files.status', 1)
                         ->where('files.is_deleted', 0)
                         ->orderBy('strata.id')
                         ->get();
 
-                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->where('status', 1)->orderBy('id', 'asc')->get();
+                $file = Files::where('company_id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('id', 'asc')->get();
             }
         }
 
