@@ -8,7 +8,7 @@ class SettingController extends BaseController {
         } else {
             if (Session::get('lang') == "en") {
                 $viewData = array(
-                    'title' => "Page not found!",
+                    'title' => trans('app.errors.page_not_found'),
                     'panel_nav_active' => '',
                     'main_nav_active' => '',
                     'sub_nav_active' => '',
@@ -17,7 +17,7 @@ class SettingController extends BaseController {
                 return View::make('404_en', $viewData);
             } else {
                 $viewData = array(
-                    'title' => "Halaman tidak dijumpai!",
+                    'title' => trans('app.errors.page_not_found'),
                     'panel_nav_active' => '',
                     'main_nav_active' => '',
                     'sub_nav_active' => '',
@@ -36,7 +36,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Area Maintenance',
+                'title' => trans('app.menus.master.area_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'area_list',
@@ -47,7 +47,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.area', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Daerah',
+                'title' => trans('app.menus.master.area_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'area_list',
@@ -65,7 +65,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Area',
+                'title' => trans('app.menus.master.add_area'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'area_list',
@@ -76,7 +76,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_area', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Daerah',
+                'title' => trans('app.menus.master.add_area'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'area_list',
@@ -124,19 +124,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($areas->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveArea(\'' . $areas->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveArea(\'' . $areas->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeArea(\'' . $areas->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeArea(\'' . $areas->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($areas->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveArea(\'' . $areas->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveArea(\'' . $areas->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeArea(\'' . $areas->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeArea(\'' . $areas->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateArea', $areas->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -248,7 +248,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Area',
+                'title' => trans('app.menus.master.edit_area'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'area_list',
@@ -260,7 +260,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_area', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Daerah',
+                'title' => trans('app.menus.master.edit_area'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'area_list',
@@ -308,7 +308,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'City Maintenance',
+                'title' => trans('app.menus.master.city_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'city_list',
@@ -319,7 +319,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.city', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Bandar',
+                'title' => trans('app.menus.master.city_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'city_list',
@@ -337,7 +337,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add City',
+                'title' => trans('app.menus.master.add_city'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'city_list',
@@ -348,7 +348,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_city', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Bandar',
+                'title' => trans('app.menus.master.add_city'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'city_list',
@@ -396,19 +396,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($cities->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCity(\'' . $cities->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCity(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCity(\'' . $cities->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCity(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($cities->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCity(\'' . $cities->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCity(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCity(\'' . $cities->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCity(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateCity', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -520,7 +520,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update City',
+                'title' => trans('app.menus.master.edit_city'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'city_list',
@@ -532,7 +532,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_city', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Bandar',
+                'title' => trans('app.menus.master.edit_city'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'city_list',
@@ -580,7 +580,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Country Maintenance',
+                'title' => trans('app.menus.master.country_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'country_list',
@@ -591,7 +591,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.country', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Bandar',
+                'title' => trans('app.menus.master.country_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'country_list',
@@ -609,7 +609,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Country',
+                'title' => trans('app.menus.master.add_country'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'country_list',
@@ -620,7 +620,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_country', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Bandar',
+                'title' => trans('app.menus.master.add_country'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'country_list',
@@ -668,19 +668,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($cities->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCountry(\'' . $cities->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCountry(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCountry(\'' . $cities->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCountry(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($cities->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCountry(\'' . $cities->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCountry(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCountry(\'' . $cities->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCountry(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateCountry', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -793,7 +793,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Country',
+                'title' => trans('app.menus.master.edit_country'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'country_list',
@@ -805,7 +805,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_country', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Bandar',
+                'title' => trans('app.menus.master.edit_country'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'country_list',
@@ -852,7 +852,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Form Type Master',
+                'title' => trans('app.menus.master.form_type_master'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'formtype_list',
@@ -863,7 +863,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.formtype', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Jenis Form',
+                'title' => trans('app.menus.master.form_type_master'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'formtype_list',
@@ -881,7 +881,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add FormType',
+                'title' => trans('app.menus.master.add_form_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'formtype_list',
@@ -892,7 +892,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_formtype', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Jenis Form',
+                'title' => trans('app.menus.master.add_form_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'formtype_list',
@@ -940,19 +940,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($ft->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFormtype(\'' . $ft->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFormtype(\'' . $ft->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFormtype(\'' . $ft->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFormtype(\'' . $ft->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($ft->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFormtype(\'' . $ft->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFormtype(\'' . $ft->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFormtype(\'' . $ft->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFormtype(\'' . $ft->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateFormtype', $ft->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -1066,7 +1066,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Form Type',
+                'title' => trans('app.menus.master.edit_form_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'formtype_list',
@@ -1078,7 +1078,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_formtype', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Jenis Form',
+                'title' => trans('app.menus.master.edit_form_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'formtype_list',
@@ -1126,7 +1126,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'State Maintenance',
+                'title' => trans('app.menus.master.state_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'state_list',
@@ -1137,7 +1137,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.state', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Bandar',
+                'title' => trans('app.menus.master.state_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'state_list',
@@ -1155,7 +1155,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add State',
+                'title' => trans('app.menus.master.add_state'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'state_list',
@@ -1166,7 +1166,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_state', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Bandar',
+                'title' => trans('app.menus.master.add_state'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'state_list',
@@ -1214,19 +1214,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($states->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $states->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $states->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $states->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $states->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($states->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $states->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $states->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $states->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $states->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateState', $states->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -1339,7 +1339,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update State',
+                'title' => trans('app.menus.master.edit_state'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'state_list',
@@ -1351,7 +1351,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_state', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Bandar',
+                'title' => trans('app.menus.master.edit_state'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'state_list',
@@ -1398,7 +1398,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Document Type Maintenance',
+                'title' => trans('app.menus.master.document_type_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'documenttype_list',
@@ -1409,7 +1409,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.documenttype', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Bandar',
+                'title' => trans('app.menus.master.document_type_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'documenttype_list',
@@ -1427,7 +1427,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Document Type',
+                'title' => trans('app.menus.master.add_document_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'documenttype_list',
@@ -1438,7 +1438,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_documenttype', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Jenis Dokumen',
+                'title' => trans('app.menus.master.add_document_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'documenttype_list',
@@ -1487,19 +1487,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($cities->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDocumenttype(\'' . $cities->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDocumenttype(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDocumenttype(\'' . $cities->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDocumenttype(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($cities->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDocumenttype(\'' . $cities->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDocumenttype(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDocumenttype(\'' . $cities->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDocumenttype(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateDocumenttype', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -1612,7 +1612,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Document Type',
+                'title' => trans('app.menus.master.edit_document_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'documenttype_list',
@@ -1624,7 +1624,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_documenttype', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Jenis Dokumen',
+                'title' => trans('app.menus.master.edit_document_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'documenttype_list',
@@ -1671,7 +1671,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Category Maintenance',
+                'title' => trans('app.menus.master.category_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'category_list',
@@ -1682,7 +1682,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.category', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Kategori',
+                'title' => trans('app.menus.master.category_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'category_list',
@@ -1700,7 +1700,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Category',
+                'title' => trans('app.menus.master.add_category'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'category_list',
@@ -1711,7 +1711,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_category', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Kategori',
+                'title' => trans('app.menus.master.add_category'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'category_list',
@@ -1759,19 +1759,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($categories->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCategory(\'' . $categories->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCategory(\'' . $categories->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCategory(\'' . $categories->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCategory(\'' . $categories->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($categories->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCategory(\'' . $categories->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCategory(\'' . $categories->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCategory(\'' . $categories->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCategory(\'' . $categories->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateCategory', $categories->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -1883,7 +1883,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Category',
+                'title' => trans('app.menus.master.edit_category'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'category_list',
@@ -1895,7 +1895,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_category', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Kategori',
+                'title' => trans('app.menus.master.edit_category'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'category_list',
@@ -1943,7 +1943,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Land Title Maintenance',
+                'title' => trans('app.menus.master.land_title_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'land_list',
@@ -1954,7 +1954,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.land', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Jenis Tanah',
+                'title' => trans('app.menus.master.land_title_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'land_list',
@@ -1972,7 +1972,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Land Title',
+                'title' => trans('app.menus.master.add_land_title'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'land_list',
@@ -1983,7 +1983,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_land', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Jenis Tanah',
+                'title' => trans('app.menus.master.add_land_title'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'land_list',
@@ -2031,19 +2031,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($lands->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveLandTitle(\'' . $lands->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveLandTitle(\'' . $lands->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeLandTitle(\'' . $lands->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeLandTitle(\'' . $lands->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($lands->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveLandTitle(\'' . $lands->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveLandTitle(\'' . $lands->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeLandTitle(\'' . $lands->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeLandTitle(\'' . $lands->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateLandTitle', $lands->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -2155,7 +2155,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Land Title',
+                'title' => trans('app.menus.master.edit_land_title'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'land_list',
@@ -2167,7 +2167,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_land', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Jenis Tanah',
+                'title' => trans('app.menus.master.edit_land_title'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'land_list',
@@ -2215,7 +2215,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Developer Maintenance',
+                'title' => trans('app.menus.master.developer_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'developer_list',
@@ -2226,7 +2226,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.developer', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Pemaju',
+                'title' => trans('app.menus.master.developer_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'developer_list',
@@ -2247,7 +2247,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Developer',
+                'title' => trans('app.menus.master.add_developer'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'developer_list',
@@ -2261,7 +2261,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_developer', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Pemaju',
+                'title' => trans('app.menus.master.add_developer'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'developer_list',
@@ -2332,19 +2332,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($developers->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDeveloper(\'' . $developers->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDeveloper(\'' . $developers->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDeveloper(\'' . $developers->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDeveloper(\'' . $developers->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($developers->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDeveloper(\'' . $developers->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDeveloper(\'' . $developers->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDeveloper(\'' . $developers->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDeveloper(\'' . $developers->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateDeveloper', $developers->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -2461,7 +2461,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Developer',
+                'title' => trans('app.menus.master.edit_developer'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'developer_list',
@@ -2476,7 +2476,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_developer', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Pemaju',
+                'title' => trans('app.menus.master.edit_developer'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'developer_list',
@@ -2547,7 +2547,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Agent Maintenance',
+                'title' => trans('app.menus.master.agent_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'agent_list',
@@ -2558,7 +2558,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.agent', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Ejen',
+                'title' => trans('app.menus.master.agent_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'agent_list',
@@ -2579,7 +2579,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Agent',
+                'title' => trans('app.menus.master.add_agent'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'agent_list',
@@ -2593,7 +2593,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_agent', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Ejen',
+                'title' => trans('app.menus.master.add_agent'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'agent_list',
@@ -2664,19 +2664,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($agents->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAgent(\'' . $agents->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAgent(\'' . $agents->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAgent(\'' . $agents->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAgent(\'' . $agents->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($agents->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAgent(\'' . $agents->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAgent(\'' . $agents->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAgent(\'' . $agents->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAgent(\'' . $agents->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateAgent', $agents->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -2793,7 +2793,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Agent',
+                'title' => trans('app.menus.master.edit_agent'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'agent_list',
@@ -2808,7 +2808,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_agent', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Ejen',
+                'title' => trans('app.menus.master.edit_agent'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'agent_list',
@@ -2879,7 +2879,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Parliment Maintenance',
+                'title' => trans('app.menus.master.parliament_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'parliament_list',
@@ -2890,7 +2890,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.parliment', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Parlimen',
+                'title' => trans('app.menus.master.parliament_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'parliament_list',
@@ -2908,7 +2908,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Parliament',
+                'title' => trans('app.menus.master.add_parliament'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'parliament_list',
@@ -2919,7 +2919,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_parliment', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Parlimen',
+                'title' => trans('app.menus.master.add_parliament'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'parliament_list',
@@ -2967,19 +2967,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($parliments->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveParliment(\'' . $parliments->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveParliment(\'' . $parliments->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeParliment(\'' . $parliments->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeParliment(\'' . $parliments->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($parliments->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveParliment(\'' . $parliments->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveParliment(\'' . $parliments->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeParliment(\'' . $parliments->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeParliment(\'' . $parliments->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateParliment', $parliments->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -3091,7 +3091,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Parliament',
+                'title' => trans('app.menus.master.edit_parliament'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'parliament_list',
@@ -3103,7 +3103,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_parliment', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Parlimen',
+                'title' => trans('app.menus.master.edit_parliament'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'parliament_list',
@@ -3152,7 +3152,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'DUN Maintenance',
+                'title' => trans('app.menus.master.dun_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'dun_list',
@@ -3164,7 +3164,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.dun', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan DUN',
+                'title' => trans('app.menus.master.dun_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'dun_list',
@@ -3184,7 +3184,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add DUN',
+                'title' => trans('app.menus.master.add_dun'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'dun_list',
@@ -3196,7 +3196,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_dun', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah DUN',
+                'title' => trans('app.menus.master.add_dun'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'dun_list',
@@ -3248,19 +3248,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($duns->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDun(\'' . $duns->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDun(\'' . $duns->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDun(\'' . $duns->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDun(\'' . $duns->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($duns->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDun(\'' . $duns->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDun(\'' . $duns->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDun(\'' . $duns->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDun(\'' . $duns->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
 
@@ -3375,7 +3375,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update DUN',
+                'title' => trans('app.menus.master.edit_dun'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'dun_list',
@@ -3388,7 +3388,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_dun', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit DUN',
+                'title' => trans('app.menus.master.edit_dun'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'dun_list',
@@ -3440,7 +3440,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Park Maintenance',
+                'title' => trans('app.menus.master.park_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'park_list',
@@ -3452,7 +3452,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.park', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Taman',
+                'title' => trans('app.menus.master.park_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'park_list',
@@ -3472,7 +3472,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Park',
+                'title' => trans('app.menus.master.add_park'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'park_list',
@@ -3484,7 +3484,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_park', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Taman',
+                'title' => trans('app.menus.master.add_park'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'park_list',
@@ -3536,19 +3536,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($parks->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactivePark(\'' . $parks->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactivePark(\'' . $parks->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activePark(\'' . $parks->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activePark(\'' . $parks->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($parks->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactivePark(\'' . $parks->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactivePark(\'' . $parks->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activePark(\'' . $parks->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activePark(\'' . $parks->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
 
@@ -3663,7 +3663,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Park',
+                'title' => trans('app.menus.master.edit_park'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'park_list',
@@ -3676,7 +3676,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_park', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Taman',
+                'title' => trans('app.menus.master.edit_park'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'park_list',
@@ -3727,7 +3727,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Memo Type Maintenance',
+                'title' => trans('app.menus.master.memo_type_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'memo_list',
@@ -3738,7 +3738,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.memotype', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Jenis Memo',
+                'title' => trans('app.menus.master.memo_type_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'memo_list',
@@ -3756,7 +3756,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Memo Type',
+                'title' => trans('app.menus.master.add_memo_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'memo_list',
@@ -3767,7 +3767,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_memotype', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Jenis Memo',
+                'title' => trans('app.menus.master.add_memo_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'memo_list',
@@ -3815,19 +3815,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($memotypes->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemoType(\'' . $memotypes->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemoType(\'' . $memotypes->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemoType(\'' . $memotypes->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemoType(\'' . $memotypes->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($memotypes->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemoType(\'' . $memotypes->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemoType(\'' . $memotypes->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemoType(\'' . $memotypes->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemoType(\'' . $memotypes->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateMemoType', $memotypes->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -3939,7 +3939,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Memo Type',
+                'title' => trans('app.menus.master.edit_memo_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'memo_list',
@@ -3951,7 +3951,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_memotype', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Jenis Memo',
+                'title' => trans('app.menus.master.edit_memo_type'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'memo_list',
@@ -3999,7 +3999,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Designation Maintenance',
+                'title' => trans('app.menus.master.designation_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'designation_list',
@@ -4010,7 +4010,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.designation', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Jawatan',
+                'title' => trans('app.menus.master.designation_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'designation_list',
@@ -4028,7 +4028,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Designation',
+                'title' => trans('app.menus.master.add_designation'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'designation_list',
@@ -4039,7 +4039,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_designation', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Jawatan',
+                'title' => trans('app.menus.master.add_designation'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'designation_list',
@@ -4087,19 +4087,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($designations->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDesignation(\'' . $designations->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDesignation(\'' . $designations->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDesignation(\'' . $designations->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDesignation(\'' . $designations->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($designations->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDesignation(\'' . $designations->id . '\')">TIdak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDesignation(\'' . $designations->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDesignation(\'' . $designations->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDesignation(\'' . $designations->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateDesignation', $designations->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -4211,7 +4211,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Designation',
+                'title' => trans('app.menus.master.edit_designation'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'designation_list',
@@ -4223,7 +4223,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_designation', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Jawatan',
+                'title' => trans('app.menus.master.edit_designation'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'designation_list',
@@ -4271,7 +4271,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Unit of Measure Maintenance',
+                'title' => trans('app.menus.master.unit_of_measure_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'unit_list',
@@ -4282,7 +4282,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.unitmeasure', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Unit Ukuran',
+                'title' => trans('app.menus.master.unit_of_measure_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'unit_list',
@@ -4300,7 +4300,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Unit of Measure',
+                'title' => trans('app.menus.master.add_unit_of_measure'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'unit_list',
@@ -4311,7 +4311,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_unitmeasure', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Unit Ukuran',
+                'title' => trans('app.menus.master.add_unit_of_measure'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'unit_list',
@@ -4359,19 +4359,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($unitmeasures->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUnitMeasure(\'' . $unitmeasures->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUnitMeasure(\'' . $unitmeasures->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUnitMeasure(\'' . $unitmeasures->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUnitMeasure(\'' . $unitmeasures->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($unitmeasures->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUnitMeasure(\'' . $unitmeasures->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUnitMeasure(\'' . $unitmeasures->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUnitMeasure(\'' . $unitmeasures->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUnitMeasure(\'' . $unitmeasures->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateUnitMeasure', $unitmeasures->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -4486,7 +4486,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Unit of Measure',
+                'title' => trans('app.menus.master.edit_unit_of_measure'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'unit_list',
@@ -4498,7 +4498,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_unitmeasure', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Unit Ukuran',
+                'title' => trans('app.menus.master.edit_unit_of_measure'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'unit_list',
@@ -4538,7 +4538,7 @@ class SettingController extends BaseController {
             }
         }
     }
-    
+
     // race
     public function race() {
         //get user permission
@@ -4546,7 +4546,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Race Maintenance',
+                'title' => trans('app.menus.master.race_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'race_list',
@@ -4557,7 +4557,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.race', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Bandar',
+                'title' => trans('app.menus.master.race_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'race_list',
@@ -4575,7 +4575,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Race',
+                'title' => trans('app.menus.master.add_race'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'race_list',
@@ -4586,7 +4586,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_race', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Bandar',
+                'title' => trans('app.menus.master.add_race'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'race_list',
@@ -4634,19 +4634,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($cities->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveRace(\'' . $cities->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveRace(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeRace(\'' . $cities->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeRace(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($cities->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveRace(\'' . $cities->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveRace(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeRace(\'' . $cities->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeRace(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateRace', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -4759,7 +4759,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Race',
+                'title' => trans('app.menus.master.edit_race'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'race_list',
@@ -4771,7 +4771,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_race', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Bandar',
+                'title' => trans('app.menus.master.edit_race'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'race_list',
@@ -4818,7 +4818,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Nationality Maintenance',
+                'title' => trans('app.menus.master.nationality_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'nationality_list',
@@ -4829,7 +4829,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.nationality', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Pengurusan Bandar',
+                'title' => trans('app.menus.master.nationality_maintenance'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'nationality_list',
@@ -4847,7 +4847,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Nationality',
+                'title' => trans('app.menus.master.add_nationality'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'nationality_list',
@@ -4858,7 +4858,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.add_nationality', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Bandar',
+                'title' => trans('app.menus.master.add_nationality'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'nationality_list',
@@ -4906,19 +4906,19 @@ class SettingController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($cities->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveNationality(\'' . $cities->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveNationality(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeNationality(\'' . $cities->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeNationality(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 } else {
                     if ($cities->is_active == 1) {
-                        $status = "Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveNationality(\'' . $cities->id . '\')">Tidak Aktif</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveNationality(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Tidak Aktif";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeNationality(\'' . $cities->id . '\')">Aktif</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeNationality(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateNationality', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -5031,7 +5031,7 @@ class SettingController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update Nationality',
+                'title' => trans('app.menus.master.edit_nationality'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'nationality_list',
@@ -5043,7 +5043,7 @@ class SettingController extends BaseController {
             return View::make('setting_en.update_nationality', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Bandar',
+                'title' => trans('app.menus.master.edit_nationality'),
                 'panel_nav_active' => 'master_panel',
                 'main_nav_active' => 'master_main',
                 'sub_nav_active' => 'nationality_list',

@@ -40,7 +40,7 @@ class ReportController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Status Kepenghunian',
+                'title' => trans('app.menus.reporting.owner'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'owner_tenant_list',
@@ -56,7 +56,7 @@ class ReportController extends BaseController {
             return View::make('report_en.owner_tenant', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Status Kepenghunian',
+                'title' => trans('app.menus.reporting.owner'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'owner_tenant_list',
@@ -89,7 +89,7 @@ class ReportController extends BaseController {
         if ($access_permission) {
             if (Session::get('lang') == "en") {
                 $viewData = array(
-                    'title' => 'Strata Profile',
+                    'title' => trans('app.menus.reporting.strata_profile'),
                     'panel_nav_active' => 'reporting_panel',
                     'main_nav_active' => 'reporting_main',
                     'sub_nav_active' => 'strata_profile_list',
@@ -102,7 +102,7 @@ class ReportController extends BaseController {
                 return View::make('report_en.strata_profile', $viewData);
             } else {
                 $viewData = array(
-                    'title' => 'Strata Profile',
+                    'title' => trans('app.menus.reporting.strata_profile'),
                     'panel_nav_active' => 'reporting_panel',
                     'main_nav_active' => 'reporting_main',
                     'sub_nav_active' => 'strata_profile_list',
@@ -116,7 +116,7 @@ class ReportController extends BaseController {
             }
         } else {
             $viewData = array(
-                'title' => "Page not found!",
+                'title' => trans('app.errors.page_not_found'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -324,7 +324,7 @@ class ReportController extends BaseController {
 
             if (Session::get('lang') == "en") {
                 $viewData = array(
-                    'title' => 'Strata Profile',
+                    'title' => trans('app.menus.reporting.strata_profile'),
                     'panel_nav_active' => 'reporting_panel',
                     'main_nav_active' => 'reporting_main',
                     'sub_nav_active' => 'strata_profile_list',
@@ -338,7 +338,7 @@ class ReportController extends BaseController {
                 return View::make('report_en.view_strata_profile', $viewData);
             } else {
                 $viewData = array(
-                    'title' => 'Strata Profile',
+                    'title' => trans('app.menus.reporting.strata_profile'),
                     'panel_nav_active' => 'reporting_panel',
                     'main_nav_active' => 'reporting_main',
                     'sub_nav_active' => 'strata_profile_list',
@@ -353,7 +353,7 @@ class ReportController extends BaseController {
             }
         } else {
             $viewData = array(
-                'title' => "Page not found!",
+                'title' => trans('app.errors.page_not_found'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',

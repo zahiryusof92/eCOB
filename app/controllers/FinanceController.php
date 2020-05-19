@@ -37,7 +37,7 @@ class FinanceController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Finance File List',
+                'title' => trans('app.menus.cob.add_finance_file_list'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'add_finance_list',
@@ -50,7 +50,7 @@ class FinanceController extends BaseController {
             return View::make('finance_en.add_finance_file', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Add Finance File List',
+                'title' => trans('app.menus.cob.add_finance_file_list'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'add_finance_list',
@@ -533,7 +533,7 @@ class FinanceController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Finance List',
+                'title' => trans('app.menus.cob.finance_file_list'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_file_list',
@@ -547,7 +547,7 @@ class FinanceController extends BaseController {
             return View::make('finance_en.finance_list', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Finance List',
+                'title' => trans('app.menus.cob.finance_file_list'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_file_list',
@@ -584,22 +584,22 @@ class FinanceController extends BaseController {
                 $button = "";
                 if (Session::get('lang') == "en") {
                     if ($filelists->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFinanceList(\'' . $filelists->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFinanceList(\'' . $filelists->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceList(\'' . $filelists->id . '\')">Delete <i class="fa fa-trash"></i></button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>&nbsp;';
                 } else {
                     if ($filelists->is_active == 1) {
-                        $status = "Active";
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFinanceList(\'' . $filelists->id . '\')">Inactive</button>&nbsp;';
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                     } else {
-                        $status = "Inactive";
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFinanceList(\'' . $filelists->id . '\')">Active</button>&nbsp;';
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                     }
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceList(\'' . $filelists->id . '\')">Delete <i class="fa fa-trash"></i></button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>&nbsp;';
                 }
 
                 $data_raw = array(
@@ -690,7 +690,7 @@ class FinanceController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Edit Finance File List',
+                'title' => trans('app.menus.cob.edit_finance_file_list'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_file_list',
@@ -720,7 +720,7 @@ class FinanceController extends BaseController {
             return View::make('finance_en.edit_finance_file', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Finance File List',
+                'title' => trans('app.menus.cob.edit_finance_file_list'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_file_list',
@@ -1497,7 +1497,7 @@ class FinanceController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Finance Support',
+                'title' => trans('app.menus.cob.finance_support'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_support_list',
@@ -1509,7 +1509,7 @@ class FinanceController extends BaseController {
             return View::make('finance_en.finance_support_list', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Finance Support',
+                'title' => trans('app.menus.cob.finance_support'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_support_list',
@@ -1545,9 +1545,9 @@ class FinanceController extends BaseController {
                 $files = Files::where('id', $filelists->file_id)->first();
                 $button = "";
                 if (Session::get('lang') == "en") {
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceSupport(\'' . $filelists->id . '\')">Delete <i class="fa fa-trash"></i></button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceSupport(\'' . $filelists->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>&nbsp;';
                 } else {
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceSupport(\'' . $filelists->id . '\')">Padam <i class="fa fa-trash"></i></button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceSupport(\'' . $filelists->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>&nbsp;';
                 }
 
                 $data_raw = array(
@@ -1595,7 +1595,7 @@ class FinanceController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Finance Support',
+                'title' => trans('app.menus.cob.add_finance_support'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_support_list',
@@ -1607,7 +1607,7 @@ class FinanceController extends BaseController {
             return View::make('finance_en.add_finance_support', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Add Finance Support',
+                'title' => trans('app.menus.cob.add_finance_support'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_support_list',
@@ -1677,7 +1677,7 @@ class FinanceController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Edit Finance Support',
+                'title' => trans('app.menus.cob.edit_finance_support'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_support_list',
@@ -1690,7 +1690,7 @@ class FinanceController extends BaseController {
             return View::make('finance_en.edit_finance_support', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Finance Support',
+                'title' => trans('app.menus.cob.edit_finance_support'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'finance_support_list',
