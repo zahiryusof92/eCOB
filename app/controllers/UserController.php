@@ -28,7 +28,7 @@ class UserController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => "Register",
+                'title' => trans('app.forms.register'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -38,7 +38,7 @@ class UserController extends BaseController {
             return View::make('user_en.register', $viewData);
         } else {
             $viewData = array(
-                'title' => "Pendaftaran",
+                'title' => trans('app.forms.register'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -105,7 +105,7 @@ class UserController extends BaseController {
             if ($company) {
                 if (Session::get('lang') == "en") {
                     $viewData = array(
-                        'title' => "Login",
+                        'title' => trans('app.forms.login'),
                         'panel_nav_active' => '',
                         'main_nav_active' => '',
                         'sub_nav_active' => '',
@@ -115,7 +115,7 @@ class UserController extends BaseController {
                     return View::make('user_en.login', $viewData);
                 } else {
                     $viewData = array(
-                        'title' => "Log Masuk",
+                        'title' => trans('app.forms.login'),
                         'panel_nav_active' => '',
                         'main_nav_active' => '',
                         'sub_nav_active' => '',
@@ -127,13 +127,13 @@ class UserController extends BaseController {
             } else {
                 if (Session::get('lang') == "en") {
                     $viewData = array(
-                        'title' => "Page not found!"
+                        'title' => trans('app.errors.page_not_found')
                     );
 
                     return View::make('404_en', $viewData);
                 } else {
                     $viewData = array(
-                        'title' => "Halaman tidak dijumpai!"
+                        'title' => trans('app.errors.page_not_found')
                     );
 
                     return View::make('404_my', $viewData);
@@ -142,7 +142,7 @@ class UserController extends BaseController {
         } else {
             if (Session::get('lang') == "en") {
                 $viewData = array(
-                    'title' => "Login",
+                    'title' => trans('app.forms.login'),
                     'panel_nav_active' => '',
                     'main_nav_active' => '',
                     'sub_nav_active' => '',
@@ -152,7 +152,7 @@ class UserController extends BaseController {
                 return View::make('user_en.login', $viewData);
             } else {
                 $viewData = array(
-                    'title' => "Log Masuk",
+                    'title' => trans('app.forms.login'),
                     'panel_nav_active' => '',
                     'main_nav_active' => '',
                     'sub_nav_active' => '',
@@ -208,9 +208,9 @@ class UserController extends BaseController {
                                 } else {
                                     Auth::logout();
                                     if (Session::get('lang') == "en") {
-                                        return Redirect::to('/' . $cob)->with('login_error', 'Account Expired');
+                                        return Redirect::to('/' . $cob)->with('login_error', trans('app.errors.account_expired'));
                                     } else {
-                                        return Redirect::to('/' . $cob)->with('login_error', 'Akaun Tamat Tempoh');
+                                        return Redirect::to('/' . $cob)->with('login_error', trans('app.errors.account_expired'));
                                     }
                                 }
                             }
@@ -232,24 +232,24 @@ class UserController extends BaseController {
                         } else {
                             Auth::logout();
                             if (Session::get('lang') == "en") {
-                                return Redirect::to('/' . $cob)->with('login_error', 'Wrong Username/Password');
+                                return Redirect::to('/' . $cob)->with('login_error', trans('app.errors.wrong_username_password'));
                             } else {
-                                return Redirect::to('/' . $cob)->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                                return Redirect::to('/' . $cob)->with('login_error', trans('app.errors.wrong_username_password'));
                             }
                         }
                     } else {
                         if (Session::get('lang') == "en") {
-                            return Redirect::to('/' . $cob)->with('login_error', 'Wrong Username/Password');
+                            return Redirect::to('/' . $cob)->with('login_error', trans('app.errors.wrong_username_password'));
                         } else {
-                            return Redirect::to('/' . $cob)->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                            return Redirect::to('/' . $cob)->with('login_error', trans('app.errors.wrong_username_password'));
                         }
                     }
                 }
             } else {
                 if (Session::get('lang') == "en") {
-                    return Redirect::to('/' . $cob)->with('login_error', 'Wrong Username/Password');
+                    return Redirect::to('/' . $cob)->with('login_error', trans('app.errors.wrong_username_password'));
                 } else {
-                    return Redirect::to('/' . $cob)->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                    return Redirect::to('/' . $cob)->with('login_error', trans('app.errors.wrong_username_password'));
                 }
             }
         } else {
@@ -289,24 +289,24 @@ class UserController extends BaseController {
                         } else {
                             Auth::logout();
                             if (Session::get('lang') == "en") {
-                                return Redirect::to('/login')->with('login_error', 'Wrong Username/Password');
+                                return Redirect::to('/login')->with('login_error', trans('app.errors.wrong_username_password'));
                             } else {
-                                return Redirect::to('/login')->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                                return Redirect::to('/login')->with('login_error', trans('app.errors.wrong_username_password'));
                             }
                         }
                     } else {
                         Auth::logout();
                         if (Session::get('lang') == "en") {
-                            return Redirect::to('/login')->with('login_error', 'Wrong Username/Password');
+                            return Redirect::to('/login')->with('login_error', trans('app.errors.wrong_username_password'));
                         } else {
-                            return Redirect::to('/login')->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                            return Redirect::to('/login')->with('login_error', trans('app.errors.wrong_username_password'));
                         }
                     }
                 } else {
                     if (Session::get('lang') == "en") {
-                        return Redirect::to('/login')->with('login_error', 'Wrong Username/Password');
+                        return Redirect::to('/login')->with('login_error', trans('app.errors.wrong_username_password'));
                     } else {
-                        return Redirect::to('/login')->with('login_error', 'Nama Pengguna/Kata Laluan salah');
+                        return Redirect::to('/login')->with('login_error', trans('app.errors.wrong_username_password'));
                     }
                 }
             }
@@ -323,7 +323,7 @@ class UserController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => "Edit Profile",
+                'title' => trans('app.menus.edit_profile'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -335,7 +335,7 @@ class UserController extends BaseController {
             return View::make('user_en.edit_profile', $viewData);
         } else {
             $viewData = array(
-                'title' => "Profil Penyelaras",
+                'title' => trans('app.menus.edit_profile'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -380,7 +380,7 @@ class UserController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => "Change Password",
+                'title' => trans('app.menus.change_password'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -391,7 +391,7 @@ class UserController extends BaseController {
             return View::make('user_en.change_password', $viewData);
         } else {
             $viewData = array(
-                'title' => "Tukar Kata Laluan",
+                'title' => trans('app.menus.change_password'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -440,7 +440,7 @@ class UserController extends BaseController {
         }
     }
 
-    //member logout start 
+    //member logout start
     public function logout($cob = '') {
         Session::forget('id');
         Session::forget('username');

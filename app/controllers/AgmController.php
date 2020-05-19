@@ -181,7 +181,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Designation Submission',
+                'title' => trans('app.menus.agm.designation'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdesignsub_list',
@@ -195,7 +195,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.ajk', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Penyerahan Maklumat AJK',
+                'title' => trans('app.menus.agm.designation'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdesignsub_list',
@@ -291,7 +291,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Designation',
+                'title' => trans('app.menus.agm.add_designation'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdesignsub_list',
@@ -305,7 +305,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.add_ajk', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Maklumat AJK',
+                'title' => trans('app.menus.agm.add_designation'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdesignsub_list',
@@ -397,7 +397,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Designation',
+                'title' => trans('app.menus.agm.edit_designation'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdesignsub_list',
@@ -412,7 +412,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.edit_ajk', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Maklumat AJK',
+                'title' => trans('app.menus.agm.edit_designation'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdesignsub_list',
@@ -509,7 +509,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Purchaser Submission',
+                'title' => trans('app.menus.agm.purchaser'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmpurchasesub_list',
@@ -523,7 +523,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.purchaser', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Penyerahan Maklumat Pembeli',
+                'title' => trans('app.menus.agm.purchaser'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmpurchasesub_list',
@@ -590,7 +590,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Purchaser',
+                'title' => trans('app.menus.agm.add_purchaser'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmpurchasesub_list',
@@ -604,7 +604,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.add_purchaser', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Pembeli',
+                'title' => trans('app.menus.agm.add_purchaser'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmpurchasesub_list',
@@ -682,7 +682,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.agm.edit_purchaser'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmpurchasesub_list',
@@ -697,7 +697,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.edit_purchaser', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.agm.edit_purchaser'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmpurchasesub_list',
@@ -803,7 +803,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Import Purchaser',
+                'title' => trans('app.menus.agm.import_purchaser'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmpurchasesub_list',
@@ -816,7 +816,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.import_purchaser', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Import Purchaser',
+                'title' => trans('app.menus.agm.import_purchaser'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmpurchasesub_list',
@@ -936,7 +936,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Tenant Submission',
+                'title' => trans('app.menus.agm.tenant'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmtenantsub_list',
@@ -950,7 +950,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.tenant', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Penyerahan Maklumat Pembeli',
+                'title' => trans('app.menus.agm.tenant'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmtenantsub_list',
@@ -1016,7 +1016,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Tenant',
+                'title' => trans('app.menus.agm.add_tenant'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmtenantsub_list',
@@ -1030,7 +1030,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.add_tenant', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Tambah Pembeli',
+                'title' => trans('app.menus.agm.add_tenant'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmtenantsub_list',
@@ -1106,7 +1106,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.agm.add_tenant'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmtenantsub_list',
@@ -1121,7 +1121,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.edit_tenant', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.agm.add_tenant'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmtenantsub_list',
@@ -1225,7 +1225,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Import Tenant',
+                'title' => trans('app.menus.agm.import_tenant'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmtenantsub_list',
@@ -1238,7 +1238,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.import_tenant', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Import Tenant',
+                'title' => trans('app.menus.agm.import_tenant'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmtenantsub_list',
@@ -1354,7 +1354,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Update COB File',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_list',
@@ -1368,7 +1368,7 @@ class AgmController extends BaseController {
             return View::make('page_en.view_buyer', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Fail COB',
+                'title' => trans('app.menus.cob.update_cob_file'),
                 'panel_nav_active' => 'cob_panel',
                 'main_nav_active' => 'cob_main',
                 'sub_nav_active' => 'cob_list',
@@ -1394,7 +1394,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Upload of Minutes',
+                'title' => trans('app.menus.agm.upload_of_minutes'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmminutesub_list',
@@ -1406,7 +1406,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.minutes', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Upload of Minutes',
+                'title' => trans('app.menus.agm.upload_of_minutes'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmminutesub_list',
@@ -1498,40 +1498,40 @@ class AgmController extends BaseController {
                 if (Session::get('lang') == "en") {
                     $data_raw = array(
                         $date_agm,
-                        'Anual General Meeting (AGM)<br/>'
-                        . 'Extraordinary General Meeting (EGM)<br/>'
-                        . 'Minit Meeting<br/>'
-                        . 'Pledge letter of integrity JMC<br>'
-                        . 'Declaration letter of non-bankruptcy',
+                        trans('app.forms.annual_general_meeting').'<br/>'
+                        . trans('app.forms.extra_general_meeting').'<br/>'
+                        . trans('app.forms.meeting_minutes').'<br/>'
+                        . trans('app.forms.pledge_letter_of_integrity').'<br>'
+                        . trans('app.forms.declaration_letter_of_non_bankruptcy'),
                         $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
-                        'JMC SPA Copy<br/>'
-                        . 'Identity Card List<br/>'
-                        . 'Attendance List',
+                        trans('app.forms.jmc_spa_copy').'<br/>'
+                        . trans('app.forms.identity_card_list').'<br/>'
+                        . trans('app.forms.attendance_list'),
                         $status6 . '<br/>' . $status7 . '<br/>' . $status8,
-                        'Audited Financial Report<br/>'
-                        . 'Financial Audit Start Date<br/>'
-                        . 'Financial Audit End Date<br/>'
-                        . 'Financial Audit Report',
+                        trans('app.forms.audited_financial_report').'<br/>'
+                        . trans('app.forms.financial_audit_start_date').'<br/>'
+                        . trans('app.forms.financial_audit_end_date').'<br/>'
+                        . trans('app.forms.financial_audit_report'),
                         $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
                         $button
                     );
                 } else {
                     $data_raw = array(
                         $date_agm,
-                        'Mesyuarat Agung Tahunan (AGM)<br/>'
-                        . 'Mesyuarat Agung Luarbiasa (EGM)<br/>'
-                        . 'Minit Mesyuarat<br/>'
-                        . 'Surat ikrar integriti JMC<br>'
-                        . 'Surat akuan tidak muflis',
+                        trans('app.forms.annual_general_meeting').'<br/>'
+                        . trans('app.forms.extra_general_meeting').'<br/>'
+                        . trans('app.forms.meeting_minutes').'<br/>'
+                        . trans('app.forms.pledge_letter_of_integrity').'<br>'
+                        . trans('app.forms.declaration_letter_of_non_bankruptcy'),
                         $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
-                        'Salinan Perjanjian Jualbeli JMC<br/>'
-                        . 'Salinan Kad Pengenalan<br/>'
-                        . 'Senarai Kehadiran',
+                        trans('app.forms.jmc_spa_copy').'<br/>'
+                        . trans('app.forms.identity_card_list').'<br/>'
+                        . trans('app.forms.attendance_list'),
                         $status6 . '<br/>' . $status7 . '<br/>' . $status8,
-                        'Laporan Kew Teraudit<br/>'
-                        . 'Tarikh Mula Kewangan Audit<br/>'
-                        . 'Tarikh Akhir Kewangan Audit<br/>'
-                        . 'Laporan Kewangan Audit',
+                        trans('app.forms.audited_financial_report').'<br/>'
+                        . trans('app.forms.financial_audit_start_date').'<br/>'
+                        . trans('app.forms.financial_audit_end_date').'<br/>'
+                        . trans('app.forms.financial_audit_report'),
                         $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
                         $button
                     );
@@ -1562,7 +1562,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Minutes',
+                'title' => trans('app.menus.agm.add_minutes'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmminutesub_list',
@@ -1574,7 +1574,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.add_minutes', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Upload of Minutes',
+                'title' => trans('app.menus.agm.add_minutes'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmminutesub_list',
@@ -1687,7 +1687,7 @@ class AgmController extends BaseController {
 
             if (Session::get('lang') == "en") {
                 $viewData = array(
-                    'title' => 'Add Minutes',
+                    'title' => trans('app.menus.agm.edit_minutes'),
                     'panel_nav_active' => 'agm_panel',
                     'main_nav_active' => 'agm_main',
                     'sub_nav_active' => 'agmminutesub_list',
@@ -1700,7 +1700,7 @@ class AgmController extends BaseController {
                 return View::make('agm_en.edit_minutes', $viewData);
             } else {
                 $viewData = array(
-                    'title' => 'Upload of Minutes',
+                    'title' => trans('app.menus.agm.edit_minutes'),
                     'panel_nav_active' => 'agm_panel',
                     'main_nav_active' => 'agm_main',
                     'sub_nav_active' => 'agmminutesub_list',
@@ -1846,7 +1846,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Document',
+                'title' => trans('app.menus.agm.upload_document'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdocumentsub_list',
@@ -1858,7 +1858,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.document', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Borang',
+                'title' => trans('app.menus.agm.upload_document'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdocumentsub_list',
@@ -1880,13 +1880,13 @@ class AgmController extends BaseController {
                 if ($documents->is_hidden == 1) {
                     $is_hidden = 'Yes';
                 } else {
-                    $is_hidden = 'No';
+                    $is_hidden = trans('app.forms.no');
                 }
 
                 if ($documents->is_readonly == 1) {
                     $is_readonly = 'Yes';
                 } else {
-                    $is_readonly = 'No';
+                    $is_readonly = trans('app.forms.no');
                 }
 
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AgmController@updateDocument', $documents->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -1999,7 +1999,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Add Document',
+                'title' => trans('app.menus.agm.add_document'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdocumentsub_list',
@@ -2012,7 +2012,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.add_document', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Add Document',
+                'title' => trans('app.menus.agm.add_document'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdocumentsub_list',
@@ -2077,7 +2077,7 @@ class AgmController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Edit Document',
+                'title' => trans('app.menus.agm.edit_document'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdocumentsub_list',
@@ -2091,7 +2091,7 @@ class AgmController extends BaseController {
             return View::make('agm_en.edit_document', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Edit Document',
+                'title' => trans('app.menus.agm.edit_document'),
                 'panel_nav_active' => 'agm_panel',
                 'main_nav_active' => 'agm_main',
                 'sub_nav_active' => 'agmdocumentsub_list',

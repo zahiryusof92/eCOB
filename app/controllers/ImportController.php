@@ -8,7 +8,7 @@ class ImportController extends BaseController {
         } else {
             if (Session::get('lang') == "en") {
                 $viewData = array(
-                    'title' => "Page not found!",
+                    'title' => trans('app.errors.page_not_found'),
                     'panel_nav_active' => '',
                     'main_nav_active' => '',
                     'sub_nav_active' => '',
@@ -17,7 +17,7 @@ class ImportController extends BaseController {
                 return View::make('404_en', $viewData);
             } else {
                 $viewData = array(
-                    'title' => "Halaman tidak dijumpai!",
+                    'title' => trans('app.errors.page_not_found'),
                     'panel_nav_active' => '',
                     'main_nav_active' => '',
                     'sub_nav_active' => '',
@@ -38,7 +38,7 @@ class ImportController extends BaseController {
 
                 $path = $file->getRealPath();
                 $data = Excel::load($path, function($reader) {
-                            
+
                         })->get();
 
                 if (!empty($data) && $data->count()) {

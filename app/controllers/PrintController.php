@@ -30,7 +30,7 @@ class PrintController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Audit Trail Report',
+                'title' => trans('app.menus.reporting.audit_trail_report'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -42,7 +42,7 @@ class PrintController extends BaseController {
             return View::make('print_en.audit_trail', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Laporan Audit Trail',
+                'title' => trans('app.menus.reporting.audit_trail_report'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -59,7 +59,7 @@ class PrintController extends BaseController {
     public function printFileByLocation() {
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'File By Location & Facilities Report',
+                'title' => trans('app.menus.reporting.file_by_location_report'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -68,7 +68,7 @@ class PrintController extends BaseController {
             return View::make('print_en.file_by_location', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Laporan Fail Mengikut Lokasi & Kemudahan',
+                'title' => trans('app.menus.reporting.file_by_location_report'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -125,7 +125,7 @@ class PrintController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Rating Summary Report',
+                'title' => trans('app.menus.reporting.rating_summary_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'rating_summary_list',
@@ -142,7 +142,7 @@ class PrintController extends BaseController {
             return View::make('print_en.rating_summary', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Laporan Penakrifan Bintang',
+                'title' => trans('app.menus.reporting.rating_summary_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'rating_summary_list',
@@ -254,7 +254,7 @@ class PrintController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Management Summary Report',
+                'title' => trans('app.menus.reporting.management_summary_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'management_summary_list',
@@ -276,7 +276,7 @@ class PrintController extends BaseController {
             return View::make('print_en.management_summary', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Laporan Rumusan Pengurusan',
+                'title' => trans('app.menus.reporting.management_summary_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'management_summary_list',
@@ -388,7 +388,7 @@ class PrintController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'COB File / Management (%) Report',
+                'title' => trans('app.menus.reporting.cob_file_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'cob_file_management_list',
@@ -407,7 +407,7 @@ class PrintController extends BaseController {
             return View::make('print_en.cob_file_management', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Laporan Fail COB / Pengurusan (%)',
+                'title' => trans('app.menus.reporting.cob_file_report'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'cob_file_management_list',
@@ -463,7 +463,7 @@ class PrintController extends BaseController {
 
         if (Session::get('lang') == "en") {
             $viewData = array(
-                'title' => 'Status Kepenghunian',
+                'title' => trans('app.menus.reporting.owner'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'owner_tenant_list',
@@ -479,7 +479,7 @@ class PrintController extends BaseController {
             return View::make('print_en.owner_tenant', $viewData);
         } else {
             $viewData = array(
-                'title' => 'Status Kepenghunian',
+                'title' => trans('app.menus.reporting.owner'),
                 'panel_nav_active' => 'reporting_panel',
                 'main_nav_active' => 'reporting_main',
                 'sub_nav_active' => 'owner_tenant_list',
@@ -609,7 +609,7 @@ class PrintController extends BaseController {
 
             if (Session::get('lang') == "en") {
                 $viewData = array(
-                    'title' => 'Strata Profile',
+                    'title' => trans('app.menus.reporting.strata_profile'),
                     'panel_nav_active' => 'reporting_panel',
                     'main_nav_active' => 'reporting_main',
                     'sub_nav_active' => 'strata_profile_list',
@@ -623,7 +623,7 @@ class PrintController extends BaseController {
                 return View::make('print_en.strata_profile', $viewData);
             } else {
                 $viewData = array(
-                    'title' => 'Strata Profile',
+                    'title' => trans('app.menus.reporting.strata_profile'),
                     'panel_nav_active' => 'reporting_panel',
                     'main_nav_active' => 'reporting_main',
                     'sub_nav_active' => 'strata_profile_list',
@@ -638,7 +638,7 @@ class PrintController extends BaseController {
             }
         } else {
             $viewData = array(
-                'title' => "Page not found!",
+                'title' => trans('app.errors.page_not_found'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
