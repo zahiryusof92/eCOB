@@ -164,6 +164,17 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
+    var changes = false;
+    $('input, textarea, select').on('keypress change input', function () {
+        changes = true;
+    });
+
+    $(window).on('beforeunload', function () {
+        if (changes) {
+            return "Data you have entered may not be saved, do you really want to leave?";
+        }
+    });
+    
     $(document).ready(function () {
         //upload
         var options = {
@@ -209,6 +220,7 @@ foreach ($user_permission as $permission) {
     }
 
     function submitAddDocument() {
+        changes = false;
         $("#loading").css("display", "inline-block");
         $("#submit_button").attr("disabled", "disabled");
         $("#cancel_button").attr("disabled", "disabled");

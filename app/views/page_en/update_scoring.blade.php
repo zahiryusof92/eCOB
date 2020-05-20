@@ -1163,6 +1163,7 @@ foreach ($user_permission as $permission) {
     });
 
     function editScoring() {
+        changes = false;
         $("#loading").css("display", "inline-block");
         $("#date_edit_error").css("display", "none");
 

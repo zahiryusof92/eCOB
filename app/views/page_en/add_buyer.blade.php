@@ -167,7 +167,19 @@
 
 <!-- Page Scripts -->
 <script>
+    var changes = false;
+    $('input, textarea, select').on('keypress change input', function () {
+        changes = true;
+    });
+
+    $(window).on('beforeunload', function () {
+        if (changes) {
+            return "Data you have entered may not be saved, do you really want to leave?";
+        }
+    });
+    
     function addBuyer() {
+        changes = false;
         $("#submit_button").attr("disabled", "disabled");
         $("#unit_no_error").css("display", "none");
         $("#owner_name_error").css("display", "none");

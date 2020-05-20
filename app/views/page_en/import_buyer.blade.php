@@ -150,12 +150,24 @@ foreach ($user_permission as $permission) {
 <!-- Page Scripts -->
 
 <script>
+    var changes = false;
+    $('input, textarea, select').on('keypress change input', function () {
+        changes = true;
+    });
+
+    $(window).on('beforeunload', function () {
+        if (changes) {
+            return "Data you have entered may not be saved, do you really want to leave?";
+        }
+    });
+    
     var oTable;
     $(function(){
         oTable = $('#buyerList').editableTableWidget();
     });
             
     function submitUploadBuyer() {
+        changes = false;
         $("#upload_button").attr('disabled', 'disabled');
         $("#submit_buyer_button").attr('disabled', 'disabled');
         $("#loading").css('display', 'inline-block');

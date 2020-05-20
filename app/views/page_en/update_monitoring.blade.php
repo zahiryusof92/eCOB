@@ -1113,6 +1113,7 @@ foreach ($user_permission as $permission) {
     }
 
     function addAGMDetail() {
+        changes = false;
         $("#loading").css("display", "inline-block");
 
         var agm,
@@ -1213,6 +1214,7 @@ foreach ($user_permission as $permission) {
     }
 
     function editAGMDetail() {
+        changes = false;
         $("#loading").css("display", "inline-block");
 
         var agm,
@@ -1314,6 +1316,7 @@ foreach ($user_permission as $permission) {
     }
 
     function addAJKDetail() {
+        changes = false;
         $("#loading").css("display", "inline-block");
 
         var ajk_designation = $("#ajk_designation").val(),
@@ -1397,6 +1400,7 @@ foreach ($user_permission as $permission) {
     }
 
     function editAJK() {
+        changes = false;
         $("#loading").css("display", "inline-block");
 
         var ajk_id_edit = $("#ajk_id_edit").val(),
