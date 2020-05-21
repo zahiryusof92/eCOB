@@ -3319,6 +3319,7 @@ class AdminController extends BaseController {
         $data = Input::all();
         if (Request::ajax()) {
             $id = $data['id'];
+            $file_id = $data['file_id'];
             $other_details_name = $data['other_details_name'];
             $others_image_url = $data['others_image_url'];
             $latitude = $data['latitude'];
@@ -3337,7 +3338,13 @@ class AdminController extends BaseController {
             $others_composition = $data['others_composition'];
             $foreigner_composition = $data['foreigner_composition'];
 
-            $others = OtherDetails::find($id);
+            if (!empty($id)) {
+                $others = OtherDetails::find($id);
+            } else {
+                $others = new OtherDetails();
+                $others->file_id = $file_id;
+            }
+
             if ($others) {
                 $others->name = $other_details_name;
                 $others->image_url = $others_image_url;
@@ -5928,7 +5935,7 @@ class AdminController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $user = User::find($id);
-        
+
         if (!Auth::user()->getAdmin()) {
             $role = Role::where('is_admin', 0)->where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
             $company = Company::where('id', Auth::user()->company_id)->where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
@@ -5941,7 +5948,7 @@ class AdminController extends BaseController {
                 $company = Company::where('id', Session::get('admin_cob'))->where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
             }
         }
-        
+
         $files = Files::where('company_id', $user->company_id)->where('is_deleted', 0)->orderBy('file_no')->get();
 
         if (Session::get('lang') == "en") {
