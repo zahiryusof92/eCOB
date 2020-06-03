@@ -38,39 +38,21 @@ class ReportController extends BaseController {
             $tenant = '';
         }
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => trans('app.menus.reporting.owner'),
-                'panel_nav_active' => 'reporting_panel',
-                'main_nav_active' => 'reporting_main',
-                'sub_nav_active' => 'owner_tenant_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'race' => $race,
-                'file_id' => $file_id,
-                'owner' => $owner,
-                'tenant' => $tenant,
-                'image' => ''
-            );
+        $viewData = array(
+            'title' => trans('app.menus.reporting.owner'),
+            'panel_nav_active' => 'reporting_panel',
+            'main_nav_active' => 'reporting_main',
+            'sub_nav_active' => 'owner_tenant_list',
+            'user_permission' => $user_permission,
+            'files' => $files,
+            'race' => $race,
+            'file_id' => $file_id,
+            'owner' => $owner,
+            'tenant' => $tenant,
+            'image' => ''
+        );
 
-            return View::make('report_en.owner_tenant', $viewData);
-        } else {
-            $viewData = array(
-                'title' => trans('app.menus.reporting.owner'),
-                'panel_nav_active' => 'reporting_panel',
-                'main_nav_active' => 'reporting_main',
-                'sub_nav_active' => 'owner_tenant_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'race' => $race,
-                'file_id' => $file_id,
-                'owner' => $owner,
-                'tenant' => $tenant,
-                'image' => ''
-            );
-
-            return View::make('report_my.owner_tenant', $viewData);
-        }
+        return View::make('report_en.owner_tenant', $viewData);
     }
 
     public function strataProfile() {
@@ -87,33 +69,18 @@ class ReportController extends BaseController {
         }
 
         if ($access_permission) {
-            if (Session::get('lang') == "en") {
-                $viewData = array(
-                    'title' => trans('app.menus.reporting.strata_profile'),
-                    'panel_nav_active' => 'reporting_panel',
-                    'main_nav_active' => 'reporting_main',
-                    'sub_nav_active' => 'strata_profile_list',
-                    'user_permission' => $user_permission,
-                    'cob' => $cob,
-                    'parliament' => $parliament,
-                    'image' => '',
-                );
+            $viewData = array(
+                'title' => trans('app.menus.reporting.strata_profile'),
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'strata_profile_list',
+                'user_permission' => $user_permission,
+                'cob' => $cob,
+                'parliament' => $parliament,
+                'image' => '',
+            );
 
-                return View::make('report_en.strata_profile', $viewData);
-            } else {
-                $viewData = array(
-                    'title' => trans('app.menus.reporting.strata_profile'),
-                    'panel_nav_active' => 'reporting_panel',
-                    'main_nav_active' => 'reporting_main',
-                    'sub_nav_active' => 'strata_profile_list',
-                    'user_permission' => $user_permission,
-                    'cob' => $cob,
-                    'parliament' => $parliament,
-                    'image' => '',
-                );
-
-                return View::make('report_my.strata_profile', $viewData);
-            }
+            return View::make('report_en.strata_profile', $viewData);
         } else {
             $viewData = array(
                 'title' => trans('app.errors.page_not_found'),
@@ -322,35 +289,19 @@ class ReportController extends BaseController {
 
 //            return "<pre>" . print_r($result, true) . "</pre>";
 
-            if (Session::get('lang') == "en") {
-                $viewData = array(
-                    'title' => trans('app.menus.reporting.strata_profile'),
-                    'panel_nav_active' => 'reporting_panel',
-                    'main_nav_active' => 'reporting_main',
-                    'sub_nav_active' => 'strata_profile_list',
-                    'user_permission' => $user_permission,
-                    'files' => $files,
-                    'race' => $race,
-                    'result' => $result,
-                    'image' => '',
-                );
+            $viewData = array(
+                'title' => trans('app.menus.reporting.strata_profile'),
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'strata_profile_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'race' => $race,
+                'result' => $result,
+                'image' => '',
+            );
 
-                return View::make('report_en.view_strata_profile', $viewData);
-            } else {
-                $viewData = array(
-                    'title' => trans('app.menus.reporting.strata_profile'),
-                    'panel_nav_active' => 'reporting_panel',
-                    'main_nav_active' => 'reporting_main',
-                    'sub_nav_active' => 'strata_profile_list',
-                    'user_permission' => $user_permission,
-                    'files' => $files,
-                    'race' => $race,
-                    'result' => $result,
-                    'image' => '',
-                );
-
-                return View::make('report_my.view_strata_profile', $viewData);
-            }
+            return View::make('report_en.view_strata_profile', $viewData);
         } else {
             $viewData = array(
                 'title' => trans('app.errors.page_not_found'),
