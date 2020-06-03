@@ -148,7 +148,7 @@ foreach ($user_permission as $permission) {
                                     <hr/>
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h6>Additional Info</h6>   
+                                            <h4>Additional Info</h4>   
                                             <div class="table-responsive">
                                                 <?php if ($update_permission == 1) { ?>
                                                     <button type="button" class="btn btn-primary pull-right margin-bottom-25" onclick="addAJKDetails()">
