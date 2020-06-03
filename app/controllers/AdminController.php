@@ -7190,9 +7190,23 @@ class AdminController extends BaseController {
             3 => 'users.full_name'
         );
 
+        if (!Auth::user()->getAdmin()) {
         $totalData = DB::table('audit_trail')
                 ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                    ->where('users.company_id', Auth::user()->company_id)
                 ->count();
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                $totalData = DB::table('audit_trail')
+                        ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                        ->count();
+            } else {
+                $totalData = DB::table('audit_trail')
+                        ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                        ->where('users.company_id', Session::get('admin_cob'))
+                        ->count();
+            }
+        }
 
         $limit = $requestData['length'];
         $start = $requestData['start'];
@@ -7227,6 +7241,7 @@ class AdminController extends BaseController {
             }
         }
 
+        if (!Auth::user()->getAdmin()) {
         if (empty($search)) {
             if (!empty($new_from_date) && !empty($new_to_date)) {
                 $posts = DB::table('audit_trail')
@@ -7234,6 +7249,7 @@ class AdminController extends BaseController {
                         ->select('audit_trail.*', 'users.full_name as name')
                         ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
                         ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                            ->where('users.company_id', Auth::user()->company_id)
                         ->offset($start)
                         ->limit($limit)
                         ->orderBy($order, $dir)
@@ -7243,11 +7259,13 @@ class AdminController extends BaseController {
                         ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
                         ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
                         ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                            ->where('users.company_id', Auth::user()->company_id)
                         ->count();
             } else {
                 $posts = DB::table('audit_trail')
                         ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
                         ->select('audit_trail.*', 'users.full_name as name')
+                            ->where('users.company_id', Auth::user()->company_id)
                         ->offset($start)
                         ->limit($limit)
                         ->orderBy($order, $dir)
@@ -7255,6 +7273,7 @@ class AdminController extends BaseController {
 
                 $totalFiltered = DB::table('audit_trail')
                         ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                            ->where('users.company_id', Auth::user()->company_id)
                         ->count();
             }
         } else {
@@ -7264,6 +7283,7 @@ class AdminController extends BaseController {
                         ->select('audit_trail.*', 'users.full_name as name')
                         ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
                         ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                            ->where('users.company_id', Auth::user()->company_id)
                         ->where(function($query) use ($search) {
                             $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
                             ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
@@ -7279,6 +7299,7 @@ class AdminController extends BaseController {
                         ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
                         ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
                         ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                            ->where('users.company_id', Auth::user()->company_id)
                         ->where(function($query) use ($search) {
                             $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
                             ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
@@ -7290,6 +7311,7 @@ class AdminController extends BaseController {
                 $posts = DB::table('audit_trail')
                         ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
                         ->select('audit_trail.*', 'users.full_name as name')
+                            ->where('users.company_id', Auth::user()->company_id)
                         ->where(function($query) use ($search) {
                             $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
                             ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
@@ -7303,6 +7325,7 @@ class AdminController extends BaseController {
 
                 $totalFiltered = DB::table('audit_trail')
                         ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                            ->where('users.company_id', Auth::user()->company_id)
                         ->where(function($query) use ($search) {
                             $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
                             ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
@@ -7310,6 +7333,189 @@ class AdminController extends BaseController {
                             ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
                         })
                         ->count();
+            }
+        }
+        } else {
+            if (empty(Session::get('admin_cob'))) {
+                if (empty($search)) {
+                    if (!empty($new_from_date) && !empty($new_to_date)) {
+                        $posts = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->select('audit_trail.*', 'users.full_name as name')
+                                ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                                ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                                ->offset($start)
+                                ->limit($limit)
+                                ->orderBy($order, $dir)
+                                ->get();
+
+                        $totalFiltered = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                                ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                                ->count();
+                    } else {
+                        $posts = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->select('audit_trail.*', 'users.full_name as name')
+                                ->offset($start)
+                                ->limit($limit)
+                                ->orderBy($order, $dir)
+                                ->get();
+
+                        $totalFiltered = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->count();
+                    }
+                } else {
+                    if (!empty($new_from_date) && !empty($new_to_date)) {
+                        $posts = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->select('audit_trail.*', 'users.full_name as name')
+                                ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                                ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                                ->where(function($query) use ($search) {
+                                    $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                                })
+                                ->offset($start)
+                                ->limit($limit)
+                                ->orderBy($order, $dir)
+                                ->get();
+
+                        $totalFiltered = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                                ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                                ->where(function($query) use ($search) {
+                                    $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                                })
+                                ->count();
+                    } else {
+                        $posts = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->select('audit_trail.*', 'users.full_name as name')
+                                ->where(function($query) use ($search) {
+                                    $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                                })
+                                ->offset($start)
+                                ->limit($limit)
+                                ->orderBy($order, $dir)
+                                ->get();
+
+                        $totalFiltered = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->where(function($query) use ($search) {
+                                    $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                                })
+                                ->count();
+                    }
+                }
+            } else {
+                if (empty($search)) {
+                    if (!empty($new_from_date) && !empty($new_to_date)) {
+                        $posts = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->select('audit_trail.*', 'users.full_name as name')
+                                ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                                ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                                ->where('users.company_id', Session::get('admin_cob'))
+                                ->offset($start)
+                                ->limit($limit)
+                                ->orderBy($order, $dir)
+                                ->get();
+
+                        $totalFiltered = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                                ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                                ->where('users.company_id', Session::get('admin_cob'))
+                                ->count();
+                    } else {
+                        $posts = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->select('audit_trail.*', 'users.full_name as name')
+                                ->where('users.company_id', Session::get('admin_cob'))
+                                ->offset($start)
+                                ->limit($limit)
+                                ->orderBy($order, $dir)
+                                ->get();
+
+                        $totalFiltered = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->where('users.company_id', Session::get('admin_cob'))
+                                ->count();
+                    }
+                } else {
+                    if (!empty($new_from_date) && !empty($new_to_date)) {
+                        $posts = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->select('audit_trail.*', 'users.full_name as name')
+                                ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                                ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                                ->where('users.company_id', Session::get('admin_cob'))
+                                ->where(function($query) use ($search) {
+                                    $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                                })
+                                ->offset($start)
+                                ->limit($limit)
+                                ->orderBy($order, $dir)
+                                ->get();
+
+                        $totalFiltered = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->where('audit_trail.created_at', '>=', $new_from_date . " 00:00:00")
+                                ->where('audit_trail.created_at', '<=', $new_to_date . " 23:59:59")
+                                ->where('users.company_id', Session::get('admin_cob'))
+                                ->where(function($query) use ($search) {
+                                    $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                                })
+                                ->count();
+                    } else {
+                        $posts = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->select('audit_trail.*', 'users.full_name as name')
+                                ->where('users.company_id', Session::get('admin_cob'))
+                                ->where(function($query) use ($search) {
+                                    $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                                })
+                                ->offset($start)
+                                ->limit($limit)
+                                ->orderBy($order, $dir)
+                                ->get();
+
+                        $totalFiltered = DB::table('audit_trail')
+                                ->leftJoin('users', 'audit_trail.audit_by', '=', 'users.id')
+                                ->where('users.company_id', Session::get('admin_cob'))
+                                ->where(function($query) use ($search) {
+                                    $query->where('audit_trail.created_at', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.module', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('audit_trail.remarks', 'LIKE', "%" . $search . "%")
+                                    ->orWhere('users.full_name', 'LIKE', "%" . $search . "%");
+                                })
+                                ->count();
+                    }
+                }
             }
         }
 
