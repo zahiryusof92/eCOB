@@ -8,7 +8,7 @@ if ($company->is_main != 1) {
     $cob_logout = '';
 }
 
-$swith_lang = false;
+$swith_lang = true;
 ?>
 
 <nav class="top-menu">
@@ -23,12 +23,12 @@ $swith_lang = false;
             <div class="dropdown">
                 <a href="javascript: void(0);" class="dropdown-toggle dropdown-inline-button" data-toggle="dropdown" aria-expanded="false">
                     <i class="dropdown-inline-button-icon fa fa-globe"></i>
-                    <span class="hidden-lg-down">{{ trans('app.language.en') }}</span>
+                    <span class="hidden-lg-down">{{ (app()->getLocale() == 'en') ? trans('app.language.en') : trans('app.language.my') }}</span>
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                    <a class="dropdown-item" href="{{ url('/changeLanguage/ms') }}">{{ trans('app.language.my') }}</a>
-                    <a class="dropdown-item active" href="{{ url('/changeLanguage/en') }}">{{ trans('app.language.en') }}</a>
+                    <a class="dropdown-item {{ (app()->getLocale() == 'ms') ? 'active' : '' }}" href="{{ url('/changeLanguage/ms') }}">{{ trans('app.language.my') }}</a>
+                    <a class="dropdown-item {{ (app()->getLocale() == 'en') ? 'active' : '' }}" href="{{ url('/changeLanguage/en') }}">{{ trans('app.language.en') }}</a>
                 </ul>
             </div>
             @endif
