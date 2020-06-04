@@ -48,14 +48,14 @@ foreach ($user_permission as $permission) {
                                 <a class="nav-link" href="{{URL::action('AdminController@document', $file->id)}}">Document</a>
                             </li>
                         </ul>
-                        <div class="tab-content padding-vertical-20">                            
+                        <div class="tab-content padding-vertical-20">
                             <div class="tab-pane active" id="management" role="tabpanel">
                                 <form id="management">
                                     @if (count($management_jmb) <= 0)
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_jmb" id="is_jmb"/>
-                                            <label><h4> Joint Management Boby (JMB)</h4></label>
+                                            <label><h4> Joint Management Body (JMB)</h4></label>
                                             <!-- jmb Form -->
                                             <div id="jmb_form" style="display:none">
                                                 <div class="row">
@@ -128,7 +128,7 @@ foreach ($user_permission as $permission) {
                                                             <input type="text" class="form-control" placeholder="Postcode" id="jmb_poscode">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -152,7 +152,7 @@ foreach ($user_permission as $permission) {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -175,14 +175,14 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @else
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_jmb" id="is_jmb" {{($management->is_jmb == 1 ? " checked" : "")}}/>
-                                            <label><h4> Joint Management Boby (JMB)</h4></label>
+                                            <label><h4> Joint Management Body (JMB)</h4></label>
                                             <!-- jmb Form -->
                                             <div id="jmb_form">
                                                 <div class="row">
@@ -255,7 +255,7 @@ foreach ($user_permission as $permission) {
                                                             <input type="text" class="form-control" placeholder="Postcode" id="jmb_poscode" value="{{$management_jmb->poscode}}">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -279,12 +279,12 @@ foreach ($user_permission as $permission) {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Phone Number</label>
-                                                            <input type="text" class="form-control" placeholder="Phone Number" id="jmb_phone_no" value="{{$management_jmb->phone_no}}"> 
+                                                            <input type="text" class="form-control" placeholder="Phone Number" id="jmb_phone_no" value="{{$management_jmb->phone_no}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -302,7 +302,7 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @endif
@@ -311,7 +311,7 @@ foreach ($user_permission as $permission) {
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_mc" id="is_mc"/>
-                                            <label><h4> Management Committee (MC)</h4></label>
+                                            <label><h4> Management Corporation (MC)</h4></label>
                                             <!-- jmb Form -->
                                             <div id="mc_form" style="display:none">
                                                 <div class="row">
@@ -398,7 +398,7 @@ foreach ($user_permission as $permission) {
                                                             <input type="text" class="form-control" placeholder="Postcode" id="mc_poscode">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -422,7 +422,7 @@ foreach ($user_permission as $permission) {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -445,14 +445,14 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @else
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_mc" id="is_mc" {{($management->is_mc == 1 ? " checked" : "")}}/>
-                                            <label><h4> Management Committee (MC)</h4></label>
+                                            <label><h4> Management Corporation (MC)</h4></label>
                                             <!-- mc Form -->
                                             <div id="mc_form">
                                                 <div class="row">
@@ -539,7 +539,7 @@ foreach ($user_permission as $permission) {
                                                             <input type="text" class="form-control" placeholder="Postcode" id="mc_poscode" value="{{$management_mc->poscode}}">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -563,7 +563,7 @@ foreach ($user_permission as $permission) {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -586,7 +586,7 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @endif
@@ -601,11 +601,13 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Selected By</label>
+                                                            <label>Appointed by</label>
                                                             <select class="form-control" id="agent_selected_by">
-                                                                <option value="">Please Select</option>                                                                
+                                                                <option value="">Please Select</option>
                                                                 <option value="developer">Developer</option>
                                                                 <option value="cob">COB</option>
+                                                                <option value="jmb">JMB</option>
+                                                                <option value="mc">MC</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -615,7 +617,7 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Name</label>
                                                             <select class="form-control" id="agent_name">
-                                                                <option value="">Please Select</option>                                                                
+                                                                <option value="">Please Select</option>
                                                                 @foreach ($agent as $agents)
                                                                 <option value="{{$agents->id}}">{{$agents->name}}</option>
                                                                 @endforeach
@@ -663,7 +665,7 @@ foreach ($user_permission as $permission) {
                                                             <input type="text" class="form-control" placeholder="Postcode" id="agent_poscode">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -687,7 +689,7 @@ foreach ($user_permission as $permission) {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -710,7 +712,7 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @else
@@ -723,11 +725,13 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Selected By</label>
+                                                            <label>Appointed by</label>
                                                             <select class="form-control" id="agent_selected_by">
-                                                                <option value="">Please Select</option>                                                                
+                                                                <option value="">Please Select</option>
                                                                 <option value="developer" {{($management_agent->selected_by == "developer" ? " selected" : "")}}>Developer</option>
                                                                 <option value="cob" {{($management_agent->selected_by == "cob" ? " selected" : "")}}>COB</option>
+                                                                <option value="jmb" {{($management_agent->selected_by == "jmb" ? " selected" : "")}}>JMB</option>
+                                                                <option value="mc" {{($management_agent->selected_by == "mc" ? " selected" : "")}}>MC</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -737,7 +741,7 @@ foreach ($user_permission as $permission) {
                                                         <div class="form-group">
                                                             <label>Name</label>
                                                             <select class="form-control" id="agent_name">
-                                                                <option value="">Please Select</option>                                                                
+                                                                <option value="">Please Select</option>
                                                                 @foreach ($agent as $agents)
                                                                 <option value="{{$agents->id}}" {{($management_agent->agent == $agents->id ? " selected" : "")}}>{{$agents->name}}</option>
                                                                 @endforeach
@@ -785,7 +789,7 @@ foreach ($user_permission as $permission) {
                                                             <input type="text" class="form-control" placeholder="Postcode" id="agent_poscode" value="{{$management_agent->address1}}">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -809,7 +813,7 @@ foreach ($user_permission as $permission) {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -832,7 +836,7 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @endif
@@ -843,7 +847,7 @@ foreach ($user_permission as $permission) {
                                             <input type="checkbox" name="is_others" id="is_others"/>
                                             <label><h4> Others</h4></label>
                                             <!-- jmb Form -->
-                                            <div id="other_form" style="display:none">                                                
+                                            <div id="other_form" style="display:none">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -892,7 +896,7 @@ foreach ($user_permission as $permission) {
                                                             <input type="text" class="form-control" placeholder="Postcode" id="others_poscode">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -916,7 +920,7 @@ foreach ($user_permission as $permission) {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -939,7 +943,7 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @else
@@ -948,7 +952,7 @@ foreach ($user_permission as $permission) {
                                             <input type="checkbox" name="is_others" id="is_others" {{($management->is_others == 1 ? " checked" : "")}}/>
                                             <label><h4> Others</h4></label>
                                             <!-- jmb Form -->
-                                            <div id="other_form">                                                
+                                            <div id="other_form">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -997,7 +1001,7 @@ foreach ($user_permission as $permission) {
                                                             <input type="text" class="form-control" placeholder="Postcode" id="others_poscode" value="{{$management_others->poscode}}">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1021,7 +1025,7 @@ foreach ($user_permission as $permission) {
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1044,7 +1048,7 @@ foreach ($user_permission as $permission) {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @endif
@@ -1057,13 +1061,13 @@ foreach ($user_permission as $permission) {
                                         <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">Cancel</button>
                                         @else
                                         <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileListBeforeVP')}}'">Cancel</button>
-                                        @endif    
+                                        @endif
                                     </div>
                                 </form>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -1082,7 +1086,7 @@ foreach ($user_permission as $permission) {
             return "Data you have entered may not be saved, do you really want to leave?";
         }
     });
-    
+
     $(function () {
         $('#jmb_date_formed_raw').datetimepicker({
             widgetPositioning: {

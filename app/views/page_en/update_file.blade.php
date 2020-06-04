@@ -71,7 +71,7 @@
                                                         <div id="developer_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
@@ -115,7 +115,7 @@
                                                         <div id="poscode_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -141,7 +141,7 @@
                                                         <div id="country_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>        
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -157,7 +157,7 @@
                                                         <div id="fax_no_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -188,11 +188,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="strata" role="tabpanel">                                
-                                <!-- strata Form -->                                
+                            <div class="tab-pane" id="strata" role="tabpanel">
+                                <!-- strata Form -->
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h4>Detail</h4>   
+                                        <h4>Detail</h4>
                                         <form id="strata">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -249,7 +249,7 @@
                                                         <div id="strata_park_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>                                      
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
@@ -293,7 +293,7 @@
                                                         <div id="strata_poscode_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -319,7 +319,7 @@
                                                         <div id="starta_country_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>        
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -335,7 +335,7 @@
                                                         <div id="strata_ownership_no_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -367,22 +367,22 @@
                                                     <div class="form-group">
                                                         <label>Total Land Area</label>
                                                         <div class="form-inline">
-                                                            <input type="text" class="form-control" placeholder="Total Land Area" id="strata_land_area" value="{{$strata->land_area}}">                               
+                                                            <input type="text" class="form-control" placeholder="Total Land Area" id="strata_land_area" value="{{$strata->land_area}}">
                                                             <select class="form-control" id="strata_land_area_unit">
                                                                 @foreach ($unit as $units)
                                                                 <option value="{{$units->id}}" {{($strata->land_area_unit == $units->id ? " selected" : "")}}>{{$units->description}}</option>
                                                                 @endforeach
                                                             </select>
-                                                            <div id="strata_land_area_error" style="display:none;"></div> 
-                                                        </div> 
+                                                            <div id="strata_land_area_error" style="display:none;"></div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Lot Number</label>
-                                                        <input type="text" class="form-control" placeholder="Lot Number" id="strata_lot_no" value="{{$strata->lot_no}}">   
+                                                        <input type="text" class="form-control" placeholder="Lot Number" id="strata_lot_no" value="{{$strata->lot_no}}">
                                                         <div id="starta_lot_no_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
@@ -437,12 +437,12 @@
                                                             <option value="{{$perimeters->id}}" {{($strata->perimeter == $perimeters->id ? " selected" : "")}}>{{$perimeters->description}}</option>
                                                             @endforeach
                                                         </select>
-                                                        <div id="starta_perimeter_error" style="display:none;"></div>                                                        
+                                                        <div id="starta_perimeter_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
-                                        <form id="upload_strata_file" enctype="multipart/form-data" method="post" action="{{ url('uploadStrataFile') }}" autocomplete="off">                                           
+                                        <form id="upload_strata_file" enctype="multipart/form-data" method="post" action="{{ url('uploadStrataFile') }}" autocomplete="off">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -450,7 +450,7 @@
                                                         <br/>
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                                         <small><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></small>
-                                                        &nbsp;<input type="file" name="strata_file" id="strata_file" /> 
+                                                        &nbsp;<input type="file" name="strata_file" id="strata_file" />
                                                         <div id="validation-errors_strata_file"></div>
                                                         @if ($strata->file_url != "")
                                                         <br/>
@@ -459,7 +459,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -485,7 +485,7 @@
                                                         <div class="form-group">
                                                             <label>Maintenance Fee (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Maintenance Fee (RM)" id="residential_maintenance_fee">                               
+                                                                <input type="text" class="form-control" placeholder="Maintenance Fee (RM)" id="residential_maintenance_fee">
                                                                 <select class="form-control" id="residential_maintenance_fee_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}">{{$unitoptions->description}}</option>
@@ -500,7 +500,7 @@
                                                         <div class="form-group">
                                                             <label>Sinking Fund (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="residential_sinking_fund">                              
+                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="residential_sinking_fund">
                                                                 <select class="form-control" id="residential_sinking_fund_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}">{{$unitoptions->description}}</option>
@@ -510,7 +510,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     <hr/>
@@ -534,7 +534,7 @@
                                                         <div class="form-group">
                                                             <label>Maintenance Fee (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Maintenance Fee (RM)" id="residential_maintenance_fee" value="{{$residential->maintenance_fee}}">                               
+                                                                <input type="text" class="form-control" placeholder="Maintenance Fee (RM)" id="residential_maintenance_fee" value="{{$residential->maintenance_fee}}">
                                                                 <select class="form-control" id="residential_maintenance_fee_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}" {{($residential->maintenance_fee_option == $unitoptions->id ? " selected" : "")}}>{{$unitoptions->description}}</option>
@@ -549,7 +549,7 @@
                                                         <div class="form-group">
                                                             <label>Sinking Fund (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="residential_sinking_fund" value="{{$residential->sinking_fund}}">                              
+                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="residential_sinking_fund" value="{{$residential->sinking_fund}}">
                                                                 <select class="form-control" id="residential_sinking_fund_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}" {{($residential->sinking_fund_option == $unitoptions->id ? " selected" : "")}}>{{$unitoptions->description}}</option>
@@ -561,7 +561,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                     <hr/>
                                     @endif
                                     @if (count($commercial) <= 0)
@@ -584,7 +584,7 @@
                                                         <div class="form-group">
                                                             <label>Commercial Fee (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Commercial Fee (RM)" id="commercial_maintenance_fee">                               
+                                                                <input type="text" class="form-control" placeholder="Commercial Fee (RM)" id="commercial_maintenance_fee">
                                                                 <select class="form-control" id="commercial_maintenance_fee_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}">{{$unitoptions->description}}</option>
@@ -599,7 +599,7 @@
                                                         <div class="form-group">
                                                             <label>Sinking Fund (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="commercial_sinking_fund">                              
+                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="commercial_sinking_fund">
                                                                 <select class="form-control" id="commercial_sinking_fund_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}">{{$unitoptions->description}}</option>
@@ -633,7 +633,7 @@
                                                         <div class="form-group">
                                                             <label>Commercial Fee (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Commercial Fee (RM)" id="commercial_maintenance_fee" value="{{$commercial->maintenance_fee}}">                               
+                                                                <input type="text" class="form-control" placeholder="Commercial Fee (RM)" id="commercial_maintenance_fee" value="{{$commercial->maintenance_fee}}">
                                                                 <select class="form-control" id="commercial_maintenance_fee_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}" {{($commercial->maintenance_fee_option == $unitoptions->id ? " selected" : "")}}>{{$unitoptions->description}}</option>
@@ -648,7 +648,7 @@
                                                         <div class="form-group">
                                                             <label>Sinking Fund (RM)</label>
                                                             <div class="form-inline">
-                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="commercial_sinking_fund" value="{{$commercial->sinking_fund}}">                              
+                                                                <input type="text" class="form-control" placeholder="Sinking Fund (RM)" id="commercial_sinking_fund" value="{{$commercial->sinking_fund}}">
                                                                 <select class="form-control" id="commercial_sinking_fund_option">
                                                                     @foreach ($unitoption as $unitoptions)
                                                                     <option value="{{$unitoptions->id}}" {{($commercial->sinking_fund_option == $unitoptions->id ? " selected" : "")}}>{{$unitoptions->description}}</option>
@@ -846,7 +846,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_jmb" id="is_jmb"/>
-                                            <label><h4> Joint Management Boby (JMB)</h4></label>
+                                            <label><h4> Joint Management Body (JMB)</h4></label>
                                             <!-- jmb Form -->
                                             <div id="jmb_form" style="display:none">
                                                 <div class="row">
@@ -918,7 +918,7 @@
                                                             <input type="text" class="form-control" placeholder="Poscode" id="jmb_poscode">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -942,7 +942,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -957,14 +957,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @else
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_jmb" id="is_jmb" {{($management->is_jmb == 1 ? " checked" : "")}}/>
-                                            <label><h4> Joint Management Boby (JMB)</h4></label>
+                                            <label><h4> Joint Management Body (JMB)</h4></label>
                                             <!-- jmb Form -->
                                             <div id="jmb_form">
                                                 <div class="row">
@@ -1036,7 +1036,7 @@
                                                             <input type="text" class="form-control" placeholder="Poscode" id="jmb_poscode" value="{{$management_jmb->poscode}}">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1060,12 +1060,12 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Phone Number</label>
-                                                            <input type="text" class="form-control" placeholder="Phone Number" id="jmb_phone_no" value="{{$management_jmb->phone_no}}"> 
+                                                            <input type="text" class="form-control" placeholder="Phone Number" id="jmb_phone_no" value="{{$management_jmb->phone_no}}">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -1075,7 +1075,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @endif
@@ -1084,7 +1084,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_mc" id="is_mc"/>
-                                            <label><h4> Management Committee (MC)</h4></label>
+                                            <label><h4> Management Corporation (MC)</h4></label>
                                             <!-- jmb Form -->
                                             <div id="mc_form" style="display:none">
                                                 <div class="row">
@@ -1161,7 +1161,7 @@
                                                             <input type="text" class="form-control" placeholder="Poscode" id="mc_poscode">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1185,7 +1185,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1200,14 +1200,14 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @else
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_mc" id="is_mc" {{($management->is_mc == 1 ? " checked" : "")}}/>
-                                            <label><h4> Management Committee (MC)</h4></label>
+                                            <label><h4> Management Corporation (MC)</h4></label>
                                             <!-- mc Form -->
                                             <div id="mc_form">
                                                 <div class="row">
@@ -1284,7 +1284,7 @@
                                                             <input type="text" class="form-control" placeholder="Poscode" id="mc_poscode" value="{{$management_mc->poscode}}">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1308,7 +1308,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1323,7 +1323,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @endif
@@ -1340,7 +1340,7 @@
                                                         <div class="form-group">
                                                             <label>Selected By</label>
                                                             <select class="form-control" id="agent_selected_by">
-                                                                <option value="">Please Select</option>                                                                
+                                                                <option value="">Please Select</option>
                                                                 <option value="developer">Developer</option>
                                                                 <option value="cob">COB</option>
                                                             </select>
@@ -1352,7 +1352,7 @@
                                                         <div class="form-group">
                                                             <label>Name</label>
                                                             <select class="form-control" id="agent_name">
-                                                                <option value="">Please Select</option>                                                                
+                                                                <option value="">Please Select</option>
                                                                 @foreach ($agent as $agents)
                                                                 <option value="{{$agents->id}}">{{$agents->name}}</option>
                                                                 @endforeach
@@ -1400,7 +1400,7 @@
                                                             <input type="text" class="form-control" placeholder="Poscode" id="agent_poscode">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1424,7 +1424,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1439,7 +1439,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @else
@@ -1454,7 +1454,7 @@
                                                         <div class="form-group">
                                                             <label>Selected By</label>
                                                             <select class="form-control" id="agent_selected_by">
-                                                                <option value="">Please Select</option>                                                                
+                                                                <option value="">Please Select</option>
                                                                 <option value="developer" {{($management_agent->selected_by == "developer" ? " selected" : "")}}>Developer</option>
                                                                 <option value="cob" {{($management_agent->selected_by == "cob" ? " selected" : "")}}>COB</option>
                                                             </select>
@@ -1466,7 +1466,7 @@
                                                         <div class="form-group">
                                                             <label>Name</label>
                                                             <select class="form-control" id="agent_name">
-                                                                <option value="">Please Select</option>                                                                
+                                                                <option value="">Please Select</option>
                                                                 @foreach ($agent as $agents)
                                                                 <option value="{{$agents->id}}" {{($management_agent->agent == $agents->id ? " selected" : "")}}>{{$agents->name}}</option>
                                                                 @endforeach
@@ -1514,7 +1514,7 @@
                                                             <input type="text" class="form-control" placeholder="Poscode" id="agent_poscode" value="{{$management_agent->address1}}">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1538,7 +1538,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1553,7 +1553,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @endif
@@ -1564,7 +1564,7 @@
                                             <input type="checkbox" name="is_others" id="is_others"/>
                                             <label><h4> Others</h4></label>
                                             <!-- jmb Form -->
-                                            <div id="other_form" style="display:none">                                                
+                                            <div id="other_form" style="display:none">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -1613,7 +1613,7 @@
                                                             <input type="text" class="form-control" placeholder="Poscode" id="others_poscode">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1637,7 +1637,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1652,7 +1652,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @else
@@ -1661,7 +1661,7 @@
                                             <input type="checkbox" name="is_others" id="is_others" {{($management->is_others == 1 ? " checked" : "")}}/>
                                             <label><h4> Others</h4></label>
                                             <!-- jmb Form -->
-                                            <div id="other_form">                                                
+                                            <div id="other_form">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -1710,7 +1710,7 @@
                                                             <input type="text" class="form-control" placeholder="Poscode" id="others_poscode" value="{{$management_others->poscode}}">
                                                         </div>
                                                     </div>
-                                                </div> 
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1734,7 +1734,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>        
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
@@ -1749,7 +1749,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </div>
                                     @endif
@@ -1759,7 +1759,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="tab-pane" id="monitoring" role="tabpanel">                                
+                            <div class="tab-pane" id="monitoring" role="tabpanel">
                                 <form id="monitoring">
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -1831,7 +1831,7 @@
                                                             <option value="12">December</option>
                                                         </select>
                                                     </div>
-                                                </div>                                                 
+                                                </div>
                                                 <table class="table table-hover nowrap" id="financial_report_list" width="100%">
                                                     <thead>
                                                         <tr>
@@ -1845,16 +1845,16 @@
                                                             <th style="width:5%;">Action</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>                                                    
+                                                    <tbody>
                                                     </tbody>
                                                 </table>
-                                            </div>                                                                                      
+                                            </div>
                                         </div>
                                     </div>
                                     <hr/>
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h6>Additional Info</h6>   
+                                            <h6>Additional Info</h6>
                                             <div class="table-responsive">
                                                 <button type="button" class="btn btn-primary pull-right margin-bottom-25" onclick="addAJKDetails()">
                                                     Add
@@ -1870,7 +1870,7 @@
                                                             <th style="width:10%;">Action</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>                                                    
+                                                    <tbody>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1987,7 +1987,7 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <a href="https://www.google.com.my/maps/preview?q={{$other_details->latitude}},{{$other_details->longitude}}" target="_blank">
-                                                            <button type="button" class="btn btn-success">                                                                
+                                                            <button type="button" class="btn btn-success">
                                                                 <i class="fa fa-map-marker"> View Map</i>
                                                             </button>
                                                         </a>
@@ -2020,7 +2020,7 @@
                             </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -2035,7 +2035,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">Add AGM Details</h4>
-            </div>            
+            </div>
             <div class="modal-body">
                 <form>
                     <div class="form-group row">
@@ -2173,11 +2173,11 @@
                             <label class="form-control-label">Financial Audit Report</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Financial Audit Report" id="audit_report"/>                            
+                            <input type="text" class="form-control" placeholder="Financial Audit Report" id="audit_report"/>
                         </div>
                     </div>
                 </form>
-                <form id="upload_audit_report_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditReportFile') }}" autocomplete="off">  
+                <form id="upload_audit_report_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditReportFile') }}" autocomplete="off">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="form-control-label">&nbsp;</label>
@@ -2190,7 +2190,7 @@
                         </div>
                     </div>
                 </form>
-                <form id="upload_letter_integrity" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterIntegrity') }}" autocomplete="off">  
+                <form id="upload_letter_integrity" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterIntegrity') }}" autocomplete="off">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="form-control-label">Pledge letter of integrity JMC</label>
@@ -2203,7 +2203,7 @@
                         </div>
                     </div>
                 </form>
-                <form id="upload_letter_bankruptcy" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterBankruptcy') }}" autocomplete="off">  
+                <form id="upload_letter_bankruptcy" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterBankruptcy') }}" autocomplete="off">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="form-control-label">Declaration letter of non-bankruptcy</label>
@@ -2216,7 +2216,7 @@
                         </div>
                     </div>
                 </form>
-            </div> 
+            </div>
             <div class="modal-footer">
                 <form>
                     <input type="hidden" id="audit_report_file_url"/>
@@ -2380,11 +2380,11 @@
                             <label class="form-control-label">Financial Audit Report</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Financial Audit Report" id="audit_report_edit"/>                            
+                            <input type="text" class="form-control" placeholder="Financial Audit Report" id="audit_report_edit"/>
                         </div>
                     </div>
                 </form>
-                <form id="upload_audit_report_file_edit" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditReportFileEdit') }}" autocomplete="off">  
+                <form id="upload_audit_report_file_edit" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditReportFileEdit') }}" autocomplete="off">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="form-control-label">&nbsp;</label>
@@ -2398,7 +2398,7 @@
                         </div>
                     </div>
                 </form>
-                <form id="upload_letter_integrity_edit" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterIntegrityEdit') }}" autocomplete="off">  
+                <form id="upload_letter_integrity_edit" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterIntegrityEdit') }}" autocomplete="off">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="form-control-label">Pledge letter of integrity JMC</label>
@@ -2411,7 +2411,7 @@
                         </div>
                     </div>
                 </form>
-                <form id="upload_letter_bankruptcy_edit" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterBankruptcyEdit') }}" autocomplete="off">  
+                <form id="upload_letter_bankruptcy_edit" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterBankruptcyEdit') }}" autocomplete="off">
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="form-control-label">Declaration letter of non-bankruptcy</label>
@@ -2461,7 +2461,7 @@
                         <div class="col-md-6">
                             <select id="ajk_designation" class="form-control">
                                 <option value="">Please select</option>
-                                @foreach ($designation as $designations) 
+                                @foreach ($designation as $designations)
                                 <option value="{{$designations->id}}">{{$designations->description}}</option>
                                 @endforeach
                             </select>
@@ -2474,25 +2474,25 @@
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control" placeholder="Name" id="ajk_name"/>
-                        </div>                    
-                    </div> 
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label class="form-control-label">Phone Number</label>
                         </div>
                         <div class="col-md-6">
                             <input type="text" class="form-control" placeholder="Phone Number" id="ajk_phone_no"/>
-                        </div>                    
-                    </div> 
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label class="form-control-label">Year</label>
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control" placeholder="Year" id="ajk_year"/>
-                        </div>                    
-                    </div> 
-                </div>                
+                        </div>
+                    </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn" data-dismiss="modal">
                         Close
@@ -2524,7 +2524,7 @@
                         <div class="col-md-6">
                             <select id="ajk_designation_edit" class="form-control">
                                 <option value="">Please select</option>
-                                @foreach ($designation as $designations) 
+                                @foreach ($designation as $designations)
                                 <option value="{{$designations->id}}">{{$designations->description}}</option>
                                 @endforeach
                             </select>
@@ -2537,24 +2537,24 @@
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control" placeholder="Name" id="ajk_name_edit"/>
-                        </div>                    
-                    </div> 
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label class="form-control-label">Phone Number</label>
                         </div>
                         <div class="col-md-6">
                             <input type="text" class="form-control" placeholder="Phone Number" id="ajk_phone_no_edit"/>
-                        </div>                    
-                    </div> 
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label class="form-control-label">Year</label>
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control" placeholder="Year" id="ajk_year_edit"/>
-                        </div>                    
-                    </div> 
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="ajk_id_edit"/>
@@ -2571,14 +2571,14 @@
 </div>
 
 <!-- Page Scripts -->
- <script type="text/javascript">     
+ <script type="text/javascript">
     $(document).ready(function () {
         //upload
         var options = {
             beforeSubmit: showRequest,
             success: showResponse,
             dataType: 'json'
-        };        
+        };
         var options2 = {
             beforeSubmit: showRequest2,
             success: showResponse2,
@@ -2668,7 +2668,7 @@
             $("#others_image_url").val(response.file);
         }
     }
-    
+
     //upload strata file
     function showRequest2(formData, jqForm, options) {
         $("#validation-errors_strata_file").hide().empty();
@@ -2694,7 +2694,7 @@
             $("#strata_file_url").val(response.file);
         }
     }
-    
+
     //upload audit report file
     function showRequest3(formData, jqForm, options) {
         $("#validation-errors_audit_report_file").hide().empty();
@@ -2720,7 +2720,7 @@
             $("#audit_report_file_url").val(response.file);
         }
     }
-    
+
     //upload letter integrity
     function showRequest4(formData, jqForm, options) {
         $("#validation-errors_letter_integrity").hide().empty();
@@ -2746,7 +2746,7 @@
             $("#letter_integrity_url").val(response.file);
         }
     }
-    
+
     //upload letter bankruptcy
     function showRequest5(formData, jqForm, options) {
         $("#validation-errors_letter_bankruptcy").hide().empty();
@@ -2772,7 +2772,7 @@
             $("#letter_bankruptcy_url").val(response.file);
         }
     }
-    
+
     //upload audit report file edit
     function showRequest6(formData, jqForm, options) {
         $("#validation-errors_audit_report_file_edit").hide().empty();
@@ -2798,7 +2798,7 @@
             $("#audit_report_file_url_edit").val(response.file);
         }
     }
-    
+
     //upload letter integrity edit
     function showRequest7(formData, jqForm, options) {
         $("#validation-errors_letter_integrity_edit").hide().empty();
@@ -2824,7 +2824,7 @@
             $("#letter_integrity_url_edit").val(response.file);
         }
     }
-    
+
     //upload letter bankruptcy edit
     function showRequest8(formData, jqForm, options) {
         $("#validation-errors_letter_bankruptcy_edit").hide().empty();
@@ -2849,10 +2849,10 @@
             $("#letter_bankruptcy_edit").css("color", "green");
             $("#letter_bankruptcy_url_edit").val(response.file);
         }
-    }   
+    }
 </script>
-    
-<script>  
+
+<script>
     $(document).on( "click", '.edit_agm',function(e) {
         var agm_id = $(this).data('agm_id');
         var agm_date = $(this).data('agm_date');
@@ -2869,7 +2869,7 @@
         var audit_end_date = $(this).data('audit_end_date');
         var audit_report = $(this).data('audit_report');
         var audit_report_url = $(this).data('audit_report_url');
-                 
+
         $("#agm_id_edit").val(agm_id);
         $("#agm_date_edit").val(agm_date);
         $("#agm_edit").val(agm);
@@ -2883,39 +2883,39 @@
         $("#audit_end_edit").val(audit_end_date);
         $("#audit_report_edit").val(audit_report);
         $("#letter_integrity_url_edit").val(letter_integrity_url);
-        $("#letter_bankruptcy_url_edit").val(letter_bankruptcy_url);  
+        $("#letter_bankruptcy_url_edit").val(letter_bankruptcy_url);
     });
-    
+
     $(document).on( "click", '.edit_ajk',function(e) {
         var ajk_id = $(this).data('ajk_id');
         var designation = $(this).data('designation');
         var name = $(this).data('name');
         var phone_no = $(this).data('phone_no');
         var year = $(this).data('year');
-                
+
         $("#ajk_id_edit").val(ajk_id);
         $("#ajk_designation_edit").val(designation);
         $("#ajk_name_edit").val(name);
         $("#ajk_phone_no_edit").val(phone_no);
         $("#ajk_year_edit").val(year);
     });
-    
+
     function updateOtherDetails(){
         $("#loading").css("display", "inline-block");
-        
+
         var other_details_name = $("#other_details_name").val(),
                 others_image_url = $("#others_image_url").val(),
                 latitude = $("#latitude").val(),
                 longitude = $("#longitude").val(),
                 other_details_description = $("#other_details_description").val();
 
-        var error = 0;        
+        var error = 0;
 
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@submitUpdateOtherDetails') }}",
                 type: "POST",
-                data: { 
+                data: {
                     other_details_name: other_details_name,
                     others_image_url: others_image_url,
                     latitude: latitude,
@@ -2926,7 +2926,7 @@
                 success: function (data) {
                     $("#loading").css("display", "none");
                     $("#submit_button").removeAttr("disabled");
-                    if (data.trim() == "true") {                        
+                    if (data.trim() == "true") {
                         $.notify({
                             message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
                         },{
@@ -2934,7 +2934,7 @@
                             placement: {
                                 align: "center"
                             }
-                        }); 
+                        });
                         location.reload();
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
@@ -2943,10 +2943,10 @@
             });
         }
     }
-    
+
     function updateMonitoring(){
         $("#loading").css("display", "inline-block");
-        
+
         if (document.getElementById('precalculate_plan').checked){
             var precalculate_plan = 1;
         } else {
@@ -2957,17 +2957,17 @@
         } else {
             var buyer_registration = 0;
         }
-        
+
         var certificate_series_no = $("#certificate_series_no").val(),
                 monitoring_remarks = $("#monitoring_remarks").val();
 
-        var error = 0;        
+        var error = 0;
 
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@submitUpdateMonitoring') }}",
                 type: "POST",
-                data: { 
+                data: {
                     precalculate_plan: precalculate_plan,
                     buyer_registration: buyer_registration,
                     certificate_series_no: certificate_series_no,
@@ -2985,8 +2985,8 @@
                             placement: {
                                 align: "center"
                             }
-                        }); 
-                        location.reload();                        
+                        });
+                        location.reload();
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
@@ -2994,17 +2994,17 @@
             });
         }
     }
-    
+
     function addAGMDetails() {
         $("#add_agm_details").modal("show");
     }
     function editAGMDetails() {
         $("#edit_agm_details").modal("show");
     }
-    
+
     function addAGMDetail() {
         $("#loading").css("display", "inline-block");
-        
+
         if (document.getElementById('agm').checked){
             var agm = $("#agm").val();
         } else {
@@ -3040,7 +3040,7 @@
         } else {
             var audited_financial_report = 0;
         }
-        
+
         var agm_date = $("#agm_date").val(),
                 audit_report = $("#audit_report").val(),
                 audit_start = $("#audit_start").val(),
@@ -3055,7 +3055,7 @@
             $.ajax({
                 url: "{{ URL::action('AdminController@addAGMDetails') }}",
                 type: "POST",
-                data: { 
+                data: {
                     agm_date: agm_date,
                     agm: agm,
                     egm: egm,
@@ -3084,8 +3084,8 @@
                             placement: {
                                 align: "center"
                             }
-                        }); 
-                        location.reload();                        
+                        });
+                        location.reload();
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
@@ -3093,10 +3093,10 @@
             });
         }
     }
-    
+
     function editAGMDetail() {
         $("#loading").css("display", "inline-block");
-        
+
         if (document.getElementById('agm_edit').checked = true){
             var agm = $("#agm_edit").val();
         } else {
@@ -3132,7 +3132,7 @@
         } else {
             var audited_financial_report = 0;
         }
-        
+
         var agm_id_edit = $("#agm_id_edit").val(),
                 agm_date = $("#agm_date_edit").val(),
                 audit_report = $("#audit_report_edit").val(),
@@ -3148,7 +3148,7 @@
             $.ajax({
                 url: "{{ URL::action('AdminController@editAGMDetails') }}",
                 type: "POST",
-                data: { 
+                data: {
                     agm_date: agm_date,
                     agm: agm,
                     egm: egm,
@@ -3177,8 +3177,8 @@
                             placement: {
                                 align: "center"
                             }
-                        }); 
-                        location.reload();                        
+                        });
+                        location.reload();
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
@@ -3186,24 +3186,24 @@
             });
         }
     }
-    
+
     function addAJKDetails() {
         $("#add_ajk_details").modal("show");
     }
     function editAJKDetails() {
         $("#edit_ajk_details").modal("show");
     }
-    
+
     function addAJKDetail() {
         $("#loading").css("display", "inline-block");
-        
+
         var ajk_designation = $("#ajk_designation").val(),
                 ajk_name = $("#ajk_name").val(),
                 ajk_phone_no = $("#ajk_phone_no").val(),
                 ajk_year = $("#ajk_year").val();
 
         var error = 0;
-        
+
         if (ajk_designation.trim() == "") {
             $("#ajk_designation_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Designation</span>');
             $("#ajk_designation_error").css("display", "block");
@@ -3214,7 +3214,7 @@
             $.ajax({
                 url: "{{ URL::action('AdminController@addAJKDetails') }}",
                 type: "POST",
-                data: { 
+                data: {
                     ajk_designation: ajk_designation,
                     ajk_name: ajk_name,
                     ajk_phone_no: ajk_phone_no,
@@ -3232,8 +3232,8 @@
                             placement: {
                                 align: "center"
                             }
-                        }); 
-                        location.reload();                        
+                        });
+                        location.reload();
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
@@ -3241,10 +3241,10 @@
             });
         }
     }
-    
+
     function editAJK() {
         $("#loading").css("display", "inline-block");
-        
+
         var ajk_id_edit = $("#ajk_id_edit").val(),
                 ajk_designation = $("#ajk_designation_edit").val(),
                 ajk_name = $("#ajk_name_edit").val(),
@@ -3252,7 +3252,7 @@
                 ajk_year = $("#ajk_year_edit").val();
 
         var error = 0;
-        
+
         if (ajk_designation.trim() == "") {
             $("#ajk_designation_edit_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Designation</span>');
             $("#ajk_designation_edit_error").css("display", "block");
@@ -3263,7 +3263,7 @@
             $.ajax({
                 url: "{{ URL::action('AdminController@editAJKDetails') }}",
                 type: "POST",
-                data: { 
+                data: {
                     ajk_designation: ajk_designation,
                     ajk_name: ajk_name,
                     ajk_phone_no: ajk_phone_no,
@@ -3282,8 +3282,8 @@
                             placement: {
                                 align: "center"
                             }
-                        }); 
-                        location.reload();                        
+                        });
+                        location.reload();
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
@@ -3291,13 +3291,13 @@
             });
         }
     }
-    
+
     function deleteAGMDetails (id) {
         swal({
             title: "Are you sure?",
             text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -3328,13 +3328,13 @@
             });
         });
     }
-    
+
     function deleteAJKDetails (id) {
         swal({
             title: "Are you sure?",
             text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -3356,7 +3356,7 @@
                             placement: {
                                 align: "center"
                             }
-                        }); 
+                        });
                         location.reload();
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
@@ -3367,7 +3367,7 @@
     }
 </script>
 
-<script>    
+<script>
     $(function(){
         $('#strata_date').datetimepicker({
             widgetPositioning: {
@@ -3490,7 +3490,7 @@
             format: 'YYYY-MM-DD'
         });
     });
-    
+
     $(document).ready(function () {
         $('#financial_report_list').DataTable({
             "sAjaxSource": "{{URL::action('AdminController@getAGM', $file->id)}}",
@@ -3505,42 +3505,42 @@
                 $("#residential_form").fadeIn(500);
             } else {
                 $("#residential_form").fadeOut(0);
-            }            
+            }
         });
         $('#commercial').click(function() {
             if ($(this).is(':checked')) {
                 $("#commercial_form").fadeIn(500);
             } else {
                 $("#commercial_form").fadeOut(0);
-            }            
+            }
         });
         $('#is_jmb').click(function() {
             if ($(this).is(':checked')) {
                 $("#jmb_form").fadeIn(500);
             } else {
                 $("#jmb_form").fadeOut(0);
-            }            
+            }
         });
         $('#is_mc').click(function() {
             if ($(this).is(':checked')) {
                 $("#mc_form").fadeIn(500);
             } else {
                 $("#mc_form").fadeOut(0);
-            }            
+            }
         });
         $('#is_agent').click(function() {
             if ($(this).is(':checked')) {
                 $("#agent_form").fadeIn(500);
             } else {
                 $("#agent_form").fadeOut(0);
-            }            
+            }
         });
         $('#is_others').click(function() {
             if ($(this).is(':checked')) {
                 $("#other_form").fadeIn(500);
             } else {
                 $("#other_form").fadeOut(0);
-            }            
+            }
         });
     });
 </script>
@@ -3549,7 +3549,7 @@
     function updateHouseScheme() {
         $("#loading").css("display", "inline-block");
 
-        var name = $("#name").val(), 
+        var name = $("#name").val(),
                 developer = $("#developer").val(),
                 address1 = $("#address1").val(),
                 address2 = $("#address2").val(),
@@ -3609,20 +3609,20 @@
                             placement: {
                                 align: "center"
                             }
-                        }); 
-                        location.reload();                        
+                        });
+                        location.reload();
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });
         }
-    } 
+    }
 
     function updateStrata() {
-        $("#loading").css("display", "inline-block");        
+        $("#loading").css("display", "inline-block");
 
-        var strata_name = $("#strata_name").val(), 
+        var strata_name = $("#strata_name").val(),
                 strata_parliament = $("#strata_parliament").val(),
                 strata_dun = $("#strata_dun").val(),
                 strata_park = $("#strata_park").val(),
@@ -3671,8 +3671,8 @@
                 rubbish_room = $("#rubbish_room:checked").val(),
                 gated = $("#gated:checked").val(),
                 others = $("#others").val();
-        
-        
+
+
         if (document.getElementById('residential').checked){
             var is_residential = 1;
         } else {
@@ -3685,7 +3685,7 @@
         }
 
         var error = 0;
-        
+
         if (strata_name.trim() == "") {
             $("#strata_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Name</span>');
             $("#strata_name_error").css("display", "block");
@@ -3724,13 +3724,13 @@
                     is_commercial: is_commercial,
                     strata_file_url: strata_file_url,
                     strata_id: '{{$strata->id}}',
-                    //residential                    
+                    //residential
                     residential_unit_no: residential_unit_no,
                     residential_maintenance_fee: residential_maintenance_fee,
                     residential_maintenance_fee_option: residential_maintenance_fee_option,
                     residential_sinking_fund: residential_sinking_fund,
                     residential_sinking_fund_option: residential_sinking_fund_option,
-                    //commercial                    
+                    //commercial
                     commercial_unit_no: commercial_unit_no,
                     commercial_maintenance_fee: commercial_maintenance_fee,
                     commercial_maintenance_fee_option: commercial_maintenance_fee_option,
@@ -3764,8 +3764,8 @@
                             placement: {
                                 align: "center"
                             }
-                        }); 
-                        location.reload();                        
+                        });
+                        location.reload();
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
@@ -3775,14 +3775,14 @@
     }
 </script>
 
-<script>    
+<script>
     function updateManagement() {
         $("#loading").css("display", "inline-block");
-        
+
         //jmb
         var jmb_date_formed = $("#jmb_date_formed").val(),
                 jmb_certificate_no = $("#jmb_certificate_no").val(),
-                jmb_name = $("#jmb_name").val(),                
+                jmb_name = $("#jmb_name").val(),
                 jmb_address1 = $("#jmb_address1").val(),
                 jmb_address2 = $("#jmb_address2").val(),
                 jmb_address3 = $("#jmb_address3").val(),
@@ -3792,11 +3792,11 @@
                 jmb_country = $("#jmb_country").val(),
                 jmb_phone_no = $("#jmb_phone_no").val(),
                 jmb_fax_no = $("#jmb_fax_no").val();
-        
+
         //mc
         var mc_date_formed = $("#mc_date_formed").val(),
                 mc_first_agm = $("#mc_first_agm").val(),
-                mc_name = $("#mc_name").val(),                
+                mc_name = $("#mc_name").val(),
                 mc_address1 = $("#mc_address1").val(),
                 mc_address2 = $("#mc_address2").val(),
                 mc_address3 = $("#mc_address3").val(),
@@ -3806,10 +3806,10 @@
                 mc_country = $("#mc_country").val(),
                 mc_phone_no = $("#mc_phone_no").val(),
                 mc_fax_no = $("#mc_fax_no").val();
-        
+
         //agent
-        var agent_selected_by = $("#agent_selected_by").val(), 
-                agent_name = $("#agent_name").val(),                
+        var agent_selected_by = $("#agent_selected_by").val(),
+                agent_name = $("#agent_name").val(),
                 agent_address1 = $("#agent_address1").val(),
                 agent_address2 = $("#agent_address2").val(),
                 agent_address3 = $("#agent_address3").val(),
@@ -3819,9 +3819,9 @@
                 agent_country = $("#agent_country").val(),
                 agent_phone_no = $("#agent_phone_no").val(),
                 agent_fax_no = $("#agent_fax_no").val();
-        
+
         //others
-        var others_name = $("#others_name").val(),                
+        var others_name = $("#others_name").val(),
                 others_address1 = $("#others_address1").val(),
                 others_address2 = $("#others_address2").val(),
                 others_address3 = $("#others_address3").val(),
@@ -3831,7 +3831,7 @@
                 others_country = $("#others_country").val(),
                 others_phone_no = $("#others_phone_no").val(),
                 others_fax_no = $("#others_fax_no").val();
-        
+
         if (document.getElementById('is_jmb').checked){
             var is_jmb = 1;
         } else {
@@ -3929,15 +3929,15 @@
                             placement: {
                                 align: "center"
                             }
-                        }); 
-                        location.reload();                        
+                        });
+                        location.reload();
                     } else {
                         bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });
         }
-    }  
+    }
 </script>
 
 <script type="text/javascript">
