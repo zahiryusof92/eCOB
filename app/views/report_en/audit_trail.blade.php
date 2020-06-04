@@ -90,14 +90,13 @@ $company = Company::find(Auth::user()->company_id);
             "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
             "pageLength": 25,
             "scrollX": true,
-            "fixedColumns": true,
             "columns": [
                 {"data": "created_at"},
                 {"data": "module"},
                 {"data": "remarks"},
                 {"data": "full_name"}
             ],
-            responsive: true
+            responsive: false
         });
 
         $('#date_from').on('dp.change', function () {
