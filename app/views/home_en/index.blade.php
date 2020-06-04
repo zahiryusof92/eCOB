@@ -22,7 +22,7 @@ foreach ($user_permission as $permission) {
                 <div class="col-lg-12">                    
                     <h4>AGM</h4>
                     <div>
-                        <ul class="nav nav-tabs" role="tablist">
+                        <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tab1" role="tab">AGM Reminder</a>
                             </li>
@@ -111,7 +111,7 @@ foreach ($user_permission as $permission) {
                 <div class="col-lg-12">                    
                     <h4>Designation</h4>
                     <div>
-                        <ul class="nav nav-tabs" role="tablist">
+                        <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#tabDesignation1" role="tab">Designation Reminder</a>
                             </li>
