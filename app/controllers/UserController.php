@@ -301,8 +301,7 @@ class UserController extends BaseController {
             'image' => ""
         );
 
-        return View::make('user_en.change_password', $viewData);
-    }
+        return View::make('user_en.change_password', $viewData);}
 
     public function checkPasswordProfile() {
         $data = Input::all();

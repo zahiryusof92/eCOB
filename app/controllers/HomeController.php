@@ -13,11 +13,10 @@ class HomeController extends BaseController {
       |	Route::get('/', 'HomeController@showWelcome');
       |
      */
-
+    
     public function getCompanyName() {
         $company = Company::find(Auth::user()->company_id);
-
+        
         print $company->name;
     }
-
 }
