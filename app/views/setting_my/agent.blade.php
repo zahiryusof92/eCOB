@@ -34,7 +34,7 @@ foreach ($user_permission as $permission) {
                                 <th style="width:40%;">Nama</th>
                                 <th style="width:20%;">No. Telefon</th>
                                 <th style="width:20%;">No. Fax</th>
-                                <th style="width:10%;">Status</th>
+                                <th style="width:10%;">{{ trans('app.forms.status') }}</th>
                                 <?php if ($update_permission == 1) { ?>
                                 <th style="width:10%;">Aksi</th>
                                 <?php } ?>
@@ -44,9 +44,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>            
+            </div>
         </div>
-    </section>    
+    </section>
     <!-- End  -->
 </div>
 
@@ -66,8 +66,8 @@ foreach ($user_permission as $permission) {
                 }
             ]
         });
-    });    
-    
+    });
+
     function inactiveAgent(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@inactiveAgent') }}",
@@ -105,13 +105,13 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-    
+
     function deleteAgent(id) {
         swal({
             title: "Anda pasti?",
-            text: "Your will not be able to recover this file!",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             cancelButtonText: "Batal",

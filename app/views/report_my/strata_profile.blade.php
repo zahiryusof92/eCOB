@@ -22,21 +22,21 @@ $zone = [
                         @if (Auth::user()->getAdmin())
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>COB</label>
+                                <label>{{ trans('app.forms.cob') }}</label>
                                 <select id="company" class="form-control select2">
-                                    <option value="">Please Select</option>
+                                    <option value="">{{ trans('app.forms.please_select') }}</option>
                                     @foreach ($cob as $companies)
                                     <option value="{{ $companies->short_name }}">{{ $companies->name }} ({{ $companies->short_name }})</option>
-                                    @endforeach                                    
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         @endif
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Parliament</label>
+                                <label>{{ trans('app.forms.parliament') }}</label>
                                 <select id="parliament" class="form-control select2">
-                                    <option value="">Please Select</option>
+                                    <option value="">{{ trans('app.forms.please_select') }}</option>
                                     @foreach ($parliament as $parliaments)
                                     <option value="{{$parliaments->description}}">{{$parliaments->description}}</option>
                                     @endforeach
@@ -47,7 +47,7 @@ $zone = [
                             <div class="form-group">
                                 <label>ZON</label>
                                 <select id="zone" class="form-control select2">
-                                    <option value="">Please Select</option>
+                                    <option value="">{{ trans('app.forms.please_select') }}</option>
                                     @foreach ($zone as $value => $zon)
                                     <option value="{{$value}}">{{ ucwords($zon) }}</option>
                                     @endforeach
@@ -61,13 +61,13 @@ $zone = [
             <hr/>
 
             <div class="row">
-                <div class="col-lg-12"> 
+                <div class="col-lg-12">
                     <table class="table table-hover nowrap" id="filelist" style="width: 100%">
                         <thead>
                             <tr>
-                                <th style="width:55%;">File No</th>
-                                <th style="width:15%;">COB</th>                                                           
-                                <th style="width:20%;">Parliament</th>
+                                <th style="width:55%;">{{ trans('app.forms.file_no') }}</th>
+                                <th style="width:15%;">{{ trans('app.forms.cob') }}</th>
+                                <th style="width:20%;">{{ trans('app.forms.parliament') }}</th>
                                 <th style="width:10%;">ZON</th>
                             </tr>
                         </thead>
@@ -75,7 +75,7 @@ $zone = [
                         </tbody>
                     </table>
                 </div>
-            </div> 
+            </div>
         </div>
     </section>
     <!-- End -->

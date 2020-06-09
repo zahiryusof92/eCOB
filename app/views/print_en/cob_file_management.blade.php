@@ -53,7 +53,7 @@ if (count($strata) > 0) {
                     <td class="text-center">
                         <h4 class="margin-bottom-0">
                             <img src="{{asset($company->image_url)}}" height="100px;" alt="">
-                        </h4> 
+                        </h4>
                     </td>
                     <td>
                         <h5 class="margin-bottom-10">
@@ -62,16 +62,16 @@ if (count($strata) > 0) {
                         <h6 class="margin-bottom-0">
                             {{$title}}
                         </h6>
-                    </td>                            
+                    </td>
                 </tr>
             </table>
             <hr/>
             <table border="1" id="cob_file_management" width="100%">
                 <thead>
                     <tr>
-                        <th rowspan="2" style="width:40%; text-align: center !important; vertical-align:middle !important;">Perkara</th>
+                        <th rowspan="2" style="width:40%; text-align: center !important; vertical-align:middle !important;">{{ trans('app.forms.items') }}</th>
                         <th colspan="3" style="width:30%; text-align: center !important; vertical-align:middle !important;">Bilangan Terkini</th>
-                        <th rowspan="2" style="width:30%; text-align: center !important; vertical-align:middle !important;">Peratusan (%)</th>
+                        <th rowspan="2" style="width:30%; text-align: center !important; vertical-align:middle !important;">{{ trans('app.forms.percentage') }} (%)</th>
                     </tr>
                     <tr>
                         <th style="width:10%; text-align: center !important; vertical-align:middle !important;"><= 10</th>
@@ -155,10 +155,10 @@ if (count($strata) > 0) {
             <table width="100%">
                 <tr>
                     <td>
-                        <p><b>CONFIDENTIAL</b></p>
+                        <p><b>{{ trans('app.forms.confidential') }}</b></p>
                     </td>
                     <td class="pull-right">
-                        <p>Print On: {{date('d/m/Y h:i:s A', strtotime("now"))}}</p>
+                        <p>{{ trans('app.forms.print_on', ['print'=>date('d/m/Y h:i:s A', strtotime("now"))]) }}</p>
                     </td>
                 </tr>
             </table>

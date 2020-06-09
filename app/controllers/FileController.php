@@ -109,158 +109,78 @@ class FileController extends BaseController {
                     }
 
                     if (!empty($csvData)) {
-                        if (Session::get('lang') == "en") {
-                            $viewData = array(
-                                'title' => 'Update COB File',
-                                'panel_nav_active' => 'cob_panel',
-                                'main_nav_active' => 'cob_main',
-                                'sub_nav_active' => 'cob_list',
-                                'user_permission' => $user_permission,
-                                'files' => $files,
-                                'Uploadmessage' => 'success',
-                                'csvData' => $csvData,
-                                'upload' => "true",
-                                'image' => (!empty($image->image_url) ? $image->image_url : '')
-                            );
-                            return View::make('page_en.import_buyer', $viewData);
-                        } else {
-                            $viewData = array(
-                                'title' => 'Kemaskini COB Fail',
-                                'panel_nav_active' => 'cob_panel',
-                                'main_nav_active' => 'cob_main',
-                                'sub_nav_active' => 'cob_list',
-                                'user_permission' => $user_permission,
-                                'files' => $files,
-                                'Uploadmessage' => 'success',
-                                'csvData' => $csvData,
-                                'upload' => "true",
-                                'image' => (!empty($image->image_url) ? $image->image_url : '')
-                            );
-                            return View::make('page_my.import_buyer', $viewData);
-                        }
-                    } else {
-                        if (Session::get('lang') == "en") {
-                            $viewData = array(
-                                'title' => 'Update COB File',
-                                'panel_nav_active' => 'cob_panel',
-                                'main_nav_active' => 'cob_main',
-                                'sub_nav_active' => 'cob_list',
-                                'user_permission' => $user_permission,
-                                'files' => $files,
-                                'Uploadmessage' => 'success',
-                                'csvData' => "No Data",
-                                'upload' => "true",
-                                'image' => (!empty($image->image_url) ? $image->image_url : '')
-                            );
-                            return View::make('page_en.import_buyer', $viewData);
-                        } else {
-                            $viewData = array(
-                                'title' => 'Kemaskini COB Fail',
-                                'panel_nav_active' => 'cob_panel',
-                                'main_nav_active' => 'cob_main',
-                                'sub_nav_active' => 'cob_list',
-                                'user_permission' => $user_permission,
-                                'files' => $files,
-                                'Uploadmessage' => 'success',
-                                'csvData' => "No Data",
-                                'upload' => "true",
-                                'image' => (!empty($image->image_url) ? $image->image_url : '')
-                            );
-                            return View::make('page_my.import_buyer', $viewData);
-                        }
-                    }
-                } else {
-                    if (Session::get('lang') == "en") {
                         $viewData = array(
-                            'title' => 'Update COB File',
+                            'title' => trans('app.menus.cob.update_cob_file'),
                             'panel_nav_active' => 'cob_panel',
                             'main_nav_active' => 'cob_main',
                             'sub_nav_active' => 'cob_list',
                             'user_permission' => $user_permission,
                             'files' => $files,
-                            'Uploadmessage' => 'error',
+                            'Uploadmessage' => 'success',
+                            'csvData' => $csvData,
                             'upload' => "true",
                             'image' => (!empty($image->image_url) ? $image->image_url : '')
                         );
-
                         return View::make('page_en.import_buyer', $viewData);
                     } else {
                         $viewData = array(
-                            'title' => 'Kemaskini COB Fail',
+                            'title' => trans('app.menus.cob.update_cob_file'),
                             'panel_nav_active' => 'cob_panel',
                             'main_nav_active' => 'cob_main',
                             'sub_nav_active' => 'cob_list',
                             'user_permission' => $user_permission,
                             'files' => $files,
-                            'Uploadmessage' => 'error',
+                            'Uploadmessage' => 'success',
+                            'csvData' => "No Data",
                             'upload' => "true",
                             'image' => (!empty($image->image_url) ? $image->image_url : '')
                         );
-
-                        return View::make('page_my.import_buyer', $viewData);
+                        return View::make('page_en.import_buyer', $viewData);
                     }
-                }
-            } else {
-                if (Session::get('lang') == "en") {
+                } else {
                     $viewData = array(
-                        'title' => 'Update COB File',
+                        'title' => trans('app.menus.cob.update_cob_file'),
                         'panel_nav_active' => 'cob_panel',
                         'main_nav_active' => 'cob_main',
                         'sub_nav_active' => 'cob_list',
                         'user_permission' => $user_permission,
                         'files' => $files,
-                        'Uploadmessage' => 'Please upload CSV file',
+                        'Uploadmessage' => 'error',
                         'upload' => "true",
                         'image' => (!empty($image->image_url) ? $image->image_url : '')
                     );
 
                     return View::make('page_en.import_buyer', $viewData);
-                } else {
-                    $viewData = array(
-                        'title' => 'Kemaskini COB Fail',
-                        'panel_nav_active' => 'cob_panel',
-                        'main_nav_active' => 'cob_main',
-                        'sub_nav_active' => 'cob_list',
-                        'user_permission' => $user_permission,
-                        'files' => $files,
-                        'Uploadmessage' => 'Sila muat naik CSV fail',
-                        'upload' => "true",
-                        'image' => (!empty($image->image_url) ? $image->image_url : '')
-                    );
-
-                    return View::make('page_my.import_buyer', $viewData);
                 }
-            }
-        } else {
-            if (Session::get('lang') == "en") {
+            } else {
                 $viewData = array(
-                    'title' => 'Update COB File',
+                    'title' => trans('app.menus.cob.update_cob_file'),
                     'panel_nav_active' => 'cob_panel',
                     'main_nav_active' => 'cob_main',
                     'sub_nav_active' => 'cob_list',
                     'user_permission' => $user_permission,
                     'files' => $files,
-                    'Uploadmessage' => 'Please upload CSV file',
+                    'Uploadmessage' => trans('app.errors.please_upload_csv_file'),
                     'upload' => "true",
                     'image' => (!empty($image->image_url) ? $image->image_url : '')
                 );
 
                 return View::make('page_en.import_buyer', $viewData);
-            } else {
-                $viewData = array(
-                    'title' => 'Kemaskini COB Fail',
-                    'panel_nav_active' => 'cob_panel',
-                    'main_nav_active' => 'cob_main',
-                    'sub_nav_active' => 'cob_list',
-                    'user_permission' => $user_permission,
-                    'files' => $files,
-                    'Uploadmessage' => 'Sila muat naik CSV fail',
-                    'upload' => "true",
-                    'image' => (!empty($image->image_url) ? $image->image_url : '')
-                );
-
-                return View::make('page_my.import_buyer', $viewData);
             }
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.cob.update_cob_file'),
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => trans('app.errors.please_upload_csv_file'),
+                'upload' => "true",
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_en.import_buyer', $viewData);
         }
     }
 
@@ -293,148 +213,73 @@ class FileController extends BaseController {
                     }
 
                     if (!empty($csvData)) {
-                        if (Session::get('lang') == "en") {
-                            $viewData = array(
-                                'title' => 'Import Purchaser',
-                                'panel_nav_active' => 'agm_panel',
-                                'main_nav_active' => 'agm_main',
-                                'sub_nav_active' => 'agmpurchasesub_list',
-                                'user_permission' => $user_permission,
-                                'Uploadmessage' => 'success',
-                                'csvData' => $csvData,
-                                'upload' => "true",
-                                'image' => ""
-                            );
-                            return View::make('agm_en.import_purchaser', $viewData);
-                        } else {
-                            $viewData = array(
-                                'title' => 'Import Purchaser',
-                                'panel_nav_active' => 'agm_panel',
-                                'main_nav_active' => 'agm_main',
-                                'sub_nav_active' => 'agmpurchasesub_list',
-                                'user_permission' => $user_permission,
-                                'Uploadmessage' => 'success',
-                                'csvData' => $csvData,
-                                'upload' => "true",
-                                'image' => ""
-                            );
-                            return View::make('agm_my.import_purchaser', $viewData);
-                        }
-                    } else {
-                        if (Session::get('lang') == "en") {
-                            $viewData = array(
-                                'title' => 'Import Purchaser',
-                                'panel_nav_active' => 'agm_panel',
-                                'main_nav_active' => 'agm_main',
-                                'sub_nav_active' => 'agmpurchasesub_list',
-                                'user_permission' => $user_permission,
-                                'Uploadmessage' => 'success',
-                                'csvData' => "No Data",
-                                'upload' => "true",
-                                'image' => ""
-                            );
-                            return View::make('agm_en.import_purchaser', $viewData);
-                        } else {
-                            $viewData = array(
-                                'title' => 'Import Purchaser',
-                                'panel_nav_active' => 'agm_panel',
-                                'main_nav_active' => 'agm_main',
-                                'sub_nav_active' => 'agmpurchasesub_list',
-                                'user_permission' => $user_permission,
-                                'Uploadmessage' => 'success',
-                                'csvData' => "No Data",
-                                'upload' => "true",
-                                'image' => ""
-                            );
-                            return View::make('agm_my.import_purchaser', $viewData);
-                        }
-                    }
-                } else {
-                    if (Session::get('lang') == "en") {
                         $viewData = array(
-                            'title' => 'Import Purchaser',
+                            'title' => trans('app.menus.agm.import_purchaser'),
                             'panel_nav_active' => 'agm_panel',
                             'main_nav_active' => 'agm_main',
                             'sub_nav_active' => 'agmpurchasesub_list',
                             'user_permission' => $user_permission,
-                            'Uploadmessage' => 'error',
+                            'Uploadmessage' => 'success',
+                            'csvData' => $csvData,
                             'upload' => "true",
                             'image' => ""
                         );
-
                         return View::make('agm_en.import_purchaser', $viewData);
                     } else {
                         $viewData = array(
-                            'title' => 'Import Purchaser',
+                            'title' => trans('app.menus.agm.import_purchaser'),
                             'panel_nav_active' => 'agm_panel',
                             'main_nav_active' => 'agm_main',
                             'sub_nav_active' => 'agmpurchasesub_list',
                             'user_permission' => $user_permission,
-                            'Uploadmessage' => 'error',
+                            'Uploadmessage' => 'success',
+                            'csvData' => "No Data",
                             'upload' => "true",
                             'image' => ""
                         );
-
-                        return View::make('agm_my.import_purchaser', $viewData);
+                        return View::make('agm_en.import_purchaser', $viewData);
                     }
-                }
-            } else {
-                if (Session::get('lang') == "en") {
+                } else {
                     $viewData = array(
-                        'title' => 'Import Purchaser',
+                        'title' => trans('app.menus.agm.import_purchaser'),
                         'panel_nav_active' => 'agm_panel',
                         'main_nav_active' => 'agm_main',
                         'sub_nav_active' => 'agmpurchasesub_list',
                         'user_permission' => $user_permission,
-                        'Uploadmessage' => 'Please upload CSV file',
+                        'Uploadmessage' => 'error',
                         'upload' => "true",
                         'image' => ""
                     );
 
                     return View::make('agm_en.import_purchaser', $viewData);
-                } else {
-                    $viewData = array(
-                        'title' => 'Import Purchaser',
-                        'panel_nav_active' => 'agm_panel',
-                        'main_nav_active' => 'agm_main',
-                        'sub_nav_active' => 'agmpurchasesub_list',
-                        'user_permission' => $user_permission,
-                        'Uploadmessage' => 'Sila muat naik CSV fail',
-                        'upload' => "true",
-                        'image' => ""
-                    );
-
-                    return View::make('agm_my.import_purchaser', $viewData);
                 }
-            }
-        } else {
-            if (Session::get('lang') == "en") {
+            } else {
                 $viewData = array(
-                    'title' => 'Import Purchaser',
+                    'title' => trans('app.menus.agm.import_purchaser'),
                     'panel_nav_active' => 'agm_panel',
                     'main_nav_active' => 'agm_main',
                     'sub_nav_active' => 'agmpurchasesub_list',
                     'user_permission' => $user_permission,
-                    'Uploadmessage' => 'Please upload CSV file',
+                    'Uploadmessage' => trans('app.errors.please_upload_csv_file'),
                     'upload' => "true",
                     'image' => ""
                 );
 
                 return View::make('agm_en.import_purchaser', $viewData);
-            } else {
-                $viewData = array(
-                    'title' => 'Import Purchaser',
-                    'panel_nav_active' => 'agm_panel',
-                    'main_nav_active' => 'agm_main',
-                    'sub_nav_active' => 'agmpurchasesub_list',
-                    'user_permission' => $user_permission,
-                    'Uploadmessage' => 'Sila muat naik CSV fail',
-                    'upload' => "true",
-                    'image' => ""
-                );
-
-                return View::make('agm_my.import_purchaser', $viewData);
             }
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.import_purchaser'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmpurchasesub_list',
+                'user_permission' => $user_permission,
+                'Uploadmessage' => trans('app.errors.please_upload_csv_file'),
+                'upload' => "true",
+                'image' => ""
+            );
+
+            return View::make('agm_en.import_purchaser', $viewData);
         }
     }
 
@@ -467,148 +312,73 @@ class FileController extends BaseController {
                     }
 
                     if (!empty($csvData)) {
-                        if (Session::get('lang') == "en") {
-                            $viewData = array(
-                                'title' => 'Import Tenant',
-                                'panel_nav_active' => 'agm_panel',
-                                'main_nav_active' => 'agm_main',
-                                'sub_nav_active' => 'agmtenantsub_list',
-                                'user_permission' => $user_permission,
-                                'Uploadmessage' => 'success',
-                                'csvData' => $csvData,
-                                'upload' => "true",
-                                'image' => ""
-                            );
-                            return View::make('agm_en.import_tenant', $viewData);
-                        } else {
-                            $viewData = array(
-                                'title' => 'Import Tenant',
-                                'panel_nav_active' => 'agm_panel',
-                                'main_nav_active' => 'agm_main',
-                                'sub_nav_active' => 'agmtenantsub_list',
-                                'user_permission' => $user_permission,
-                                'Uploadmessage' => 'success',
-                                'csvData' => $csvData,
-                                'upload' => "true",
-                                'image' => ""
-                            );
-                            return View::make('agm_my.import_tenant', $viewData);
-                        }
-                    } else {
-                        if (Session::get('lang') == "en") {
-                            $viewData = array(
-                                'title' => 'Import Tenant',
-                                'panel_nav_active' => 'agm_panel',
-                                'main_nav_active' => 'agm_main',
-                                'sub_nav_active' => 'agmtenantsub_list',
-                                'user_permission' => $user_permission,
-                                'Uploadmessage' => 'success',
-                                'csvData' => "No Data",
-                                'upload' => "true",
-                                'image' => ""
-                            );
-                            return View::make('agm_en.import_tenant', $viewData);
-                        } else {
-                            $viewData = array(
-                                'title' => 'Import Tenant',
-                                'panel_nav_active' => 'agm_panel',
-                                'main_nav_active' => 'agm_main',
-                                'sub_nav_active' => 'agmtenantsub_list',
-                                'user_permission' => $user_permission,
-                                'Uploadmessage' => 'success',
-                                'csvData' => "No Data",
-                                'upload' => "true",
-                                'image' => ""
-                            );
-                            return View::make('agm_my.import_tenant', $viewData);
-                        }
-                    }
-                } else {
-                    if (Session::get('lang') == "en") {
                         $viewData = array(
-                            'title' => 'Import Tenant',
+                            'title' => trans('app.menus.agm.import_tenant'),
                             'panel_nav_active' => 'agm_panel',
                             'main_nav_active' => 'agm_main',
                             'sub_nav_active' => 'agmtenantsub_list',
                             'user_permission' => $user_permission,
-                            'Uploadmessage' => 'error',
+                            'Uploadmessage' => 'success',
+                            'csvData' => $csvData,
                             'upload' => "true",
                             'image' => ""
                         );
-
                         return View::make('agm_en.import_tenant', $viewData);
                     } else {
                         $viewData = array(
-                            'title' => 'Import Tenant',
+                            'title' => trans('app.menus.agm.import_tenant'),
                             'panel_nav_active' => 'agm_panel',
                             'main_nav_active' => 'agm_main',
                             'sub_nav_active' => 'agmtenantsub_list',
                             'user_permission' => $user_permission,
-                            'Uploadmessage' => 'error',
+                            'Uploadmessage' => 'success',
+                            'csvData' => "No Data",
                             'upload' => "true",
                             'image' => ""
                         );
-
-                        return View::make('agm_my.import_tenant', $viewData);
+                        return View::make('agm_en.import_tenant', $viewData);
                     }
-                }
-            } else {
-                if (Session::get('lang') == "en") {
+                } else {
                     $viewData = array(
-                        'title' => 'Import Tenant',
+                        'title' => trans('app.menus.agm.import_tenant'),
                         'panel_nav_active' => 'agm_panel',
                         'main_nav_active' => 'agm_main',
                         'sub_nav_active' => 'agmtenantsub_list',
                         'user_permission' => $user_permission,
-                        'Uploadmessage' => 'Please upload CSV file',
+                        'Uploadmessage' => 'error',
                         'upload' => "true",
                         'image' => ""
                     );
 
                     return View::make('agm_en.import_tenant', $viewData);
-                } else {
-                    $viewData = array(
-                        'title' => 'Import Tenant',
-                        'panel_nav_active' => 'agm_panel',
-                        'main_nav_active' => 'agm_main',
-                        'sub_nav_active' => 'agmtenantsub_list',
-                        'user_permission' => $user_permission,
-                        'Uploadmessage' => 'Sila muat naik CSV fail',
-                        'upload' => "true",
-                        'image' => ""
-                    );
-
-                    return View::make('agm_my.import_tenant', $viewData);
                 }
-            }
-        } else {
-            if (Session::get('lang') == "en") {
+            } else {
                 $viewData = array(
-                    'title' => 'Import Tenant',
+                    'title' => trans('app.menus.agm.import_tenant'),
                     'panel_nav_active' => 'agm_panel',
                     'main_nav_active' => 'agm_main',
                     'sub_nav_active' => 'agmtenantsub_list',
                     'user_permission' => $user_permission,
-                    'Uploadmessage' => 'Please upload CSV file',
+                    'Uploadmessage' => trans('app.errors.please_upload_csv_file'),
                     'upload' => "true",
                     'image' => ""
                 );
 
                 return View::make('agm_en.import_tenant', $viewData);
-            } else {
-                $viewData = array(
-                    'title' => 'Import Tenant',
-                    'panel_nav_active' => 'agm_panel',
-                    'main_nav_active' => 'agm_main',
-                    'sub_nav_active' => 'agmtenantsub_list',
-                    'user_permission' => $user_permission,
-                    'Uploadmessage' => 'Sila muat naik CSV fail',
-                    'upload' => "true",
-                    'image' => ""
-                );
-
-                return View::make('agm_my.import_tenant', $viewData);
             }
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.import_tenant'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'Uploadmessage' => trans('app.errors.please_upload_csv_file'),
+                'upload' => "true",
+                'image' => ""
+            );
+
+            return View::make('agm_en.import_tenant', $viewData);
         }
     }
 
@@ -622,7 +392,7 @@ class FileController extends BaseController {
 
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
-            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+            return Response::json(['success' => false, 'msg' => trans('app.errors.please_upload_valid_file')]);
         }
     }
 
@@ -636,7 +406,7 @@ class FileController extends BaseController {
 
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
-            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+            return Response::json(['success' => false, 'msg' => trans('app.errors.please_upload_valid_file')]);
         }
     }
 
@@ -650,7 +420,7 @@ class FileController extends BaseController {
 
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
-            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+            return Response::json(['success' => false, 'msg' => trans('app.errors.please_upload_valid_file')]);
         }
     }
 
@@ -664,7 +434,7 @@ class FileController extends BaseController {
 
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
-            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+            return Response::json(['success' => false, 'msg' => trans('app.errors.please_upload_valid_file')]);
         }
     }
 
@@ -678,7 +448,7 @@ class FileController extends BaseController {
 
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
-            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+            return Response::json(['success' => false, 'msg' => trans('app.errors.please_upload_valid_file')]);
         }
     }
 
@@ -692,7 +462,7 @@ class FileController extends BaseController {
 
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
-            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+            return Response::json(['success' => false, 'msg' => trans('app.errors.please_upload_valid_file')]);
         }
     }
 
@@ -706,8 +476,7 @@ class FileController extends BaseController {
 
             return Response::json(['success' => true, 'file' => $output, 'filename' => $filename]);
         } else {
-            return Response::json(['success' => false, 'msg' => 'Please upload valid file']);
+            return Response::json(['success' => false, 'msg' => trans('app.errors.please_upload_valid_file')]);
         }
     }
-
 }

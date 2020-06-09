@@ -20,32 +20,32 @@ foreach ($user_permission as $permission) {
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <h6>File No: {{$file->file_no}}</h6>
+                    <h6>{{ trans('app.forms.file_no') }}: {{$file->file_no}}</h6>
                     <div id="update_files_lists">
                         <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewHouse', $file->id)}}">Housing Scheme</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewHouse', $file->id)}}">{{ trans('app.forms.housing_scheme') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewStrata', $file->id)}}">Developed Area (STRATA)</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewStrata', $file->id)}}">{{ trans('app.forms.developed_area') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active">Management</a>
+                                <a class="nav-link active">{{ trans('app.forms.management') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewMonitoring', $file->id)}}">Monitoring</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewMonitoring', $file->id)}}">{{ trans('app.forms.monitoring') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewOthers', $file->id)}}">Others</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewOthers', $file->id)}}">{{ trans('app.forms.others') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewScoring', $file->id)}}">Scoring Component Value</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewScoring', $file->id)}}">{{ trans('app.forms.scoring_component_value') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewBuyer', $file->id)}}">Buyer List</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewBuyer', $file->id)}}">{{ trans('app.forms.buyer_list') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@fileApproval', $file->id)}}">Approval</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@fileApproval', $file->id)}}">{{ trans('app.forms.approval') }}</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
@@ -55,15 +55,15 @@ foreach ($user_permission as $permission) {
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_jmb" id="is_jmb" disabled="">
-                                            <label><h4> Joint Management Body (JMB)</h4></label>
+                                            <label><h4> {{ trans('app.forms.joint_management_boby') }}</h4></label>
                                             <!-- jmb Form -->
                                             <div id="jmb_form" style="display:none">
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Date Formed</label>
+                                                            <label>{{ trans('app.forms.date_formed') }}</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="Date Formed" id="jmb_date_formed" readonly=""d>
+                                                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.date_formed') }}" id="jmb_date_formed" readonly=""d>
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
@@ -74,47 +74,47 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Certificate Series Number</label>
-                                                            <input type="text" class="form-control" placeholder="Certificate Series Number" id="jmb_certificate_no" readonly="">
+                                                            <label>{{ trans('app.forms.certificate_series_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.certificate_series_number') }}" id="jmb_certificate_no" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Name</label>
-                                                            <input type="text" class="form-control" placeholder="Name" id="jmb_name" readonly="">
+                                                            <label>{{ trans('app.forms.name') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="jmb_name" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <label>Address</label>
-                                                            <input type="text" class="form-control" placeholder="Address 1" id="jmb_address1" readonly="">
+                                                            <label>{{ trans('app.forms.address') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address') }}" id="jmb_address1" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 2" id="jmb_address2" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address2') }}" id="jmb_address2" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 3" id="jmb_address3" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address3') }}" id="jmb_address3" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>City</label>
+                                                            <label>{{ trans('app.forms.city') }}</label>
                                                             <select class="form-control" id="jmb_city" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($city as $cities)
                                                                 <option value="{{$cities->id}}">{{$cities->description}}</option>
                                                                 @endforeach
@@ -123,17 +123,17 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Postcode</label>
-                                                            <input type="text" class="form-control" placeholder="Postcode" id="jmb_poscode" readonly="">
+                                                            <label>{{ trans('app.forms.postcode') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.postcode') }}" id="jmb_poscode" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>State</label>
+                                                            <label>{{ trans('app.forms.state') }}</label>
                                                             <select class="form-control" id="jmb_state" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($state as $states)
                                                                 <option value="{{$states->id}}">{{$states->name}}</option>
                                                                 @endforeach
@@ -142,9 +142,9 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Country</label>
+                                                            <label>{{ trans('app.forms.country') }}</label>
                                                             <select class="form-control" id="jmb_country" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($country as $countries)
                                                                 <option value="{{$countries->id}}">{{$countries->name}}</option>
                                                                 @endforeach
@@ -155,14 +155,14 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Phone Number</label>
-                                                            <input type="text" class="form-control" placeholder="Phone Number" id="jmb_phone_no" readonly="">
+                                                            <label>{{ trans('app.forms.phone_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="jmb_phone_no" readonly="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Fax Number</label>
-                                                            <input type="text" class="form-control" placeholder="Fax Number" id="jmb_fax_no" readonly="">
+                                                            <label>{{ trans('app.forms.fax_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.fax_number') }}" id="jmb_fax_no" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -173,15 +173,15 @@ foreach ($user_permission as $permission) {
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_jmb" id="is_jmb" {{($management->is_jmb == 1 ? " checked" : "")}} disabled>
-                                            <label><h4> Joint Management Body (JMB)</h4></label>
+                                            <label><h4> {{ trans('app.forms.joint_management_boby') }}</h4></label>
                                             <!-- jmb Form -->
                                             <div id="jmb_form">
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Date Formed</label>
+                                                            <label>{{ trans('app.forms.date_formed') }}</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="Date Formed" id="jmb_date_formed" value="{{$management_jmb->date_formed}}" readonly="">
+                                                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.date_formed') }}" id="jmb_date_formed" value="{{$management_jmb->date_formed}}" readonly="">
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
@@ -192,47 +192,47 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Certificate Series Number</label>
-                                                            <input type="text" class="form-control" placeholder="Certificate Series Number" id="jmb_certificate_no" value="{{$management_jmb->certificate_no}}" readonly="">
+                                                            <label>{{ trans('app.forms.certificate_series_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.certificate_series_number') }}" id="jmb_certificate_no" value="{{$management_jmb->certificate_no}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Name</label>
-                                                            <input type="text" class="form-control" placeholder="Name" id="jmb_name" value="{{$management_jmb->name}}" readonly="">
+                                                            <label>{{ trans('app.forms.name') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="jmb_name" value="{{$management_jmb->name}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <label>Address</label>
-                                                            <input type="text" class="form-control" placeholder="Address 1" id="jmb_address1" value="{{$management_jmb->address1}}" readonly="">
+                                                            <label>{{ trans('app.forms.address') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address') }}" id="jmb_address1" value="{{$management_jmb->address1}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 2" id="jmb_address2" value="{{$management_jmb->address2}}" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address2') }}" id="jmb_address2" value="{{$management_jmb->address2}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 3" id="jmb_address3" value="{{$management_jmb->address3}}" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address3') }}" id="jmb_address3" value="{{$management_jmb->address3}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>City</label>
+                                                            <label>{{ trans('app.forms.city') }}</label>
                                                             <select class="form-control" id="jmb_city" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($city as $cities)
                                                                 <option value="{{$cities->id}}" {{($management_jmb->city == $cities->id ? " selected" : "")}}>{{$cities->description}}</option>
                                                                 @endforeach
@@ -241,17 +241,17 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Postcode</label>
-                                                            <input type="text" class="form-control" placeholder="Postcode" id="jmb_poscode" value="{{$management_jmb->poscode}}" readonly="">
+                                                            <label>{{ trans('app.forms.postcode') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.postcode') }}" id="jmb_poscode" value="{{$management_jmb->poscode}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>State</label>
+                                                            <label>{{ trans('app.forms.state') }}</label>
                                                             <select class="form-control" id="jmb_state" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($state as $states)
                                                                 <option value="{{$states->id}}" {{($management_jmb->state == $states->id ? " selected" : "")}}>{{$states->name}}</option>
                                                                 @endforeach
@@ -260,9 +260,9 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Country</label>
+                                                            <label>{{ trans('app.forms.country') }}</label>
                                                             <select class="form-control" id="jmb_country" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($country as $countries)
                                                                 <option value="{{$countries->id}}" {{($management_jmb->country == $countries->id ? " selected" : "")}}>{{$countries->name}}</option>
                                                                 @endforeach
@@ -273,14 +273,14 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Phone Number</label>
-                                                            <input type="text" class="form-control" placeholder="Phone Number" id="jmb_phone_no" value="{{$management_jmb->phone_no}}" readonly="">
+                                                            <label>{{ trans('app.forms.phone_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="jmb_phone_no" value="{{$management_jmb->phone_no}}" readonly="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Fax Number</label>
-                                                            <input type="text" class="form-control" placeholder="Fax Number" id="jmb_fax_no" value="{{$management_jmb->fax_no}}" readonly="">
+                                                            <label>{{ trans('app.forms.fax_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.fax_number') }}" id="jmb_fax_no" value="{{$management_jmb->fax_no}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -293,15 +293,15 @@ foreach ($user_permission as $permission) {
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_mc" id="is_mc" disabled="">
-                                            <label><h4> Management Corporation (MC)</h4></label>
+                                            <label><h4> {{ trans('app.forms.management_committee') }}</h4></label>
                                             <!-- jmb Form -->
                                             <div id="mc_form" style="display:none">
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Date Formed</label>
+                                                            <label>{{ trans('app.forms.date_formed') }}</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="Date Formed" id="mc_date_formed" readonly="">
+                                                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.date_formed') }}" id="mc_date_formed" readonly="">
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
@@ -312,9 +312,9 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>First AGM Date</label>
+                                                            <label>{{ trans('app.forms.first_agm_date') }}</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="First AGM Date" id="mc_first_agm" readonly="">
+                                                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.first_agm_date') }}" id="mc_first_agm" readonly="">
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
@@ -325,39 +325,39 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Name</label>
-                                                            <input type="text" class="form-control" placeholder="Name" id="mc_name" readonly="">
+                                                            <label>{{ trans('app.forms.name') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="mc_name" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <label>Address</label>
-                                                            <input type="text" class="form-control" placeholder="Address 1" id="mc_address1" readonly="">
+                                                            <label>{{ trans('app.forms.address') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address') }}" id="mc_address1" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 2" id="mc_address2" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address2') }}" id="mc_address2" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 3" id="mc_address3" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address3') }}" id="mc_address3" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>City</label>
+                                                            <label>{{ trans('app.forms.city') }}</label>
                                                             <select class="form-control" id="mc_city" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($city as $cities)
                                                                 <option value="{{$cities->id}}">{{$cities->description}}</option>
                                                                 @endforeach
@@ -366,17 +366,17 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Postcode</label>
-                                                            <input type="text" class="form-control" placeholder="Postcode" id="mc_poscode" readonly="">
+                                                            <label>{{ trans('app.forms.postcode') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.postcode') }}" id="mc_poscode" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>State</label>
+                                                            <label>{{ trans('app.forms.state') }}</label>
                                                             <select class="form-control" id="mc_state" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($state as $states)
                                                                 <option value="{{$states->id}}">{{$states->name}}</option>
                                                                 @endforeach
@@ -385,9 +385,9 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Country</label>
+                                                            <label>{{ trans('app.forms.country') }}</label>
                                                             <select class="form-control" id="mc_country" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($country as $countries)
                                                                 <option value="{{$countries->id}}">{{$countries->name}}</option>
                                                                 @endforeach
@@ -398,14 +398,14 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Phone Number</label>
-                                                            <input type="text" class="form-control" placeholder="Phone Number" id="mc_phone_no" readonly="">
+                                                            <label>{{ trans('app.forms.phone_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="mc_phone_no" readonly="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Fax Number</label>
-                                                            <input type="text" class="form-control" placeholder="Fax Number" id="mc_fax_no" readonly="">
+                                                            <label>{{ trans('app.forms.fax_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.fax_number') }}" id="mc_fax_no" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -416,15 +416,15 @@ foreach ($user_permission as $permission) {
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_mc" id="is_mc" {{($management->is_mc == 1 ? " checked" : "")}} disabled>
-                                            <label><h4> Management Corporation (MC)</h4></label>
+                                            <label><h4> {{ trans('app.forms.management_committee') }}</h4></label>
                                             <!-- mc Form -->
                                             <div id="mc_form">
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Date Formed</label>
+                                                            <label>{{ trans('app.forms.date_formed') }}</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="Date Formed" id="mc_date_formed" value="{{$management_mc->date_formed}}" readonly="">
+                                                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.date_formed') }}" id="mc_date_formed" value="{{$management_mc->date_formed}}" readonly="">
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
@@ -435,9 +435,9 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>First AGM Date</label>
+                                                            <label>{{ trans('app.forms.first_agm_date') }}</label>
                                                             <label class="input-group datepicker-only-init">
-                                                                <input type="text" class="form-control" placeholder="First AGM Date" id="mc_first_agm" value="{{$management_mc->first_agm}}" readonly="">
+                                                                <input type="text" class="form-control" placeholder="{{ trans('app.forms.first_agm_date') }}" id="mc_first_agm" value="{{$management_mc->first_agm}}" readonly="">
                                                                 <span class="input-group-addon">
                                                                     <i class="icmn-calendar"></i>
                                                                 </span>
@@ -448,39 +448,39 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Name</label>
-                                                            <input type="text" class="form-control" placeholder="Name" id="mc_name" value="{{$management_mc->name}}" readonly="">
+                                                            <label>{{ trans('app.forms.name') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="mc_name" value="{{$management_mc->name}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <label>Address</label>
-                                                            <input type="text" class="form-control" placeholder="Address 1" id="mc_address1" value="{{$management_mc->address1}}" readonly="">
+                                                            <label>{{ trans('app.forms.address') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address') }}" id="mc_address1" value="{{$management_mc->address1}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 2" id="mc_address2" value="{{$management_mc->address2}}" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address2') }}" id="mc_address2" value="{{$management_mc->address2}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 3" id="mc_address3" value="{{$management_mc->address3}}" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address3') }}" id="mc_address3" value="{{$management_mc->address3}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>City</label>
+                                                            <label>{{ trans('app.forms.city') }}</label>
                                                             <select class="form-control" id="mc_city" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($city as $cities)
                                                                 <option value="{{$cities->id}}" {{($management_mc->city == $cities->id ? " selected" : "")}}>{{$cities->description}}</option>
                                                                 @endforeach
@@ -489,17 +489,17 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Postcode</label>
-                                                            <input type="text" class="form-control" placeholder="Postcode" id="mc_poscode" value="{{$management_mc->poscode}}" readonly="">
+                                                            <label>{{ trans('app.forms.postcode') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.postcode') }}" id="mc_poscode" value="{{$management_mc->poscode}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>State</label>
+                                                            <label>{{ trans('app.forms.state') }}</label>
                                                             <select class="form-control" id="mc_state" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($state as $states)
                                                                 <option value="{{$states->id}}" {{($management_mc->state == $states->id ? " selected" : "")}}>{{$states->name}}</option>
                                                                 @endforeach
@@ -508,9 +508,9 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Country</label>
+                                                            <label>{{ trans('app.forms.country') }}</label>
                                                             <select class="form-control" id="mc_country" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($country as $countries)
                                                                 <option value="{{$countries->id}}" {{($management_mc->country == $countries->id ? " selected" : "")}}>{{$countries->name}}</option>
                                                                 @endforeach
@@ -521,14 +521,14 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Phone Number</label>
-                                                            <input type="text" class="form-control" placeholder="Phone Number" id="mc_phone_no" value="{{$management_mc->phone_no}}" readonly="">
+                                                            <label>{{ trans('app.forms.phone_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="mc_phone_no" value="{{$management_mc->phone_no}}" readonly="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Fax Number</label>
-                                                            <input type="text" class="form-control" placeholder="Fax Number" id="mc_fax_no" value="{{$management_mc->fax_no}}" readonly="">
+                                                            <label>{{ trans('app.forms.fax_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.fax_number') }}" id="mc_fax_no" value="{{$management_mc->fax_no}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -541,17 +541,17 @@ foreach ($user_permission as $permission) {
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_agent" id="is_agent" disabled="">
-                                            <label><h4> Agent</h4></label>
+                                            <label><h4> {{ trans('app.forms.agent') }}</h4></label>
                                             <!-- agent Form -->
                                             <div id="agent_form" style="display:none">
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Selected By</label>
+                                                            <label>{{ trans('app.forms.selected_by') }}</label>
                                                             <select class="form-control" id="agent_selected_by" disabled="">
-                                                                <option value="">Please Select</option>
-                                                                <option value="developer">Developer</option>
-                                                                <option value="cob">COB</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
+                                                                <option value="developer">{{ trans('app.forms.developer') }}</option>
+                                                                <option value="cob">{{ trans('app.forms.cob') }}</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -559,9 +559,9 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Name</label>
+                                                            <label>{{ trans('app.forms.name') }}</label>
                                                             <select class="form-control" id="agent_name" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($agent as $agents)
                                                                 <option value="{{$agents->id}}">{{$agents->name}}</option>
                                                                 @endforeach
@@ -572,31 +572,31 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <label>Address</label>
-                                                            <input type="text" class="form-control" placeholder="Address 1" id="agent_address1" readonly="">
+                                                            <label>{{ trans('app.forms.address') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address') }}" id="agent_address1" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 2" id="agent_address2" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address2') }}" id="agent_address2" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 3" id="agent_address3" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address3') }}" id="agent_address3" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>City</label>
+                                                            <label>{{ trans('app.forms.city') }}</label>
                                                             <select class="form-control" id="agent_city" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($city as $cities)
                                                                 <option value="{{$cities->id}}">{{$cities->description}}</option>
                                                                 @endforeach
@@ -605,17 +605,17 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Postcode</label>
-                                                            <input type="text" class="form-control" placeholder="Postcode" id="agent_poscode" readonly="">
+                                                            <label>{{ trans('app.forms.postcode') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.postcode') }}" id="agent_poscode" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>State</label>
+                                                            <label>{{ trans('app.forms.state') }}</label>
                                                             <select class="form-control" id="agent_state" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($state as $states)
                                                                 <option value="{{$states->id}}">{{$states->name}}</option>
                                                                 @endforeach
@@ -624,9 +624,9 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Country</label>
+                                                            <label>{{ trans('app.forms.country') }}</label>
                                                             <select class="form-control" id="agent_country" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($country as $countries)
                                                                 <option value="{{$countries->id}}">{{$countries->name}}</option>
                                                                 @endforeach
@@ -637,14 +637,14 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Phone Number</label>
-                                                            <input type="text" class="form-control" placeholder="Phone Number" id="agent_phone_no" readonly="">
+                                                            <label>{{ trans('app.forms.phone_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="agent_phone_no" readonly="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Fax Number</label>
-                                                            <input type="text" class="form-control" placeholder="Fax Number" id="agent_fax_no" readonly="">
+                                                            <label>{{ trans('app.forms.fax_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.fax_number') }}" id="agent_fax_no" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -655,17 +655,17 @@ foreach ($user_permission as $permission) {
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_agent" id="is_agent" {{($management->is_agent == 1 ? " checked" : "")}} disabled>
-                                            <label><h4> Agent</h4></label>
+                                            <label><h4> {{ trans('app.forms.agent') }}</h4></label>
                                             <!-- agent Form -->
                                             <div id="agent_form">
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Selected By</label>
+                                                            <label>{{ trans('app.forms.selected_by') }}</label>
                                                             <select class="form-control" id="agent_selected_by" disabled="">
-                                                                <option value="">Please Select</option>
-                                                                <option value="developer" {{($management_agent->selected_by == "developer" ? " selected" : "")}}>Developer</option>
-                                                                <option value="cob" {{($management_agent->selected_by == "cob" ? " selected" : "")}}>COB</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
+                                                                <option value="developer" {{($management_agent->selected_by == "developer" ? " selected" : "")}}>{{ trans('app.forms.developer') }}</option>
+                                                                <option value="cob" {{($management_agent->selected_by == "cob" ? " selected" : "")}}>{{ trans('app.forms.cob') }}</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -673,9 +673,9 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Name</label>
+                                                            <label>{{ trans('app.forms.name') }}</label>
                                                             <select class="form-control" id="agent_name" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($agent as $agents)
                                                                 <option value="{{$agents->id}}" {{($management_agent->agent == $agents->id ? " selected" : "")}}>{{$agents->name}}</option>
                                                                 @endforeach
@@ -686,31 +686,31 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <label>Address</label>
-                                                            <input type="text" class="form-control" placeholder="Address 1" id="agent_address1" value="{{$management_agent->address1}}" readonly="">
+                                                            <label>{{ trans('app.forms.address') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address') }}" id="agent_address1" value="{{$management_agent->address1}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 2" id="agent_address2" value="{{$management_agent->address2}}" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address2') }}" id="agent_address2" value="{{$management_agent->address2}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 3" id="agent_address3" value="{{$management_agent->address3}}" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address3') }}" id="agent_address3" value="{{$management_agent->address3}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>City</label>
+                                                            <label>{{ trans('app.forms.city') }}</label>
                                                             <select class="form-control" id="agent_city" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($city as $cities)
                                                                 <option value="{{$cities->id}}" {{($management_agent->city == $cities->id ? " selected" : "")}}>{{$cities->description}}</option>
                                                                 @endforeach
@@ -719,17 +719,17 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Postcode</label>
-                                                            <input type="text" class="form-control" placeholder="Postcode" id="agent_poscode" value="{{$management_agent->address1}}" readonly="">
+                                                            <label>{{ trans('app.forms.postcode') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.postcode') }}" id="agent_poscode" value="{{$management_agent->address1}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>State</label>
+                                                            <label>{{ trans('app.forms.state') }}</label>
                                                             <select class="form-control" id="agent_state" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($state as $states)
                                                                 <option value="{{$states->id}}" {{($management_agent->state == $states->id ? " selected" : "")}}>{{$states->name}}</option>
                                                                 @endforeach
@@ -738,9 +738,9 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Country</label>
+                                                            <label>{{ trans('app.forms.country') }}</label>
                                                             <select class="form-control" id="agent_country" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($country as $countries)
                                                                 <option value="{{$countries->id}}" {{($management_agent->country == $countries->id ? " selected" : "")}}>{{$countries->name}}</option>
                                                                 @endforeach
@@ -751,14 +751,14 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Phone Number</label>
-                                                            <input type="text" class="form-control" placeholder="Phone Number" id="agent_phone_no" value="{{$management_agent->phone_no}}" readonly="">
+                                                            <label>{{ trans('app.forms.phone_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="agent_phone_no" value="{{$management_agent->phone_no}}" readonly="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Fax Number</label>
-                                                            <input type="text" class="form-control" placeholder="Fax Number" id="agent_fax_no" value="{{$management_agent->fax_no}}" readonly="">
+                                                            <label>{{ trans('app.forms.fax_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.fax_number') }}" id="agent_fax_no" value="{{$management_agent->fax_no}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -771,45 +771,45 @@ foreach ($user_permission as $permission) {
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_others" id="is_others" disabled="">
-                                            <label><h4> Others</h4></label>
+                                            <label><h4> {{ trans('app.forms.others') }}</h4></label>
                                             <!-- jmb Form -->
                                             <div id="other_form" style="display:none">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Name</label>
-                                                            <input type="text" class="form-control" placeholder="Name" id="others_name" readonly="">
+                                                            <label>{{ trans('app.forms.name') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="others_name" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <label>Address</label>
-                                                            <input type="text" class="form-control" placeholder="Address 1" id="others_address1" readonly="">
+                                                            <label>{{ trans('app.forms.address') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address') }}" id="others_address1" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 2" id="others_address2" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address2') }}" id="others_address2" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 3" id="others_address3" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address3') }}" id="others_address3" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>City</label>
+                                                            <label>{{ trans('app.forms.city') }}</label>
                                                             <select class="form-control" id="others_city" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($city as $cities)
                                                                 <option value="{{$cities->id}}">{{$cities->description}}</option>
                                                                 @endforeach
@@ -818,17 +818,17 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Postcode</label>
-                                                            <input type="text" class="form-control" placeholder="Postcode" id="others_poscode" readonly="">
+                                                            <label>{{ trans('app.forms.postcode') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.postcode') }}" id="others_poscode" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>State</label>
+                                                            <label>{{ trans('app.forms.state') }}</label>
                                                             <select class="form-control" id="others_state" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($state as $states)
                                                                 <option value="{{$states->id}}">{{$states->name}}</option>
                                                                 @endforeach
@@ -837,9 +837,9 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Country</label>
+                                                            <label>{{ trans('app.forms.country') }}</label>
                                                             <select class="form-control" id="others_country" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($country as $countries)
                                                                 <option value="{{$countries->id}}">{{$countries->name}}</option>
                                                                 @endforeach
@@ -850,14 +850,14 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Phone Number</label>
-                                                            <input type="text" class="form-control" placeholder="Phone Number" id="others_phone_no" readonly="">
+                                                            <label>{{ trans('app.forms.phone_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="others_phone_no" readonly="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Fax Number</label>
-                                                            <input type="text" class="form-control" placeholder="Fax Number" id="others_fax_no" readonly="">
+                                                            <label>{{ trans('app.forms.fax_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.fax_number') }}" id="others_fax_no" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -868,45 +868,45 @@ foreach ($user_permission as $permission) {
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <input type="checkbox" name="is_others" id="is_others" {{($management->is_others == 1 ? " checked" : "")}} disabled>
-                                            <label><h4> Others</h4></label>
+                                            <label><h4> {{ trans('app.forms.others') }}</h4></label>
                                             <!-- jmb Form -->
                                             <div id="other_form">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label>Name</label>
-                                                            <input type="text" class="form-control" placeholder="Name" id="others_name" value="{{$management_others->name}}" readonly="">
+                                                            <label>{{ trans('app.forms.name') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="others_name" value="{{$management_others->name}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <label>Address</label>
-                                                            <input type="text" class="form-control" placeholder="Address 1" id="others_address1" value="{{$management_others->address1}}" readonly="">
+                                                            <label>{{ trans('app.forms.address') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address') }}" id="others_address1" value="{{$management_others->address1}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 2" id="others_address2" value="{{$management_others->address2}}" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address2') }}" id="others_address2" value="{{$management_others->address2}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-8">
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control" placeholder="Address 3" id="others_address3" value="{{$management_others->address3}}" readonly="">
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.address3') }}" id="others_address3" value="{{$management_others->address3}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>City</label>
+                                                            <label>{{ trans('app.forms.city') }}</label>
                                                             <select class="form-control" id="others_city" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($city as $cities)
                                                                 <option value="{{$cities->id}}" {{($management_others->city == $cities->id ? " selected" : "")}}>{{$cities->description}}</option>
                                                                 @endforeach
@@ -915,17 +915,17 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Postcode</label>
-                                                            <input type="text" class="form-control" placeholder="Postcode" id="others_poscode" value="{{$management_others->poscode}}" readonly="">
+                                                            <label>{{ trans('app.forms.postcode') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.postcode') }}" id="others_poscode" value="{{$management_others->poscode}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>State</label>
+                                                            <label>{{ trans('app.forms.state') }}</label>
                                                             <select class="form-control" id="others_state" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($state as $states)
                                                                 <option value="{{$states->id}}" {{($management_others->state == $states->id ? " selected" : "")}}>{{$states->name}}</option>
                                                                 @endforeach
@@ -934,9 +934,9 @@ foreach ($user_permission as $permission) {
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Country</label>
+                                                            <label>{{ trans('app.forms.country') }}</label>
                                                             <select class="form-control" id="others_country" disabled="">
-                                                                <option value="">Please Select</option>
+                                                                <option value="">{{ trans('app.forms.please_select') }}</option>
                                                                 @foreach ($country as $countries)
                                                                 <option value="{{$countries->id}}" {{($management_others->country == $countries->id ? " selected" : "")}}>{{$countries->name}}</option>
                                                                 @endforeach
@@ -947,14 +947,14 @@ foreach ($user_permission as $permission) {
                                                 <div class="row">
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Phone Number</label>
-                                                            <input type="text" class="form-control" placeholder="Phone Number" id="others_phone_no" value="{{$management_others->phone_no}}" readonly="">
+                                                            <label>{{ trans('app.forms.phone_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="others_phone_no" value="{{$management_others->phone_no}}" readonly="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <label>Fax Number</label>
-                                                            <input type="text" class="form-control" placeholder="Fax Number" id="others_fax_no" value="{{$management_others->fax_no}}" readonly="">
+                                                            <label>{{ trans('app.forms.fax_number') }}</label>
+                                                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.fax_number') }}" id="others_fax_no" value="{{$management_others->fax_no}}" readonly="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1197,7 +1197,7 @@ foreach ($user_permission as $permission) {
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
                         },{
                             type: 'success',
                             placement: {
@@ -1206,7 +1206,7 @@ foreach ($user_permission as $permission) {
                         });
                         window.location = "{{URL::action('AdminController@monitoring', $file->id)}}";
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

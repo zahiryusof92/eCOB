@@ -25,51 +25,51 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                    <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>Nama Pengguna</label>
-                                    <input type="text" class="form-control" placeholder="Nama Pengguna" id="username" value="{{$user->username}}" disabled>
+                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.username') }}</label>
+                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.username') }}" id="username" value="{{$user->username}}" disabled>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">*</span> Full Name</label>
-                                    <input type="text" class="form-control" placeholder="Name" id="name" value="{{$user->full_name}}">
+                                    <label><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.full_name') }}</label>
+                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.full_name') }}" id="name" value="{{$user->full_name}}">
                                     <div id="name_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">*</span> Email</label>
-                                    <input type="text" class="form-control" placeholder="Email" id="email" value="{{$user->email}}">
+                                    <label><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.email') }}</label>
+                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.email') }}" id="email" value="{{$user->email}}">
                                     <div id="email_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div> 
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Phone Number</label>
-                                    <input type="text" class="form-control" placeholder="Phone Number" id="phone_no" value="{{$user->phone_no}}">
-                                    <div id="phone_no_error" style="display:none;"></div>
-                                </div>
-                            </div>                            
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Access Group</label>
+                                    <label>{{ trans('app.forms.phone_number') }}</label>
+                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="phone_no" value="{{$user->phone_no}}">
+                                    <div id="phone_no_error" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.access_group') }}</label>
                                     <select id="role" class="form-control select2" onchange="showExpiryDate(this)">
-                                        <option value="">Please Select</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
                                         @foreach ($role as $roles)
                                         <option value="{{$roles->name}}" {{($user->role == $roles->id ? " selected" : "")}}>{{$roles->name}}</option>
                                         @endforeach
@@ -81,9 +81,9 @@ foreach ($user_permission as $permission) {
                         <div class="row" id="expiry_date" style="display: none;">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Start Date</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.date_start') }}</label>
                                     <label class="input-group">
-                                        <input type="text" class="form-control" placeholder="Start Date" id="start_date_raw" value="{{ (!empty($user->start_date) ? date('d-m-Y', strtotime($user->start_date)) : '') }}"/>
+                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.date_start') }}" id="start_date_raw" value="{{ (!empty($user->start_date) ? date('d-m-Y', strtotime($user->start_date)) : '') }}"/>
                                         <span class="input-group-addon">
                                             <i class="icmn-calendar"></i>
                                         </span>
@@ -94,9 +94,9 @@ foreach ($user_permission as $permission) {
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> End Date</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.date_end') }}</label>
                                     <label class="input-group">
-                                        <input type="text" class="form-control" placeholder="End Date" id="end_date_raw" value="{{ (!empty($user->end_date) ? date('d-m-Y', strtotime($user->end_date)) : '') }}"/>
+                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.date_end') }}" id="end_date_raw" value="{{ (!empty($user->end_date) ? date('d-m-Y', strtotime($user->end_date)) : '') }}"/>
                                         <span class="input-group-addon">
                                             <i class="icmn-calendar"></i>
                                         </span>
@@ -109,9 +109,9 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> COB</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.cob') }}</label>
                                     <select id="company" class="form-control select2" onchange="findFile()">
-                                        <option value="">Please Select</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
                                         @foreach ($company as $companies)
                                         <option value="{{$companies->id}}" {{ $user->company_id == $companies->id ? 'selected' : '' }}>{{$companies->name}} ({{$companies->short_name}})</option>
                                         @endforeach
@@ -123,9 +123,9 @@ foreach ($user_permission as $permission) {
                         <div class="row" id="file_form" style="display: none;">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Files</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.files') }}</label>
                                     <select id="file_id" class="form-control select2">
-                                        <option value="">Please Select</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
                                         @foreach ($files as $file)
                                         <option value="{{$file->id}}" {{ $user->file_id == $file->id ? 'selected' : '' }}>{{ $file->file_no }}</option>
                                         @endforeach
@@ -137,11 +137,11 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Status</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.status') }}</label>
                                     <select id="is_active" class="form-control">
-                                        <option value="">Please Select</option>
-                                        <option value="1" {{($user->is_active == 1 ? " selected" : "")}}>Active</option>
-                                        <option value="0" {{($user->is_active == 0 ? " selected" : "")}}>Inactive</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="1" {{($user->is_active == 1 ? " selected" : "")}}>{{ trans('app.forms.active') }}</option>
+                                        <option value="0" {{($user->is_active == 0 ? " selected" : "")}}>{{ trans('app.forms.inactive') }}</option>
                                     </select>
                                     <div id="is_active_error" style="display:none;"></div>
                                 </div>
@@ -150,20 +150,20 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>Remarks</label>
-                                    <textarea class="form-control" rows="3" placeholder="Remarks" id="remarks">{{$user->remarks}}</textarea>
+                                    <label>{{ trans('app.forms.remarks') }}</label>
+                                    <textarea class="form-control" rows="3" placeholder="{{ trans('app.forms.remarks') }}" id="remarks">{{$user->remarks}}</textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="form-actions">
                             <?php if ($update_permission == 1) { ?>
-                                <button type="button" class="btn btn-primary" id="submit_button" onclick="updateUser()">Submit</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="updateUser()">{{ trans('app.forms.submit') }}</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@user')}}'">Cancel</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@user')}}'">{{ trans('app.forms.cancel') }}</button>
                         </div>
                     </form>
                     <!-- End Vertical Form -->
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -268,44 +268,45 @@ foreach ($user_permission as $permission) {
 
         if (role == 'JMB' || role == 'MC') {
             if (start_date.trim() == "") {
-                $("#start_date_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Start Date</span>');
+                $("#start_date_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute" => "Start Date"]) }}</span>');
                 $("#start_date_error").css("display", "block");
                 error = 1;
             }
             if (end_date.trim() == "") {
-                $("#end_date_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter End Date</span>');
+                $("#end_date_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute" => "End Date"]) }}</span>');
                 $("#end_date_error").css("display", "block");
                 error = 1;
             }
             if (file_id.trim() == "") {
-                $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File</span>');
+                $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute" => "File"]) }}</span>');
                 $("#file_id_error").css("display", "block");
                 error = 1;
             }
         }
 
         if (name.trim() == "") {
-            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Full Name</span>');
+            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute" => "Full Name"]) }}</span>');
             $("#name_error").css("display", "block");
             error = 1;
         }
         if (email.trim() == "" || !IsEmail(email)) {
-            $("#email_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Email</span>');
+            $("#email_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute" => "valid Email"]) }}</span>');
             $("#email_error").css("display", "block");
             error = 1;
         }
         if (role.trim() == "") {
-            $("#role_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Access Group</span>');
+            $("#role_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute" => "Access Group"]) }}</span>');
             $("#role_error").css("display", "block");
             error = 1;
         }
         if (company.trim() == "") {
-            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Company</span>');
+            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute" => "Company"]) }}</span>');
             $("#company_error").css("display", "block");
             error = 1;
         }
         if (is_active.trim() == "") {
-            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Status</span>');
+            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute" => "Status"]) }}</span>');
+        }
             $("#is_active_error").css("display", "block");
             error = 1;
         }
@@ -332,11 +333,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>User updated successfully!</span>", function () {
+                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.users.update') }}}</span>", function () {
                             window.location = '{{URL::action("AdminController@user") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

@@ -3,9 +3,9 @@
 class BaseController extends Controller {
 
     public function __construct() {
-//        if (empty(Session::get('lang'))) {
-        Session::put('lang', 'en');
-//        }
+        if (empty(Session::get('lang'))) {
+            Session::put('lang', 'en');
+        }
 
         if (empty(Session::get('admin_cob'))) {
             Session::put('admin_cob', '');

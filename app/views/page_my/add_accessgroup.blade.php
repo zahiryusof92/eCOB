@@ -27,11 +27,11 @@ foreach ($user_permission as $permission) {
                                     <label style="color: red; font-style: italic;">* Medan Wajib Diisi</label>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label"><span style="color: red; font-style: italic;">*</span> Nama</label>                            
+                                    <label class="form-label"><span style="color: red; font-style: italic;">*</span> Nama</label>
                                     <input id="description" class="form-control" placeholder="Nama" type="text">
                                     <div id="description_error" style="display:none;"></div>
                                 </div>
@@ -107,13 +107,13 @@ foreach ($user_permission as $permission) {
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </div>                            
+                            </div>
                         </div>
                         <hr/>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Status</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.admin_status') }}</label>
                                     <select id="is_active" class="form-control">
                                         <option value="">Sila pilih</option>
                                         <option value="1">Aktif</option>
@@ -122,7 +122,7 @@ foreach ($user_permission as $permission) {
                                     <div id="is_active_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>   
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -138,7 +138,7 @@ foreach ($user_permission as $permission) {
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AdminController@accessGroups") }}'">Batal</button>
                         </div>
                     </form>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -147,7 +147,7 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-    
+
     function addAccessGroup() {
         $("#loading").css("display", "inline-block");
 
@@ -162,7 +162,7 @@ foreach ($user_permission as $permission) {
             $("#description_error").css("display", "block");
             error = 1;
         }
-               
+
         if (is_active.trim() == "") {
             $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila pilih Status</span>');
             $("#is_active_error").css("display", "block");

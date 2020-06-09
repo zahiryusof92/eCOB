@@ -24,19 +24,19 @@ foreach ($user_permission as $permission) {
                 <div class="col-lg-12">
                     <?php if ($insert_permission == 1) { ?>
                     <button onclick="window.location = '{{ URL::action('SettingController@addFormtype') }}'" type="button" class="btn btn-primary">
-                        Add Form Type
+                        {{ trans('app.buttons.add_form_type') }}
                     </button>
                     <br/><br/>
                     <?php } ?>
                     <table class="table table-hover nowrap" id="formtype" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:70%;">Form Type (BI)</th>
-                                <th style="width:70%;">Form Type (BM)</th>
-                                <th style="width:20%;">Sort No</th>
-                                <th style="width:20%;">Status</th>
+                                <th style="width:70%;">{{ trans('app.forms.form_type_bi') }}</th>
+                                <th style="width:70%;">{{ trans('app.forms.form_type_bm') }}</th>
+                                <th style="width:20%;">{{ trans('app.forms.sort_no') }}</th>
+                                <th style="width:20%;">{{ trans('app.forms.status') }}</th>
                                 <?php if ($update_permission == 1) { ?>
-                                <th style="width:10%;">Action</th>
+                                <th style="width:10%;">{{ trans('app.forms.action') }}</th>
                                 <?php } ?>
                             </tr>
                         </thead>
@@ -44,9 +44,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>            
+            </div>
         </div>
-    </section>    
+    </section>
     <!-- End  -->
 </div>
 
@@ -60,8 +60,8 @@ foreach ($user_permission as $permission) {
             "order": [[ 2, "asc" ]],
             responsive: true
         });
-    });    
-    
+    });
+
     function inactiveFormtype(id) {
         $.ajax({
             url: "{{ URL::action('SettingController@inactiveFormtype') }}",
@@ -71,11 +71,11 @@ foreach ($user_permission as $permission) {
             },
             success: function(data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
+                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function() {
                         window.location = "{{URL::action('SettingController@formtype')}}";
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                 }
             }
         });
@@ -90,22 +90,22 @@ foreach ($user_permission as $permission) {
             },
             success: function(data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
+                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function() {
                         window.location = "{{URL::action('SettingController@formtype')}}";
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                 }
             }
         });
     }
-    
+
     function deleteFormtype (id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -121,15 +121,15 @@ foreach ($user_permission as $permission) {
                 success: function(data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "Deleted!",
-                            text: "File has been deleted",
+                            title: "{{ trans('app.successes.deleted_title') }}",
+                            text: "{{ trans('app.successes.deleted_text_file') }}",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

@@ -23,51 +23,51 @@ foreach ($user_permission as $permission) {
                     <form id="update_state" class="form-horizontal">
                         <div class="form-group row">
                             <div class="col-md-2">
-                                <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields.</label>
+                                <label class="form-control-label" style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> State Name</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.state_name') }}</label>
                             </div>
                             <div class="col-md-4">
-                                <input id="name" class="form-control" placeholder="State" type="text" value="{{ $state->name }}">
+                                <input id="name" class="form-control" placeholder="{{ trans('app.forms.state_name') }}" type="text" value="{{ $state->name }}">
                                 <div id="name_error" style="display:none;"></div>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Sort No</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.sort_no') }}</label>
                             </div>
                             <div class="col-md-4">
-                                <input id="sort_no" class="form-control" placeholder="Sort No" type="text" value="{{ $state->sort_no }}">
+                                <input id="sort_no" class="form-control" placeholder="{{ trans('app.forms.sort_no') }}" type="text" value="{{ $state->sort_no }}">
                                 <div id="sort_no_error" style="display:none;"></div>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Status</label>
-                            </div>    
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.admin_status') }}</label>
+                            </div>
                             <div class="col-md-4">
                                 <select id="is_active" class="form-control">
-                                    <option value="">Please Select</option>
-                                    <option value="1" {{($state->is_active==1 ? " selected" : "")}}>Active</option>
-                                    <option value="0" {{($state->is_active==0 ? " selected" : "")}}>Inactive</option>
+                                    <option value="">{{ trans('app.forms.please_select') }}</option>
+                                    <option value="1" {{($state->is_active==1 ? " selected" : "")}}>{{ trans('app.forms.active') }}</option>
+                                    <option value="0" {{($state->is_active==0 ? " selected" : "")}}>{{ trans('app.forms.inactive') }}</option>
                                 </select>
                                 <div id="is_active_error" style="display:none;"></div>
-                            </div>                            
-                        </div>                                               
+                            </div>
+                        </div>
                         <div class="form-actions">
                             <?php if ($update_permission == 1) { ?>
-                                <button type="button" class="btn btn-primary" id="submit_button" onclick="updateState()">Save</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="updateState()">{{ trans('app.forms.save') }}</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AdminController@state") }}'" >Cancel</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AdminController@state") }}'" >{{ trans('app.forms.cancel') }}</button>
                         </div>
                     </form>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -87,19 +87,19 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (name.trim() == "") {
-            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter State Name</span>');
+            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"State Name"]) }}</span>');
             $("#name_error").css("display", "block");
             error = 1;
         }
 
         if (sort_no.trim() == "") {
-            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Sort No</span>');
+            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Sort No"]) }}</span>');
             $("#sort_no_error").css("display", "block");
             error = 1;
         }
 
         if (is_active.trim() == "") {
-            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Status</span>');
+            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Status"]) }}</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
@@ -123,7 +123,7 @@ foreach ($user_permission as $permission) {
                             window.location = '{{URL::action("AdminController@state") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

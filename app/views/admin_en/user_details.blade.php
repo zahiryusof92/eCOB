@@ -19,50 +19,50 @@ foreach ($user_permission as $permission) {
         </div>
         <div class="panel-body">
             <dl class="dl-horizontal">
-                <dt>Username</dt>
+                <dt>{{ trans('app.forms.username') }}</dt>
                 <dd>{{($user->username != "" ? $user->username : "-")}}</dd>
-                <dt>Full Name</dt>
+                <dt>{{ trans('app.forms.full_name') }}</dt>
                 <dd>{{($user->full_name != "" ? $user->full_name : "-")}}</dd>
-                <dt>E-mail</dt>
+                <dt>{{ trans('app.forms.email') }}</dt>
                 <dd>{{($user->email != "" ? $user->email : "-")}}</dd>
-                <dt>Phone No.</dt>
+                <dt>{{ trans('app.forms.phone_number') }}</dt>
                 <dd>{{($user->phone_no != "" ? $user->phone_no : "-")}}</dd>
-                <dt>COB</dt>
+                <dt>{{ trans('app.forms.cob') }}</dt>
                 <dd>{{($user->getCOB->name != "" ? $user->getCOB->name : "-")}}</dd>
-                <dt>Access Group</dt>
-                <dd>{{($user->getRole->name != "" ? $user->getRole->name : "-")}}</dd>                
+                <dt>{{ trans('app.forms.access_group') }}</dt>
+                <dd>{{($user->getRole->name != "" ? $user->getRole->name : "-")}}</dd>
                 @if ($user->getRole->name == 'JMB' || $user->getRole->name == 'MC')
-                <dt>Start Date</dt>
+                <dt>{{ trans('app.forms.date_start') }}</dt>
                 <dd>{{($user->start_date != "" ? date('d-m-Y', strtotime($user->start_date)) : "-")}}</dd>
-                <dt>End Date</dt>
+                <dt>{{ trans('app.forms.date_end') }}</dt>
                 <dd>{{($user->end_date != "" ? date('d-m-Y', strtotime($user->end_date)) : "-")}}</dd>
-                <dt>File No</dt>
+                <dt>{{ trans('app.forms.file_no') }}</dt>
                 <dd>{{($user->getFile->file_no != "" ? $user->getFile->file_no : "-")}}</dd>
-                @endif                
-                <dt>Is Active</dt>
+                @endif
+                <dt>{{ trans('app.forms.is_active') }}</dt>
                 <dd>{{ ($user->is_active == '1' ? 'Yes' : 'No') }}</dd>
                 @if ($user->status == 0)
-                <dt>Status</dt>
+                <dt>{{ trans('app.forms.status') }}</dt>
                 <dd>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <select id="status" class="form-control">
-                                    <option value="">Please choose</option>
-                                    <option value="1">Approve</option>
-                                    <option value="2">Reject</option>
+                                    <option value="">{{ trans('app.forms.please_select') }}</option>
+                                    <option value="1">{{ trans('app.forms.approve') }}</option>
+                                    <option value="2">{{ trans('app.forms.reject') }}</option>
                                 </select>
                                 <div id="status_error" style="display:none;"></div>
                             </div>
                         </div>
                     </div>
                 </dd>
-                <dt>Remarks</dt>
+                <dt>{{ trans('app.forms.remarks') }}</dt>
                 <dd>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <textarea class="form-control" rows="3" placeholder="Remarks" id="remarks"></textarea>
+                                <textarea class="form-control" rows="3" placeholder="{{ trans('app.forms.remarks') }}" id="remarks"></textarea>
                             </div>
                         </div>
                     </div>
@@ -71,40 +71,40 @@ foreach ($user_permission as $permission) {
                     <dt>&nbsp;</dt>
                     <dd>
                         <?php if ($update_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="approvedUser()">Submit</button>
+                            <button type="button" class="btn btn-primary" id="submit_button" onclick="approvedUser()">{{ trans('app.forms.submit') }}</button>
                         <?php } ?>
-                        <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@user')}}'">Cancel</button>
+                        <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@user')}}'">{{ trans('app.forms.cancel') }}</button>
                     </dd>
                 </div>
-                @else      
+                @else
                 <?php $admin = User::find($user->approved_by); ?>
                 @if ($user->status == 1)
-                <dt>Status</dt>
-                <dd>Approved</dd>
-                <dt>Approved By</dt>
+                <dt>{{ trans('app.forms.status') }}</dt>
+                <dd>{{ trans('app.forms.approve') }}</dd>
+                <dt>{{ trans('app.forms.approved_by') }}</dt>
                 <dd>{{($admin->full_name != "" ? $admin->full_name : "-")}}</dd>
-                <dt>Approved Date</dt>
+                <dt>{{ trans('app.forms.approved_date') }}</dt>
                 <dd>{{($user->approved_at != "" ? date('d-m-Y', strtotime($user->approved_at)) : "-")}}</dd>
-                <dt>Remarks</dt>
+                <dt>{{ trans('app.forms.remarks') }}</dt>
                 <dd>{{($user->remarks != "" ? $user->remarks : "-")}}</dd>
                 @else
-                <dt>Status</dt>
-                <dd>Rejected</dd>
-                <dt>Rejected By</dt>
+                <dt>{{ trans('app.forms.status') }}</dt>
+                <dd>{{ trans('app.forms.reject') }}</dd>
+                <dt>{{ trans('app.forms.rejected_by') }}</dt>
                 <dd>{{($admin->full_name != "" ? $admin->full_name : "-")}}</dd>
-                <dt>Rejected Date</dt>
+                <dt>{{ trans('app.forms.rejected_date') }}</dt>
                 <dd>{{($user->approved_at != "" ? date('d-m-Y', strtotime($user->approved_at)) : "-")}}</dd>
-                <dt>Catatan</dt>
+                <dt>{{ trans('app.forms.remarks') }}</dt>
                 <dd>{{($user->remarks != "" ? $user->remarks : "-")}}</dd>
                 @endif
                 <div class="form-actions">
                     <dt>&nbsp;</dt>
                     <dd>
-                        <button type="button" class="btn btn-default" id="cancel_button" onclick="window.history.back()">Back</button>
+                        <button type="button" class="btn btn-default" id="cancel_button" onclick="window.history.back()">{{ trans('app.forms.back') }}</button>
                     </dd>
                 </div>
                 @endif
-            </dl>            
+            </dl>
         </div>
     </section>
     <!-- End -->
@@ -116,14 +116,14 @@ foreach ($user_permission as $permission) {
     function approvedUser() {
         $("#loading").css("display", "inline-block");
         $("#status_error").css("display", "none");
-        
+
         var status = $("#status").val(),
                 remarks = $("#remarks").val();
-        
+
         var error = 0;
-        
+
         if (status.trim() === "") {
-            $("#status_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please choose Status</span>');
+            $("#status_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Status"]) }}</span>');
             $("#status_error").css("display", "block");
             error = 1;
         }
@@ -142,11 +142,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() === "true") {
-                        bootbox.alert("<span style='color:green;'>Update user succesfull!</span>", function () {
+                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.users.update') }}</span>", function () {
                             window.location = '{{URL::action("AdminController@user") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
