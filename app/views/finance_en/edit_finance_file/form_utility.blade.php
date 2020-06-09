@@ -20,7 +20,7 @@ $prefix3 = 'utilab_';
                         <th width="10%" style="text-align: center;">BULAN HADAPAN<br/>C</th>
                         <th width="10%" style="text-align: center;">JUMLAH<br/>A + B + C</th>
                         <th width="10%" style="text-align: center;">JUMLAH<br/>BAKI BAYARAN MASIH TERTUNGGAK<br/>(BELUM BAYAR)</th>
-                        <td width="5%" style="text-align: center;">&nbsp;</td>
+                        <td width="5%" style="text-align: center;">&nbsp;</td> 
                     </tr>
                 </thead>
                 <tbody>
@@ -100,7 +100,7 @@ $prefix3 = 'utilab_';
                         <td><input type="number" step="any" id="{{ $prefix2 . 'total_income_' . $countb }}" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $totalb_income }}" readonly=""></td>
                         <td><input type="number" step="any" oninput="calculateUtilityBTotal('{{ $countb }}')" id="{{ $prefix2 . 'tertunggak_' . $countb }}" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $utilbs['tertunggak'] }}"></td>
                         @if ($utilbs['is_custom'])
-                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowUtility('utility_row<?php echo $countb ?>')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td>
+                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowUtility('utility_row<?php echo $countb ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                         @else
                         <td>&nbsp;</td>
                         @endif
@@ -108,7 +108,7 @@ $prefix3 = 'utilab_';
                     @endforeach
 
                     <tr>
-                        <td class="padding-table text-right" colspan="8"><a href="javascript:void(0);" onclick="addRowUtility()" class="btn btn-primary btn-xs">{{ trans("app.forms.add_more") }}</a></td>
+                        <td class="padding-table text-right" colspan="8"><a href="javascript:void(0);" onclick="addRowUtility()" class="btn btn-primary btn-xs">Add More</a></td>
                     </tr>
 
                     <tr>
@@ -133,7 +133,7 @@ $prefix3 = 'utilab_';
                         <td>&nbsp;</td>
                     </tr>
                 </tbody>
-            </table>
+            </table>    
         </div>
     </div>
 </div>
@@ -227,8 +227,8 @@ $prefix3 = 'utilab_';
             $('#' + util_total_income[i].id).val(parseFloat(util_total_income[i].value).toFixed(2));
         }
 
-        var util_sum_total_all = parseFloat(util_sum_total_tunggakan) + parseFloat(util_sum_total_semasa) + parseFloat(util_sum_total_hadapan); // JUMLAH SEMUA A + B + C
-        $('#{{ $prefix }}total_all').val(parseFloat(util_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
+        var util_sum_total_all = parseFloat(util_sum_total_tunggakan) + parseFloat(util_sum_total_semasa) + parseFloat(util_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
+        $('#{{ $prefix }}total_all').val(parseFloat(util_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
 
         calculateUtilityABTotal();
     }
@@ -271,7 +271,7 @@ $prefix3 = 'utilab_';
             $('#' + utilb_total_income[i].id).val(parseFloat(utilb_total_income[i].value).toFixed(2));
         }
 
-        var utilb_sum_total_all = parseFloat(utilb_sum_total_tunggakan) + parseFloat(utilb_sum_total_semasa) + parseFloat(utilb_sum_total_hadapan); // JUMLAH SEMUA A + B + C
+        var utilb_sum_total_all = parseFloat(utilb_sum_total_tunggakan) + parseFloat(utilb_sum_total_semasa) + parseFloat(utilb_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
         $('#{{ $prefix2 }}total_all').val(parseFloat(utilb_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
 
         calculateUtilityABTotal();
@@ -294,7 +294,7 @@ $prefix3 = 'utilab_';
         var util_total_income = document.getElementById("{{ $prefix }}total_all");
         var utilb_total_income = document.getElementById("{{ $prefix2 }}total_all");
         utilab_sum_total_all += parseFloat(util_total_income.value) + parseFloat(utilb_total_income.value);
-        $('#{{ $prefix3 }}total_all').val(parseFloat(utilab_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
+        $('#{{ $prefix3 }}total_all').val(parseFloat(utilab_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
 
         var utilab_sum_total_tertunggak = 0;
         var util_total_tertunggak = document.getElementById("{{ $prefix }}total_tertunggak");
@@ -306,7 +306,7 @@ $prefix3 = 'utilab_';
     function addRowUtility() {
         var rowUtilityNo = $("#dynamic_form_utility tr").length;
         rowUtilityNo = rowUtilityNo - 8;
-        $("#dynamic_form_utility tr:last").prev().prev().prev().after('<tr id="utility_row' + rowUtilityNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix2 }}is_custom[]" value="1">' + rowUtilityNo + '</td><td><input type="text" name="{{ $prefix2 }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateUtilityB(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}tunggakan_' + rowUtilityNo + '" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateUtilityB(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}semasa_' + rowUtilityNo + '" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateUtilityB(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}hadapan_' + rowUtilityNo + '" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix2 }}total_income_' + rowUtilityNo + '" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateUtilityBTotal(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}tertunggak_' + rowUtilityNo + '" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowUtility(\'utility_row' + rowUtilityNo + '\')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td></tr>');
+        $("#dynamic_form_utility tr:last").prev().prev().prev().after('<tr id="utility_row' + rowUtilityNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix2 }}is_custom[]" value="1">' + rowUtilityNo + '</td><td><input type="text" name="{{ $prefix2 }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateUtilityB(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}tunggakan_' + rowUtilityNo + '" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateUtilityB(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}semasa_' + rowUtilityNo + '" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateUtilityB(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}hadapan_' + rowUtilityNo + '" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix2 }}total_income_' + rowUtilityNo + '" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateUtilityBTotal(\'' + rowUtilityNo + '\')" id="{{ $prefix2 }}tertunggak_' + rowUtilityNo + '" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowUtility(\'utility_row' + rowUtilityNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
 
         calculateUtilityBTotal();
     }

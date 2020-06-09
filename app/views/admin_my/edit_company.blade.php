@@ -41,7 +41,7 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.short_name') }}</label>
+                                    <label><span style="color: red; font-style: italic;">* </span>Short Name</label>
                                     <input type="text" class="form-control" placeholder="Short Name" id="short_name" value="{{$company->short_name}}">
                                     <div id="short_name_error" style="display:none;"></div>
                                 </div>
@@ -55,7 +55,7 @@ foreach ($user_permission as $permission) {
                                     <div id="rob_roc_no_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -99,7 +99,7 @@ foreach ($user_permission as $permission) {
                                     <div id="poscode_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -125,7 +125,7 @@ foreach ($user_permission as $permission) {
                                     <div id="country_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div>        
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -141,7 +141,7 @@ foreach ($user_permission as $permission) {
                                     <div id="fax_no_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -159,7 +159,7 @@ foreach ($user_permission as $permission) {
                                     <label>Logo</label>
                                     <br />
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                    <input type="file" name="image" id="image" />
+                                    <input type="file" name="image" id="image" /> 
                                     <br />
                                     <!--<small>Max image size: MB</small>-->
                                 </div>
@@ -185,7 +185,7 @@ foreach ($user_permission as $permission) {
                                     <label>Gambar Menu</label>
                                     <br />
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                    <input type="file" name="nav_image" id="nav_image" />
+                                    <input type="file" name="nav_image" id="nav_image" /> 
                                     <br />
                                     <!--<small>Max image size: MB</small>-->
                                 </div>
@@ -204,7 +204,7 @@ foreach ($user_permission as $permission) {
                             </div>
                         </div>
                     </form>
-                    <form role="form">
+                    <form role="form">  
                         <div class="form-actions">
                             <input type="hidden" id="image_url" value="{{$company->image_url}}"/>
                             <input type="hidden" id="nav_image_url" value="{{$company->nav_image_url}}"/>
@@ -215,7 +215,7 @@ foreach ($user_permission as $permission) {
                         </div>
                     </form>
                     <!-- End Vertical Form -->
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -232,7 +232,7 @@ foreach ($user_permission as $permission) {
                 var imagefile = file.type;
                 var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
                 if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
-                    $("#validation-errors").html("<span id='error'>{{ trans('app.forms.please_select_valid_image') }}</span><br/>" + "<span id='error_message'>{{ trans('app.forms.only_image_allowed') }}</span>");
+                    $("#validation-errors").html("<span id='error'>Please Select a valid Image File</span><br/>" + "<span id='error_message'>Only .jpeg, .jpg, .png and .gif images type allowed</span>");
                     $("#validation-errors").css("color", "red");
                     return false;
                 }
@@ -250,7 +250,7 @@ foreach ($user_permission as $permission) {
             $("#output").html("<img id='previewing' style='width: 50%;'/>");
             $('#previewing').attr('src', e.target.result);
         };
-
+        
         $(function() {
             $("#nav_image").change(function() {
                 $("#nav_validation-errors").empty(); // To remove the previous error message
@@ -258,7 +258,7 @@ foreach ($user_permission as $permission) {
                 var navImagefile = nav_file.type;
                 var nav_match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
                 if (!((navImagefile == nav_match[0]) || (navImagefile == nav_match[1]) || (navImagefile == nav_match[2])  || (navImagefile == match[3]))) {
-                    $("#nav_validation-errors").html("<span id='error'>{{ trans('app.forms.please_select_valid_image') }}</span><br/>" + "<span id='error_message'>{{ trans('app.forms.only_image_allowed') }}</span>");
+                    $("#nav_validation-errors").html("<span id='error'>Please Select a valid Image File</span><br/>" + "<span id='error_message'>Only .jpeg, .jpg, .png and .gif images type allowed</span>");
                     $("#nav_validation-errors").css("color", "red");
                     return false;
                 }
@@ -276,14 +276,14 @@ foreach ($user_permission as $permission) {
             $("#output_nav_image").html("<img id='nav_previewing' style='width: 50%;'/>");
             $('#nav_previewing').attr('src', e.target.result);
         };
-
+        
         //upload
         var options = {
             beforeSubmit: showRequest,
             success: showResponse,
             dataType: 'json'
         };
-
+        
         var options2 = {
             beforeSubmit: showRequest2,
             success: showResponse2,
@@ -293,7 +293,7 @@ foreach ($user_permission as $permission) {
         $('body').delegate('#image', 'change', function () {
             $('#upload').ajaxForm(options).submit();
         });
-
+        
         $('body').delegate('#nav_image', 'change', function () {
             $('#upload_nav_image').ajaxForm(options2).submit();
         });
@@ -341,7 +341,7 @@ foreach ($user_permission as $permission) {
             $("#nav_image_url").val(response.file);
         }
     }
-
+    
     function editCompany() {
         $("#loading").css("display", "inline-block");
 
@@ -439,7 +439,7 @@ foreach ($user_permission as $permission) {
                     if (data.trim() == "true") {
                         bootbox.alert("<span style='color:green;'>Organization Profile updated successfully!</span>", function () {
                             window.location = '{{URL::action("AdminController@company") }}';
-                        });
+                        }); 
                     } else {
                         bootbox.alert("<span style='color:red;'>Terdapat masalah ketika prosess. Sila cuba lagi.</span>");
                     }

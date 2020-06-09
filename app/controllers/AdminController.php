@@ -6,14 +6,25 @@ class AdminController extends BaseController {
         if (View::exists($name)) {
             return View::make($name);
         } else {
-            $viewData = array(
-                'title' => trans('app.errors.page_not_found'),
-                'panel_nav_active' => '',
-                'main_nav_active' => '',
-                'sub_nav_active' => '',
-                'image' => ""
-            );
-            return View::make('404_en', $viewData);
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => "Page not found!",
+                    'panel_nav_active' => '',
+                    'main_nav_active' => '',
+                    'sub_nav_active' => '',
+                    'image' => ""
+                );
+                return View::make('404_en', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => "Halaman tidak dijumpai!",
+                    'panel_nav_active' => '',
+                    'main_nav_active' => '',
+                    'sub_nav_active' => '',
+                    'image' => ""
+                );
+                return View::make('404_my', $viewData);
+            }
         }
     }
 
@@ -80,7 +91,7 @@ class AdminController extends BaseController {
         }
 
         $viewData = array(
-            'title' => trans('app.app_name_short'),
+            'title' => 'eCOB System',
             'panel_nav_active' => 'home_panel',
             'main_nav_active' => 'home_main',
             'sub_nav_active' => 'home',
@@ -127,7 +138,11 @@ class AdminController extends BaseController {
                 if (count($agm_remainder) > 0) {
                     if ($agm_remainder->agm_date <= date('Y-m-d', $oneyear) && $agm_remainder->agm_date != "0000-00-00") {
                         $button = "";
-                        $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
+                        if (Session::get('lang') == "en") {
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">View</button>&nbsp;';
+                        } else {
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">Papar</button>&nbsp;';
+                        }
                         $data_raw = array(
                             $files->company->short_name,
                             $files->file_no,
@@ -176,7 +191,11 @@ class AdminController extends BaseController {
                 $never_agm = MeetingDocument::where('file_id', $files->id)->where('is_deleted', 0)->orderBy('agm_date', 'desc')->first();
 
                 $button = "";
-                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">View</button>&nbsp;';
+                } else {
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">Papar</button>&nbsp;';
+                }
                 if (count($never_agm) > 0) {
                     if ($never_agm->agm_date == "0000-00-00") {
                         $data_raw = array(
@@ -237,7 +256,11 @@ class AdminController extends BaseController {
                 if (count($agm_more12months) > 0) {
                     if ($agm_more12months->agm_date <= date('Y-m-d', $twelveMonths) && $agm_more12months->agm_date != "0000-00-00") {
                         $button = "";
-                        $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
+                        if (Session::get('lang') == "en") {
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">View</button>&nbsp;';
+                        } else {
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">Papar</button>&nbsp;';
+                        }
                         $data_raw = array(
                             $files->company->short_name,
                             $files->file_no,
@@ -289,7 +312,11 @@ class AdminController extends BaseController {
                 if (count($agm_more15months) > 0) {
                     if ($agm_more15months->agm_date <= date('Y-m-d', $fifthteenMonths) && $agm_more15months->agm_date != "0000-00-00") {
                         $button = "";
-                        $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">'.trans('app.forms.view').'</button>&nbsp;';
+                        if (Session::get('lang') == "en") {
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">View</button>&nbsp;';
+                        } else {
+                            $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@monitoring', $files->id) . '\'">Papar</button>&nbsp;';
+                        }
                         $data_raw = array(
                             $files->company->short_name,
                             $files->file_no,
@@ -324,7 +351,11 @@ class AdminController extends BaseController {
             $data = Array();
             foreach ($memo as $memos) {
                 $button = "";
-                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="getMemoDetails(\'' . $memos->id . '\')">'.trans('app.forms.view').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="getMemoDetails(\'' . $memos->id . '\')">View</button>&nbsp;';
+                } else {
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="getMemoDetails(\'' . $memos->id . '\')">Papar</button>&nbsp;';
+                }
                 $data_raw = array(
                     $memos->subject,
                     date('d-M-Y', strtotime($memos->memo_date)),
@@ -369,7 +400,7 @@ class AdminController extends BaseController {
                 $result .= "<p>" . ($memo->description != "" ? $memo->description : "-") . "</p>";
                 $result .= "</div>";
             } else {
-                $result = trans('app.errors.no_data_found');
+                $result = "No Data Found";
             }
 
             print $result;
@@ -382,16 +413,29 @@ class AdminController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.file_prefix_maintenance'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => 'prefix_file',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'COB File Prefix Maintenance',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'prefix_file',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('cob_en.fileprefix', $viewData);
+            return View::make('cob_en.fileprefix', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Pengurusan Awalan Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'prefix_file',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('cob_my.fileprefix', $viewData);
+        }
     }
 
     public function addFilePrefix() {
@@ -407,17 +451,31 @@ class AdminController extends BaseController {
             }
         }
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.add_cob_file_prefix'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => 'prefix_file',
-            'user_permission' => $user_permission,
-            'cob' => $cob,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add COB File Prefix',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'prefix_file',
+                'user_permission' => $user_permission,
+                'cob' => $cob,
+                'image' => ""
+            );
 
-        return View::make('cob_en.add_fileprefix', $viewData);
+            return View::make('cob_en.add_fileprefix', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Awalan Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'prefix_file',
+                'user_permission' => $user_permission,
+                'cob' => $cob,
+                'image' => ""
+            );
+
+            return View::make('cob_my.add_fileprefix', $viewData);
+        }
     }
 
     public function submitFilePrefix() {
@@ -466,15 +524,27 @@ class AdminController extends BaseController {
             $data = Array();
             foreach ($prefix as $fileprefixs) {
                 $button = "";
-                if ($fileprefixs->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFilePrefix(\'' . $fileprefixs->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($fileprefixs->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFilePrefix(\'' . $fileprefixs->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFilePrefix(\'' . $fileprefixs->id . '\')">Active</button>&nbsp;';
+                    }
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateFilePrefix', $fileprefixs->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                    $button .= '<button class="btn btn-xs btn-danger" onclick="deleteFilePrefix(\'' . $fileprefixs->id . '\')"><i class="fa fa-trash"></i></button>';
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFilePrefix(\'' . $fileprefixs->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($fileprefixs->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFilePrefix(\'' . $fileprefixs->id . '\')">Tidak Aktif</button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFilePrefix(\'' . $fileprefixs->id . '\')">Aktif</button>&nbsp;';
+                    }
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateFilePrefix', $fileprefixs->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
+                    $button .= '<button class="btn btn-xs btn-danger" onclick="deleteFilePrefix(\'' . $fileprefixs->id . '\')"><i class="fa fa-trash"></i></button>';
                 }
-                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateFilePrefix', $fileprefixs->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
-                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteFilePrefix(\'' . $fileprefixs->id . '\')"><i class="fa fa-trash"></i></button>';
                 $data_raw = array(
                     $fileprefixs->description,
                     $fileprefixs->sort_no,
@@ -580,17 +650,31 @@ class AdminController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $prefix = FilePrefix::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file_prefix'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => 'prefix_file',
-            'user_permission' => $user_permission,
-            'prefix' => $prefix,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File Prefix',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'prefix_file',
+                'user_permission' => $user_permission,
+                'prefix' => $prefix,
+                'image' => ""
+            );
 
-        return View::make('cob_en.update_fileprefix', $viewData);
+            return View::make('cob_en.update_fileprefix', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Awalan Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'prefix_file',
+                'user_permission' => $user_permission,
+                'prefix' => $prefix,
+                'image' => ""
+            );
+
+            return View::make('cob_my.update_fileprefix', $viewData);
+        }
     }
 
     public function submitUpdateFilePrefix() {
@@ -623,7 +707,7 @@ class AdminController extends BaseController {
         }
     }
 
-    // add file
+    // add file    
     public function addFile() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
@@ -641,18 +725,33 @@ class AdminController extends BaseController {
             }
         }
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.add_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => 'add_cob',
-            'file_no' => $file_no,
-            'cob' => $cob,
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'add_cob',
+                'file_no' => $file_no,
+                'cob' => $cob,
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('page_en.add_file', $viewData);
+            return View::make('page_en.add_file', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'add_cob',
+                'file_no' => $file_no,
+                'cob' => $cob,
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_my.add_file', $viewData);
+        }
     }
 
     public function submitFile() {
@@ -766,18 +865,33 @@ class AdminController extends BaseController {
 
         $file = Files::where('is_deleted', 0)->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.file_list'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => 'cob_list',
-            'user_permission' => $user_permission,
-            'cob' => $cob,
-            'file' => $file,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'COB File List',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'cob' => $cob,
+                'file' => $file,
+                'image' => ""
+            );
 
-        return View::make('page_en.file_list', $viewData);
+            return View::make('page_en.file_list', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Senarai Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'cob' => $cob,
+                'file' => $file,
+                'image' => ""
+            );
+
+            return View::make('page_my.file_list', $viewData);
+        }
     }
 
     public function getFileList() {
@@ -805,16 +919,29 @@ class AdminController extends BaseController {
                     $strata_name = "";
                 }
                 $button = "";
-                if ($files->is_active == 1) {
-                    $is_active = trans('app.forms.yes');
-                    $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
-                } else {
-                    $is_active = trans('app.forms.no');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
-                }
+                if (Session::get('lang') == "en") {
+                    if ($files->is_active == 1) {
+                        $is_active = "Yes";
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $is_active = "No";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Active</button>&nbsp;';
+                    }
 
 //                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
-                $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Delete <i class="fa fa-trash"></i></button>';
+                } else {
+                    if ($files->is_active == 1) {
+                        $is_active = "Ya";
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Tidak Aktif</button>&nbsp;';
+                    } else {
+                        $is_active = "Tidak";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Aktif</button>&nbsp;';
+                    }
+
+//                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Padam <i class="fa fa-trash"></i></button>';
+                }
 
                 $data_raw = array(
                     "<a style='text-decoration:underline;' href='" . URL::action('AdminController@house', $files->id) . "'>" . $files->file_no . "</a>",
@@ -855,18 +982,33 @@ class AdminController extends BaseController {
 
         $file = Files::where('is_deleted', 0)->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.file_list_before_vp'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => 'cob_before_vp_list',
-            'user_permission' => $user_permission,
-            'cob' => $cob,
-            'file' => $file,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'COB File List Before VP',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_before_vp_list',
+                'user_permission' => $user_permission,
+                'cob' => $cob,
+                'file' => $file,
+                'image' => ""
+            );
 
-        return View::make('page_en.file_list_before_vp', $viewData);
+            return View::make('page_en.file_list_before_vp', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Senarai Fail COB Sebelum VP',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_before_vp_list',
+                'user_permission' => $user_permission,
+                'cob' => $cob,
+                'file' => $file,
+                'image' => ""
+            );
+
+            return View::make('page_my.file_list_before_vp', $viewData);
+        }
     }
 
     public function getFileListBeforeVP() {
@@ -894,16 +1036,29 @@ class AdminController extends BaseController {
                     $strata_name = "";
                 }
                 $button = "";
-                if ($files->is_active == 1) {
-                    $is_active = trans('app.forms.yes');
-                    $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
-                } else {
-                    $is_active = trans('app.forms.no');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
-                }
+                if (Session::get('lang') == "en") {
+                    if ($files->is_active == 1) {
+                        $is_active = "Yes";
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $is_active = "No";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Active</button>&nbsp;';
+                    }
 
 //                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
-                $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Delete <i class="fa fa-trash"></i></button>';
+                } else {
+                    if ($files->is_active == 1) {
+                        $is_active = "Ya";
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFileList(\'' . $files->id . '\')">Tidak Aktif</button>&nbsp;';
+                    } else {
+                        $is_active = "Tidak";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFileList(\'' . $files->id . '\')">Aktif</button>&nbsp;';
+                    }
+
+//                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@viewHouse', $files->id) . '\'">View <i class="fa fa-eye"></i></button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFileList(\'' . $files->id . '\')">Padam <i class="fa fa-trash"></i></button>';
+                }
 
                 $data_raw = array(
                     "<a style='text-decoration:underline;' href='" . URL::action('AdminController@house', $files->id) . "'>" . $files->file_no . "</a>",
@@ -1052,22 +1207,41 @@ class AdminController extends BaseController {
         $country = Country::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
         $state = State::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'developer' => $developer,
-            'house_scheme' => $house_scheme,
-            'city' => $city,
-            'country' => $country,
-            'state' => $state,
-            'file' => $file,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'developer' => $developer,
+                'house_scheme' => $house_scheme,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'file' => $file,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.view_house_scheme', $viewData);
+            return View::make('page_en.view_house_scheme', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'developer' => $developer,
+                'house_scheme' => $house_scheme,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'file' => $file,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.view_house_scheme', $viewData);
+        }
     }
 
     public function house($id) {
@@ -1082,22 +1256,41 @@ class AdminController extends BaseController {
         $country = Country::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
         $state = State::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'developer' => $developer,
-            'house_scheme' => $house_scheme,
-            'city' => $city,
-            'country' => $country,
-            'state' => $state,
-            'file' => $file,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'developer' => $developer,
+                'house_scheme' => $house_scheme,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'file' => $file,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.update_house_scheme', $viewData);
+            return View::make('page_en.update_house_scheme', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'developer' => $developer,
+                'house_scheme' => $house_scheme,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'file' => $file,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.update_house_scheme', $viewData);
+        }
     }
 
     public function submitUpdateHouseScheme() {
@@ -1198,34 +1391,65 @@ class AdminController extends BaseController {
         $unitoption = UnitOption::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
         $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'strata' => $strata,
-            'city' => $city,
-            'country' => $country,
-            'state' => $state,
-            'parliament' => $parliament,
-            'dun' => $dun,
-            'park' => $park,
-            'area' => $area,
-            'unit' => $unit,
-            'land_title' => $land_title,
-            'category' => $category,
-            'perimeter' => $perimeter,
-            'facility' => $facility,
-            'file' => $file,
-            'unitoption' => $unitoption,
-            'residential' => $residential,
-            'commercial' => $commercial,
-            'designation' => $designation,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'strata' => $strata,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'parliament' => $parliament,
+                'dun' => $dun,
+                'park' => $park,
+                'area' => $area,
+                'unit' => $unit,
+                'land_title' => $land_title,
+                'category' => $category,
+                'perimeter' => $perimeter,
+                'facility' => $facility,
+                'file' => $file,
+                'unitoption' => $unitoption,
+                'residential' => $residential,
+                'commercial' => $commercial,
+                'designation' => $designation,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.view_strata', $viewData);
+            return View::make('page_en.view_strata', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'strata' => $strata,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'parliament' => $parliament,
+                'dun' => $dun,
+                'park' => $park,
+                'area' => $area,
+                'unit' => $unit,
+                'land_title' => $land_title,
+                'category' => $category,
+                'perimeter' => $perimeter,
+                'facility' => $facility,
+                'file' => $file,
+                'unitoption' => $unitoption,
+                'residential' => $residential,
+                'commercial' => $commercial,
+                'designation' => $designation,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.view_strata', $viewData);
+        }
     }
 
     public function strata($id) {
@@ -1261,34 +1485,65 @@ class AdminController extends BaseController {
         $unitoption = UnitOption::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
         $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'strata' => $strata,
-            'city' => $city,
-            'country' => $country,
-            'state' => $state,
-            'parliament' => $parliament,
-            'dun' => $dun,
-            'park' => $park,
-            'area' => $area,
-            'unit' => $unit,
-            'land_title' => $land_title,
-            'category' => $category,
-            'perimeter' => $perimeter,
-            'facility' => $facility,
-            'file' => $file,
-            'unitoption' => $unitoption,
-            'residential' => $residential,
-            'commercial' => $commercial,
-            'designation' => $designation,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'strata' => $strata,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'parliament' => $parliament,
+                'dun' => $dun,
+                'park' => $park,
+                'area' => $area,
+                'unit' => $unit,
+                'land_title' => $land_title,
+                'category' => $category,
+                'perimeter' => $perimeter,
+                'facility' => $facility,
+                'file' => $file,
+                'unitoption' => $unitoption,
+                'residential' => $residential,
+                'commercial' => $commercial,
+                'designation' => $designation,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.update_strata', $viewData);
+            return View::make('page_en.update_strata', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'strata' => $strata,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'parliament' => $parliament,
+                'dun' => $dun,
+                'park' => $park,
+                'area' => $area,
+                'unit' => $unit,
+                'land_title' => $land_title,
+                'category' => $category,
+                'perimeter' => $perimeter,
+                'facility' => $facility,
+                'file' => $file,
+                'unitoption' => $unitoption,
+                'residential' => $residential,
+                'commercial' => $commercial,
+                'designation' => $designation,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.update_strata', $viewData);
+        }
     }
 
     public function findDUN() {
@@ -1298,7 +1553,11 @@ class AdminController extends BaseController {
             $parliament_id = $data['parliament_id'];
             $dun = Dun::where('is_deleted', 0)->where('parliament', $parliament_id)->orderBy('description', 'asc')->get();
             if (count($dun) > 0) {
-                $result = "<option value=''>".trans('app.forms.please_select')."</option>";
+                if (Session::get('lang') == "en") {
+                    $result = "<option value=''>Please Select</option>";
+                } else {
+                    $result = "<option value=''>Sila pilih</option>";
+                }
 
                 foreach ($dun as $duns) {
                     $result .= "<option value='" . $duns->id . "'>" . $duns->description . "</option>";
@@ -1306,7 +1565,11 @@ class AdminController extends BaseController {
 
                 print $result;
             } else {
-                print "<option value=''>".trans('app.forms.please_select')."</option>";
+                if (Session::get('lang') == "en") {
+                    print "<option value=''>Please Select</option>";
+                } else {
+                    print "<option value=''>Sila pilih</option>";
+                }
             }
         }
     }
@@ -1318,14 +1581,22 @@ class AdminController extends BaseController {
             $dun_id = $data['dun_id'];
             $park = Park::where('is_deleted', 0)->where('dun', $dun_id)->orderBy('description', 'asc')->get();
             if (count($park) > 0) {
-                $result = "<option value=''>".trans('app.forms.please_select')."</option>";
+                if (Session::get('lang') == "en") {
+                    $result = "<option value=''>Please Select</option>";
+                } else {
+                    $result = "<option value=''>Sila pilih</option>";
+                }
 
                 foreach ($park as $parks) {
                     $result .= "<option value='" . $parks->id . "'>" . $parks->description . "</option>";
                 }
                 print $result;
             } else {
-                print "<option value=''>".trans('app.forms.please_select')."</option>";
+                if (Session::get('lang') == "en") {
+                    print "<option value=''>Please Select</option>";
+                } else {
+                    print "<option value=''>Sila pilih</option>";
+                }
             }
         }
     }
@@ -1415,14 +1686,14 @@ class AdminController extends BaseController {
                 $success = $strata->save();
 
                 if ($success) {
-                    //residential
+                    //residential               
                     $residential_unit_no = $data['residential_unit_no'];
                     $residential_maintenance_fee = $data['residential_maintenance_fee'];
                     $residential_maintenance_fee_option = $data['residential_maintenance_fee_option'];
                     $residential_sinking_fund = $data['residential_sinking_fund'];
                     $residential_sinking_fund_option = $data['residential_sinking_fund_option'];
 
-                    //commercial
+                    //commercial                          
                     $commercial_unit_no = $data['commercial_unit_no'];
                     $commercial_maintenance_fee = $data['commercial_maintenance_fee'];
                     $commercial_maintenance_fee_option = $data['commercial_maintenance_fee_option'];
@@ -1593,26 +1864,49 @@ class AdminController extends BaseController {
         $state = State::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
         $agent = Agent::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'city' => $city,
-            'country' => $country,
-            'state' => $state,
-            'file' => $file,
-            'agent' => $agent,
-            'management' => $management,
-            'management_jmb' => $management_jmb,
-            'management_mc' => $management_mc,
-            'management_agent' => $management_agent,
-            'management_others' => $management_others,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'file' => $file,
+                'agent' => $agent,
+                'management' => $management,
+                'management_jmb' => $management_jmb,
+                'management_mc' => $management_mc,
+                'management_agent' => $management_agent,
+                'management_others' => $management_others,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.view_management', $viewData);
+            return View::make('page_en.view_management', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'file' => $file,
+                'agent' => $agent,
+                'management' => $management,
+                'management_jmb' => $management_jmb,
+                'management_mc' => $management_mc,
+                'management_agent' => $management_agent,
+                'management_others' => $management_others,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.view_management', $viewData);
+        }
     }
 
     public function management($id) {
@@ -1631,26 +1925,49 @@ class AdminController extends BaseController {
         $state = State::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
         $agent = Agent::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'city' => $city,
-            'country' => $country,
-            'state' => $state,
-            'file' => $file,
-            'agent' => $agent,
-            'management' => $management,
-            'management_jmb' => $management_jmb,
-            'management_mc' => $management_mc,
-            'management_agent' => $management_agent,
-            'management_others' => $management_others,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'file' => $file,
+                'agent' => $agent,
+                'management' => $management,
+                'management_jmb' => $management_jmb,
+                'management_mc' => $management_mc,
+                'management_agent' => $management_agent,
+                'management_others' => $management_others,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.update_management', $viewData);
+            return View::make('page_en.update_management', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'file' => $file,
+                'agent' => $agent,
+                'management' => $management,
+                'management_jmb' => $management_jmb,
+                'management_mc' => $management_mc,
+                'management_agent' => $management_agent,
+                'management_others' => $management_others,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.update_management', $viewData);
+        }
     }
 
     public function submitUpdateManagement() {
@@ -1704,7 +2021,7 @@ class AdminController extends BaseController {
             $agent_fax_no = $data['agent_fax_no'];
             $agent_email = $data['agent_email'];
 
-            //others
+            //others            
             $is_others = $data['is_others'];
             $others_name = $data['others_name'];
             $others_address1 = $data['others_address1'];
@@ -1863,19 +2180,35 @@ class AdminController extends BaseController {
         $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
         $image = OtherDetails::where('file_id', $files->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'file' => $files,
-            'designation' => $designation,
-            'monitoring' => $monitoring,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'file' => $files,
+                'designation' => $designation,
+                'monitoring' => $monitoring,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.view_monitoring', $viewData);
+            return View::make('page_en.view_monitoring', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'file' => $files,
+                'designation' => $designation,
+                'monitoring' => $monitoring,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.view_monitoring', $viewData);
+        }
     }
 
     public function monitoring($id) {
@@ -1886,19 +2219,35 @@ class AdminController extends BaseController {
         $designation = Designation::where('is_active', 1)->where('is_deleted', 0)->orderBy('description', 'asc')->get();
         $image = OtherDetails::where('file_id', $file->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'file' => $file,
-            'designation' => $designation,
-            'monitoring' => $monitoring,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'file' => $file,
+                'designation' => $designation,
+                'monitoring' => $monitoring,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.update_monitoring', $viewData);
+            return View::make('page_en.update_monitoring', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'file' => $file,
+                'designation' => $designation,
+                'monitoring' => $monitoring,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.update_monitoring', $viewData);
+        }
     }
 
     public function submitUpdateMonitoring() {
@@ -2055,137 +2404,268 @@ class AdminController extends BaseController {
 
             if (count($agm) > 0) {
                 $result .= '<form>';
-                $result .= '<div class="form-group row">';
-                $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.annual_general_meeting').'</label></div>';
-                if ($agm->agm == 1) {
-                    $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0"> '.trans('app.forms.no').'</div>';
+                if (Session::get('lang') == "en") {
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Anual General Meeting (AGM)</label></div>';
+                    if ($agm->agm == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1" checked> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0"> No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1"> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0" checked> No</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Extraordinary General Meeting (EGM)</label></div>';
+                    if ($agm->egm == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1" checked> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0"> No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1"> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0" checked> No</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Minit Meeting</label></div>';
+                    if ($agm->minit_meeting == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1" checked> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0"> No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1"> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0" checked> No</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">JMC SPA Copy</label></div>';
+                    if ($agm->jmc_spa == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1" checked>Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0">No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1">Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0" checked>No</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Identity Card List</label></div>';
+                    if ($agm->identity_card == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1" checked> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0"> No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1"> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0" checked> No</div>';
+                    }
+                    $result .= '</div>';
+
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Attendance List</label></div>';
+                    if ($agm->attendance == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1" checked> Yes </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0"> No </div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1"> Yes </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0" checked> No </div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Audited Financial Report</label></div>';
+                    if ($agm->financial_report == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1" checked> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0"> No</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1"> Yes</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0" checked> No</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Financial Audit Report</label></div>';
+                    $result .= '<div class="col-md-6"><input type="text" class="form-control" placeholder="Financial Audit Report" id="audit_report_edit" value=' . "$agm->audit_report" . '></div>';
+                    $result .= '</div>';
+
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_audit_report_file_edit" enctype="multipart/form-data" method="post" action="' . url("uploadAuditReportFileEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">&nbsp;</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_audit_report_file_edit" class="btn btn-xs btn-danger" onclick="clearAuditFileEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="audit_report_file_edit" id="audit_report_file_edit">';
+                    $result .= '<div id="validation-errors_audit_report_file_edit"></div><div id="view_audit_report_file_edit"></div>';
+                    if ($agm->audit_report_url != "") {
+                        $result .= '<div id="report_edit"><a href="' . asset($agm->audit_report_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteAuditReport(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_letter_integrity_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterIntegrityEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Pledge letter of integrity JMC</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_letter_integrity_edit" class="btn btn-xs btn-danger" onclick="clearLetterIntegrityEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="letter_integrity_edit" id="letter_integrity_edit">';
+                    $result .= '<div id="validation-errors_letter_integrity_edit"></div>';
+                    if ($agm->letter_integrity_url != "") {
+                        $result .= '<div id="integrity_edit"><a href="' . asset($agm->letter_integrity_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteLetterIntegrity(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_letter_bankruptcy_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterBankruptcyEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Declaration letter of non-bankruptcy</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_letter_bankruptcy_edit" class="btn btn-xs btn-danger" onclick="clearLetterBankruptcyEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="letter_bankruptcy_edit" id="letter_bankruptcy_edit">';
+                    $result .= '<div id="validation-errors_letter_bankruptcy_edit"></div>';
+                    if ($agm->letter_bankruptcy_url != "") {
+                        $result .= '<div id="bankruptcy_edit"><a href="' . asset($agm->letter_bankruptcy_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteLetterBankruptcy(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
                 } else {
-                    $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1"> '.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0" checked> '.trans('app.forms.no').'</div>';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Mesyuarat Agung Tahunan (AGM)</label></div>';
+                    if ($agm->agm == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1" checked> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0"> Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="1"> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" class="agm_edit" id="agm_edit" name="agm_edit" value="0" checked> Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Mesyuarat Agung Luarbiasa (EGM)</label></div>';
+                    if ($agm->egm == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1" checked> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0"> Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1"> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0" checked> Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Minit Mesyuarat</label></div>';
+                    if ($agm->minit_meeting == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1" checked> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0"> Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1"> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0" checked> Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Salinan Perjanjian Jualbeli JMC</label></div>';
+                    if ($agm->jmc_spa == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1" checked>Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0">Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1">Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0" checked>Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Salinan Kad Pengenalan</label></div>';
+                    if ($agm->identity_card == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1" checked> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0"> Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1"> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0" checked> Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Senarai Kehadiran</label></div>';
+                    if ($agm->attendance == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1" checked> Ada </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0"> Tiada </div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1"> Ada </div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0" checked> Tiada </div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Laporan Kew Teraudit</label></div>';
+                    if ($agm->financial_report == 1) {
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1" checked> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0"> Tiada</div>';
+                    } else {
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1"> Ada</div>';
+                        $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0" checked> Tiada</div>';
+                    }
+                    $result .= '</div>';
+
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Laporan Kewangan Audit</label></div>';
+                    $result .= '<div class="col-md-6"><input type="text" class="form-control" placeholder="Laporan Kewangan Audit" id="audit_report_edit" value=' . "$agm->audit_report" . '></div>';
+                    $result .= '</div>';
+
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_audit_report_file_edit" enctype="multipart/form-data" method="post" action="' . url("uploadAuditReportFileEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">&nbsp;</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_audit_report_file_edit" class="btn btn-xs btn-danger" onclick="clearAuditFileEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="audit_report_file_edit" id="audit_report_file_edit">';
+                    $result .= '<div id="validation-errors_audit_report_file_edit"></div><div id="view_audit_report_file_edit"></div>';
+                    if ($agm->audit_report_url != "") {
+                        $result .= '<div id="report_edit"><a href="' . asset($agm->audit_report_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteAuditReport(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_letter_integrity_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterIntegrityEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Surat ikrar integriti JMC</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_letter_integrity_edit" class="btn btn-xs btn-danger" onclick="clearLetterIntegrityEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="letter_integrity_edit" id="letter_integrity_edit">';
+                    $result .= '<div id="validation-errors_letter_integrity_edit"></div>';
+                    if ($agm->letter_integrity_url != "") {
+                        $result .= '<div id="integrity_edit"><a href="' . asset($agm->letter_integrity_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteLetterIntegrity(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
+                    $result .= '</form>';
+
+                    $result .= '<form id="upload_letter_bankruptcy_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterBankruptcyEdit") . '" autocomplete="off">';
+                    $result .= '<div class="form-group row">';
+                    $result .= '<div class="col-md-6"><label class="form-control-label">Surat akuan tidak muflis</label></div>';
+                    $result .= '<div class="col-md-6">';
+                    $result .= '<button type="button" id="clear_letter_bankruptcy_edit" class="btn btn-xs btn-danger" onclick="clearLetterBankruptcyEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
+                    $result .= '<input type="file" name="letter_bankruptcy_edit" id="letter_bankruptcy_edit">';
+                    $result .= '<div id="validation-errors_letter_bankruptcy_edit"></div>';
+                    if ($agm->letter_bankruptcy_url != "") {
+                        $result .= '<div id="bankruptcy_edit"><a href="' . asset($agm->letter_bankruptcy_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> Download</button></a>&nbsp;';
+                        $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Padam Fail" onclick="deleteLetterBankruptcy(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
+                    }
+                    $result .= '</div>';
+                    $result .= '</div>';
                 }
-                $result .= '</div>';
-
-                $result .= '<div class="form-group row">';
-                $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.extra_general_meeting').'</label></div>';
-                if ($agm->egm == 1) {
-                    $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0"> '.trans('app.forms.no').'</div>';
-                } else {
-                    $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="1"> '.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="egm_edit" name="egm_edit" value="0" checked> '.trans('app.forms.no').'</div>';
-                }
-                $result .= '</div>';
-
-                $result .= '<div class="form-group row">';
-                $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.meeting_minutes').'</label></div>';
-                if ($agm->minit_meeting == 1) {
-                    $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0"> '.trans('app.forms.no').'</div>';
-                } else {
-                    $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="1"> '.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="minit_meeting_edit" name="minit_meeting_edit" value="0" checked> '.trans('app.forms.no').'</div>';
-                }
-                $result .= '</div>';
-
-                $result .= '<div class="form-group row">';
-                $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.jmc_spa_copy').'</label></div>';
-                if ($agm->jmc_spa == 1) {
-                    $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1" checked>'.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0">'.trans('app.forms.no').'</div>';
-                } else {
-                    $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="1">'.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="jmc_copy_edit" name="jmc_copy_edit" value="0" checked>'.trans('app.forms.no').'</div>';
-                }
-                $result .= '</div>';
-
-                $result .= '<div class="form-group row">';
-                $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.identity_card_list').'</label></div>';
-                if ($agm->identity_card == 1) {
-                    $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0"> '.trans('app.forms.no').'</div>';
-                } else {
-                    $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="1"> '.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="ic_list_edit" name="ic_list_edit" value="0" checked> '.trans('app.forms.no').'</div>';
-                }
-                $result .= '</div>';
-
-
-                $result .= '<div class="form-group row">';
-                $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.attendance_list').'</label></div>';
-                if ($agm->attendance == 1) {
-                    $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1" checked> '.trans('app.forms.yes').' </div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0"> '.trans('app.forms.no').' </div>';
-                } else {
-                    $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="1"> '.trans('app.forms.yes').' </div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="attendance_list_edit" name="attendance_list_edit" value="0" checked> '.trans('app.forms.no').' </div>';
-                }
-                $result .= '</div>';
-
-                $result .= '<div class="form-group row">';
-                $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.audited_financial_report').'</label></div>';
-                if ($agm->financial_report == 1) {
-                    $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1" checked> '.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0"> '.trans('app.forms.no').'</div>';
-                } else {
-                    $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="1"> '.trans('app.forms.yes').'</div>';
-                    $result .= '<div class="col-md-2"><input type="radio" id="audited_financial_report_edit" name="audited_financial_report_edit" value="0" checked> '.trans('app.forms.no').'</div>';
-                }
-                $result .= '</div>';
-
-                $result .= '<div class="form-group row">';
-                $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.financial_audit_report').'</label></div>';
-                $result .= '<div class="col-md-6"><input type="text" class="form-control" placeholder="'.trans('app.forms.financial_audit_report').'" id="audit_report_edit" value=' . "$agm->audit_report" . '></div>';
-                $result .= '</div>';
-
-                $result .= '</form>';
-
-                $result .= '<form id="upload_audit_report_file_edit" enctype="multipart/form-data" method="post" action="' . url("uploadAuditReportFileEdit") . '" autocomplete="off">';
-                $result .= '<div class="form-group row">';
-                $result .= '<div class="col-md-6"><label class="form-control-label">&nbsp;</label></div>';
-                $result .= '<div class="col-md-6">';
-                $result .= '<button type="button" id="clear_audit_report_file_edit" class="btn btn-xs btn-danger" onclick="clearAuditFileEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
-                $result .= '<input type="file" name="audit_report_file_edit" id="audit_report_file_edit">';
-                $result .= '<div id="validation-errors_audit_report_file_edit"></div><div id="view_audit_report_file_edit"></div>';
-                if ($agm->audit_report_url != "") {
-                    $result .= '<div id="report_edit"><a href="' . asset($agm->audit_report_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> '.trans('app.forms.download').'</button></a>&nbsp;';
-                    $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteAuditReport(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
-                }
-                $result .= '</div>';
-                $result .= '</div>';
-                $result .= '</form>';
-
-                $result .= '<form id="upload_letter_integrity_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterIntegrityEdit") . '" autocomplete="off">';
-                $result .= '<div class="form-group row">';
-                $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.pledge_letter_of_integrity').'</label></div>';
-                $result .= '<div class="col-md-6">';
-                $result .= '<button type="button" id="clear_letter_integrity_edit" class="btn btn-xs btn-danger" onclick="clearLetterIntegrityEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
-                $result .= '<input type="file" name="letter_integrity_edit" id="letter_integrity_edit">';
-                $result .= '<div id="validation-errors_letter_integrity_edit"></div>';
-                if ($agm->letter_integrity_url != "") {
-                    $result .= '<div id="integrity_edit"><a href="' . asset($agm->letter_integrity_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> '.trans('app.forms.download').'</button></a>&nbsp;';
-                    $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteLetterIntegrity(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
-                }
-                $result .= '</div>';
-                $result .= '</div>';
-                $result .= '</form>';
-
-                $result .= '<form id="upload_letter_bankruptcy_edit" enctype="multipart/form-data" method="post" action="' . url("uploadLetterBankruptcyEdit") . '" autocomplete="off">';
-                $result .= '<div class="form-group row">';
-                $result .= '<div class="col-md-6"><label class="form-control-label">'.trans('app.forms.declaration_letter_of_non_bankruptcy').'</label></div>';
-                $result .= '<div class="col-md-6">';
-                $result .= '<button type="button" id="clear_letter_bankruptcy_edit" class="btn btn-xs btn-danger" onclick="clearLetterBankruptcyEdit()" style="display: none;"><i class="fa fa-times"></i></button>&nbsp;';
-                $result .= '<input type="file" name="letter_bankruptcy_edit" id="letter_bankruptcy_edit">';
-                $result .= '<div id="validation-errors_letter_bankruptcy_edit"></div>';
-                if ($agm->letter_bankruptcy_url != "") {
-                    $result .= '<div id="bankruptcy_edit"><a href="' . asset($agm->letter_bankruptcy_url) . '" target="_blank"><button type="button" class="btn btn-xs btn-primary" data-toggle="tooltip" data-placement="bottom" title="Download File"><i class="icmn-file-download2"></i> '.trans('app.forms.download').'</button></a>&nbsp;';
-                    $result .= '<button type="button" class="btn btn-xs btn-danger" data-toggle="tooltip" data-placement="bottom" title="Delete File" onclick="deleteLetterBankruptcy(\'' . $agm->id . '\')"><i class="fa fa-times"></i></button></div>';
-                }
-                $result .= '</div>';
-                $result .= '</div>';
                 $result .= '</form>';
             } else {
-                $result = trans('app.errors.no_data_found');
+                $result = "No Data Found";
             }
             print $result;
         }
@@ -2199,7 +2679,7 @@ class AdminController extends BaseController {
             foreach ($agm_detail as $agm_details) {
                 $button = "";
                 $button .= '<button type="button" class="btn btn-xs btn-success edit_agm" title="Edit" onclick="getAGMDetails(\'' . $agm_details->id . '\')"
-                            data-agm_id="' . $agm_details->id . '" data-agm_date="' . $agm_details->agm_date . '"
+                            data-agm_id="' . $agm_details->id . '" data-agm_date="' . $agm_details->agm_date . '"                          
                             data-audit_start_date="' . $agm_details->audit_start_date . '" data-audit_end_date="' . $agm_details->audit_end_date . '"
                             data-audit_report_file_url="' . $agm_details->audit_report_url . '" data-letter_integrity_url="' . $agm_details->letter_integrity_url . '" data-letter_bankruptcy_url="' . $agm_details->letter_bankruptcy_url . '">
                                 <i class="fa fa-pencil"></i>
@@ -2275,25 +2755,47 @@ class AdminController extends BaseController {
                     $status10 = '<i class="icmn-checkmark4"></i>';
                 }
 
-                $data_raw = array(
-                    $date_agm,
-                    trans('app.forms.annual_general_meeting').'<br/>'
-                    . trans('app.forms.extra_general_meeting').'<br/>'
-                    . trans('app.forms.meeting_minutes').'<br/>'
-                    . trans('app.forms.pledge_letter_of_integrity').'<br>'
-                    . trans('app.forms.declaration_letter_of_non_bankruptcy'),
-                    $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
-                    trans('app.forms.jmc_spa_copy').'<br/>'
-                    . trans('app.forms.identity_card_list').'<br/>'
-                    . trans('app.forms.attendance_list'),
-                    $status6 . '<br/>' . $status7 . '<br/>' . $status8,
-                    trans('app.forms.audited_financial_report').'<br/>'
-                    . trans('app.forms.financial_audit_start_date').'<br/>'
-                    . trans('app.forms.financial_audit_end_date').'<br/>'
-                    . trans('app.forms.financial_audit_report'),
-                    $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
-                    $button
-                );
+                if (Session::get('lang') == "en") {
+                    $data_raw = array(
+                        $date_agm,
+                        'Anual General Meeting (AGM)<br/>'
+                        . 'Extraordinary General Meeting (EGM)<br/>'
+                        . 'Minit Meeting<br/>'
+                        . 'Pledge letter of integrity JMC<br>'
+                        . 'Declaration letter of non-bankruptcy',
+                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
+                        'JMC SPA Copy<br/>'
+                        . 'Identity Card List<br/>'
+                        . 'Attendance List',
+                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
+                        'Audited Financial Report<br/>'
+                        . 'Financial Audit Start Date<br/>'
+                        . 'Financial Audit End Date<br/>'
+                        . 'Financial Audit Report',
+                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
+                        $button
+                    );
+                } else {
+                    $data_raw = array(
+                        $date_agm,
+                        'Mesyuarat Agung Tahunan (AGM)<br/>'
+                        . 'Mesyuarat Agung Luarbiasa (EGM)<br/>'
+                        . 'Minit Mesyuarat<br/>'
+                        . 'Surat ikrar integriti JMC<br>'
+                        . 'Surat akuan tidak muflis',
+                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
+                        'Salinan Perjanjian Jualbeli JMC<br/>'
+                        . 'Salinan Kad Pengenalan<br/>'
+                        . 'Senarai Kehadiran',
+                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
+                        'Laporan Kew Teraudit<br/>'
+                        . 'Tarikh Mula Kewangan Audit<br/>'
+                        . 'Tarikh Akhir Kewangan Audit<br/>'
+                        . 'Laporan Kewangan Audit',
+                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
+                        $button
+                    );
+                }
 
                 array_push($data, $data_raw);
             }
@@ -2748,18 +3250,33 @@ class AdminController extends BaseController {
         $other_details = OtherDetails::where('file_id', $files->id)->first();
         $image = OtherDetails::where('file_id', $files->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'file' => $files,
-            'other_details' => $other_details,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'file' => $files,
+                'other_details' => $other_details,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.view_others', $viewData);
+            return View::make('page_en.view_others', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'file' => $files,
+                'other_details' => $other_details,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.view_others', $viewData);
+        }
     }
 
     public function others($id) {
@@ -2769,18 +3286,33 @@ class AdminController extends BaseController {
         $other_details = OtherDetails::where('file_id', $file->id)->first();
         $image = OtherDetails::where('file_id', $file->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'file' => $file,
-            'other_details' => $other_details,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'file' => $file,
+                'other_details' => $other_details,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.update_others', $viewData);
+            return View::make('page_en.update_others', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'file' => $file,
+                'other_details' => $other_details,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.update_others', $viewData);
+        }
     }
 
     public function submitUpdateOtherDetails() {
@@ -2885,17 +3417,31 @@ class AdminController extends BaseController {
         $files = Files::find($id);
         $image = OtherDetails::where('file_id', $files->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.view_scoring', $viewData);
+            return View::make('page_en.view_scoring', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.view_scoring', $viewData);
+        }
     }
 
     public function scoring($id) {
@@ -2904,17 +3450,31 @@ class AdminController extends BaseController {
         $file = Files::find($id);
         $image = OtherDetails::where('file_id', $file->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'files' => $file,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.update_scoring', $viewData);
+            return View::make('page_en.update_scoring', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.update_scoring', $viewData);
+        }
     }
 
     public function addScoring() {
@@ -3219,19 +3779,35 @@ class AdminController extends BaseController {
         $files = Files::find($id);
         $image = OtherDetails::where('file_id', $files->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'Uploadmessage' => '',
-            'upload' => "true",
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.view_buyer', $viewData);
+            return View::make('page_en.view_buyer', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.view_buyer', $viewData);
+        }
     }
 
     public function buyer($id) {
@@ -3240,19 +3816,35 @@ class AdminController extends BaseController {
         $file = Files::find($id);
         $image = OtherDetails::where('file_id', $file->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'files' => $file,
-            'Uploadmessage' => '',
-            'upload' => "true",
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.update_buyer', $viewData);
+            return View::make('page_en.update_buyer', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.update_buyer', $viewData);
+        }
     }
 
     public function addBuyer($id) {
@@ -3261,18 +3853,33 @@ class AdminController extends BaseController {
         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
         $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'files' => $file,
-            'race' => $race,
-            'nationality' => $nationality,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'files' => $file,
+                'race' => $race,
+                'nationality' => $nationality,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.add_buyer', $viewData);
+            return View::make('page_en.add_buyer', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'files' => $file,
+                'race' => $race,
+                'nationality' => $nationality,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.add_buyer', $viewData);
+        }
     }
 
     public function submitBuyer() {
@@ -3337,20 +3944,37 @@ class AdminController extends BaseController {
         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
         $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'race' => $race,
-            'nationality' => $nationality,
-            'buyer' => $buyer,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'race' => $race,
+                'nationality' => $nationality,
+                'buyer' => $buyer,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.edit_buyer', $viewData);
+            return View::make('page_en.edit_buyer', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'race' => $race,
+                'nationality' => $nationality,
+                'buyer' => $buyer,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.edit_buyer', $viewData);
+        }
     }
 
     public function submitEditBuyer() {
@@ -3488,19 +4112,35 @@ class AdminController extends BaseController {
         $file = Files::find($id);
         $image = OtherDetails::where('file_id', $file->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'files' => $file,
-            'Uploadmessage' => '',
-            'upload' => "true",
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.import_buyer', $viewData);
+            return View::make('page_en.import_buyer', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.import_buyer', $viewData);
+        }
     }
 
     public function submitUploadBuyer($id) {
@@ -3612,18 +4252,33 @@ class AdminController extends BaseController {
         $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderby('sort_no', 'asc')->get();
         $image = OtherDetails::where('file_id', $file->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'files' => $file,
-            'documentType' => $documentType,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.update_document', $viewData);
+            return View::make('page_en.update_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.update_document', $viewData);
+        }
     }
 
     public function getDocument($id) {
@@ -3636,13 +4291,13 @@ class AdminController extends BaseController {
                 if ($documents->is_hidden == 1) {
                     $is_hidden = 'Yes';
                 } else {
-                    $is_hidden = trans('app.forms.no');
+                    $is_hidden = 'No';
                 }
 
                 if ($documents->is_readonly == 1) {
                     $is_readonly = 'Yes';
                 } else {
-                    $is_readonly = trans('app.forms.no');
+                    $is_readonly = 'No';
                 }
 
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@editDocument', $documents->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -3741,18 +4396,33 @@ class AdminController extends BaseController {
         $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
         $image = OtherDetails::where('file_id', $file->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'files' => $file,
-            'documentType' => $documentType,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.add_document', $viewData);
+            return View::make('page_en.add_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.add_document', $viewData);
+        }
     }
 
     public function submitAddDocument() {
@@ -3795,19 +4465,35 @@ class AdminController extends BaseController {
         $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->get();
         $image = OtherDetails::where('file_id', $file->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'files' => $file,
-            'document' => $document,
-            'documentType' => $documentType,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'document' => $document,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.edit_document', $viewData);
+            return View::make('page_en.edit_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $file,
+                'document' => $document,
+                'documentType' => $documentType,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.edit_document', $viewData);
+        }
     }
 
     public function submitEditDocument() {
@@ -3853,31 +4539,50 @@ class AdminController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::find($id);
         if ($files->status == 1) {
-            $status = trans('app.forms.approved');
+            $status = "Approved";
         } else if ($files->status == 2) {
-            $status = trans('app.forms.rejected');
+            $status = "Rejected";
         } else {
-            $status = trans('app.forms.pending');
+            $status = "Pending";
         }
         $approveBy = User::find($files->approved_by);
         $image = OtherDetails::where('file_id', $files->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'status' => $status,
-            'approveBy' => $approveBy,
-            'Uploadmessage' => '',
-            'upload' => "true",
-            'role' => Auth::user()->role,
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update COB File',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'status' => $status,
+                'approveBy' => $approveBy,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'role' => Auth::user()->role,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.file_approval', $viewData);
+            return View::make('page_en.file_approval', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Fail COB',
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => ($files->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'status' => $status,
+                'approveBy' => $approveBy,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'role' => Auth::user()->role,
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.file_approval', $viewData);
+        }
     }
 
     public function submitFileApproval() {
@@ -3920,16 +4625,29 @@ class AdminController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.organization_profile'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'profile_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Organization Profile',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'profile_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('admin_en.company', $viewData);
+            return View::make('admin_en.company', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Organization Profile',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'profile_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('admin_my.company', $viewData);
+        }
     }
 
     public function getCompany() {
@@ -3943,16 +4661,29 @@ class AdminController extends BaseController {
             $data = Array();
             foreach ($company as $companies) {
                 $button = "";
-                if ($companies->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveCompany(\'' . $companies->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
-                } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCompany(\'' . $companies->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
-                }
+                if (Session::get('lang') == "en") {
+                    if ($companies->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveCompany(\'' . $companies->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCompany(\'' . $companies->id . '\')">Active</button>&nbsp;';
+                    }
 
-                $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@editCompany', $companies->id) . '\'">'.trans('app.forms.edit').' <i class="fa fa-pencil"></i></button>&nbsp;';
-                $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteCompany(\'' . $companies->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
+                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@editCompany', $companies->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteCompany(\'' . $companies->id . '\')">Delete <i class="fa fa-trash"></i></button>';
+                } else {
+                    if ($companies->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveCompany(\'' . $companies->id . '\')">Aktif</button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCompany(\'' . $companies->id . '\')">Tidak Aktif</button>&nbsp;';
+                    }
+
+                    $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@editCompany', $companies->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
+                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteCompany(\'' . $companies->id . '\')">Padam <i class="fa fa-trash"></i></button>';
+                }
 
                 $data_raw = array(
                     $companies->name,
@@ -4062,19 +4793,35 @@ class AdminController extends BaseController {
         $country = Country::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
         $state = State::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.add_organization_profile'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'profile_list',
-            'user_permission' => $user_permission,
-            'city' => $city,
-            'country' => $country,
-            'state' => $state,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Organization Profile',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'profile_list',
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'image' => ""
+            );
 
-        return View::make('admin_en.add_company', $viewData);
+            return View::make('admin_en.add_company', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Add Profil Organisasi',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'profile_list',
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'image' => ""
+            );
+
+            return View::make('admin_my.add_company', $viewData);
+        }
     }
 
     public function submitAddCompany() {
@@ -4140,20 +4887,37 @@ class AdminController extends BaseController {
             $country = Country::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
             $state = State::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
-            $viewData = array(
-                'title' => trans('app.menus.administration.edit_organization_profile'),
-                'panel_nav_active' => 'admin_panel',
-                'main_nav_active' => 'admin_main',
-                'sub_nav_active' => 'profile_list',
-                'user_permission' => $user_permission,
-                'company' => $company,
-                'city' => $city,
-                'country' => $country,
-                'state' => $state,
-                'image' => ""
-            );
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => 'Edit Organization Profile',
+                    'panel_nav_active' => 'admin_panel',
+                    'main_nav_active' => 'admin_main',
+                    'sub_nav_active' => 'profile_list',
+                    'user_permission' => $user_permission,
+                    'company' => $company,
+                    'city' => $city,
+                    'country' => $country,
+                    'state' => $state,
+                    'image' => ""
+                );
 
-            return View::make('admin_en.edit_company', $viewData);
+                return View::make('admin_en.edit_company', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => 'Edit Profil Organisasi',
+                    'panel_nav_active' => 'admin_panel',
+                    'main_nav_active' => 'admin_main',
+                    'sub_nav_active' => 'profile_list',
+                    'user_permission' => $user_permission,
+                    'company' => $company,
+                    'city' => $city,
+                    'country' => $country,
+                    'state' => $state,
+                    'image' => ""
+                );
+
+                return View::make('admin_my.edit_company', $viewData);
+            }
         }
     }
 
@@ -4221,16 +4985,29 @@ class AdminController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.access_group_management'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'access_group_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Access Group Management',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'access_group_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('page_en.accessgroup', $viewData);
+            return View::make('page_en.accessgroup', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Akses Kumpulan',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'access_group_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('page_my.accessgroup', $viewData);
+        }
     }
 
     public function addAccessGroup() {
@@ -4238,17 +5015,31 @@ class AdminController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $module = Module::get();
 
-        $viewData = array(
-            'title' => trans('app.buttons.add_access_group'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'access_group_list',
-            'user_permission' => $user_permission,
-            'module' => $module,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Access Group',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'access_group_list',
+                'user_permission' => $user_permission,
+                'module' => $module,
+                'image' => ""
+            );
 
-        return View::make('page_en.add_accessgroup', $viewData);
+            return View::make('page_en.add_accessgroup', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Akses Kumpulan',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'access_group_list',
+                'user_permission' => $user_permission,
+                'module' => $module,
+                'image' => ""
+            );
+
+            return View::make('page_my.add_accessgroup', $viewData);
+        }
     }
 
     public function submitAccessGroup() {
@@ -4393,17 +5184,32 @@ class AdminController extends BaseController {
             $data = Array();
             foreach ($accessgroup as $accessgroups) {
                 $button = "";
-                $is_admin = trans('app.forms.no');
-                if ($accessgroups->is_admin == 1) {
-                    $is_admin = trans('app.forms.yes');
-                }
+                if (Session::get('lang') == "en") {
+                    $is_admin = 'No';
+                    if ($accessgroups->is_admin == 1) {
+                        $is_admin = "Yes";
+                    }
 
-                if ($accessgroups->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAccessGroup(\'' . $accessgroups->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    if ($accessgroups->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAccessGroup(\'' . $accessgroups->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAccessGroup(\'' . $accessgroups->id . '\')">Active</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAccessGroup(\'' . $accessgroups->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    $is_admin = 'Tidak';
+                    if ($accessgroups->is_admin == 1) {
+                        $is_admin = "Ya";
+                    }
+
+                    if ($accessgroups->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAccessGroup(\'' . $accessgroups->id . '\')">Tidak Aktif</button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAccessGroup(\'' . $accessgroups->id . '\')">Aktif</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateAccessGroup', $accessgroups->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteAccessGroup(\'' . $accessgroups->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -4527,18 +5333,33 @@ class AdminController extends BaseController {
         $accessgroup = Role::find($id);
         $module = Module::get();
 
-        $viewData = array(
-            'title' => trans('app.buttons.update_access_group'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'access_group_list',
-            'user_permission' => $user_permission,
-            'accessgroup' => $accessgroup,
-            'module' => $module,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update Access Group',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'access_group_list',
+                'user_permission' => $user_permission,
+                'accessgroup' => $accessgroup,
+                'module' => $module,
+                'image' => ""
+            );
 
-        return View::make('page_en.update_accessgroup', $viewData);
+            return View::make('page_en.update_accessgroup', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Akses Kumpulan',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'access_group_list',
+                'user_permission' => $user_permission,
+                'accessgroup' => $accessgroup,
+                'module' => $module,
+                'image' => ""
+            );
+
+            return View::make('page_my.update_accessgroup', $viewData);
+        }
     }
 
     public function submitUpdateAccessGroup() {
@@ -4685,16 +5506,29 @@ class AdminController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.user_management'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'user_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'User Management',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'user_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('admin_en.user', $viewData);
+            return View::make('admin_en.user', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Pengurusan Pengguna',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'user_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('admin_my.user', $viewData);
+        }
     }
 
     public function addUser() {
@@ -4714,18 +5548,33 @@ class AdminController extends BaseController {
             }
         }
 
-        $viewData = array(
-            'title' => trans('app.buttons.add_user'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'user_list',
-            'user_permission' => $user_permission,
-            'company' => $company,
-            'role' => $role,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add User',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'user_list',
+                'user_permission' => $user_permission,
+                'company' => $company,
+                'role' => $role,
+                'image' => ""
+            );
 
-        return View::make('admin_en.add_user', $viewData);
+            return View::make('admin_en.add_user', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Pengguna',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'user_list',
+                'user_permission' => $user_permission,
+                'company' => $company,
+                'role' => $role,
+                'image' => ""
+            );
+
+            return View::make('admin_my.add_user', $viewData);
+        }
     }
 
     public function submitUser() {
@@ -4821,24 +5670,46 @@ class AdminController extends BaseController {
                 $role = Role::find($users->role);
 
                 $button = "";
-                if ($users->is_active == 1) {
-                    $is_active = trans('app.forms.yes');
-                    if ($users->status == 1) {
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUser(\'' . $users->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($users->is_active == 1) {
+                        $is_active = "Yes";
+                        if ($users->status == 1) {
+                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUser(\'' . $users->id . '\')">Inactive</button>&nbsp;';
+                        }
+                    } else {
+                        $is_active = "No";
+                        if ($users->status == 1) {
+                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUser(\'' . $users->id . '\')">Active</button>&nbsp;';
+                        }
                     }
-                } else {
-                    $is_active = trans('app.forms.no');
-                    if ($users->status == 1) {
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUser(\'' . $users->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
-                    }
-                }
 
-                if ($users->status == 0) {
-                    $status = trans('app.forms.pending');
-                } else if ($users->status == 1) {
-                    $status = trans('app.forms.approved');
+                    if ($users->status == 0) {
+                        $status = "Pending";
+                    } else if ($users->status == 1) {
+                        $status = "Approved";
+                    } else {
+                        $status = "Rejected";
+                    }
                 } else {
-                    $status = trans('app.forms.rejected');
+                    if ($users->is_active == 1) {
+                        $is_active = "Ya";
+                        if ($users->status == 1) {
+                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUser(\'' . $users->id . '\')">Tidak Aktif</button>&nbsp;';
+                        }
+                    } else {
+                        $is_active = "Tidak";
+                        if ($users->status == 1) {
+                            $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUser(\'' . $users->id . '\')">Aktif</button>&nbsp;';
+                        }
+                    }
+
+                    if ($users->status == 0) {
+                        $status = "Menunggu";
+                    } else if ($users->status == 1) {
+                        $status = "Diterima";
+                    } else {
+                        $status = "Ditolak";
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateUser', $users->id) . '\'" title="Edit"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button type="button" class="btn btn-xs btn-warning" onclick="window.location=\'' . URL::action('AdminController@getUserDetails', $users->id) . '\'" title="View"><i class="fa fa-eye"></i></button>&nbsp;';
@@ -4878,18 +5749,33 @@ class AdminController extends BaseController {
         $user = User::find($id);
         $company = Company::find($user->company_id);
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.user_details'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'user_list',
-            'user_permission' => $user_permission,
-            'user' => $user,
-            'company' => $company,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'User Details',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'user_list',
+                'user_permission' => $user_permission,
+                'user' => $user,
+                'company' => $company,
+                'image' => ""
+            );
 
-        return View::make('admin_en.user_details', $viewData);
+            return View::make('admin_en.user_details', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Maklumat Pengguna',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'user_list',
+                'user_permission' => $user_permission,
+                'user' => $user,
+                'company' => $company,
+                'image' => ""
+            );
+
+            return View::make('admin_my.user_details', $viewData);
+        }
     }
 
     public function submitApprovedUser() {
@@ -5017,7 +5903,11 @@ class AdminController extends BaseController {
                 }
 
                 if ($files) {
-                    $result = "<option value=''>".trans('app.forms.please_select')."</option>";
+                    if (Session::get('lang') == "en") {
+                        $result = "<option value=''>Please Select</option>";
+                    } else {
+                        $result = "<option value=''>Sila pilih</option>";
+                    }
 
                     foreach ($files as $file) {
                         $result .= "<option value='" . $file->id . "'>" . $file->file_no . "</option>";
@@ -5025,10 +5915,18 @@ class AdminController extends BaseController {
 
                     print $result;
                 } else {
-                    print "<option value=''>".trans('app.forms.please_select')."</option>";
+                    if (Session::get('lang') == "en") {
+                        print "<option value=''>Please Select</option>";
+                    } else {
+                        print "<option value=''>Sila pilih</option>";
+                    }
                 }
             } else {
-                print "<option value=''>".trans('app.forms.please_select')."</option>";
+                if (Session::get('lang') == "en") {
+                    print "<option value=''>Please Select</option>";
+                } else {
+                    print "<option value=''>Sila pilih</option>";
+                }
             }
         }
     }
@@ -5053,20 +5951,37 @@ class AdminController extends BaseController {
 
         $files = Files::where('company_id', $user->company_id)->where('is_deleted', 0)->orderBy('file_no')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.update_user'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'user_list',
-            'user_permission' => $user_permission,
-            'user' => $user,
-            'role' => $role,
-            'company' => $company,
-            'files' => $files,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update User',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'user_list',
+                'user_permission' => $user_permission,
+                'user' => $user,
+                'role' => $role,
+                'company' => $company,
+                'files' => $files,
+                'image' => ""
+            );
 
-        return View::make('admin_en.update_user', $viewData);
+            return View::make('admin_en.update_user', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Pengguna',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'user_list',
+                'user_permission' => $user_permission,
+                'user' => $user,
+                'role' => $role,
+                'company' => $company,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('admin_my.update_user', $viewData);
+        }
     }
 
     public function submitUpdateUser() {
@@ -5141,17 +6056,31 @@ class AdminController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $memotype = MemoType::where('is_active', 1)->where('is_deleted', 0)->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.memo_management'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'memo_maintenence_list',
-            'user_permission' => $user_permission,
-            'memotype' => $memotype,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Memo Management',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'memo_maintenence_list',
+                'user_permission' => $user_permission,
+                'memotype' => $memotype,
+                'image' => ""
+            );
 
-        return View::make('page_en.memo', $viewData);
+            return View::make('page_en.memo', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Pengurusan Memo',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'memo_maintenence_list',
+                'user_permission' => $user_permission,
+                'memotype' => $memotype,
+                'image' => ""
+            );
+
+            return View::make('page_my.memo', $viewData);
+        }
     }
 
     public function addMemo() {
@@ -5159,17 +6088,31 @@ class AdminController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $memotype = MemoType::where('is_active', 1)->where('is_deleted', 0)->get();
 
-        $viewData = array(
-            'title' => trans('app.buttons.add_memo'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'memo_maintenence_list',
-            'user_permission' => $user_permission,
-            'memotype' => $memotype,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Memo',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'memo_maintenence_list',
+                'user_permission' => $user_permission,
+                'memotype' => $memotype,
+                'image' => ""
+            );
 
-        return View::make('page_en.add_memo', $viewData);
+            return View::make('page_en.add_memo', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Tambah Memo',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'memo_maintenence_list',
+                'user_permission' => $user_permission,
+                'memotype' => $memotype,
+                'image' => ""
+            );
+
+            return View::make('page_my.add_memo', $viewData);
+        }
     }
 
     public function submitMemo() {
@@ -5221,12 +6164,22 @@ class AdminController extends BaseController {
                 $memotype = MemoType::find($memos->memo_type_id);
 
                 $button = "";
-                if ($memos->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemo(\'' . $memos->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($memos->is_active == 1) {
+                        $status = "Active";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemo(\'' . $memos->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = "Inactive";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemo(\'' . $memos->id . '\')">Active</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemo(\'' . $memos->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($memos->is_active == 1) {
+                        $status = "Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemo(\'' . $memos->id . '\')">Tidak Aktif</button>&nbsp;';
+                    } else {
+                        $status = "Tidak Aktif";
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemo(\'' . $memos->id . '\')">Aktif</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateMemo', $memos->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteMemo(\'' . $memos->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -5346,18 +6299,33 @@ class AdminController extends BaseController {
         $memo = Memo::find($id);
         $memotype = MemoType::where('is_active', 1)->where('is_deleted', 0)->get();
 
-        $viewData = array(
-            'title' => trans('app.buttons.update_memo'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'memo_maintenence_list',
-            'user_permission' => $user_permission,
-            'memo' => $memo,
-            'memotype' => $memotype,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Update Memo',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'memo_maintenence_list',
+                'user_permission' => $user_permission,
+                'memo' => $memo,
+                'memotype' => $memotype,
+                'image' => ""
+            );
 
-        return View::make('page_en.update_memo', $viewData);
+            return View::make('page_en.update_memo', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Memo',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'memo_maintenence_list',
+                'user_permission' => $user_permission,
+                'memo' => $memo,
+                'memotype' => $memotype,
+                'image' => ""
+            );
+
+            return View::make('page_my.update_memo', $viewData);
+        }
     }
 
     public function submitUpdateMemo() {
@@ -5405,16 +6373,29 @@ class AdminController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.rating'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'rating_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Rating',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'rating_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('admin_en.rating', $viewData);
+            return View::make('admin_en.rating', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Rating',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'rating_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('admin_my.rating', $viewData);
+        }
     }
 
     public function getRating() {
@@ -5532,17 +6513,31 @@ class AdminController extends BaseController {
             }
         }
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.add_rating'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'rating_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Rating',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'rating_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
 
-        return View::make('admin_en.add_rating', $viewData);
+            return View::make('admin_en.add_rating', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Add Rating',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'rating_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('admin_my.add_rating', $viewData);
+        }
     }
 
     public function submitAddRating() {
@@ -5646,18 +6641,33 @@ class AdminController extends BaseController {
         }
         $rating = Scoring::find($id);
         if ($rating) {
-            $viewData = array(
-                'title' => trans('app.menus.administration.edit_rating'),
-                'panel_nav_active' => 'admin_panel',
-                'main_nav_active' => 'admin_main',
-                'sub_nav_active' => 'rating_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'rating' => $rating,
-                'image' => ""
-            );
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => 'Edit Rating',
+                    'panel_nav_active' => 'admin_panel',
+                    'main_nav_active' => 'admin_main',
+                    'sub_nav_active' => 'rating_list',
+                    'user_permission' => $user_permission,
+                    'files' => $files,
+                    'rating' => $rating,
+                    'image' => ""
+                );
 
-            return View::make('admin_en.edit_rating', $viewData);
+                return View::make('admin_en.edit_rating', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => 'Edit Rating',
+                    'panel_nav_active' => 'admin_panel',
+                    'main_nav_active' => 'admin_main',
+                    'sub_nav_active' => 'rating_list',
+                    'user_permission' => $user_permission,
+                    'files' => $files,
+                    'rating' => $rating,
+                    'image' => ""
+                );
+
+                return View::make('admin_my.edit_rating', $viewData);
+            }
         }
     }
 
@@ -5778,17 +6788,31 @@ class AdminController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $formtype = FormType::where('is_active', 1)->where('is_deleted', 0)->orderby('sort_no', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.form'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'form_list',
-            'user_permission' => $user_permission,
-            'formtype' => $formtype,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Form',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'form_list',
+                'user_permission' => $user_permission,
+                'formtype' => $formtype,
+                'image' => ""
+            );
 
-        return View::make('admin_en.form', $viewData);
+            return View::make('admin_en.form', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Borang',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'form_list',
+                'user_permission' => $user_permission,
+                'formtype' => $formtype,
+                'image' => ""
+            );
+
+            return View::make('admin_my.form', $viewData);
+        }
     }
 
     public function getForm() {
@@ -5796,31 +6820,59 @@ class AdminController extends BaseController {
         if (count($form) > 0) {
             $data = Array();
 
-            foreach ($form as $forms) {
-                $formtype = FormType::find($forms->form_type_id);
+            if (Session::get('lang') == "en") {
+                foreach ($form as $forms) {
+                    $formtype = FormType::find($forms->form_type_id);
 
-                $button = "";
-                if ($forms->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveForm(\'' . $forms->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
-                } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeForm(\'' . $forms->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    $button = "";
+                    if ($forms->is_active == 1) {
+                        $status = 'Active';
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveForm(\'' . $forms->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = 'Inactive';
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeForm(\'' . $forms->id . '\')">Active</button>&nbsp;';
+                    }
+
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateForm', $forms->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
+                    $button .= '<button class="btn btn-xs btn-danger" onclick="deleteForm(\'' . $forms->id . '\')">Delete <i class="fa fa-trash"></i></button>';
+
+                    $data_raw = array(
+                        ($forms->company ? $forms->company->short_name : '<i>(not set)</i>'),
+                        $formtype->name_en,
+                        $forms->name_en,
+                        $forms->sort_no,
+                        $status,
+                        $button
+                    );
+
+                    array_push($data, $data_raw);
                 }
+            } else {
+                foreach ($form as $forms) {
+                    $formtype = FormType::find($forms->form_type_id);
 
-                $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateForm', $forms->id) . '\'">'.trans('app.forms.edit').' <i class="fa fa-pencil"></i></button>&nbsp;';
-                $button .= '<button class="btn btn-xs btn-danger" onclick="deleteForm(\'' . $forms->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>';
+                    $button = "";
+                    if ($forms->is_active == 1) {
+                        $status = 'Aktif';
+                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveForm(\'' . $forms->id . '\')">Inactive</button>&nbsp;';
+                    } else {
+                        $status = 'Tidak Aktif';
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeForm(\'' . $forms->id . '\')">Active</button>&nbsp;';
+                    }
 
-                $data_raw = array(
-                    ($forms->company ? $forms->company->short_name : '<i>(not set)</i>'),
-                    $formtype->name_en,
-                    $forms->name_en,
-                    $forms->sort_no,
-                    $status,
-                    $button
-                );
+                    $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('AdminController@updateForm', $forms->id) . '\'">Edit <i class="fa fa-pencil"></i></button>&nbsp;';
+                    $button .= '<button class="btn btn-xs btn-danger" onclick="deleteForm(\'' . $forms->id . '\')">Padam <i class="fa fa-trash"></i></button>';
 
-                array_push($data, $data_raw);
+                    $data_raw = array(
+                        $formtype->name_my,
+                        $forms->name_my,
+                        $forms->sort_no,
+                        $status,
+                        $button
+                    );
+
+                    array_push($data, $data_raw);
+                }
             }
 
             $output_raw = array(
@@ -5956,18 +7008,33 @@ class AdminController extends BaseController {
 
         $formtype = FormType::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.add_form'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'form_list',
-            'user_permission' => $user_permission,
-            'cob' => $cob,
-            'formtype' => $formtype,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Add Form',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'form_list',
+                'user_permission' => $user_permission,
+                'cob' => $cob,
+                'formtype' => $formtype,
+                'image' => ""
+            );
 
-        return View::make('admin_en.add_form', $viewData);
+            return View::make('admin_en.add_form', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Add Form',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'form_list',
+                'user_permission' => $user_permission,
+                'cob' => $cob,
+                'formtype' => $formtype,
+                'image' => ""
+            );
+
+            return View::make('admin_my.add_form', $viewData);
+        }
     }
 
     public function submitAddForm() {
@@ -6017,19 +7084,35 @@ class AdminController extends BaseController {
 
         $formtype = FormType::where('is_active', 1)->where('is_deleted', 0)->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.administration.edit_form'),
-            'panel_nav_active' => 'admin_panel',
-            'main_nav_active' => 'admin_main',
-            'sub_nav_active' => 'form_list',
-            'user_permission' => $user_permission,
-            'form' => $form,
-            'cob' => $cob,
-            'formtype' => $formtype,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Edit Form',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'form_list',
+                'user_permission' => $user_permission,
+                'form' => $form,
+                'cob' => $cob,
+                'formtype' => $formtype,
+                'image' => ""
+            );
 
-        return View::make('admin_en.edit_form', $viewData);
+            return View::make('admin_en.edit_form', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Edit Form',
+                'panel_nav_active' => 'admin_panel',
+                'main_nav_active' => 'admin_main',
+                'sub_nav_active' => 'form_list',
+                'user_permission' => $user_permission,
+                'form' => $form,
+                'cob' => $cob,
+                'formtype' => $formtype,
+                'image' => ""
+            );
+
+            return View::make('admin_my.edit_form', $viewData);
+        }
     }
 
     public function submitUpdateForm() {
@@ -6073,15 +7156,27 @@ class AdminController extends BaseController {
     //audit trail
     public function auditTrail() {
 
-        $viewData = array(
-            'title' => trans('app.menus.reporting.audit_trail_report'),
-            'panel_nav_active' => 'reporting_panel',
-            'main_nav_active' => 'reporting_main',
-            'sub_nav_active' => 'audit_trail_list',
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Audit Trail Report',
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'audit_trail_list',
+                'image' => ""
+            );
 
-        return View::make('report_en.audit_trail', $viewData);
+            return View::make('report_en.audit_trail', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Laporan Audit Trail',
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'audit_trail_list',
+                'image' => ""
+            );
+
+            return View::make('report_my.audit_trail', $viewData);
+        }
     }
 
     public function getAuditTrail() {
@@ -6448,16 +7543,29 @@ class AdminController extends BaseController {
     public function fileByLocation() {
         $strata = Strata::get();
 
-        $viewData = array(
-            'title' => trans('app.menus.reporting.file_by_location_report'),
-            'panel_nav_active' => 'reporting_panel',
-            'main_nav_active' => 'reporting_main',
-            'sub_nav_active' => 'file_by_location_list',
-            'strata' => $strata,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'File By Location & Facilities Report',
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'file_by_location_list',
+                'strata' => $strata,
+                'image' => ""
+            );
 
-        return View::make('report_en.file_by_location', $viewData);
+            return View::make('report_en.file_by_location', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Laporan Fail Mengikut Lokasi & Kemudahan',
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'file_by_location_list',
+                'strata' => $strata,
+                'image' => ""
+            );
+
+            return View::make('report_my.file_by_location', $viewData);
+        }
     }
 
     public function getFileByLocation() {
@@ -6640,26 +7748,45 @@ class AdminController extends BaseController {
             }
         }
 
-        $viewData = array(
-            'title' => trans('app.menus.reporting.rating_summary_report'),
-            'panel_nav_active' => 'reporting_panel',
-            'main_nav_active' => 'reporting_main',
-            'sub_nav_active' => 'rating_summary_list',
-            'strata' => $stratas,
-            'rating' => $ratings,
-            'fiveStar' => $fiveStars,
-            'fourStar' => $fourStars,
-            'threeStar' => $threeStars,
-            'twoStar' => $twoStars,
-            'oneStar' => $oneStars,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Rating Summary Report',
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'rating_summary_list',
+                'strata' => $stratas,
+                'rating' => $ratings,
+                'fiveStar' => $fiveStars,
+                'fourStar' => $fourStars,
+                'threeStar' => $threeStars,
+                'twoStar' => $twoStars,
+                'oneStar' => $oneStars,
+                'image' => ""
+            );
 
 //            print "<pre>";
 //            print_r($viewData);
 //            print "</pre>";
 
-        return View::make('report_en.rating_summary', $viewData);
+            return View::make('report_en.rating_summary', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Laporan Penakrifan Bintang',
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'rating_summary_list',
+                'strata' => $stratas,
+                'rating' => $ratings,
+                'fiveStar' => $fiveStars,
+                'fourStar' => $fourStars,
+                'threeStar' => $threeStars,
+                'twoStar' => $twoStars,
+                'oneStar' => $oneStars,
+                'image' => ""
+            );
+
+            return View::make('report_my.rating_summary', $viewData);
+        }
     }
 
     //management summary
@@ -6753,27 +7880,51 @@ class AdminController extends BaseController {
             }
         }
 
-        $viewData = array(
-            'title' => trans('app.menus.reporting.management_summary_report'),
-            'panel_nav_active' => 'reporting_panel',
-            'main_nav_active' => 'reporting_main',
-            'sub_nav_active' => 'management_summary_list',
-            'strata' => $strata,
-            'residential' => $residentials,
-            'residential_less10' => $residential_less10s,
-            'residential_more10' => $residential_more10s,
-            'commercial' => $commercials,
-            'commercial_less10' => $commercial_less10s,
-            'commercial_more10' => $commercial_more10s,
-            'developer' => $developer,
-            'jmb' => $jmbs,
-            'mc' => $mcs,
-            'agent' => $agents,
-            'others' => $otherss,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Management Summary Report',
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'management_summary_list',
+                'strata' => $strata,
+                'residential' => $residentials,
+                'residential_less10' => $residential_less10s,
+                'residential_more10' => $residential_more10s,
+                'commercial' => $commercials,
+                'commercial_less10' => $commercial_less10s,
+                'commercial_more10' => $commercial_more10s,
+                'developer' => $developer,
+                'jmb' => $jmbs,
+                'mc' => $mcs,
+                'agent' => $agents,
+                'others' => $otherss,
+                'image' => ""
+            );
 
-        return View::make('report_en.management_summary', $viewData);
+            return View::make('report_en.management_summary', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Laporan Rumusan Pengurusan',
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'management_summary_list',
+                'strata' => $strata,
+                'residential' => $residentials,
+                'residential_less10' => $residential_less10s,
+                'residential_more10' => $residential_more10s,
+                'commercial' => $commercials,
+                'commercial_less10' => $commercial_less10s,
+                'commercial_more10' => $commercial_more10s,
+                'developer' => $developer,
+                'jmb' => $jmbs,
+                'mc' => $mcs,
+                'agent' => $agents,
+                'others' => $otherss,
+                'image' => ""
+            );
+
+            return View::make('report_my.management_summary', $viewData);
+        }
     }
 
     //cob file / management
@@ -6863,24 +8014,45 @@ class AdminController extends BaseController {
             $total = $totals;
         }
 
-        $viewData = array(
-            'title' => trans('app.menus.reporting.cob_file_report'),
-            'panel_nav_active' => 'reporting_panel',
-            'main_nav_active' => 'reporting_main',
-            'sub_nav_active' => 'cob_file_management_list',
-            'strata' => $strata,
-            'developer' => $developer,
-            'jmb' => $jmbs,
-            'mc' => $mcs,
-            'agent' => $agents,
-            'others' => $otherss,
-            'total' => $total,
-            'residential' => $residentials,
-            'commercial' => $commercials,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'COB File / Management (%) Report',
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'cob_file_management_list',
+                'strata' => $strata,
+                'developer' => $developer,
+                'jmb' => $jmbs,
+                'mc' => $mcs,
+                'agent' => $agents,
+                'others' => $otherss,
+                'total' => $total,
+                'residential' => $residentials,
+                'commercial' => $commercials,
+                'image' => ""
+            );
 
-        return View::make('report_en.cob_file_management', $viewData);
+            return View::make('report_en.cob_file_management', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Laporan Fail COB / Pengurusan (%)',
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'cob_file_management_list',
+                'strata' => $strata,
+                'developer' => $developer,
+                'jmb' => $jmbs,
+                'mc' => $mcs,
+                'agent' => $agents,
+                'others' => $otherss,
+                'total' => $total,
+                'residential' => $residentials,
+                'commercial' => $commercials,
+                'image' => ""
+            );
+
+            return View::make('report_my.cob_file_management', $viewData);
+        }
     }
 
     //form download
@@ -6889,16 +8061,31 @@ class AdminController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $formtype = FormType::where('is_active', 1)->where('is_deleted', 0)->orderby('sort_no', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.form.download'),
-            'panel_nav_active' => 'form_panel',
-            'main_nav_active' => 'form_main',
-            'sub_nav_active' => 'form_download_list',
-            'user_permission' => $user_permission,
-            'formtype' => $formtype,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => 'Form Download',
+                'panel_nav_active' => 'form_panel',
+                'main_nav_active' => 'form_main',
+                'sub_nav_active' => 'form_download_list',
+                'user_permission' => $user_permission,
+                'formtype' => $formtype,
+                'image' => ""
+            );
 
-        return View::make('form_en.index', $viewData);
+            return View::make('form_en.index', $viewData);
+        } else {
+            $viewData = array(
+                'title' => 'Form Download',
+                'panel_nav_active' => 'form_panel',
+                'main_nav_active' => 'form_main',
+                'sub_nav_active' => 'form_download_list',
+                'user_permission' => $user_permission,
+                'formtype' => $formtype,
+                'image' => ""
+            );
+
+            return View::make('form_my.index', $viewData);
+        }
     }
+
 }

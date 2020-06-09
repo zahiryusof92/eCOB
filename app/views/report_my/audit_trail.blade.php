@@ -19,7 +19,7 @@ $company = Company::find(Auth::user()->company_id);
                             <td class="text-center">
                                 <h4 class="margin-bottom-0">
                                     <img src="{{asset($company->image_url)}}" height="100px;" alt="">
-                                </h4>
+                                </h4> 
                             </td>
                             <td>
                                 <h5 class="margin-bottom-10">
@@ -36,12 +36,12 @@ $company = Company::find(Auth::user()->company_id);
                             </td>
                         </tr>
                     </table>
-                </div>
+                </div>                
                 <hr/>
                 <br/>
                 <div class="row text-center">
                     <div class="col-lg-12">
-                        <span style="font-size: 12px;"><b>{{ trans('app.forms.date_audited') }}: </b></span>&nbsp;
+                        <span style="font-size: 12px;"><b>Date Audited: </b></span>&nbsp;                        
                         <input style="font-size: 12px;" id="date_from" data-column="0" type="text" class="form-control width-150 display-inline-block" placeholder="From"/>
                         <span style="font-size: 12px;" class="margin-right-10">&nbsp; —</span>
                         <input style="font-size: 12px;" id="date_to" data-column="0" type="text" class="form-control width-150 display-inline-block" placeholder="To"/>
@@ -54,9 +54,9 @@ $company = Company::find(Auth::user()->company_id);
                             <thead>
                                 <tr>
                                     <th style="width:20%; text-align: center !important;">Tarikh</th>
-                                    <th style="width:20%; text-align: center !important;">{{ trans('app.forms.module') }}</th>
-                                    <th style="width:40%; text-align: center !important;">{{ trans('app.forms.activity') }}</th>
-                                    <th style="width:20%; text-align: center !important;">{{ trans('app.forms.action_from') }}</th>
+                                    <th style="width:20%; text-align: center !important;">Modul</th>
+                                    <th style="width:40%; text-align: center !important;">Aktiviti</th>
+                                    <th style="width:20%; text-align: center !important;">Tindakan Daripada</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,9 +64,9 @@ $company = Company::find(Auth::user()->company_id);
                         </table>
                     </div>
                 </div>
-            </div>
+            </div>           
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 

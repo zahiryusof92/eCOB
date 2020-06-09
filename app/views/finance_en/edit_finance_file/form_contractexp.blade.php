@@ -12,7 +12,7 @@ $prefix = 'contract_';
                 <thead>
                     <tr>
                         <th width="5%">&nbsp;</th>
-                        <th width="40%" style="text-align: center;">PERKARA</th>
+                        <th width="40%" style="text-align: center;">PERKARA</th>                            
                         <th width="10%" style="text-align: center;">TUNGGAKAN BULAN-BULAN TERDAHULU<br/>A</th>
                         <th width="10%" style="text-align: center;">BULAN SEMASA<br/>B</th>
                         <th width="10%" style="text-align: center;">BULAN HADAPAN<br/>C</th>
@@ -49,7 +49,7 @@ $prefix = 'contract_';
                         <td><input type="number" step="any" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
                         <td><input type="number" step="any" oninput="calculateContractTotal('{{ $count }}')" id="{{ $prefix . 'tertunggak_' . $count }}" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $contractFiles['tertunggak'] }}"></td>
                         @if ($contractFiles['is_custom'])
-                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowContract('contract_row<?php echo $count ?>')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td>
+                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowContract('contract_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                         @else
                         <td>&nbsp;</td>
                         @endif
@@ -57,7 +57,7 @@ $prefix = 'contract_';
                     @endforeach
 
                     <tr>
-                        <td class="padding-table text-right" colspan="8"><a href="javascript:void(0);" onclick="addRowContract()" class="btn btn-primary btn-xs">{{ trans("app.forms.add_more") }}</a></td>
+                        <td class="padding-table text-right" colspan="8"><a href="javascript:void(0);" onclick="addRowContract()" class="btn btn-primary btn-xs">Add More</a></td>
                     </tr>
 
                     <tr>
@@ -71,7 +71,7 @@ $prefix = 'contract_';
                         <td>&nbsp;</td>
                     </tr>
                 </tbody>
-            </table>
+            </table>    
         </div>
     </div>
 </div>
@@ -140,14 +140,14 @@ $prefix = 'contract_';
         }
         $('#{{ $prefix }}total_tertunggak').val(parseFloat(contract_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
 
-        var contract_sum_total_all = parseFloat(contract_sum_total_tunggakan) + parseFloat(contract_sum_total_semasa) + parseFloat(contract_sum_total_hadapan); // JUMLAH SEMUA A + B + C
-        $('#{{ $prefix }}total_all').val(parseFloat(contract_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
+        var contract_sum_total_all = parseFloat(contract_sum_total_tunggakan) + parseFloat(contract_sum_total_semasa) + parseFloat(contract_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
+        $('#{{ $prefix }}total_all').val(parseFloat(contract_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
     }
 
     function addRowContract() {
         var rowContractNo = $("#dynamic_form_contract tr").length;
         rowContractNo = rowContractNo - 2;
-        $("#dynamic_form_contract tr:last").prev().prev().after('<tr id="contract_row' + rowContractNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowContractNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}tunggakan_' + rowContractNo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}semasa_' + rowContractNo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}hadapan_' + rowContractNo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowContractNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateContractTotal(\'' + rowContractNo + '\')" id="{{ $prefix }}tertunggak_' + rowContractNo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowContract(\'contract_row' + rowContractNo + '\')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td></tr>');
+        $("#dynamic_form_contract tr:last").prev().prev().after('<tr id="contract_row' + rowContractNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowContractNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}tunggakan_' + rowContractNo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}semasa_' + rowContractNo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateContract(\'' + rowContractNo + '\')" id="{{ $prefix }}hadapan_' + rowContractNo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowContractNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateContractTotal(\'' + rowContractNo + '\')" id="{{ $prefix }}tertunggak_' + rowContractNo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowContract(\'contract_row' + rowContractNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
 
         calculateContractTotal();
     }

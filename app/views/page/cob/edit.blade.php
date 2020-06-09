@@ -28,15 +28,15 @@ foreach ($user_permission as $permission) {
                         </div>
                         <input type="hidden" name="id" value="{{ $cob->id }}">
                         <input type="hidden" name="type" value="{{ $cob->type }}">
-
+                        
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('cob.form.file') }}</label>
                                     <select id="file" class="form-control" name="file_id">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($files as $file)
-                                        <option value="{{$file->id}}"
+                                        <option value="{{$file->id}}" 
                                             <?php if($cob->file_id == $file->id) echo 'selected'; ?>
                                         >{{$file->file_no}}</option>
                                         @endforeach
@@ -51,10 +51,10 @@ foreach ($user_permission as $permission) {
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('cob.form.document') }}</label>
                                     <select id="document" class="form-control" name="document_id">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
-
+                                        <option value="">Please Select</option>
+                                        
                                         @foreach ($documents as $document)
-                                        <option value="{{$document->id}}"
+                                        <option value="{{$document->id}}" 
                                             <?php if($cob->document_id == $document->id) echo 'selected'; ?>
                                         >{{$document->name}}</option>
                                         @endforeach
@@ -79,9 +79,9 @@ foreach ($user_permission as $permission) {
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('cob.form.hidden') }}</label>
                                     <select id="hidden" class="form-control" name="is_hidden">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
-                                        <option value="1" <?php if($cob->is_hidden === 1) echo 'selected' ?>>{{ trans("app.forms.yes") }}</option>
-                                        <option value="0" <?php if($cob->is_hidden === 0) echo 'selected' ?>>{{ trans("app.forms.no") }}</option>
+                                        <option value="">Please Select</option>
+                                        <option value="1" <?php if($cob->is_hidden === 1) echo 'selected' ?>>Yes</option>
+                                        <option value="0" <?php if($cob->is_hidden === 0) echo 'selected' ?>>No</option>
                                     </select>
                                     <div id="hidden_err" style="display:none;"></div>
                                 </div>
@@ -93,9 +93,9 @@ foreach ($user_permission as $permission) {
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('cob.form.readonly') }}</label>
                                     <select id="readonly" class="form-control" name="is_readonly">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
-                                        <option value="1" <?php if($cob->is_readonly === 1) echo 'selected' ?>>{{ trans("app.forms.yes") }}</option>
-                                        <option value="0" <?php if($cob->is_readonly === 0) echo 'selected' ?>>{{ trans("app.forms.no") }}</option>
+                                        <option value="">Please Select</option>
+                                        <option value="1" <?php if($cob->is_readonly === 1) echo 'selected' ?>>Yes</option>
+                                        <option value="0" <?php if($cob->is_readonly === 0) echo 'selected' ?>>No</option>
                                     </select>
                                     <div id="readonly_err" style="display:none;"></div>
                                 </div>
@@ -113,13 +113,13 @@ foreach ($user_permission as $permission) {
                         </div>
 
                         <div class="form-actions">
-                            <a href='{{ url("cob/get/{$name}") }}' class="btn btn-default" id="cancel_button">{{ trans('app.forms.cancel') }}</a>
+                            <a href='{{ url("cob/get/{$name}") }}' class="btn btn-default" id="cancel_button">Cancel</a>
                             <?php if ($insert_permission == 1) { ?>
                                 <input type="submit" value="{{ trans('general.label_save') }}" class="btn btn-primary">
                             <?php } ?>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -131,7 +131,7 @@ foreach ($user_permission as $permission) {
     $("#formSubmit").submit(function(e){
         e.preventDefault();
         $("#loading").css("display", "inline-block");
-
+        
         let error = 0;
 
         if (error == 0) {
@@ -144,11 +144,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.cob.update') }}</span>", function () {
+                        bootbox.alert("<span style='color:green;'>COB Updated successfully!</span>", function () {
                             window.location = '{{URL::action("CobController@get", ["name" => $cob->type]) }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

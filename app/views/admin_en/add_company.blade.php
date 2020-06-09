@@ -25,15 +25,15 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
+                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.company_name') }}</label>
-                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.company_name') }}" id="name">
+                                    <label><span style="color: red; font-style: italic;">* </span>Company Name</label>
+                                    <input type="text" class="form-control" placeholder="Company Name" id="name">
                                     <div id="name_error" style="display:none;"></div>
                                 </div>
                             </div>
@@ -41,8 +41,8 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.short_name') }}</label>
-                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.short_name') }}" id="short_name">
+                                    <label><span style="color: red; font-style: italic;">* </span>Short Name</label>
+                                    <input type="text" class="form-control" placeholder="Short Name" id="short_name">
                                     <div id="short_name_error" style="display:none;"></div>
                                 </div>
                             </div>
@@ -50,31 +50,31 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.roc_rob_number') }}</label>
-                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.roc_rob_number') }}" id="rob_roc_no">
+                                    <label><span style="color: red; font-style: italic;">* </span>ROC / ROB No.</label>
+                                    <input type="text" class="form-control" placeholder="ROC / ROB No" id="rob_roc_no">
                                     <div id="rob_roc_no_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.address') }}</label>
-                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.address1') }}" id="address1">
+                                    <label><span style="color: red; font-style: italic;">* </span>Address</label>
+                                    <input type="text" class="form-control" placeholder="Address 1" id="address1">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.address2') }}" id="address2">
+                                    <input type="text" class="form-control" placeholder="Address 2" id="address2">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.address3') }}" id="address3">
+                                    <input type="text" class="form-control" placeholder="Address 3" id="address3">
                                     <div id="address_error" style="display:none;"></div>
                                 </div>
                             </div>
@@ -82,9 +82,9 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.city') }}</label>
+                                    <label><span style="color: red; font-style: italic;">* </span>City</label>
                                     <select class="form-control" id="city">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please select</option>
                                         @foreach ($city as $cities)
                                         <option value="{{$cities->id}}">{{$cities->description}}</option>
                                         @endforeach
@@ -94,18 +94,18 @@ foreach ($user_permission as $permission) {
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.postcode') }}</label>
-                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.postcode') }}" id="poscode">
+                                    <label><span style="color: red; font-style: italic;">* </span>Postcode</label>
+                                    <input type="text" class="form-control" placeholder="Postcode" id="poscode">
                                     <div id="poscode_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.state') }}</label>
+                                    <label><span style="color: red; font-style: italic;">* </span>State</label>
                                     <select class="form-control" id="state">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please select</option>
                                         @foreach ($state as $states)
                                         <option value="{{$states->id}}">{{$states->name}}</option>
                                         @endforeach
@@ -115,9 +115,9 @@ foreach ($user_permission as $permission) {
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.country') }}</label>
+                                    <label><span style="color: red; font-style: italic;">* </span>Country</label>
                                     <select class="form-control" id="country">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please select</option>
                                         @foreach ($country as $countries)
                                         <option value="{{$countries->id}}">{{$countries->name}}</option>
                                         @endforeach
@@ -125,28 +125,28 @@ foreach ($user_permission as $permission) {
                                     <div id="country_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div>        
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.office_phone_number') }}</label>
-                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.office_phone_number') }}" id="phone_no">
+                                    <label>Office Phone No.</label>
+                                    <input type="text" class="form-control" placeholder="Office Phone No." id="phone_no">
                                     <div id="phone_no_error" style="display:none;"></div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.fax_number') }}</label>
-                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.fax_number') }}" id="fax_no">
+                                    <label>Fax No.</label>
+                                    <input type="text" class="form-control" placeholder="Fax No." id="fax_no">
                                     <div id="fax_no_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.email') }}</label>
-                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.email') }}" id="email">
+                                    <label><span style="color: red; font-style: italic;">* </span>Email</label>
+                                    <input type="text" class="form-control" placeholder="Email" id="email">
                                     <div id="email_error" style="display:none;"></div>
                                 </div>
                             </div>
@@ -156,10 +156,10 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.logo') }}</label>
+                                    <label>Logo</label>
                                     <br />
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                    <input type="file" name="image" id="image" />
+                                    <input type="file" name="image" id="image" /> 
                                     <br />
                                     <!--<small>Max image size: MB</small>-->
                                 </div>
@@ -169,7 +169,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <div id="output">
-
+                                        
                                     </div>
                                     <div id="validation-errors"></div>
                                 </div>
@@ -180,10 +180,10 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.navbar_image') }}</label>
+                                    <label>Navbar Image</label>
                                     <br />
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                                    <input type="file" name="nav_image" id="nav_image" />
+                                    <input type="file" name="nav_image" id="nav_image" /> 
                                     <br />
                                     <!--<small>Max image size: MB</small>-->
                                 </div>
@@ -193,25 +193,25 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <div id="output_nav_image">
-
+                                        
                                     </div>
                                     <div id="nav_validation-errors"></div>
                                 </div>
                             </div>
                         </div>
                     </form>
-                    <form role="form">
+                    <form role="form">  
                         <div class="form-actions">
                             <input type="hidden" id="image_url" value=""/>
                             <input type="hidden" id="nav_image_url" value=""/>
                             <?php if ($insert_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addCompany()">{{ trans('app.forms.submit') }}</button>
+                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addCompany()">Submit</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@company')}}'">{{ trans('app.forms.cancel') }}</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@company')}}'">Cancel</button>
                         </div>
                     </form>
                     <!-- End Vertical Form -->
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -228,7 +228,7 @@ foreach ($user_permission as $permission) {
                 var imagefile = file.type;
                 var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
                 if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
-                    $("#validation-errors").html("<span id='error'>{{ trans('app.forms.please_select_valid_image') }}</span><br/>" + "<span id='error_message'>{{ trans('app.forms.only_image_allowed') }}</span>");
+                    $("#validation-errors").html("<span id='error'>Please Select a valid Image File</span><br/>" + "<span id='error_message'>Only .jpeg, .jpg, .png and .gif images type allowed</span>");
                     $("#validation-errors").css("color", "red");
                     return false;
                 }
@@ -246,7 +246,7 @@ foreach ($user_permission as $permission) {
             $("#output").html("<img id='previewing' style='width: 50%;'/>");
             $('#previewing').attr('src', e.target.result);
         };
-
+        
         $(function() {
             $("#nav_image").change(function() {
                 $("#nav_validation-errors").empty(); // To remove the previous error message
@@ -254,7 +254,7 @@ foreach ($user_permission as $permission) {
                 var navImagefile = nav_file.type;
                 var nav_match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
                 if (!((navImagefile == nav_match[0]) || (navImagefile == nav_match[1]) || (navImagefile == nav_match[2])  || (navImagefile == match[3]))) {
-                    $("#nav_validation-errors").html("<span id='error'>{{ trans('app.forms.please_select_valid_image') }}</span><br/>" + "<span id='error_message'>{{ trans('app.forms.only_image_allowed') }}</span>");
+                    $("#nav_validation-errors").html("<span id='error'>Please Select a valid Image File</span><br/>" + "<span id='error_message'>Only .jpeg, .jpg, .png and .gif images type allowed</span>");
                     $("#nav_validation-errors").css("color", "red");
                     return false;
                 }
@@ -272,14 +272,14 @@ foreach ($user_permission as $permission) {
             $("#output_nav_image").html("<img id='nav_previewing' style='width: 50%;'/>");
             $('#nav_previewing').attr('src', e.target.result);
         };
-
+        
         //upload
         var options = {
             beforeSubmit: showRequest,
             success: showResponse,
             dataType: 'json'
         };
-
+        
         var options2 = {
             beforeSubmit: showRequest2,
             success: showResponse2,
@@ -289,7 +289,7 @@ foreach ($user_permission as $permission) {
         $('body').delegate('#image', 'change', function () {
             $('#upload').ajaxForm(options).submit();
         });
-
+        
         $('body').delegate('#nav_image', 'change', function () {
             $('#upload_nav_image').ajaxForm(options2).submit();
         });
@@ -337,7 +337,7 @@ foreach ($user_permission as $permission) {
             $("#nav_image_url").val(response.file);
         }
     }
-
+    
     function addCompany() {
         $("#loading").css("display", "inline-block");
 
@@ -360,47 +360,47 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (name.trim() == "") {
-            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"name"]) }}</span>');
+            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Name</span>');
             $("#name_error").css("display", "block");
             error = 1;
         }
         if (short_name.trim() == "") {
-            $("#short_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"short name"]) }}</span>');
+            $("#short_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Short Name</span>');
             $("#short_name_error").css("display", "block");
             error = 1;
         }
         if (rob_roc_no.trim() == "") {
-            $("#rob_roc_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"ROC / ROB No"]) }}</span>');
+            $("#rob_roc_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter ROC / ROB No</span>');
             $("#rob_roc_no_error").css("display", "block");
             error = 1;
         }
         if (address1.trim() == "") {
-            $("#address_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"address"]) }}</span>');
+            $("#address_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Address</span>');
             $("#address_error").css("display", "block");
             error = 1;
         }
         if (poscode.trim() == "") {
-            $("#poscode_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"postcode"]) }}</span>');
+            $("#poscode_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Postcode</span>');
             $("#poscode_error").css("display", "block");
             error = 1;
         }
         if (city.trim() == "") {
-            $("#city_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"city"]) }}</span>');
+            $("#city_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select City</span>');
             $("#city_error").css("display", "block");
             error = 1;
         }
         if (state.trim() == "") {
-            $("#state_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"state"]) }}</span>');
+            $("#state_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select State</span>');
             $("#state_error").css("display", "block");
             error = 1;
         }
         if (country.trim() == "") {
-            $("#country_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"country"]) }}</span>');
+            $("#country_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Country</span>');
             $("#country_error").css("display", "block");
             error = 1;
         }
         if (email.trim() == "") {
-            $("#email_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"email"]) }}</span>');
+            $("#email_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Email</span>');
             $("#email_error").css("display", "block");
             error = 1;
         }
@@ -431,11 +431,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>{{ trans("app.successes.organization.store") }}</span>", function () {
+                        bootbox.alert("<span style='color:green;'>Organization Profile updated successfully!</span>", function () {
                             window.location = '{{URL::action("AdminController@company") }}';
-                        });
+                        }); 
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans("app.errors.occurred") }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

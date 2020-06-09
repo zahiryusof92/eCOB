@@ -28,31 +28,31 @@ foreach ($user_permission as $permission) {
                         </button>
                         &nbsp;
                         <button onclick="window.location = '{{ URL::action('AgmController@importPurchaser') }}'" type="button" class="btn btn-primary">
-                            {{ trans('app.forms.import_csv_file') }}
+                            Import CSV
                         </button>
                         &nbsp;
                         <a href="{{asset('files/buyer_template.csv')}}" target="_blank">
                             <button type="button" class="btn btn-success pull-right">
-                                {{ trans('app.forms.download_csv_template') }}
+                                Download CSV Template
                             </button>
-                        </a>
+                        </a> 
                         <br/><br/>
                     <?php } ?>
                     <div class="table-responsive">
                         <table class="table table-hover nowrap" id="purchaser" width="100%">
                             <thead>
                                 <tr>
-                                    <th style="width:10%;">{{ trans('app.forms.unit_number') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.unit_share') }}</th>
-                                    <th style="width:20%;">{{ trans('app.forms.buyer') }}</th>
-                                    <th style="width:15%;">{{ trans('app.forms.nric') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.phone_number') }}</th>
-                                    <th style="width:15%;">{{ trans('app.forms.email') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.race') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.action') }}</th>
+                                    <th style="width:10%;">Unit No</th>
+                                    <th style="width:10%;">Share Unit</th>
+                                    <th style="width:20%;">Buyer</th>
+                                    <th style="width:15%;">NRIC</th>
+                                    <th style="width:10%;">Phone No</th>
+                                    <th style="width:15%;">Email</th>
+                                    <th style="width:10%;">Race</th>
+                                    <th style="width:10%;">Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody>  
                             </tbody>
                         </table>
                     </div>
@@ -78,11 +78,11 @@ foreach ($user_permission as $permission) {
             ]
         });
     });
-
+    
     function deletePurchaser(id) {
     swal({
-    title: "{{ trans('app.confirmation.are_you_sure') }}",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+    title: "Are you sure?",
+            text: "Your will not be able to recover this file!",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -99,7 +99,7 @@ foreach ($user_permission as $permission) {
             success: function (data) {
             if (data.trim() == "true") {
             $.notify({
-            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.deleted_successfully") }}</p>'
+            message: '<p style="text-align: center; margin-bottom: 0px;">Deleted Successfully</p>'
             }, {
             type: 'success',
                     placement: {
@@ -108,7 +108,7 @@ foreach ($user_permission as $permission) {
             });
             location.reload();
             } else {
-            bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+            bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
             }
             }
     });

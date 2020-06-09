@@ -13,8 +13,8 @@ foreach ($user_permission as $permission) {
 $fields = [
             'unit_no',
             'share_unit',
-            'buyer',
-            'nric',
+            'buyer', 
+            'nric', 
             'address1',
             'address2',
             'address3',
@@ -47,9 +47,9 @@ $fields = [
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('agm_purchase_sub.form.file') }}</label>
                                     <select id="form_type" class="form-control" name="file_id">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($file as $f)
-                                        <option value="{{$f->id}}"
+                                        <option value="{{$f->id}}" 
                                         <?php if($agmPurchaseSub->file_id === $f->id) echo 'selected'; ?>
                                         >{{$f->file_no}}</option>
                                         @endforeach
@@ -80,15 +80,15 @@ $fields = [
                                 <div id="remark_error" style="display:none;"></div>
                             </div>
                         </div>
-
+                        
                         <div class="form-actions">
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AgmController@agmPurchaseSub") }}'">{{ trans('app.forms.cancel') }}</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AgmController@agmPurchaseSub") }}'">Cancel</button>
                             <?php if ($insert_permission == 1) { ?>
                                 <input type="submit" value="{{ trans('general.label_save') }}" class="btn btn-primary">
                             <?php } ?>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -100,7 +100,7 @@ $fields = [
     $("#formSubmit").submit(function(e){
         e.preventDefault();
         $("#loading").css("display", "inline-block");
-
+        
         let error = 0;
 
         if (error == 0) {
@@ -113,11 +113,11 @@ $fields = [
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.agm_purchaser.update') }}</span>", function () {
+                        bootbox.alert("<span style='color:green;'>AGM Submission Updated successfully!</span>", function () {
                             window.location = '{{URL::action("AgmController@agmPurchaseSub") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

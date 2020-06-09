@@ -24,18 +24,18 @@ foreach ($user_permission as $permission) {
                 <div class="col-lg-12">
                     <?php if ($insert_permission == 1) { ?>
                     <button onclick="window.location = '{{ URL::action('AdminController@addFilePrefix') }}'" type="button" class="btn btn-primary">
-                        {{ trans('app.buttons.add_cob_file_prefix') }}
+                        Add COB File Prefix 
                     </button>
                     <br/><br/>
                     <?php } ?>
                     <table class="table table-hover nowrap" id="fileprefix" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:60%;">{{ trans('app.forms.description') }}</th>
-                                <th style="width:10%;">{{ trans('app.forms.sort_no') }}</th>
-                                <th style="width:20%;">{{ trans('app.forms.status') }}</th>
+                                <th style="width:60%;">Description</th>
+                                <th style="width:10%;">Sort No</th>
+                                <th style="width:20%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
-                                <th style="width:10%;">{{ trans('app.forms.action') }}</th>
+                                <th style="width:10%;">Action</th>
                                 <?php } ?>
                             </tr>
                         </thead>
@@ -43,9 +43,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>            
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 
@@ -65,8 +65,8 @@ foreach ($user_permission as $permission) {
                 }
             ]
         });
-    });
-
+    }); 
+    
     function inactiveFilePrefix(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@inactiveFilePrefix') }}",
@@ -76,11 +76,11 @@ foreach ($user_permission as $permission) {
             },
             success: function(data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function() {
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
                         window.location = "{{URL::action('AdminController@filePrefix')}}";
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                 }
             }
         });
@@ -95,22 +95,22 @@ foreach ($user_permission as $permission) {
             },
             success: function(data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function() {
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
                         window.location = "{{URL::action('AdminController@filePrefix')}}";
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                 }
             }
         });
     }
-
+    
     function deleteFilePrefix (id) {
         swal({
-            title: "{{ trans('app.confirmation.are_you_sure') }}",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            title: "Are you sure?",
+            text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,
+            showCancelButton: true,            
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -126,15 +126,15 @@ foreach ($user_permission as $permission) {
                 success: function(data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "{{ trans('app.successes.deleted_title') }}",
-                            text: "{{ trans('app.successes.deleted_text_file') }}",
+                            title: "Deleted!",
+                            text: "File has been deleted",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

@@ -23,39 +23,39 @@ foreach ($user_permission as $permission) {
                     <form id="add_memo_type" class="form-horizontal">
                         <div class="form-group row">
                             <div class="col-md-2">
-                                <label class="form-control-label" style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
+                                <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields</label>
                             </div>
-                        </div>
+                        </div>   
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.memo_type') }}</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Memo Type</label>
                             </div>
                             <div class="col-md-4">
-                                <input id="description" class="form-control" placeholder="{{ trans('app.forms.memo_type') }}" type="text">
+                                <input id="description" class="form-control" placeholder="Memo Type" type="text">
                                 <div id="description_error" style="display:none;"></div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.admin_status') }}</label>
-                            </div>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Status</label>
+                            </div>    
                             <div class="col-md-4">
                                 <select id="is_active" class="form-control">
-                                    <option value="">{{ trans('app.forms.please_select') }}</option>
-                                    <option value="1">{{ trans('app.forms.active') }}</option>
-                                    <option value="0">{{ trans('app.forms.inactive') }}</option>
+                                    <option value="">Please Select</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
                                 </select>
                                 <div id="is_active_error" style="display:none;"></div>
-                            </div>
-                        </div>
+                            </div>                            
+                        </div>                                               
                         <div class="form-actions">
                             <?php if ($insert_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addMemoType()">{{ trans('app.forms.save') }}</button>
+                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addMemoType()">Save</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("SettingController@memoType") }}'">{{ trans('app.forms.cancel') }}</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("SettingController@memoType") }}'">Cancel</button>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -64,7 +64,7 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-
+    
     function addMemoType() {
         $("#loading").css("display", "inline-block");
 
@@ -72,19 +72,19 @@ foreach ($user_permission as $permission) {
             is_active = $("#is_active").val();
 
         var error = 0;
-
+        
         if (description.trim() == "") {
-            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Memo Type"]) }}</span>');
+            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter memo type</span>');
             $("#description_error").css("display", "block");
             error = 1;
         }
-
+        
         if (is_active.trim() == "") {
-            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Status"]) }}</span>');
+            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select status</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
-
+        
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('SettingController@submitMemoType') }}",
@@ -99,11 +99,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.memo_types.store') }}</span>", function () {
+                        bootbox.alert("<span style='color:green;'>Memo Type added successfully!</span>", function () {
                             window.location = '{{URL::action("SettingController@memoType") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

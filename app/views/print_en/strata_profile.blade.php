@@ -12,7 +12,7 @@
                     <td class="text-center">
                         <h4 class="margin-bottom-0">
                             <img src="{{asset($company->image_url)}}" height="100px;" alt="">
-                        </h4>
+                        </h4> 
                     </td>
                     <td>
                         <h5 class="margin-bottom-10">
@@ -21,7 +21,7 @@
                         <h6 class="margin-bottom-0">
                             {{$title}}
                         </h6>
-                    </td>
+                    </td>                            
                 </tr>
             </table>
 
@@ -55,7 +55,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr>  
                     </tr>
                 </tbody>
             </table>
@@ -74,7 +74,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr>  
                     </tr>
                 </tbody>
             </table>
@@ -99,13 +99,13 @@
                     @endforeach
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr>  
                     </tr>
                 </tbody>
             </table>
             @endif
 
-            @if (!empty($race))
+            @if (!empty($race))                
             @if ($files->owner)
             <table border="1" id="owner_table" width="100%" style="margin-top: 25px;">
                 <thead>
@@ -120,17 +120,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr>                                    
                         <?php $total_all_owner = Buyer::where('file_id', $files->id)->where('is_deleted', 0)->count(); ?>
 
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $files->file_no }}</td>
+                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $files->file_no }}</td>                               
                         @foreach ($race as $rc)
                         <?php $total_owner = Buyer::where('file_id', $files->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
                         <?php $percentage_owner = 0; ?>
                         <?php if ($total_owner > 0) { ?>
                             <?php $percentage_owner = ($total_owner / $total_all_owner) * 100; ?>
                         <?php } ?>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $percentage_owner }}</td>
+                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $percentage_owner }}</td>                                    
 
                         <?php
                         $ownerData[] = array(
@@ -203,7 +203,7 @@
                     <tr>
                         <?php $total_all_tenant = Buyer::where('file_id', $files->id)->where('is_deleted', 0)->count(); ?>
 
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $files->file_no }}</td>
+                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $files->file_no }}</td>                               
                         @foreach ($race as $rc)
                         <?php $total_tenant = Tenant::where('file_id', $files->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
                         <?php $percentage_tenant = 0; ?>
@@ -265,16 +265,16 @@
             @endif
             @endif
             @endif
-
+            
             <hr/>
-
+            
             <table width="100%">
                 <tr>
                     <td>
-                        <p><b>{{ trans('app.forms.confidential') }}</b></p>
+                        <p><b>CONFIDENTIAL</b></p>
                     </td>
                     <td class="pull-right">
-                        <p>{{ trans('app.forms.print_on', ['print'=>date('d/m/Y h:i:s A', strtotime("now"))]) }}</p>
+                        <p>Print On: {{date('d/m/Y h:i:s A', strtotime("now"))}}</p>
                     </td>
                 </tr>
             </table>

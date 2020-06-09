@@ -58,7 +58,7 @@ if (count($strata) > 0) {
                             <td class="text-center">
                                 <h4 class="margin-bottom-0">
                                     <img src="{{asset($company->image_url)}}" height="100px;" alt="">
-                                </h4>
+                                </h4> 
                             </td>
                             <td>
                                 <h5 class="margin-bottom-10">
@@ -75,7 +75,7 @@ if (count($strata) > 0) {
                             </td>
                         </tr>
                     </table>
-                </div>
+                </div>  
                 <hr/>
                 <div class="row">
                     <div class="col-lg-12">
@@ -83,9 +83,9 @@ if (count($strata) > 0) {
                         <table border="1" id="cob_file_management" width="100%" style="font-size: 12px;">
                             <thead>
                                 <tr>
-                                    <th rowspan="2" style="width:40%; text-align: center !important; vertical-align:middle !important;">{{ trans('app.forms.items') }}</th>
+                                    <th rowspan="2" style="width:40%; text-align: center !important; vertical-align:middle !important;">Perkara</th>
                                     <th colspan="3" style="width:30%; text-align: center !important; vertical-align:middle !important;">Bilangan Terkini</th>
-                                    <th rowspan="2" style="width:30%; text-align: center !important; vertical-align:middle !important;">{{ trans('app.forms.percentage') }} (%)</th>
+                                    <th rowspan="2" style="width:30%; text-align: center !important; vertical-align:middle !important;">Peratusan (%)</th>
                                 </tr>
                                 <tr>
                                     <th style="width:10%; text-align: center !important; vertical-align:middle !important;"><= 10</th>
@@ -170,10 +170,10 @@ if (count($strata) > 0) {
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
+                </div>                
+            </div>           
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 
