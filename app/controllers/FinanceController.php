@@ -35,33 +35,18 @@ class FinanceController extends BaseController {
             12 => 'DEC'
         ];
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => trans('app.menus.cob.add_finance_file_list'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'add_finance_list',
-                'user_permission' => $user_permission,
-                'image' => "",
-                'file_no' => $file_no,
-                'month' => $month
-            );
+        $viewData = array(
+            'title' => trans('app.menus.cob.add_finance_file_list'),
+            'panel_nav_active' => 'cob_panel',
+            'main_nav_active' => 'cob_main',
+            'sub_nav_active' => 'add_finance_list',
+            'user_permission' => $user_permission,
+            'image' => "",
+            'file_no' => $file_no,
+            'month' => $month
+        );
 
-            return View::make('finance_en.add_finance_file', $viewData);
-        } else {
-            $viewData = array(
-                'title' => trans('app.menus.cob.add_finance_file_list'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'add_finance_list',
-                'user_permission' => $user_permission,
-                'image' => "",
-                'file_no' => $file_no,
-                'month' => $month
-            );
-
-            return View::make('finance_en.add_finance_file', $viewData);
-        }
+        return View::make('finance_en.add_finance_file', $viewData);
     }
 
     public function submitAddFinanceFile() {
@@ -531,35 +516,19 @@ class FinanceController extends BaseController {
         ];
 
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => trans('app.menus.cob.finance_file_list'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'finance_file_list',
-                'user_permission' => $user_permission,
-                'cob' => $cob,
-                'month' => $month,
-                'file' => $file,
-                'image' => ""
-            );
+        $viewData = array(
+            'title' => trans('app.menus.cob.finance_file_list'),
+            'panel_nav_active' => 'cob_panel',
+            'main_nav_active' => 'cob_main',
+            'sub_nav_active' => 'finance_file_list',
+            'user_permission' => $user_permission,
+            'cob' => $cob,
+            'month' => $month,
+            'file' => $file,
+            'image' => ""
+        );
 
-            return View::make('finance_en.finance_list', $viewData);
-        } else {
-            $viewData = array(
-                'title' => trans('app.menus.cob.finance_file_list'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'finance_file_list',
-                'user_permission' => $user_permission,
-                'cob' => $cob,
-                'month' => $month,
-                'file' => $file,
-                'image' => ""
-            );
-
-            return View::make('finance_my.finance_list', $viewData);
-        }
+        return View::make('finance_en.finance_list', $viewData);
     }
 
     public function getFinanceList() {
@@ -582,25 +551,14 @@ class FinanceController extends BaseController {
             $data = Array();
             foreach ($filelist as $filelists) {
                 $button = "";
-                if (Session::get('lang') == "en") {
-                    if ($filelists->is_active == 1) {
-                        $status = trans('app.forms.active');
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
-                    } else {
-                        $status = trans('app.forms.inactive');
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
-                    }
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>&nbsp;';
+                if ($filelists->is_active == 1) {
+                    $status = trans('app.forms.active');
+                    $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
                 } else {
-                    if ($filelists->is_active == 1) {
-                        $status = trans('app.forms.active');
-                        $button .= '<button type="button" class="btn btn-xs btn-default" onclick="inactiveFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
-                    } else {
-                        $status = trans('app.forms.inactive');
-                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
-                    }
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>&nbsp;';
+                    $status = trans('app.forms.inactive');
+                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
                 }
+                $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceList(\'' . $filelists->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>&nbsp;';
 
                 $data_raw = array(
                     "<a style='text-decoration:underline;' href='" . URL::action('FinanceController@editFinanceFileList', $filelists->id) . "'>" . $filelists->file->file_no . " " . $filelists->year . "-" . strtoupper($filelists->monthName()) . "</a>",
@@ -688,67 +646,35 @@ class FinanceController extends BaseController {
         $sfreport = FinanceReport::where('finance_file_id', $id)->where('type', 'SF')->first();
         $reportSF = FinanceReportPerbelanjaan::where('finance_file_id', $id)->where('type', 'SF')->orderBy('sort_no', 'asc')->get();
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => trans('app.menus.cob.edit_finance_file_list'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'finance_file_list',
-                'user_permission' => $user_permission,
-                'image' => "",
-                'file_no' => $file_no,
-                'financefiledata' => $financefiledata,
-                'checkdata' => $financeCheckData,
-                'summary' => $financeSummary,
-                'adminFile' => $financeFileAdmin,
-                'contractFile' => $financeFileContract,
-                'staffFile' => $financeFileStaff,
-                'vandala' => $financeFileVandalA,
-                'vandalb' => $financeFileVandalB,
-                'repaira' => $financeFileRepairA,
-                'repairb' => $financeFileRepairB,
-                'incomeFile' => $financeFileIncome,
-                'utila' => $financeFileUtilityA,
-                'utilb' => $financeFileUtilityB,
-                'mfreport' => $mfreport,
-                'reportMF' => $reportMF,
-                'sfreport' => $sfreport,
-                'reportSF' => $reportSF,
-                'finance_file_id' => $id
-            );
+        $viewData = array(
+            'title' => trans('app.menus.cob.edit_finance_file_list'),
+            'panel_nav_active' => 'cob_panel',
+            'main_nav_active' => 'cob_main',
+            'sub_nav_active' => 'finance_file_list',
+            'user_permission' => $user_permission,
+            'image' => "",
+            'file_no' => $file_no,
+            'financefiledata' => $financefiledata,
+            'checkdata' => $financeCheckData,
+            'summary' => $financeSummary,
+            'adminFile' => $financeFileAdmin,
+            'contractFile' => $financeFileContract,
+            'staffFile' => $financeFileStaff,
+            'vandala' => $financeFileVandalA,
+            'vandalb' => $financeFileVandalB,
+            'repaira' => $financeFileRepairA,
+            'repairb' => $financeFileRepairB,
+            'incomeFile' => $financeFileIncome,
+            'utila' => $financeFileUtilityA,
+            'utilb' => $financeFileUtilityB,
+            'mfreport' => $mfreport,
+            'reportMF' => $reportMF,
+            'sfreport' => $sfreport,
+            'reportSF' => $reportSF,
+            'finance_file_id' => $id
+        );
 
-            return View::make('finance_en.edit_finance_file', $viewData);
-        } else {
-            $viewData = array(
-                'title' => trans('app.menus.cob.edit_finance_file_list'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'finance_file_list',
-                'user_permission' => $user_permission,
-                'image' => "",
-                'file_no' => $file_no,
-                'financefiledata' => $financefiledata,
-                'checkdata' => $financeCheckData,
-                'summary' => $financeSummary,
-                'adminFile' => $financeFileAdmin,
-                'contractFile' => $financeFileContract,
-                'staffFile' => $financeFileStaff,
-                'vandala' => $financeFileVandalA,
-                'vandalb' => $financeFileVandalB,
-                'repaira' => $financeFileRepairA,
-                'repairb' => $financeFileRepairB,
-                'incomeFile' => $financeFileIncome,
-                'utila' => $financeFileUtilityA,
-                'utilb' => $financeFileUtilityB,
-                'mfreport' => $mfreport,
-                'reportMF' => $reportMF,
-                'sfreport' => $sfreport,
-                'reportSF' => $reportSF,
-                'finance_file_id' => $id
-            );
-
-            return View::make('finance_my.edit_finance_file', $viewData);
-        }
+        return View::make('finance_en.edit_finance_file', $viewData);
     }
 
     public function updateFinanceCheck() {
@@ -1495,31 +1421,17 @@ class FinanceController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $file = Files::where('is_deleted', 0)->get();
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => trans('app.menus.cob.finance_support'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'finance_support_list',
-                'user_permission' => $user_permission,
-                'file' => $file,
-                'image' => ""
-            );
+        $viewData = array(
+            'title' => trans('app.menus.cob.finance_support'),
+            'panel_nav_active' => 'cob_panel',
+            'main_nav_active' => 'cob_main',
+            'sub_nav_active' => 'finance_support_list',
+            'user_permission' => $user_permission,
+            'file' => $file,
+            'image' => ""
+        );
 
-            return View::make('finance_en.finance_support_list', $viewData);
-        } else {
-            $viewData = array(
-                'title' => trans('app.menus.cob.finance_support'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'finance_support_list',
-                'user_permission' => $user_permission,
-                'file' => $file,
-                'image' => ""
-            );
-
-            return View::make('finance_my.finance_support_list', $viewData);
-        }
+        return View::make('finance_en.finance_support_list', $viewData);
     }
 
     public function getFinanceSupportList() {
@@ -1544,11 +1456,7 @@ class FinanceController extends BaseController {
             foreach ($filelist as $filelists) {
                 $files = Files::where('id', $filelists->file_id)->first();
                 $button = "";
-                if (Session::get('lang') == "en") {
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceSupport(\'' . $filelists->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>&nbsp;';
-                } else {
-                    $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceSupport(\'' . $filelists->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>&nbsp;';
-                }
+                $button .= '<button type="button" class="btn btn-xs btn-danger" onclick="deleteFinanceSupport(\'' . $filelists->id . '\')">'.trans('app.forms.delete').' <i class="fa fa-trash"></i></button>&nbsp;';
 
                 $data_raw = array(
                     "<a style='text-decoration:underline;' href='" . URL::action('FinanceController@editFinanceSupport', $filelists->id) . "'>" . $files->file_no . "</a>",
@@ -1593,31 +1501,17 @@ class FinanceController extends BaseController {
             }
         }
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => trans('app.menus.cob.add_finance_support'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'finance_support_list',
-                'user_permission' => $user_permission,
-                'image' => "",
-                'file_no' => $file_no
-            );
+        $viewData = array(
+            'title' => trans('app.menus.cob.add_finance_support'),
+            'panel_nav_active' => 'cob_panel',
+            'main_nav_active' => 'cob_main',
+            'sub_nav_active' => 'finance_support_list',
+            'user_permission' => $user_permission,
+            'image' => "",
+            'file_no' => $file_no
+        );
 
-            return View::make('finance_en.add_finance_support', $viewData);
-        } else {
-            $viewData = array(
-                'title' => trans('app.menus.cob.add_finance_support'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'finance_support_list',
-                'user_permission' => $user_permission,
-                'image' => "",
-                'file_no' => $file_no
-            );
-
-            return View::make('finance_my.add_finance_support', $viewData);
-        }
+        return View::make('finance_en.add_finance_support', $viewData);
     }
 
     public function submitFinanceSupport() {
@@ -1675,33 +1569,18 @@ class FinanceController extends BaseController {
         }
         $financeSupportData = FinanceSupport::where('id', $id)->first();
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => trans('app.menus.cob.edit_finance_support'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'finance_support_list',
-                'user_permission' => $user_permission,
-                'image' => "",
-                'file_no' => $file_no,
-                'financesupportdata' => $financeSupportData
-            );
+        $viewData = array(
+            'title' => trans('app.menus.cob.edit_finance_support'),
+            'panel_nav_active' => 'cob_panel',
+            'main_nav_active' => 'cob_main',
+            'sub_nav_active' => 'finance_support_list',
+            'user_permission' => $user_permission,
+            'image' => "",
+            'file_no' => $file_no,
+            'financesupportdata' => $financeSupportData
+        );
 
-            return View::make('finance_en.edit_finance_support', $viewData);
-        } else {
-            $viewData = array(
-                'title' => trans('app.menus.cob.edit_finance_support'),
-                'panel_nav_active' => 'cob_panel',
-                'main_nav_active' => 'cob_main',
-                'sub_nav_active' => 'finance_support_list',
-                'user_permission' => $user_permission,
-                'image' => "",
-                'file_no' => $file_no,
-                'financesupportdata' => $financeSupportData
-            );
-
-            return View::make('finance_my.edit_finance_support', $viewData);
-        }
+        return View::make('finance_en.edit_finance_support', $viewData);
     }
 
     public function updateFinanceSupport() {
