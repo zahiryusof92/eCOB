@@ -23,39 +23,39 @@ foreach ($user_permission as $permission) {
                     <form id="add_land" class="form-horizontal">
                         <div class="form-group row">
                             <div class="col-md-2">
-                                <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                <label class="form-control-label" style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                             </div>
-                        </div>   
+                        </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Land Title</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.land_title') }}</label>
                             </div>
                             <div class="col-md-4">
-                                <input id="description" class="form-control" placeholder="Land Title" type="text">
+                                <input id="description" class="form-control" placeholder="{{ trans('app.forms.land_title') }}" type="text">
                                 <div id="description_error" style="display:none;"></div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Status</label>
-                            </div>    
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.admin_status') }}</label>
+                            </div>
                             <div class="col-md-4">
                                 <select id="is_active" class="form-control">
-                                    <option value="">Please Select</option>
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
+                                    <option value="">{{ trans('app.forms.please_select') }}</option>
+                                    <option value="1">{{ trans('app.forms.active') }}</option>
+                                    <option value="0">{{ trans('app.forms.inactive') }}</option>
                                 </select>
                                 <div id="is_active_error" style="display:none;"></div>
-                            </div>                            
-                        </div>                                               
+                            </div>
+                        </div>
                         <div class="form-actions">
                             <?php if ($insert_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addLandTitle()">Save</button>
+                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addLandTitle()">{{ trans('app.forms.save') }}</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("SettingController@landTitle") }}'">Cancel</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("SettingController@landTitle") }}'">{{ trans('app.forms.cancel') }}</button>
                         </div>
                     </form>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -64,7 +64,7 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-    
+
     function addLandTitle() {
         $("#loading").css("display", "inline-block");
 
@@ -72,19 +72,19 @@ foreach ($user_permission as $permission) {
             is_active = $("#is_active").val();
 
         var error = 0;
-        
+
         if (description.trim() == "") {
-            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter land title</span>');
+            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Land Title"]) }}</span>');
             $("#description_error").css("display", "block");
             error = 1;
         }
-        
+
         if (is_active.trim() == "") {
-            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select status</span>');
+            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Status"]) }}</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
-        
+
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('SettingController@submitLandTitle') }}",
@@ -99,11 +99,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>Land title added successfully!</span>", function () {
+                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.lands.store') }}</span>", function () {
                             window.location = '{{URL::action("SettingController@landTitle") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

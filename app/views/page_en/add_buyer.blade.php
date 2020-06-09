@@ -10,32 +10,32 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <h6>File No: {{$files->file_no}}</h6>
+                    <h6>{{ trans('app.forms.file_no') }}: {{$files->file_no}}</h6>
                     <div id="update_files_lists">
                         <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@house', $files->id)}}">Housing Scheme</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@house', $files->id)}}">{{ trans('app.forms.housing_scheme') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@strata', $files->id)}}">Developed Area (STRATA)</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@strata', $files->id)}}">{{ trans('app.forms.developed_area') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@management', $files->id)}}">Management</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@management', $files->id)}}">{{ trans('app.forms.management') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@monitoring', $files->id)}}">Monitoring</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@monitoring', $files->id)}}">{{ trans('app.forms.monitoring') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@others', $files->id)}}">Others</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@others', $files->id)}}">{{ trans('app.forms.others') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@scoring', $files->id)}}">Scoring Component Value</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@scoring', $files->id)}}">{{ trans('app.forms.scoring_component_value') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active">Buyer List</a>
+                                <a class="nav-link active">{{ trans('app.forms.buyer_list') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@document', $files->id)}}">Document</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $files->id)}}">{{ trans('app.forms.document') }}</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
@@ -47,15 +47,15 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                                        <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label><span style="color: red;">*</span> Unit Number</label>
-                                                        <input type="text" class="form-control" placeholder="Unit Number" id="unit_no">
+                                                        <label><span style="color: red;">*</span> {{ trans('app.forms.unit_number') }}</label>
+                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.unit_number') }}" id="unit_no">
                                                         <div id="unit_no_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
@@ -63,60 +63,60 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Unit Share</label>
-                                                        <input type="text" class="form-control" placeholder="Unit Share" id="unit_share">
+                                                        <label>{{ trans('app.forms.unit_share') }}</label>
+                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.unit_share') }}" id="unit_share">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label><span style="color: red;">*</span> Owner Name</label>
-                                                        <input type="text" class="form-control" placeholder="Owner Name" id="owner_name">
+                                                        <label><span style="color: red;">*</span> {{ trans('app.forms.owner_name') }}</label>
+                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.owner_name') }}" id="owner_name">
                                                         <div id="owner_name_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>                        
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>IC No / Company Number</label>
-                                                        <input type="text" class="form-control" placeholder="IC No / Company Number" id="ic_company_no">
+                                                        <label>{{ trans('app.forms.ic_company_number') }}</label>
+                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.ic_company_number') }}" id="ic_company_no">
                                                         <div id="ic_company_no_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
-                                                        <label>Address</label>
-                                                        <textarea class="form-control" placeholder="Address" rows="3" id="address"></textarea>
+                                                        <label>{{ trans('app.forms.address') }}</label>
+                                                        <textarea class="form-control" placeholder="{{ trans('app.forms.address') }}" rows="3" id="address"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>Phone Number</label>
-                                                        <input type="text" class="form-control" placeholder="Phone Number" id="phone_no">
+                                                        <label>{{ trans('app.forms.phone_number') }}</label>
+                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="phone_no">
                                                     </div>
-                                                </div>                            
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>Email</label>
-                                                        <input type="email" class="form-control" placeholder="Email" id="email">
+                                                        <label>{{ trans('app.forms.email') }}</label>
+                                                        <input type="email" class="form-control" placeholder="{{ trans('app.forms.email') }}" id="email">
                                                     </div>
-                                                </div>                            
+                                                </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label><span style="color: red;">*</span> Race</label>
+                                                        <label><span style="color: red;">*</span> {{ trans('app.forms.race') }}</label>
                                                         <select id="race" class="form-control select2">
-                                                            <option value="">Please select</option>
-                                                            @foreach ($race as $races) 
+                                                            <option value="">{{ trans('app.forms.please_select') }}</option>
+                                                            @foreach ($race as $races)
                                                             <option value="{{ $races->id }}">{{ $races->name }}</option>
                                                             @endforeach
                                                         </select>
@@ -127,10 +127,10 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label><span style="color: red;">*</span> Nationality</label>
+                                                        <label><span style="color: red;">*</span> {{ trans('app.forms.nationality') }}</label>
                                                         <select id="nationality" class="form-control select2">
-                                                            <option value="">Please select</option>
-                                                            @foreach ($nationality as $national) 
+                                                            <option value="">{{ trans('app.forms.please_select') }}</option>
+                                                            @foreach ($nationality as $national)
                                                             <option value="{{ $national->id }}">{{ $national->name }}</option>
                                                             @endforeach
                                                         </select>
@@ -141,24 +141,24 @@
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
-                                                        <label>Remarks</label>
-                                                        <textarea class="form-control" placeholder="Remarks" rows="3" id="remarks"></textarea>
+                                                        <label>{{ trans('app.forms.remarks') }}</label>
+                                                        <textarea class="form-control" placeholder="{{ trans('app.forms.remarks') }}" rows="3" id="remarks"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-actions">
-                                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addBuyer()">Submit</button>
-                                                <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@buyer', $files->id)}}'">Cancel</button>
+                                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addBuyer()">{{ trans('app.forms.submit') }}</button>
+                                                <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@buyer', $files->id)}}'">{{ trans('app.forms.cancel') }}</button>
                                                 <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                                             </div>
                                         </form>
                                         <!-- End Form -->
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -200,22 +200,22 @@
         var error = 0;
 
         if (unit_no.trim() == "") {
-            $("#unit_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Unit Number</span>');
+            $("#unit_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Unit Number"]) }}</span>');
             $("#unit_no_error").css("display", "block");
             error = 1;
         }
         if (owner_name.trim() == "") {
-            $("#owner_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Owner Name</span>');
+            $("#owner_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Owner Name"]) }}</span>');
             $("#owner_name_error").css("display", "block");
             error = 1;
         }
         if (race.trim() == "") {
-            $("#race_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Race</span>');
+            $("#race_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Race"]) }}</span>');
             $("#race_error").css("display", "block");
             error = 1;
         }
         if (nationality.trim() == "") {
-            $("#nationality_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Nationality</span>');
+            $("#nationality_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Nationality"]) }}</span>');
             $("#nationality_error").css("display", "block");
             error = 1;
         }
@@ -243,7 +243,7 @@
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
                         }, {
                             type: 'success',
                             placement: {
@@ -252,7 +252,7 @@
                         });
                         location = '{{URL::action("AdminController@buyer", $files->id) }}';
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

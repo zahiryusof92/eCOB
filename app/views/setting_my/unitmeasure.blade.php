@@ -32,7 +32,7 @@ foreach ($user_permission as $permission) {
                         <thead>
                             <tr>
                                 <th style="width:70%;">Penerangan
-                                <th style="width:20%;">Status</th>
+                                <th style="width:20%;">{{ trans('app.forms.status') }}</th>
                                 <?php if ($update_permission == 1) { ?>
                                 <th style="width:10%;">Aksi</th>
                                 <?php } ?>
@@ -42,9 +42,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>            
+            </div>
         </div>
-    </section>    
+    </section>
     <!-- End  -->
 </div>
 
@@ -64,8 +64,8 @@ foreach ($user_permission as $permission) {
                 }
             ]
         });
-    });    
-    
+    });
+
     function inactiveUnitMeasure(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@inactiveUnitMeasure') }}",
@@ -103,13 +103,13 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-    
+
     function deleteUnitMeasure (id) {
         swal({
             title: "Anda pasti?",
-            text: "Your will not be able to recover this file!",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             cancelButtonText: "Batal",

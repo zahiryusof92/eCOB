@@ -34,14 +34,14 @@ foreach ($user_permission as $permission) {
                             <div class="col-sm-3">
                                 <select id="memo_type" class="form-control">
                                     <option value="">Semua</option>
-                                    @foreach ($memotype as $memotypes) 
+                                    @foreach ($memotype as $memotypes)
                                     <option value="{{$memotypes->description}}">{{$memotypes->description}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                    </div> 
-                    
+                    </div>
+
                     <table class="table table-hover nowrap" id="memo" width="100%">
                         <thead>
                             <tr>
@@ -50,7 +50,7 @@ foreach ($user_permission as $permission) {
                                 <th style="width:40%;">Subjek</th>
                                 <th style="width:10%;">Tarikh Papar</th>
                                 <th style="width:10%;">Tarikh Luput</th>
-                                <th style="width:10%;">Status</th>
+                                <th style="width:10%;">{{ trans('app.forms.status') }}</th>
                                 <?php if ($update_permission == 1) { ?>
                                 <th style="width:10%;">Aksi</th>
                                 <?php } ?>
@@ -60,9 +60,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>            
+            </div>
         </div>
-    </section>    
+    </section>
     <!-- End  -->
 </div>
 
@@ -82,12 +82,12 @@ foreach ($user_permission as $permission) {
                 }
             ]
         });
-    });  
-    
+    });
+
     $('#memo_type').on('change', function (){
         oTable.columns(1).search(this.value).draw();
     });
-    
+
     function inactiveMemo(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@inactiveMemo') }}",
@@ -125,13 +125,13 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-    
+
     function deleteMemo (id) {
         swal({
             title: "Anda pasti?",
-            text: "Your will not be able to recover this file!",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             cancelButtonText: "Batal",

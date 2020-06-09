@@ -17,7 +17,7 @@ $company = Company::orderBy('id')->first();
 
                 </a>
             </div>
-        </div>            
+        </div>
     </div>
 
 
@@ -27,12 +27,12 @@ $company = Company::orderBy('id')->first();
             <div class="single-page-block-form">
                 <div class="row">
                     <div class="col-md-3 text-center">
-                        <img src="{{asset($company->image_url)}}" style="width: 100px;" alt="" /> 
+                        <img src="{{asset($company->image_url)}}" style="width: 100px;" alt="" />
                     </div>
                     <div class="col-md-9">
                         <div class="vertical-align margin-top-20">
                             <div class="vertical-align-middle">
-                                <h5>eCOB Management System</h5>
+                                <h5>{{ trans('app.app_name') }}</h5>
                                 <h4 style="color: darkblue;">{{$company->name}}</h4>
                             </div>
                         </div>
@@ -45,36 +45,36 @@ $company = Company::orderBy('id')->first();
                 </h3>
                 <form>
                     <div class="form-group">
-                        <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                        <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Username *" id="username">
+                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.username') }}" id="username">
                         <div id="username_error" style="display:none;"></div>
                         <div id="username_in_use" style="display:none"></div>
                     </div>
-                    <div class="form-group">                        
-                        <input type="password" class="form-control" placeholder="Password *" id="password">
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="{{ trans('app.forms.password') }}" id="password">
                         <div id="password_error" style="display:none;"></div>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Confirm Password *" id="retype_password">
+                        <input type="password" class="form-control" placeholder="{{ trans('app.forms.password_confirm') }}" id="retype_password">
                         <div id="retype_password_error" style="display:none;"></div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Full Name *" id="name">
+                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.full_name') }}" id="name">
                         <div id="name_error" style="display:none;"></div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="E-mail *" id="email">
+                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.email') }}" id="email">
                         <div id="email_error" style="display:none;"></div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Phone No. *" id="phone_no">
+                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="phone_no">
                         <div id="phone_no_error" style="display:none;"></div>
                     </div>
                     <div class="form-group">
                         <select id="company" class="form-control">
-                            <option value="">Please Select COB *</option>
+                            <option value="">{{ trans('app.forms.please_select') }}</option>
                             @foreach ($cob as $cobs)
                             <option value="{{ $cobs->id }}">{{ $cobs->name }} - {{ $cobs->short_name }}</option>
                             @endforeach
@@ -82,16 +82,16 @@ $company = Company::orderBy('id')->first();
                         <div id="company_error" style="display:none;"></div>
                     </div>
                     <div class="form-actions text-center">
-                        <button type="button" class="btn btn-primary width-150" id="submit_button" onclick="register()">Register</button>
+                        <button type="button" class="btn btn-primary width-150" id="submit_button" onclick="register()">{{ trans('app.forms.register') }}</button>
                     </div>
-                    <a href="{{URL::action('UserController@login')}}">Log In</a>
+                    <a href="{{URL::action('UserController@login')}}">{{ trans('app.forms.login') }}</a>
                 </form>
             </div>
         </div>
     </div>
     <div class="single-page-block-footer text-center">
 
-    </div>    
+    </div>
     <!-- End Login Page -->
 </div>
 
@@ -159,43 +159,43 @@ $company = Company::orderBy('id')->first();
         var error = 0;
 
         if (username.trim() === "") {
-            $("#username_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Username</span>');
+            $("#username_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Username"]) }}</span>');
             $("#username_error").css("display", "block");
             $("#username_in_use").css("display", "none");
             error = 1;
         }
         if (password.trim() === "") {
-            $("#password_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Password</span>');
+            $("#password_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Password"]) }}</span>');
             $("#password_error").css("display", "block");
             error = 1;
         }
         if (retype_password.trim() === "") {
-            $("#retype_password_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Confirm Password</span>');
+            $("#retype_password_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Confirm Password"]) }}</span>');
             $("#retype_password_error").css("display", "block");
             error = 1;
         }
         if (password.trim() !== retype_password.trim()) {
-            $("#retype_password_error").html('<span style="color:red;font-style:italic;font-size:13px;">Wrong Confirmation Password</span>');
+            $("#retype_password_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.wrong_confirm_password") }}</span>');
             $("#retype_password_error").css("display", "block");
             error = 1;
         }
         if (name.trim() === "") {
-            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Full Name</span>');
+            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Full Name"]) }}</span>');
             $("#name_error").css("display", "block");
             error = 1;
         }
         if (email.trim() === "" || !IsEmail(email)) {
-            $("#email_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter E-mail</span>');
+            $("#email_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Email"]) }}</span>');
             $("#email_error").css("display", "block");
             error = 1;
         }
         if (phone_no.trim() === "" || isNaN(phone_no)) {
-            $("#phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Phone No.</span>');
+            $("#phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Phone Number"]) }}</span>');
             $("#phone_no_error").css("display", "block");
             error = 1;
         }
         if (company.trim() === "") {
-            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select COB</span>');
+            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"COB"]) }}</span>');
             $("#company_error").css("display", "block");
             error = 1;
         }
@@ -217,15 +217,15 @@ $company = Company::orderBy('id')->first();
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() === "true") {
-                        bootbox.alert("<span style='color:green;'>Successfully register!</span>", function () {
+                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.successfully_register') }}</span>", function () {
                             window.location = '{{URL::action("UserController@login") }}';
                         });
                     } else if (data.trim() === "username_in_use") {
-                        $("#username_in_use").html('<span style="color:red;font-style:italic;font-size:13px;">Username already exist</span>');
+                        $("#username_in_use").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.exist2", ["attribute"=>"Username"]) }}</span>');
                         $("#username_in_use").css("display", "block");
                         $("#username_error").css("display", "none");
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

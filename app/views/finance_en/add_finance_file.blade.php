@@ -24,28 +24,28 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                    <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> File No</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.file_no') }}</label>
                                     <select id="file_id" class="form-control select2">
-                                        <option value="">Please Select</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
                                         @foreach ($file_no as $files)
                                         <option value="{{ $files->id }}">{{ $files->file_no }}</option>
-                                        @endforeach                                    
+                                        @endforeach
                                     </select>
                                     <div id="file_no_error" style="display:none;"></div>
                                 </div>
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Year</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.year') }}</label>
                                     <select id="year" class="form-control select2">
-                                        <option value="">Please Select</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
                                         @for ($i = 2012; $i <= date('Y'); $i++)
                                         <option value="{{ $i }}">{{ $i}}</option>
                                         @endfor
@@ -55,9 +55,9 @@ foreach ($user_permission as $permission) {
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Month</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.month') }}</label>
                                     <select id="month" class="form-control select2">
-                                        <option value="">Please Select</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
                                         @foreach ($month as $value => $months)
                                         <option value="{{ $value }}">{{ $months }}</option>
                                         @endforeach
@@ -65,7 +65,7 @@ foreach ($user_permission as $permission) {
                                     <div id="month_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>                                                
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div id="file_already_exists_error" style="display: none;"></div>
@@ -73,13 +73,13 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-actions">
                             <?php if ($insert_permission) { ?>
-                                <button type="button" class="btn btn-primary" id="submit_button" onclick="submitAddFinanceFile()">Submit</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="submitAddFinanceFile()">{{ trans('app.forms.submit') }}</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('FinanceController@addFinanceFileList')}}'">Cancel</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('FinanceController@addFinanceFileList')}}'">{{ trans('app.forms.cancel') }}</button>
                             <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -104,19 +104,19 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (file_no.trim() == "") {
-            $("#file_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File No</span>');
+            $("#file_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"File No"]) }}</span>');
             $("#file_no_error").css("display", "block");
             error = 1;
         }
 
         if (month.trim() == "") {
-            $("#month_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please Enter Month</span>');
+            $("#month_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Month"]) }}</span>');
             $("#month_error").css("display", "block");
             error = 1;
         }
 
         if (year.trim() == "") {
-            $("#year_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please Enter Year</span>');
+            $("#year_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Year"]) }}</span>');
             $("#year_error").css("display", "block");
             error = 1;
         }
@@ -136,14 +136,14 @@ foreach ($user_permission as $permission) {
                     $("#cancel_button").removeAttr("disabled");
 
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>Finance File added successfully!</span>", function () {
+                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.finance_file.store') }}</span>", function () {
                             window.location = '{{URL::action("FinanceController@financeList") }}';
                         });
                     } else if (data.trim() == "file_already_exists") {
-                        $("#file_already_exists_error").html('<span style="color:red;font-style:italic;font-size:13px;">This file already exist!</span>');
+                        $("#file_already_exists_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.exist2", ["attribute"=>"file"]) }}</span>');
                         $("#file_already_exists_error").css("display", "block");
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

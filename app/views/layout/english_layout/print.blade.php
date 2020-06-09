@@ -5,13 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title id="">eCOB Management System</title>
-        
-        <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="{{asset('assets/common/img/favicon.57x57.png')}}">	
+        <title id="">{{ trans('app.app_name') }}</title>
+
+        <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="{{asset('assets/common/img/favicon.57x57.png')}}">
         <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="{{asset('assets/common/img/favicon.72x72.png')}}">
 	<link rel="apple-touch-icon" type="image/png" sizes="114x114" href="{{asset('assets/common/img/favicon.114x114.png')}}">
 	<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="{{asset('assets/common/img/favicon.144x144.png')}}">
-	<link rel="icon" type="image/png" href="{{asset('assets/common/img/favicon.png')}}">	
+	<link rel="icon" type="image/png" href="{{asset('assets/common/img/favicon.png')}}">
         <link href="favicon.ico" rel="shortcut icon">
 
         <!-- Vendors Styles -->
@@ -19,7 +19,7 @@
         {{HTML::style("assets/vendors/bootstrap/dist/css/bootstrap.min.css")}}
         {{HTML::style("assets/vendors/jscrollpane/style/jquery.jscrollpane.css")}}
         {{HTML::style("assets/vendors/ladda/dist/ladda-themeless.min.css")}}
-        {{HTML::style("assets/vendors/select2/dist/css/select2.min.css")}}  
+        {{HTML::style("assets/vendors/select2/dist/css/select2.min.css")}}
         {{HTML::style("assets/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css")}}
         {{HTML::style("assets/vendors/fullcalendar/dist/fullcalendar.min.css")}}
         {{HTML::style("assets/vendors/cleanhtmlaudioplayer/src/player.css")}}
@@ -34,11 +34,11 @@
 
         <!-- Clean UI Styles -->
         {{HTML::style("assets/common/css/source/main.css")}}
-        {{HTML::style("assets/common/css/source/materialize/materialize.css")}}    
-        
+        {{HTML::style("assets/common/css/source/materialize/materialize.css")}}
+
         <!--Preloader-->
         {{HTML::style("assets/common/css/source/preloader/main.css")}}
-        
+
         <!--Rating Star-->
         {{HTML::style("assets/common/css/source/ratingstar/rating.css")}}
 
@@ -91,30 +91,30 @@
         <!-- QR Code Scripts -->
         {{HTML::script("assets/common/js/qrcode/jquery.qrcode.js")}}
         {{HTML::script("assets/common/js/qrcode/qrcode.js")}}
-        
+
         <!-- Bootbox Scripts -->
         {{HTML::script("assets/common/js/bootbox/bootbox.min.js")}}
-        
+
         {{HTML::script("assets/common/js/jQueryForm/form.js")}}
-        
+
         <!-- Highcharts -->
         {{HTML::script("assets/highcharts/highcharts.js")}}
         {{HTML::script("assets/highcharts/modules/exporting.js")}}
 
     </head>
-    
+
     <body class="background-white">
-        <!-- BEGIN CONTENT -->             
+        <!-- BEGIN CONTENT -->
             @yield('content')
         <!-- END CONTENT -->
         <!--<div class="main-backdrop"> </div>-->
     </body>
 </html>
 
-<script>    
+<script>
     $(window).load(function(){
         setTimeout(function(){
-            window.print();            
-        }, 1000);        
-    });    
+            window.print();
+        }, 1000);
+    });
 </script>

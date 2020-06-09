@@ -45,7 +45,7 @@ foreach ($user_permission as $permission) {
                                 <a class="nav-link active" href="{{URL::action('AdminController@buyer', $files->id)}}">Senarai Pembeli</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@document', $files->id)}}">Document</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $files->id)}}">{{ trans('app.forms.document') }}</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
@@ -59,14 +59,14 @@ foreach ($user_permission as $permission) {
                                             </button>
                                             &nbsp;
                                             <button onclick="window.location = '{{ URL::action('AdminController@importBuyer', $files->id) }}'" type="button" class="btn btn-primary">
-                                                Import CSV
+                                                {{ trans('app.forms.import_csv_file') }}
                                             </button>
                                             &nbsp;
                                             <a href="{{asset('files/buyer_template.csv')}}" target="_blank">
                                                 <button type="button" class="btn btn-success pull-right">
                                                     Muat Turun Template CSV
                                                 </button>
-                                            </a>                                            
+                                            </a>
                                             <br/><br/>
                                             <?php } ?>
                                             <table class="table table-hover nowrap" id="buyer_list">
@@ -82,16 +82,16 @@ foreach ($user_permission as $permission) {
                                                         <?php } ?>
                                                     </tr>
                                                 </thead>
-                                                <tbody>  
+                                                <tbody>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -111,12 +111,12 @@ foreach ($user_permission as $permission) {
                 }
             ]
         });
-    }); 
-    
+    });
+
     function deleteBuyer(id) {
         swal({
             title: "Anda pasti ingin memadam pembeli ini?",
-            text: "Your will not be able to recover this file!",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -134,7 +134,7 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Deleted Successfully</p>'
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.deleted_successfully") }}</p>'
                         }, {
                             type: 'success',
                             placement: {
@@ -143,7 +143,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

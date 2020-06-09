@@ -18,7 +18,7 @@ $prefix = 'admin_';
                         <th width="10%" style="text-align: center;">BULAN HADAPAN<br/>E</th>
                         <th width="10%" style="text-align: center;">JUMLAH<br/>C + D + E</th>
                         <th width="10%" style="text-align: center;">JUMLAH<br/>BAKI BAYARAN MASIH TERTUNGGAK<br/>(BELUM BAYAR)</th>
-                        <td width="5%" style="text-align: center;">&nbsp;</td> 
+                        <td width="5%" style="text-align: center;">&nbsp;</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +50,7 @@ $prefix = 'admin_';
                         <td><input type="number" step="any" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
                         <td><input type="number" step="any" oninput="calculateAdminTotal('{{ $count }}')" id="{{ $prefix . 'tertunggak_' . $count }}" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $adminFiles['tertunggak'] }}"></td>
                         @if ($adminFiles['is_custom'])
-                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowAdmin('admin_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
+                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowAdmin('admin_row<?php echo $count ?>')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td>
                         @else
                         <td>&nbsp;</td>
                         @endif
@@ -58,7 +58,7 @@ $prefix = 'admin_';
                     @endforeach
 
                     <tr>
-                        <td class="padding-table text-right" colspan="8"><a href="javascript:void(0);" onclick="addRowAdmin()" class="btn btn-success btn-xs">Add More</a></td>
+                        <td class="padding-table text-right" colspan="8"><a href="javascript:void(0);" onclick="addRowAdmin()" class="btn btn-success btn-xs">{{ trans("app.forms.add_more") }}</a></td>
                     </tr>
 
                     <tr>
@@ -72,7 +72,7 @@ $prefix = 'admin_';
                         <td>&nbsp;</td>
                     </tr>
                 </tbody>
-            </table>    
+            </table>
         </div>
     </div>
 </div>
@@ -141,14 +141,14 @@ $prefix = 'admin_';
         }
         $('#admin_total_tertunggak').val(parseFloat(admin_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
 
-        var admin_sum_total_all = parseFloat(admin_sum_total_tunggakan) + parseFloat(admin_sum_total_semasa) + parseFloat(admin_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
-        $('#admin_total_all').val(parseFloat(admin_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
+        var admin_sum_total_all = parseFloat(admin_sum_total_tunggakan) + parseFloat(admin_sum_total_semasa) + parseFloat(admin_sum_total_hadapan); // JUMLAH SEMUA A + B + C
+        $('#admin_total_all').val(parseFloat(admin_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
     }
 
     function addRowAdmin() {
         var rowAdminNo = $("#dynamic_form_admin tr").length;
         rowAdminNo = rowAdminNo - 2;
-        $("#dynamic_form_admin tr:last").prev().prev().after('<tr id="admin_row' + rowAdminNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowAdminNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateAdmin(\'' + rowAdminNo + '\')" id="{{ $prefix }}tunggakan_' + rowAdminNo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateAdmin(\'' + rowAdminNo + '\')" id="{{ $prefix }}semasa_' + rowAdminNo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateAdmin(\'' + rowAdminNo + '\')" id="{{ $prefix }}hadapan_' + rowAdminNo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowAdminNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateAdminTotal(\'' + rowAdminNo + '\')" id="{{ $prefix }}tertunggak_' + rowAdminNo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowAdmin(\'admin_row' + rowAdminNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
+        $("#dynamic_form_admin tr:last").prev().prev().after('<tr id="admin_row' + rowAdminNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowAdminNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateAdmin(\'' + rowAdminNo + '\')" id="{{ $prefix }}tunggakan_' + rowAdminNo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateAdmin(\'' + rowAdminNo + '\')" id="{{ $prefix }}semasa_' + rowAdminNo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateAdmin(\'' + rowAdminNo + '\')" id="{{ $prefix }}hadapan_' + rowAdminNo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowAdminNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateAdminTotal(\'' + rowAdminNo + '\')" id="{{ $prefix }}tertunggak_' + rowAdminNo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowAdmin(\'admin_row' + rowAdminNo + '\')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td></tr>');
 
         calculateAdminTotal();
     }

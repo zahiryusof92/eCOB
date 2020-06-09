@@ -169,54 +169,29 @@ class PrintController extends BaseController {
             }
         }
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'Audit Trail Report',
-                'panel_nav_active' => '',
-                'main_nav_active' => '',
-                'sub_nav_active' => '',
-                'start' => $start,
-                'end' => $end,
-                'audit_trail' => $audit_trail
-            );
+        $viewData = array(
+            'title' => trans('app.menus.reporting.audit_trail_report'),
+            'panel_nav_active' => '',
+            'main_nav_active' => '',
+            'sub_nav_active' => '',
+            'start' => $start,
+            'end' => $end,
+            'audit_trail' => $audit_trail
+        );
 
-            return View::make('print_en.audit_trail', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Laporan Audit Trail',
-                'panel_nav_active' => '',
-                'main_nav_active' => '',
-                'sub_nav_active' => '',
-                'start' => $start,
-                'end' => $end,
-                'audit_trail' => $audit_trail
-            );
-
-            return View::make('print_my.audit_trail', $viewData);
-        }
+        return View::make('print_en.audit_trail', $viewData);
     }
 
     //file by location
     public function printFileByLocation() {
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'File By Location & Facilities Report',
-                'panel_nav_active' => '',
-                'main_nav_active' => '',
-                'sub_nav_active' => '',
-            );
+        $viewData = array(
+            'title' => trans('app.menus.reporting.file_by_location_report'),
+            'panel_nav_active' => '',
+            'main_nav_active' => '',
+            'sub_nav_active' => '',
+        );
 
-            return View::make('print_en.file_by_location', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Laporan Fail Mengikut Lokasi & Kemudahan',
-                'panel_nav_active' => '',
-                'main_nav_active' => '',
-                'sub_nav_active' => '',
-            );
-
-            return View::make('print_my.file_by_location', $viewData);
-        }
+        return View::make('print_en.file_by_location', $viewData);
     }
 
     //rating summary
@@ -253,7 +228,7 @@ class PrintController extends BaseController {
                 $threeStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 41)->where('total_score', '<=', 60)->count();
                 $twoStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 21)->where('total_score', '<=', 40)->count();
                 $oneStar = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->where('total_score', '>=', 1)->where('total_score', '<=', 20)->count();
-                
+
                 $stratas += $strata;
                 $ratings += $rating;
                 $fiveStars += $fiveStar;
@@ -264,41 +239,22 @@ class PrintController extends BaseController {
             }
         }
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'Rating Summary Report',
-                'panel_nav_active' => 'reporting_panel',
-                'main_nav_active' => 'reporting_main',
-                'sub_nav_active' => 'rating_summary_list',
-                'strata' => $stratas,
-                'rating' => $ratings,
-                'fiveStar' => $fiveStars,
-                'fourStar' => $fourStars,
-                'threeStar' => $threeStars,
-                'twoStar' => $twoStars,
-                'oneStar' => $oneStars,
-                'image' => ""
-            );
+        $viewData = array(
+            'title' => trans('app.menus.reporting.rating_summary_report'),
+            'panel_nav_active' => 'reporting_panel',
+            'main_nav_active' => 'reporting_main',
+            'sub_nav_active' => 'rating_summary_list',
+            'strata' => $stratas,
+            'rating' => $ratings,
+            'fiveStar' => $fiveStars,
+            'fourStar' => $fourStars,
+            'threeStar' => $threeStars,
+            'twoStar' => $twoStars,
+            'oneStar' => $oneStars,
+            'image' => ""
+        );
 
-            return View::make('print_en.rating_summary', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Laporan Penakrifan Bintang',
-                'panel_nav_active' => 'reporting_panel',
-                'main_nav_active' => 'reporting_main',
-                'sub_nav_active' => 'rating_summary_list',
-                'strata' => $stratas,
-                'rating' => $ratings,
-                'fiveStar' => $fiveStars,
-                'fourStar' => $fourStars,
-                'threeStar' => $threeStars,
-                'twoStar' => $twoStars,
-                'oneStar' => $oneStars,
-                'image' => ""
-            );
-
-            return View::make('print_my.rating_summary', $viewData);
-        }
+        return View::make('print_en.rating_summary', $viewData);
     }
 
     //management summary
@@ -393,51 +349,27 @@ class PrintController extends BaseController {
             }
         }
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'Management Summary Report',
-                'panel_nav_active' => 'reporting_panel',
-                'main_nav_active' => 'reporting_main',
-                'sub_nav_active' => 'management_summary_list',
-                'strata' => $strata,
-                'residential' => $residentials,
-                'residential_less10' => $residential_less10s,
-                'residential_more10' => $residential_more10s,
-                'commercial' => $commercials,
-                'commercial_less10' => $commercial_less10s,
-                'commercial_more10' => $commercial_more10s,
-                'developer' => $developer,
-                'jmb' => $jmbs,
-                'mc' => $mcs,
-                'agent' => $agents,
-                'others' => $otherss,
-                'image' => ""
-            );
+        $viewData = array(
+            'title' => trans('app.menus.reporting.management_summary_report'),
+            'panel_nav_active' => 'reporting_panel',
+            'main_nav_active' => 'reporting_main',
+            'sub_nav_active' => 'management_summary_list',
+            'strata' => $strata,
+            'residential' => $residentials,
+            'residential_less10' => $residential_less10s,
+            'residential_more10' => $residential_more10s,
+            'commercial' => $commercials,
+            'commercial_less10' => $commercial_less10s,
+            'commercial_more10' => $commercial_more10s,
+            'developer' => $developer,
+            'jmb' => $jmbs,
+            'mc' => $mcs,
+            'agent' => $agents,
+            'others' => $otherss,
+            'image' => ""
+        );
 
-            return View::make('print_en.management_summary', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Laporan Rumusan Pengurusan',
-                'panel_nav_active' => 'reporting_panel',
-                'main_nav_active' => 'reporting_main',
-                'sub_nav_active' => 'management_summary_list',
-                'strata' => $strata,
-                'residential' => $residentials,
-                'residential_less10' => $residential_less10s,
-                'residential_more10' => $residential_more10s,
-                'commercial' => $commercials,
-                'commercial_less10' => $commercial_less10s,
-                'commercial_more10' => $commercial_more10s,
-                'developer' => $developer,
-                'jmb' => $jmbs,
-                'mc' => $mcs,
-                'agent' => $agents,
-                'others' => $otherss,
-                'image' => ""
-            );
-
-            return View::make('print_my.management_summary', $viewData);
-        }
+        return View::make('print_en.management_summary', $viewData);
     }
 
     //cob file / management
@@ -527,45 +459,24 @@ class PrintController extends BaseController {
             $total = $totals;
         }
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'COB File / Management (%) Report',
-                'panel_nav_active' => 'reporting_panel',
-                'main_nav_active' => 'reporting_main',
-                'sub_nav_active' => 'cob_file_management_list',
-                'strata' => $strata,
-                'developer' => $developer,
-                'jmb' => $jmbs,
-                'mc' => $mcs,
-                'agent' => $agents,
-                'others' => $otherss,
-                'total' => $total,
-                'residential' => $residentials,
-                'commercial' => $commercials,
-                'image' => ""
-            );
+        $viewData = array(
+            'title' => trans('app.menus.reporting.cob_file_report'),
+            'panel_nav_active' => 'reporting_panel',
+            'main_nav_active' => 'reporting_main',
+            'sub_nav_active' => 'cob_file_management_list',
+            'strata' => $strata,
+            'developer' => $developer,
+            'jmb' => $jmbs,
+            'mc' => $mcs,
+            'agent' => $agents,
+            'others' => $otherss,
+            'total' => $total,
+            'residential' => $residentials,
+            'commercial' => $commercials,
+            'image' => ""
+        );
 
-            return View::make('print_en.cob_file_management', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Laporan Fail COB / Pengurusan (%)',
-                'panel_nav_active' => 'reporting_panel',
-                'main_nav_active' => 'reporting_main',
-                'sub_nav_active' => 'cob_file_management_list',
-                'strata' => $strata,
-                'developer' => $developer,
-                'jmb' => $jmbs,
-                'mc' => $mcs,
-                'agent' => $agents,
-                'others' => $otherss,
-                'total' => $total,
-                'residential' => $residentials,
-                'commercial' => $commercials,
-                'image' => ""
-            );
-
-            return View::make('print_my.cob_file_management', $viewData);
-        }
+        return View::make('print_en.cob_file_management', $viewData);
     }
 
     public function printOwnerTenant($id) {
@@ -602,39 +513,21 @@ class PrintController extends BaseController {
             $tenant = '';
         }
 
-        if (Session::get('lang') == "en") {
-            $viewData = array(
-                'title' => 'Status Kepenghunian',
-                'panel_nav_active' => 'reporting_panel',
-                'main_nav_active' => 'reporting_main',
-                'sub_nav_active' => 'owner_tenant_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'race' => $race,
-                'file_id' => $file_id,
-                'owner' => $owner,
-                'tenant' => $tenant,
-                'image' => ''
-            );
+        $viewData = array(
+            'title' => trans('app.menus.reporting.owner'),
+            'panel_nav_active' => 'reporting_panel',
+            'main_nav_active' => 'reporting_main',
+            'sub_nav_active' => 'owner_tenant_list',
+            'user_permission' => $user_permission,
+            'files' => $files,
+            'race' => $race,
+            'file_id' => $file_id,
+            'owner' => $owner,
+            'tenant' => $tenant,
+            'image' => ''
+        );
 
-            return View::make('print_en.owner_tenant', $viewData);
-        } else {
-            $viewData = array(
-                'title' => 'Status Kepenghunian',
-                'panel_nav_active' => 'reporting_panel',
-                'main_nav_active' => 'reporting_main',
-                'sub_nav_active' => 'owner_tenant_list',
-                'user_permission' => $user_permission,
-                'files' => $files,
-                'race' => $race,
-                'file_id' => $file_id,
-                'owner' => $owner,
-                'tenant' => $tenant,
-                'image' => ''
-            );
-
-            return View::make('print_my.owner_tenant', $viewData);
-        }
+        return View::make('print_en.owner_tenant', $viewData);
     }
 
     public function printStrataProfile($id) {
@@ -748,38 +641,22 @@ class PrintController extends BaseController {
 
 //            return "<pre>" . print_r($result, true) . "</pre>";
 
-            if (Session::get('lang') == "en") {
-                $viewData = array(
-                    'title' => 'Strata Profile',
-                    'panel_nav_active' => 'reporting_panel',
-                    'main_nav_active' => 'reporting_main',
-                    'sub_nav_active' => 'strata_profile_list',
-                    'user_permission' => $user_permission,
-                    'files' => $files,
-                    'race' => $race,
-                    'result' => $result,
-                    'image' => '',
-                );
+            $viewData = array(
+                'title' => trans('app.menus.reporting.strata_profile'),
+                'panel_nav_active' => 'reporting_panel',
+                'main_nav_active' => 'reporting_main',
+                'sub_nav_active' => 'strata_profile_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'race' => $race,
+                'result' => $result,
+                'image' => '',
+            );
 
-                return View::make('print_en.strata_profile', $viewData);
-            } else {
-                $viewData = array(
-                    'title' => 'Strata Profile',
-                    'panel_nav_active' => 'reporting_panel',
-                    'main_nav_active' => 'reporting_main',
-                    'sub_nav_active' => 'strata_profile_list',
-                    'user_permission' => $user_permission,
-                    'files' => $files,
-                    'race' => $race,
-                    'result' => $result,
-                    'image' => '',
-                );
-
-                return View::make('print_my.strata_profile', $viewData);
-            }
+            return View::make('print_en.strata_profile', $viewData);
         } else {
             $viewData = array(
-                'title' => "Page not found!",
+                'title' => trans('app.errors.page_not_found'),
                 'panel_nav_active' => '',
                 'main_nav_active' => '',
                 'sub_nav_active' => '',
@@ -788,5 +665,4 @@ class PrintController extends BaseController {
             return View::make('404_en', $viewData);
         }
     }
-
 }
