@@ -12,10 +12,10 @@ foreach ($user_permission as $permission) {
 }
 
 $fields = array(
-    'parliment_id' => 'parliment',
-    'dun_id' => 'dun',
-    'park_id' => 'park',
-    'land_title' => 'land',
+    'parliment_id' => 'parliment', 
+    'dun_id' => 'dun', 
+    'park_id' => 'park', 
+    'land_title' => 'land', 
     'category_id' =>  'category'
 );
 ?>
@@ -29,13 +29,13 @@ $fields = array(
             <div class="row">
                 <div class="col-lg-12">
                     <form id="formSubmit" class="form-horizontal">
-
+                        
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('report_lhps.form.parliment_id') }}</label>
                                     <select id="form_type" class="form-control" name="parliment_id">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($parliment as $f)
                                         <option value="{{$f->id}}">{{$f->description}}</option>
                                         @endforeach
@@ -50,7 +50,7 @@ $fields = array(
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('report_lhps.form.dun_id') }}</label>
                                     <select id="form_type" class="form-control" name="dun_id">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($dun as $f)
                                         <option value="{{$f->id}}">{{$f->description}}</option>
                                         @endforeach
@@ -65,7 +65,7 @@ $fields = array(
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('report_lhps.form.park_id') }}</label>
                                     <select id="form_type" class="form-control" name="park_id">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($dun as $f)
                                         <option value="{{$f->id}}">{{$f->description}}</option>
                                         @endforeach
@@ -80,7 +80,7 @@ $fields = array(
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('report_lhps.form.land_id') }}</label>
                                     <select id="form_type" class="form-control" name="land_id">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($land as $f)
                                         <option value="{{$f->id}}">{{$f->description}}</option>
                                         @endforeach
@@ -95,7 +95,7 @@ $fields = array(
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('report_lhps.form.category_id') }}</label>
                                     <select id="form_type" class="form-control" name="category_id">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($category as $f)
                                         <option value="{{$f->id}}">{{$f->description}}</option>
                                         @endforeach
@@ -113,14 +113,14 @@ $fields = array(
                                 <input type="text" class="form-control" name="strata_id">
                                 <div id="remark_error" style="display:none;"></div>
                             </div>
-                        </div>
+                        </div>  
 
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('report_lhps.form.export_to') }}</label>
                                     <select id="form_type" class="form-control" name="export_to">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         <option value="pdf">PDF</option>
                                     </select>
                                     <div id="export_to_err" style="display:none;"></div>
@@ -134,8 +134,8 @@ $fields = array(
                                     <label><span style="color: red;">*</span> {{ trans('report_lhps.form.bantuan') }}</label>
                                     <select id="form_type" class="form-control" name="bantuan_lhps">
                                         <option value="">-- ALL -- </option>
-                                        <option value="1">{{ trans("app.forms.yes") }}</option>
-                                        <option value="1">{{ trans("app.forms.no") }}</option>
+                                        <option value="1">Yes</option>
+                                        <option value="1">No</option>
                                     </select>
                                     <div id="bantuan_err" style="display:none;"></div>
                                 </div>
@@ -153,17 +153,17 @@ $fields = array(
                         <div class="row">
                             <?php
                                 $fields = [
-                                    'management_office' => 'Management Office',
-                                    'gym' => 'Gym',
-                                    'kindergarten' => 'Kindergarten',
-                                    'pool' => 'Pool',
-                                    'lift' => 'Lift',
-                                    'openspace' => 'Openspace',
-                                    'surau' => 'Surau',
-                                    'playground' => 'Play Ground',
-                                    'rubbish_room' => 'Rubbish Room',
-                                    'hall' => 'Hall',
-                                    'guardhouse' => 'Guardhouse',
+                                    'management_office' => 'Management Office', 
+                                    'gym' => 'Gym', 
+                                    'kindergarten' => 'Kindergarten', 
+                                    'pool' => 'Pool', 
+                                    'lift' => 'Lift', 
+                                    'openspace' => 'Openspace', 
+                                    'surau' => 'Surau', 
+                                    'playground' => 'Play Ground', 
+                                    'rubbish_room' => 'Rubbish Room', 
+                                    'hall' => 'Hall', 
+                                    'guardhouse' => 'Guardhouse', 
                                     'gated' => 'Gated'
                         ];
                             ?>
@@ -175,15 +175,15 @@ $fields = array(
                             </div>
                             @endforeach
                         </div>
-
+                        
                         <div class="form-actions">
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("ReportController@reportStrataProfile") }}'">{{ trans('app.forms.cancel') }}</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("ReportController@reportStrataProfile") }}'">Cancel</button>
                             <?php if ($insert_permission == 1) { ?>
                                 <input type="submit" value="{{ trans('general.label_save') }}" class="btn btn-primary">
                             <?php } ?>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -195,7 +195,7 @@ $fields = array(
     $("#formSubmit").submit(function(e){
         e.preventDefault();
         $("#loading").css("display", "inline-block");
-
+        
         let error = 0;
 
         if (error == 0) {
@@ -208,11 +208,11 @@ $fields = array(
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.files.submit') }}</span>", function () {
+                        bootbox.alert("<span style='color:green;'>File Submistted successfully!</span>", function () {
                             window.location = '{{URL::action("ReportController@reportStrataProfile") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

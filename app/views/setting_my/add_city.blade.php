@@ -25,7 +25,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-2">
                                 <label style="color: red; font-style: italic;">* Medan Wajib Diisi</label>
                             </div>
-                        </div>
+                        </div>   
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label class="form-label"><span style="color: red; font-style: italic;">*</span> Bandar</label>
@@ -37,8 +37,8 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.admin_status') }}</label>
-                            </div>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Status</label>
+                            </div>    
                             <div class="col-md-4">
                                 <select id="is_active" class="form-control">
                                     <option value="">Sila pilih</option>
@@ -46,8 +46,8 @@ foreach ($user_permission as $permission) {
                                     <option value="0">Tidak Aktif</option>
                                 </select>
                                 <div id="is_active_error" style="display:none;"></div>
-                            </div>
-                        </div>
+                            </div>                            
+                        </div>                                               
                         <div class="form-actions">
                             <?php if ($insert_permission == 1) { ?>
                             <button type="button" class="btn btn-primary" id="submit_button" onclick="addArea()">Simpan</button>
@@ -55,7 +55,7 @@ foreach ($user_permission as $permission) {
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AdminController@city") }}'">Batal</button>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -64,7 +64,7 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-
+    
     function addArea() {
         $("#loading").css("display", "inline-block");
 
@@ -72,19 +72,19 @@ foreach ($user_permission as $permission) {
             is_active = $("#is_active").val();
 
         var error = 0;
-
+        
         if (description.trim() == "") {
             $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Bandar</span>');
             $("#description_error").css("display", "block");
             error = 1;
         }
-
+        
         if (is_active.trim() == "") {
             $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila pilih Status</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
-
+        
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@submitCity') }}",

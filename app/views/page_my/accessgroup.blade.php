@@ -33,7 +33,7 @@ foreach ($user_permission as $permission) {
                             <tr>
                                 <th style="width:40%;">Nama</th>
                                 <th style="width:40%;">Catatan</th>
-                                <th style="width:10%;">{{ trans('app.forms.status') }}</th>
+                                <th style="width:10%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
                                 <th style="width:10%;">Aksi</th>
                                 <?php } ?>
@@ -43,9 +43,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>            
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 
@@ -65,8 +65,8 @@ foreach ($user_permission as $permission) {
                 }
             ]
         });
-    });
-
+    });    
+    
     function inactiveAccessGroup(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@inactiveAccessGroup') }}",
@@ -104,13 +104,13 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-
+    
     function deleteAccessGroup (id) {
         swal({
             title: "Anda pasti?",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,
+            showCancelButton: true,            
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             cancelButtonText: "Batal",

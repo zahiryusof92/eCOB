@@ -20,7 +20,7 @@ $company = Company::find(Auth::user()->company_id);
                                 <td class="text-center">
                                     <h4 class="margin-bottom-0">
                                         <img src="{{asset($company->image_url)}}" height="100px;" alt="">
-                                    </h4>
+                                    </h4> 
                                 </td>
                                 <td>
                                     <h5 class="margin-bottom-10">
@@ -36,13 +36,13 @@ $company = Company::find(Auth::user()->company_id);
                                     <button type="submit" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Print"><i class="fa fa-print"></i></button>
                                 </td>
                             </tr>
-                        </table>
-                    </div>
+                        </table>                    
+                    </div>                
                     <hr/>
                     <br/>
                     <div class="row text-center">
                         <div class="col-lg-12">
-                            <span style="font-size: 12px;"><b>{{ trans('app.forms.date_audited') }}: </b></span>&nbsp;
+                            <span style="font-size: 12px;"><b>Date Audited: </b></span>&nbsp;                        
                             <input style="font-size: 12px;" id="date_from" data-column="0" type="text" class="form-control width-150 display-inline-block" placeholder="From"/>
                             <span style="font-size: 12px;" class="margin-right-10">&nbsp; —</span>
                             <input style="font-size: 12px;" id="date_to" data-column="0" type="text" class="form-control width-150 display-inline-block" placeholder="To"/>
@@ -54,10 +54,10 @@ $company = Company::find(Auth::user()->company_id);
                             <table class="table" id="audit_trail" width="100%" style="font-size: 12px;">
                                 <thead>
                                     <tr>
-                                        <th style="width:10%; text-align: center !important;">{{ trans('app.forms.date') }}</th>
-                                        <th style="width:20%; text-align: center !important;">{{ trans('app.forms.module') }}</th>
-                                        <th style="width:50%; text-align: center !important;">{{ trans('app.forms.activities') }}</th>
-                                        <th style="width:20%; text-align: center !important;">{{ trans('app.forms.action_from') }}</th>
+                                        <th style="width:10%; text-align: center !important;">Date</th>
+                                        <th style="width:20%; text-align: center !important;">Module</th>
+                                        <th style="width:50%; text-align: center !important;">Activities</th>
+                                        <th style="width:20%; text-align: center !important;">Action From</th>                                    
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,7 +68,7 @@ $company = Company::find(Auth::user()->company_id);
                 </div>
             </form>
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 
@@ -90,19 +90,18 @@ $company = Company::find(Auth::user()->company_id);
             "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
             "pageLength": 25,
             "scrollX": true,
-            "fixedColumns": true,
             "columns": [
                 {"data": "created_at"},
                 {"data": "module"},
                 {"data": "remarks"},
                 {"data": "full_name"}
             ],
-            responsive: true
+            responsive: false
         });
 
         $('#date_from').on('dp.change', function () {
             $("#date_to").val("");
-
+            
             let currentDate = $(this).val().split('-');
             $("#start").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });
@@ -115,7 +114,7 @@ $company = Company::find(Auth::user()->company_id);
                 var date = from_date + "&" + to_date;
                 oTable.columns(i).search(date).draw();
             }
-
+            
             let currentDate = $(this).val().split('-');
             $("#end").val(`${currentDate[2]}-${currentDate[1]}-${currentDate[0]}`);
         });

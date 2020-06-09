@@ -34,20 +34,20 @@ foreach ($user_permission as $permission) {
                             <div class="col-sm-3">
                                 <select id="parliaments" class="form-control">
                                     <option value="">Semua</option>
-                                    @foreach ($parliament as $parliaments)
+                                    @foreach ($parliament as $parliaments) 
                                     <option value="{{$parliaments->description}}">{{$parliaments->description}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                    </div>
-
+                    </div> 
+                    
                     <table class="table table-hover nowrap" id="dun" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:40%;">{{ trans('app.forms.dun') }}</th>
+                                <th style="width:40%;">DUN</th>
                                 <th style="width:40%;">Parlimen</th>
-                                <th style="width:10%;">{{ trans('app.forms.status') }}</th>
+                                <th style="width:10%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
                                 <th style="width:10%;">Aksi</th>
                                 <?php } ?>
@@ -57,9 +57,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>            
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 
@@ -80,11 +80,11 @@ foreach ($user_permission as $permission) {
             ]
         });
     });
-
+    
     $('#parliaments').on('change', function (){
         oTable.columns(1).search(this.value).draw();
     });
-
+    
     function inactiveDun(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@inactiveDun') }}",
@@ -122,13 +122,13 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-
+    
     function deleteDun(id) {
         swal({
             title: "Anda pasti?",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,
+            showCancelButton: true,            
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             cancelButtonText: "Batal",

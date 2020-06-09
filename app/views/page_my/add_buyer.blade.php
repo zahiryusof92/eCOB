@@ -10,7 +10,7 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <h6>{{ trans('app.forms.file_no') }}: {{$files->file_no}}</h6>
+                    <h6>File No: {{$files->file_no}}</h6>
                     <div id="update_files_lists">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
@@ -35,7 +35,7 @@
                                 <a class="nav-link active" href="{{URL::action('AdminController@buyer', $files->id)}}">Senarai Pembeli</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@document', $files->id)}}">{{ trans('app.forms.document') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $files->id)}}">Document</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
@@ -54,7 +54,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label><span style="color: red;">*</span> {{ trans('app.forms.no') }}. Unit</label>
+                                                        <label><span style="color: red;">*</span> No. Unit</label>
                                                         <input type="text" class="form-control" placeholder="No. Unit" id="unit_no">
                                                         <div id="unit_no_error" style="display:none;"></div>
                                                     </div>
@@ -76,7 +76,7 @@
                                                         <div id="owner_name_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>                        
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
@@ -85,7 +85,7 @@
                                                         <div id="ic_company_no_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
@@ -100,8 +100,8 @@
                                                         <label>No. Telefon</label>
                                                         <input type="text" class="form-control" placeholder="No. Telefon" id="phone_no">
                                                     </div>
-                                                </div>
-                                            </div>
+                                                </div>                            
+                                            </div>                         
                                             <div class="form-actions">
                                                 <button type="button" class="btn btn-primary" id="submit_button" onclick="addBuyer()">Simpan</button>
                                                 <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@buyer', $files->id)}}'">Batal</button>
@@ -111,10 +111,10 @@
                                         <!-- End Form -->
                                     </div>
                                 </div>
-                            </div>
+                            </div>                            
                         </div>
                     </div>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -126,15 +126,15 @@
     function addBuyer() {
         $("#submit_button").attr("disabled", "disabled");
 
-        var unit_no = $("#unit_no").val(),
-                unit_share = $("#unit_share").val(),
-                owner_name = $("#owner_name").val(),
+        var unit_no = $("#unit_no").val(), 
+                unit_share = $("#unit_share").val(), 
+                owner_name = $("#owner_name").val(), 
                 ic_company_no = $("#ic_company_no").val(),
                 address = $("#address").val(),
                 phone_no = $("#phone_no").val();
 
         var error = 0;
-
+        
         if (unit_no.trim() == "") {
             $("#unit_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan No. Unit</span>');
             $("#unit_no_error").css("display", "block");
@@ -150,7 +150,7 @@
 //            $("#ic_company_no_error").css("display", "block");
 //            error = 1;
 //        }
-
+        
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@submitBuyer') }}",
@@ -185,7 +185,7 @@
             });
         }
     }
-
+    
     function IsEmail(email) {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         return regex.test(email);

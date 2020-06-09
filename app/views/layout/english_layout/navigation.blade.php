@@ -224,7 +224,7 @@ if (!Auth::user()->getAdmin()) {
 
             @if ($image == "")
             @if ($company->nav_image_url != "")
-            <img src="{{asset($company->nav_image_url)}}" style="width: 100%;" alt="" />
+            <img src="{{asset($company->nav_image_url)}}" style="width: 100%;" alt="" />     
             @endif
             @else
             <img src="{{asset($image)}}" style="width: 100%;" alt="" />
@@ -235,7 +235,7 @@ if (!Auth::user()->getAdmin()) {
             <li class="left-menu-list-link hidden-md-up">
                 <a class="left-menu-link" href="{{ URL::action('AdminController@home') }}">
                     <i class="left-menu-link-icon fa fa-home"><!-- --></i>
-                    {{ trans('app.menus.home') }}
+                    {{ trans('navigation.home') }}
                 </a>
             </li>
 
@@ -243,57 +243,57 @@ if (!Auth::user()->getAdmin()) {
             <li class="left-menu-list-submenu" id="cob_panel">
                 <a class="left-menu-link" href="javascript: void(0);">
                     <i class="left-menu-link-icon fa fa-file"><!-- --></i>
-                    {{ trans('app.menus.cob.maintenance') }}
+                    {{ trans('navigation.cob_maintenance') }}                    
                 </a>
                 <ul class="left-menu-list list-unstyled" id="cob_main">
                     @if ($access_permission1 == 1)
                     <li id="prefix_file">
                         <a class="left-menu-link" href="{{URL::action('AdminController@filePrefix')}}">
-                            {{ trans('app.menus.cob.file_prefix') }}
+                            COB File Prefix
                         </a>
                     </li>
                     @endif
                     @if($access_permission2 == 1)
                     <li id="add_cob">
                         <a class="left-menu-link" href="{{URL::action('AdminController@addFile')}}">
-                            {{ trans('app.menus.cob.add_cob_file') }}
+                            Add COB File
                         </a>
                     </li>
                     @endif
                     @if ($access_permission3 == 1)
                     <li id="cob_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@fileList')}}">
-                            {{ trans('app.menus.cob.file_list') }}
+                            COB File List
                         </a>
-                    </li>
+                    </li> 
                     @endif
                     @if ($access_permission36 == 1)
                     <li id="cob_before_vp_list">
                         <a class="left-menu-link" href="{{ URL::action('AdminController@fileListBeforeVP') }}">
-                            {{ trans('app.menus.cob.file_list_before_vp') }}
+                            COB File List Before VP
                         </a>
                     </li>
                     @endif
                     @if ($access_permission37 == 1)
                     <li id="add_finance_list">
                         <a class="left-menu-link" href="{{URL::action('FinanceController@addFinanceFileList')}}">
-                            {{ trans('app.menus.cob.add_finance_file_list') }}
+                            Add Finance File List
                         </a>
                     </li>
                     @endif
                     @if ($access_permission38 == 1)
                     <li id="finance_file_list">
                         <a class="left-menu-link" href="{{URL::action('FinanceController@financeList')}}">
-                            {{ trans('app.menus.cob.finance_file_list') }}
+                            Finance File List
                         </a>
                     </li>
                     @endif
                     @if ($access_permission39 == 1)
                     <li id="finance_support_list">
                         <a class="left-menu-link" href="{{URL::action('FinanceController@financeSupport')}}">
-                            {{ trans('app.menus.cob.finance_support') }}
+                            Finance Support
                         </a>
-                    </li>
+                    </li>  
                     @endif
                 </ul>
             </li>
@@ -303,48 +303,48 @@ if (!Auth::user()->getAdmin()) {
             <li class="left-menu-list-submenu" id="admin_panel">
                 <a class="left-menu-link" href="javascript: void(0);">
                     <i class="left-menu-link-icon fa fa-user"><!-- --></i>
-                    {{ trans('app.menus.administration.administration') }}
+                    Administration
                 </a>
                 <ul class="left-menu-list list-unstyled" id="admin_main">
                     @if ($access_permission4 == 1)
                     <li id="profile_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@company')}}">
-                            {{ trans('app.menus.administration.organization_profile') }}
+                            Organization Profile
                         </a>
                     </li>
                     @endif
                     @if ($access_permission5 == 1)
                     <li id="access_group_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@accessGroups')}}">
-                            {{ trans('app.menus.administration.access_group_management') }}
+                            Access Group Management
                         </a>
                     </li>
                     @endif
                     @if ($access_permission6 == 1)
                     <li id="user_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@user')}}">
-                            {{ trans('app.menus.administration.user_management') }}<span class="label left-menu-label label-danger">&nbsp;{{ trans('app.menus.administration.pending', ['count'=> User::where('status', 0)->where('is_deleted', 0)->count()]) }}</span>
+                            User Management <span class="label left-menu-label label-danger">{{User::where('status', 0)->where('is_deleted', 0)->count()}} pendings</span>
                         </a>
-                    </li>
+                    </li>  
                     @endif
                     @if ($access_permission7 == 1)
                     <li id="memo_maintenence_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@memo')}}">
-                            {{ trans('app.menus.administration.memo_maintenance') }}
+                            Memo Maintenance
                         </a>
                     </li>
                     @endif
                     @if ($access_permission40 == 1)
                     <li id="rating_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@rating')}}">
-                            {{ trans('app.menus.administration.rating') }}
+                            Rating
                         </a>
                     </li>
                     @endif
                     @if ($access_permission41 == 1)
                     <li id="form_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@form')}}">
-                            {{ trans('app.menus.administration.form') }}
+                            Form
                         </a>
                     </li>
                     @endif
@@ -359,131 +359,131 @@ if (!Auth::user()->getAdmin()) {
             <li class="left-menu-list-submenu" id="master_panel">
                 <a class="left-menu-link" href="javascript: void(0);">
                     <i class="left-menu-link-icon fa fa-gears"><!-- --></i>
-                    {{ trans('app.menus.master.setup') }}
+                    Master Setup
                 </a>
-                <ul class="left-menu-list list-unstyled" id="master_main">
+                <ul class="left-menu-list list-unstyled" id="master_main">                    
                     @if ($access_permission8 == 1)
                     <li id="country_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@country')}}">
-                            {{ trans('app.menus.master.country') }}
+                            Country
                         </a>
                     </li>
                     @endif
                     @if ($access_permission9 == 1)
                     <li id="state_list"><a class="left-menu-link" href="{{URL::action('SettingController@state')}}">
-                            {{ trans('app.menus.master.state') }}
+                            State
                         </a>
                     </li>
                     @endif
                     @if ($access_permission10 == 1)
                     <li id="area_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@area')}}">
-                            {{ trans('app.menus.master.area') }}
+                            Area
                         </a>
                     </li>
                     @endif
                     @if ($access_permission11 == 1)
                     <li id="city_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@city')}}">
-                            {{ trans('app.menus.master.city') }}
+                            City
                         </a>
                     </li>
                     @endif
                     @if ($access_permission12 == 1)
                     <li id="category_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@category')}}">
-                            {{ trans('app.menus.master.category') }}
+                            Category
                         </a>
-                    </li>
+                    </li> 
                     @endif
                     @if ($access_permission13 == 1)
                     <li id="land_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@landTitle')}}">
-                            {{ trans('app.menus.master.land_title') }}
+                            Land Title
                         </a>
-                    </li>
+                    </li> 
                     @endif
                     @if ($access_permission14 == 1)
                     <li id="developer_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@developer')}}">
-                            {{ trans('app.menus.master.developer') }}
+                            Developer
                         </a>
-                    </li>
+                    </li> 
                     @endif
                     @if ($access_permission15 == 1)
                     <li id="agent_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@agent')}}">
-                            {{ trans('app.menus.master.agent') }}
+                            Agent
                         </a>
-                    </li>
+                    </li> 
                     @endif
                     @if ($access_permission16 == 1)
                     <li id="parliament_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@parliment')}}">
-                            {{ trans('app.menus.master.parliament') }}
+                            Parliament
                         </a>
                     </li>
                     @endif
                     @if ($access_permission17 == 1)
                     <li id="dun_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@dun')}}">
-                            {{ trans('app.menus.master.dun') }}
+                            DUN
                         </a>
                     </li>
                     @endif
                     @if ($access_permission18 == 1)
                     <li id="park_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@park')}}">
-                            {{ trans('app.menus.master.park') }}
+                            Park
                         </a>
-                    </li>
+                    </li> 
                     @endif
                     @if ($access_permission19 == 1)
                     <li id="memo_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@memoType')}}">
-                            {{ trans('app.menus.master.memo_type') }}
+                            Memo Type
                         </a>
                     </li>
                     @endif
                     @if ($access_permission20 == 1)
                     <li id="designation_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@designation')}}">
-                            {{ trans('app.menus.master.designation') }}
+                            Designation
                         </a>
-                    </li>
+                    </li> 
                     @endif
                     @if ($access_permission21 == 1)
                     <li id="unit_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@unitMeasure')}}">
-                            {{ trans('app.menus.master.unit_of_measure') }}
+                            Unit of Measure
                         </a>
-                    </li>
+                    </li> 
                     @endif
                     @if ($access_permission22 == 1)
                     <li id="formtype_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@formtype')}}">
-                            {{ trans('app.menus.master.form_type') }}
+                            Form Type
                         </a>
                     </li>
                     @endif
                     @if ($access_permission23 == 1)
                     <li id="documenttype_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@documenttype')}}">
-                            {{ trans('app.menus.master.document_type') }}
+                            Document Type
                         </a>
                     </li>
                     @endif
                     @if ($access_permission42 == 1)
                     <li id="race_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@race')}}">
-                            {{ trans('app.menus.master.race') }}
+                            Race
                         </a>
                     </li>
                     @endif
                     @if ($access_permission44 == 1)
                     <li id="nationality_list">
                         <a class="left-menu-link" href="{{URL::action('SettingController@nationality')}}">
-                            {{ trans('app.menus.master.nationality') }}
+                            Nationality
                         </a>
                     </li>
                     @endif
@@ -495,53 +495,53 @@ if (!Auth::user()->getAdmin()) {
             <li class="left-menu-list-submenu" id="reporting_panel">
                 <a class="left-menu-link" href="javascript: void(0);">
                     <i class="left-menu-link-icon fa fa-file-pdf-o"><!-- --></i>
-                    {{ trans('app.menus.reporting.reporting') }}
+                    Reporting
                 </a>
                 <ul class="left-menu-list list-unstyled" id="reporting_main">
                     @if ($access_permission24 == 1)
                     <li id="audit_trail_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@auditTrail')}}">
-                            {{ trans('app.menus.reporting.audit_trail') }}
+                            Audit Trail
                         </a>
                     </li>
                     @endif
                     @if ($access_permission25 == 1)
                     <li id="file_by_location_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@fileByLocation')}}">
-                            {{ trans('app.menus.reporting.file_by_location') }}
+                            File By Location
                         </a>
                     </li>
                     @endif
                     @if ($access_permission26 == 1)
                     <li id="rating_summary_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@ratingSummary')}}">
-                            {{ trans('app.menus.reporting.rating_summary') }}
+                            Rating Summary
                         </a>
-                    </li>
+                    </li>  
                     @endif
                     @if ($access_permission27 == 1)
                     <li id="management_summary_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@managementSummary')}}">
-                            {{ trans('app.menus.reporting.management_summary') }}
+                            Management Summary
                         </a>
-                    </li>
+                    </li> 
                     @endif
                     @if ($access_permission28 == 1)
                     <li id="cob_file_management_list">
                         <a class="left-menu-link" href="{{URL::action('AdminController@cobFileManagement')}}">
-                            {{ trans('app.menus.reporting.cob_file') }}
+                            COB File / Management (%)
                         </a>
-                    </li>
+                    </li>  
                     @endif
                     @if ($access_permission29 == 1)
                     <li id="strata_profile_list">
                         <a class="left-menu-link" href="{{ URL::action('ReportController@strataProfile') }}">
-                            {{ trans('app.menus.reporting.strata_profile') }}
+                            Strata Profile
                         </a>
                     </li>
                     <li id="owner_tenant_list">
                         <a class="left-menu-link" href="{{ URL::action('ReportController@ownerTenant') }}">
-                            {{ trans('app.menus.reporting.owner') }}
+                            Owner / Tenant
                         </a>
                     </li>
                     @endif
@@ -553,41 +553,41 @@ if (!Auth::user()->getAdmin()) {
             <li class="left-menu-list-submenu" id="agm_panel">
                 <a class="left-menu-link" href="javascript: void(0);">
                     <i class="left-menu-link-icon fa fa-sitemap"><!-- --></i>
-                    {{ trans('app.menus.agm.submission') }}
+                    AGM Submission
                 </a>
                 <ul class="left-menu-list list-unstyled" id="agm_main">
                     @if ($access_permission30 == 1)
                     <li id="agmdesignsub_list">
                         <a class="left-menu-link" href="{{URL::action('AgmController@AJK')}}">
-                            {{ trans('app.menus.agm.designation') }}
+                            Designation Submission
                         </a>
                     </li>
                     @endif
                     @if ($access_permission31 == 1)
                     <li id="agmpurchasesub_list">
                         <a class="left-menu-link" href="{{URL::action('AgmController@purchaser')}}">
-                            {{ trans('app.menus.agm.purchaser') }}
+                            Purchaser Submission
                         </a>
                     </li>
                     @endif
                     @if ($access_permission43 == 1)
                     <li id="agmtenantsub_list">
                         <a class="left-menu-link" href="{{URL::action('AgmController@tenant')}}">
-                            {{ trans('app.menus.agm.tenant') }}
+                            Tenant Submission
                         </a>
                     </li>
                     @endif
                     @if ($access_permission32 == 1)
                     <li id="agmminutesub_list">
                         <a class="left-menu-link" href="{{URL::action('AgmController@minutes')}}">
-                            {{ trans('app.menus.agm.upload_of_minutes') }}
+                            Upload of Minutes
                         </a>
                     </li>
                     @endif
                     @if ($access_permission33 == 1)
                     <li id="agmdocumentsub_list">
                         <a class="left-menu-link" href="{{URL::action('AgmController@document')}}">
-                            {{ trans('app.menus.agm.upload_document') }}
+                            Upload Document
                         </a>
                     </li>
                     @endif
@@ -599,13 +599,13 @@ if (!Auth::user()->getAdmin()) {
             <li class="left-menu-list-submenu" id="form_panel">
                 <a class="left-menu-link" href="javascript: void(0);">
                     <i class="left-menu-link-icon fa fa-file-text-o"><!-- --></i>
-                    {{ trans('app.menus.form.management') }}
+                    Form Management
                 </a>
                 <ul class="left-menu-list list-unstyled" id="form_main">
                     @if ($access_permission34 == 1)
                     <li id="form_download_list">
                         <a class="left-menu-link" href="{{ URL::action('AdminController@formDownload') }}">
-                            {{ trans('app.menus.form.download') }}
+                            Form Download
                         </a>
                     </li>
                     @endif
@@ -617,7 +617,7 @@ if (!Auth::user()->getAdmin()) {
             <li class="left-menu-list-submenu" id="change_cob_panel">
                 <a class="left-menu-link" href="javascript: void(0);">
                     <i class="left-menu-link-icon fa fa-exchange"><!-- --></i>
-                    {{ trans('app.menus.change_cob') }}
+                    Change COB
                 </a>
                 <ul class="left-menu-list list-unstyled" id="change_cob_main">
                     @if ($access_permission34 == 1)
@@ -628,7 +628,7 @@ if (!Auth::user()->getAdmin()) {
                     @foreach ($jmb as $cob)
                     <li id="{{ $cob->short_name . "_list" }}">
                         <a class="left-menu-link" href='{{ URL::action('UserController@changeCOB', $cob->id) }}'>{{ strtoupper($cob->short_name) }}</a>
-                    </li>
+                    </li>    
                     @endforeach
                     @endif
                 </ul>

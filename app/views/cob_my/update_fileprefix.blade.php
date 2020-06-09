@@ -25,7 +25,7 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-12">
                                 <label class="form-control-label" style="color: red; font-style: italic;">* Medan Wajib Diisi</label>
                             </div>
-                        </div>
+                        </div>   
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label class="form-label"><span style="color: red; font-style: italic;">*</span> Penerangan</label>
@@ -37,17 +37,17 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.sort_no') }}</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Sort No</label>
                             </div>
                             <div class="col-md-2">
-                                <input id="sort_no" class="form-control" placeholder="{{ trans('app.forms.sort_no') }}" type="number" value="{{$prefix->sort_no}}">
+                                <input id="sort_no" class="form-control" placeholder="Sort No" type="number" value="{{$prefix->sort_no}}">
                                 <div id="sort_no_error" style="display:none;"></div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.admin_status') }}</label>
-                            </div>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Status</label>
+                            </div>    
                             <div class="col-md-4">
                                 <select id="is_active" class="form-control">
                                     <option value="">Sila pilih</option>
@@ -55,8 +55,8 @@ foreach ($user_permission as $permission) {
                                     <option value="0" {{($prefix->is_active == 0 ? " selected" : "")}}>Tidak Aktif</option>
                                 </select>
                                 <div id="is_active_error" style="display:none;"></div>
-                            </div>
-                        </div>
+                            </div>                            
+                        </div>                                               
                         <div class="form-actions">
                             <?php if ($update_permission == 1) { ?>
                                 <button type="button" class="btn btn-primary" id="submit_button" onclick="addFilePrefix()">Hantar</button>
@@ -64,7 +64,7 @@ foreach ($user_permission as $permission) {
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@filePrefix')}}'">Batal</button>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -93,7 +93,7 @@ foreach ($user_permission as $permission) {
         }
 
         if (sort_no.trim() <= 0) {
-            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Sort No"]) }}</span>');
+            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Sort No</span>');
             $("#sort_no_error").css("display", "block");
             error = 1;
         }

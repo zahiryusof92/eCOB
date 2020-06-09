@@ -19,7 +19,7 @@ $prefix2 = 'singkingfund_';
                         <th width="10%" style="text-align: center;">BULAN HADAPAN<br/>C</th>
                         <th width="10%" style="text-align: center;">JUMLAH<br/>A + B + C</th>
                         <th width="10%" style="text-align: center;">JUMLAH<br/>BAKI BAYARAN MASIH TERTUNGGAK<br/>(BELUM BAYAR)</th>
-                        <td width="5%" style="text-align: center;">&nbsp;</td>
+                        <td width="5%" style="text-align: center;">&nbsp;</td> 
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +50,7 @@ $prefix2 = 'singkingfund_';
                         <td><input type="number" step="any" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
                         <td><input type="number" step="any" oninput="calculateVandalismeATotal('{{ $count }}')" id="{{ $prefix . 'tertunggak_' . $count }}" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $vandalas['tertunggak'] }}"></td>
                         @if ($vandalas['is_custom'])
-                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowVandalA('vandala_row<?php echo $count ?>')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td>
+                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowVandalA('vandala_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                         @else
                         <td>&nbsp;</td>
                         @endif
@@ -58,7 +58,7 @@ $prefix2 = 'singkingfund_';
                     @endforeach
 
                     <tr>
-                        <td class="padding-table text-right" colspan="8"><a href="javascript:void(0);" onclick="addRowVandalA()" class="btn btn-success btn-xs">{{ trans("app.forms.add_more") }}</a></td>
+                        <td class="padding-table text-right" colspan="8"><a href="javascript:void(0);" onclick="addRowVandalA()" class="btn btn-success btn-xs">Add More</a></td>
                     </tr>
 
                     <tr>
@@ -72,7 +72,7 @@ $prefix2 = 'singkingfund_';
                         <td>&nbsp;</td>
                     </tr>
                 </tbody>
-            </table>
+            </table> 
         </div>
 
         <hr/>
@@ -90,7 +90,7 @@ $prefix2 = 'singkingfund_';
                         <th width="10%" style="text-align: center;">BULAN HADAPAN<br/>C</th>
                         <th width="10%" style="text-align: center;">JUMLAH<br/>A + B + C</th>
                         <th width="10%" style="text-align: center;">JUMLAH<br/>BAKI BAYARAN MASIH TERTUNGGAK<br/>(BELUM BAYAR)</th>
-                        <td width="5%" style="text-align: center;">&nbsp;</td>
+                        <td width="5%" style="text-align: center;">&nbsp;</td> 
                     </tr>
                 </thead>
                 <tbody>
@@ -121,7 +121,7 @@ $prefix2 = 'singkingfund_';
                         <td><input type="number" step="any" id="{{ $prefix2 . 'total_income_' . $countb }}" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $totalb_income }}" readonly=""></td>
                         <td><input type="number" step="any" oninput="calculateVandalismeBTotal('{{ $countb }}')" id="{{ $prefix2 . 'tertunggak_' . $countb }}" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $vandalbs['tertunggak'] }}"></td>
                         @if ($vandalbs['is_custom'])
-                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowVandalB('vandalb_row<?php echo $countb ?>')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td>
+                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowVandalB('vandalb_row<?php echo $countb ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                         @else
                         <td>&nbsp;</td>
                         @endif
@@ -129,7 +129,7 @@ $prefix2 = 'singkingfund_';
                     @endforeach
 
                     <tr>
-                        <td class="padding-table text-right" colspan="8"><a href="javascript:void(0);" onclick="addRowVandalB()" class="btn btn-success btn-xs">{{ trans("app.forms.add_more") }}</a></td>
+                        <td class="padding-table text-right" colspan="8"><a href="javascript:void(0);" onclick="addRowVandalB()" class="btn btn-success btn-xs">Add More</a></td>
                     </tr>
 
                     <tr>
@@ -143,7 +143,7 @@ $prefix2 = 'singkingfund_';
                         <td>&nbsp;</td>
                     </tr>
                 </tbody>
-            </table>
+            </table>   
         </div>
     </div>
 </div>
@@ -213,8 +213,8 @@ $prefix2 = 'singkingfund_';
         }
         $('#{{ $prefix }}total_tertunggak').val(parseFloat(vandala_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
 
-        var vandala_sum_total_all = parseFloat(vandala_sum_total_tunggakan) + parseFloat(vandala_sum_total_semasa) + parseFloat(vandala_sum_total_hadapan); // JUMLAH SEMUA A + B + C
-        $('#{{ $prefix }}total_all').val(parseFloat(vandala_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
+        var vandala_sum_total_all = parseFloat(vandala_sum_total_tunggakan) + parseFloat(vandala_sum_total_semasa) + parseFloat(vandala_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
+        $('#{{ $prefix }}total_all').val(parseFloat(vandala_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
     }
 
     function calculateVandalismeB(id) {
@@ -276,14 +276,14 @@ $prefix2 = 'singkingfund_';
         }
         $('#{{ $prefix2 }}total_tertunggak').val(parseFloat(vandalb_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
 
-        var vandalb_sum_total_all = parseFloat(vandalb_sum_total_tunggakan) + parseFloat(vandalb_sum_total_semasa) + parseFloat(vandalb_sum_total_hadapan); // JUMLAH SEMUA A + B + C
-        $('#{{ $prefix2 }}total_all').val(parseFloat(vandalb_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
+        var vandalb_sum_total_all = parseFloat(vandalb_sum_total_tunggakan) + parseFloat(vandalb_sum_total_semasa) + parseFloat(vandalb_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
+        $('#{{ $prefix2 }}total_all').val(parseFloat(vandalb_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
     }
 
     function addRowVandalA() {
         var rowVandalANo = $("#dynamic_form_vandal_a tr").length;
         rowVandalANo = rowVandalANo - 2;
-        $("#dynamic_form_vandal_a tr:last").prev().prev().after('<tr id="vandala_row' + rowVandalANo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowVandalANo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateVandalismeA(\'' + rowVandalANo + '\')" id="{{ $prefix }}tunggakan_' + rowVandalANo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateVandalismeA(\'' + rowVandalANo + '\')" id="{{ $prefix }}semasa_' + rowVandalANo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateVandalismeA(\'' + rowVandalANo + '\')" id="{{ $prefix }}hadapan_' + rowVandalANo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowVandalANo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateVandalismeATotal(\'' + rowVandalANo + '\')" id="{{ $prefix }}tertunggak_' + rowVandalANo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowVandalA(\'vandala_row' + rowVandalANo + '\')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td></tr>');
+        $("#dynamic_form_vandal_a tr:last").prev().prev().after('<tr id="vandala_row' + rowVandalANo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowVandalANo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateVandalismeA(\'' + rowVandalANo + '\')" id="{{ $prefix }}tunggakan_' + rowVandalANo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateVandalismeA(\'' + rowVandalANo + '\')" id="{{ $prefix }}semasa_' + rowVandalANo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateVandalismeA(\'' + rowVandalANo + '\')" id="{{ $prefix }}hadapan_' + rowVandalANo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowVandalANo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateVandalismeATotal(\'' + rowVandalANo + '\')" id="{{ $prefix }}tertunggak_' + rowVandalANo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowVandalA(\'vandala_row' + rowVandalANo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
 
         calculateVandalismeATotal();
     }
@@ -297,7 +297,7 @@ $prefix2 = 'singkingfund_';
     function addRowVandalB() {
         var rowVandalBNo = $("#dynamic_form_vandal_b tr").length;
         rowVandalBNo = rowVandalBNo - 2;
-        $("#dynamic_form_vandal_b tr:last").prev().prev().after('<tr id="vandalb_row' + rowVandalBNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix2 }}is_custom[]" value="1">' + rowVandalBNo + '</td><td><input type="text" name="{{ $prefix2 }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateVandalismeB(\'' + rowVandalBNo + '\')" id="{{ $prefix2 }}tunggakan_' + rowVandalBNo + '" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateVandalismeB(\'' + rowVandalBNo + '\')" id="{{ $prefix2 }}semasa_' + rowVandalBNo + '" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateVandalismeB(\'' + rowVandalBNo + '\')" id="{{ $prefix2 }}hadapan_' + rowVandalBNo + '" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix2 }}total_income_' + rowVandalBNo + '" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateVandalismeBTotal(\'' + rowVandalBNo + '\')" id="{{ $prefix2 }}tertunggak_' + rowVandalBNo + '" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowVandalB(\'vandalb_row' + rowVandalBNo + '\')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td></tr>');
+        $("#dynamic_form_vandal_b tr:last").prev().prev().after('<tr id="vandalb_row' + rowVandalBNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix2 }}is_custom[]" value="1">' + rowVandalBNo + '</td><td><input type="text" name="{{ $prefix2 }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateVandalismeB(\'' + rowVandalBNo + '\')" id="{{ $prefix2 }}tunggakan_' + rowVandalBNo + '" name="{{ $prefix2 }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateVandalismeB(\'' + rowVandalBNo + '\')" id="{{ $prefix2 }}semasa_' + rowVandalBNo + '" name="{{ $prefix2 }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateVandalismeB(\'' + rowVandalBNo + '\')" id="{{ $prefix2 }}hadapan_' + rowVandalBNo + '" name="{{ $prefix2 }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix2 }}total_income_' + rowVandalBNo + '" name="{{ $prefix2 }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateVandalismeBTotal(\'' + rowVandalBNo + '\')" id="{{ $prefix2 }}tertunggak_' + rowVandalBNo + '" name="{{ $prefix2 }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowVandalB(\'vandalb_row' + rowVandalBNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
 
         calculateVandalismeBTotal();
     }

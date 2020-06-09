@@ -77,7 +77,7 @@ foreach ($user_permission as $permission) {
                                                         <div id="developer_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
@@ -121,7 +121,7 @@ foreach ($user_permission as $permission) {
                                                         <div id="poscode_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -147,7 +147,7 @@ foreach ($user_permission as $permission) {
                                                         <div id="country_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>        
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -163,13 +163,13 @@ foreach ($user_permission as $permission) {
                                                         <div id="fax_no_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.admin_status') }}</label>
+                                                        <label>Status</label>
                                                         <select id="is_active" class="form-control" disabled="">
-                                                            <option value="">{{ trans('app.forms.please_select') }}</option>
+                                                            <option value="">Please Select</option>
                                                             <option value="1" {{($house_scheme->is_active==1 ? " selected" : "")}}>Aktif</option>
                                                             <option value="0" {{($house_scheme->is_active==0 ? " selected" : "")}}>Tidak Aktif</option>
                                                         </select>
@@ -189,10 +189,10 @@ foreach ($user_permission as $permission) {
                                         <!-- End House Form -->
                                     </div>
                                 </div>
-                            </div>
+                            </div>                            
                         </div>
                     </div>
-                </div>
+                </div>                
             </div>
         </div>
     </section>

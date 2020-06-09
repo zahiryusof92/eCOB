@@ -1,41 +1,41 @@
 <div class="row">
     <div class="col-lg-12">
 
-        <h6>{{ trans("app.forms.check") }}</h6>
+        <h6>Check</h6>
 
         <div class="form-group row">
-            <div class="col-md-6">
-                <label><span style="color: red;">*</span> {{ trans("app.forms.date") }}</label>
-                <input id="date" class="form-control form-control-sm" type="text" placeholder="{{ trans("app.forms.date") }}" value="{{ ($checkdata->date) ? date('d/m/Y', strtotime($checkdata->date)) : '' }}">
+            <div class="col-md-6">                            
+                <label><span style="color: red;">*</span> Date</label>
+                <input id="date" class="form-control form-control-sm" type="text" placeholder="Date" value="{{ ($checkdata->date) ? date('d/m/Y', strtotime($checkdata->date)) : '' }}">
                 <input type="hidden" name="date" id="mirror_date" value="{{ $checkdata->date }}">
                 <div id="date_err" style="display:none;"></div>
             </div>
             <div class="col-md-6">
-                <label><span style="color: red;">*</span> {{ trans('app.forms.name') }}</label>
-                <input name="name" id="name" class="form-control form-control-sm" type="text" placeholder="{{ trans('app.forms.name') }}" value="{{ $checkdata->name }}">
+                <label><span style="color: red;">*</span> Name</label>
+                <input name="name" id="name" class="form-control form-control-sm" type="text" placeholder="Name" value="{{ $checkdata->name }}">
                 <div id="name_err" style="display:none;"></div>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-md-6">
-                <label><span style="color: red;">*</span> {{ trans("app.forms.position") }}</label>
-                <input name="position" id="position" class="form-control form-control-sm" type="text" placeholder="{{ trans("app.forms.position") }}" value="{{ $checkdata->position }}">
+                <label><span style="color: red;">*</span> Position</label>
+                <input name="position" id="position" class="form-control form-control-sm" type="text" placeholder="Position" value="{{ $checkdata->position }}">
                 <div id="position_err" style="display:none;"></div>
             </div>
             <div class="col-md-6">
-                <label><span style="color: red;">*</span> {{ trans('app.forms.admin_status') }}</label>
+                <label><span style="color: red;">*</span> Status</label>
                 <select name="is_active" id="is_active" class="form-control form-control-sm">
-                    <option value="">{{ trans('app.forms.please_select') }}</option>
-                    <option value="1" {{ ($checkdata->is_active == 1) ? 'selected' : '' }}>{{ trans('app.forms.active') }}</option>
-                    <option value="0" {{ ($checkdata->is_active == 0) ? 'selected' : '' }}>{{ trans('app.forms.inactive') }}</option>
+                    <option value="">Please Select</option>
+                    <option value="1" {{ ($checkdata->is_active == 1) ? 'selected' : '' }}>Active</option>
+                    <option value="0" {{ ($checkdata->is_active == 0) ? 'selected' : '' }}>Inactive</option>
                 </select>
                 <div id="is_active_err" style="display:none;"></div>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-md-12">
-                <label>{{ trans('app.forms.remarks') }}</label>
-                <textarea name="remarks" id="remarks" rows="5" class="form-control form-control-sm" placeholder="{{ trans('app.forms.remarks') }}">{{ $checkdata->remarks }}</textarea>
+                <label>Remarks</label>
+                <textarea name="remarks" id="remarks" rows="5" class="form-control form-control-sm" placeholder="Remarks">{{ $checkdata->remarks }}</textarea>
             </div>
         </div>
     </div>

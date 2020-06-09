@@ -45,7 +45,7 @@ foreach ($user_permission as $permission) {
                                     <div id="name_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div>                       
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -54,7 +54,7 @@ foreach ($user_permission as $permission) {
                                     <div id="email_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -62,7 +62,7 @@ foreach ($user_permission as $permission) {
                                     <input type="text" class="form-control" placeholder="No. Telefon" id="phone_no" value="{{$user->phone_no}}">
                                     <div id="phone_no_error" style="display:none;"></div>
                                 </div>
-                            </div>
+                            </div>                            
                         </div>
                         <div class="row">
                             <div class="col-md-4">
@@ -81,7 +81,7 @@ foreach ($user_permission as $permission) {
                         <div class="row" id="expiry_date" style="display: none;">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> {{ trans("app.forms.date_start") }}</label>
+                                    <label><span style="color: red;">*</span> Start Date</label>
                                     <label class="input-group">
                                         <input type="text" class="form-control" placeholder="Start Date" id="start_date_raw" value="{{ (!empty($user->start_date) ? date('d-m-Y', strtotime($user->start_date)) : '') }}"/>
                                         <span class="input-group-addon">
@@ -94,7 +94,7 @@ foreach ($user_permission as $permission) {
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> {{ trans("app.forms.date_end") }}</label>
+                                    <label><span style="color: red;">*</span> End Date</label>
                                     <label class="input-group">
                                         <input type="text" class="form-control" placeholder="End Date" id="end_date_raw" value="{{ (!empty($user->end_date) ? date('d-m-Y', strtotime($user->end_date)) : '') }}"/>
                                         <span class="input-group-addon">
@@ -109,9 +109,9 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> {{ trans('app.forms.cob') }}</label>
+                                    <label><span style="color: red;">*</span> COB</label>
                                     <select id="company" class="form-control select2" onchange="findFile()">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($company as $companies)
                                         <option value="{{$companies->id}}" {{ $user->company_id == $companies->id ? 'selected' : '' }}>{{$companies->name}} - {{$companies->short_name}}</option>
                                         @endforeach
@@ -125,7 +125,7 @@ foreach ($user_permission as $permission) {
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> Files</label>
                                     <select id="file_id" class="form-control select2">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($files as $file)
                                         <option value="{{$file->id}}" {{ $user->file_id == $file->id ? 'selected' : '' }}>{{ $file->file_no }}</option>
                                         @endforeach
@@ -137,11 +137,11 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.admin_status') }}</label>
+                                    <label><span style="color: red; font-style: italic;">*</span> Status</label>
                                     <select id="is_active" class="form-control" {{($user->status == 0 ? " disabled" : "")}}>
                                         <option value="">Sila pilih</option>
-                                        <option value="1" {{($user->is_active == 1 ? " selected" : "")}}>{{ trans('app.forms.active') }}</option>
-                                        <option value="0" {{($user->is_active == 0 ? " selected" : "")}}>{{ trans('app.forms.inactive') }}</option>
+                                        <option value="1" {{($user->is_active == 1 ? " selected" : "")}}>Active</option>
+                                        <option value="0" {{($user->is_active == 0 ? " selected" : "")}}>Inactive</option>
                                     </select>
                                     <div id="is_active_error" style="display:none;"></div>
                                 </div>
@@ -163,7 +163,7 @@ foreach ($user_permission as $permission) {
                         </div>
                     </form>
                     <!-- End Vertical Form -->
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -279,7 +279,7 @@ foreach ($user_permission as $permission) {
                 error = 1;
             }
             if (file_id.trim() == "") {
-                $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"File"]) }}</span>');
+                $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File</span>');
                 $("#file_id_error").css("display", "block");
                 error = 1;
             }

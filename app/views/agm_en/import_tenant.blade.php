@@ -25,7 +25,7 @@ foreach ($user_permission as $permission) {
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label>{{ trans('app.forms.import_csv_file') }}</label>
+                                <label>Import CSV File</label>
                                 <br />
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                 <input type="file" name="uploadedCSV" id="uploadedCSV" />
@@ -37,11 +37,11 @@ foreach ($user_permission as $permission) {
                             <div class="form-group">
                                 <?php if ($insert_permission == 1) { ?>
                                     <button type="submit" class="btn btn-primary" id="upload_button">
-                                        {{ trans('app.forms.upload') }}
+                                        Upload
                                     </button>
                                 <?php } ?>
                                 <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AgmController@tenant')}}'">
-                                    {{ trans('app.forms.cancel') }}
+                                    Cancel
                                 </button>
                             </div>
                         </div>
@@ -52,25 +52,25 @@ foreach ($user_permission as $permission) {
                     @if($csvData=='No Data')
                     <div class="row">
                         <div class="col-md-8" style="color:red;font-style:italic;">
-                            {{ trans('app.forms.csv_file_empty') }}
+                            The CSV file is empty
                         </div>
                     </div>
-                    @else
+                    @else                                        
                     <br /><br/>
                     <div class="table-responsive">
                         <table class="table table-hover nowrap" id="tenant" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th style="width:10%;">{{ trans('app.forms.file_no') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.unit_number') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.tenant_name') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.ic_company_number') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.address') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.phone_number') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.email') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.race') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.nationality') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.remarks') }}</th>
+                                    <th style="width:10%;">File No</th>
+                                    <th style="width:10%;">Unit No</th>
+                                    <th style="width:10%;">Tenant Name</th>
+                                    <th style="width:10%;">IC No / Company No</th>
+                                    <th style="width:10%;">Address</th>
+                                    <th style="width:10%;">Phone Number</th>
+                                    <th style="width:10%;">Email</th>
+                                    <th style="width:10%;">Race</th>
+                                    <th style="width:10%;">Nationality</th>
+                                    <th style="width:10%;">Remarks</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -90,7 +90,7 @@ foreach ($user_permission as $permission) {
                     </div>
                     <?php if ($insert_permission == 1) { ?>
                         <br/>
-                        <button id="submit_buyer_button" type="button" class="btn btn-primary" onclick="submitUploadTenant()">{{ trans('app.forms.submit') }}</button>
+                        <button id="submit_buyer_button" type="button" class="btn btn-primary" onclick="submitUploadTenant()">Submit</button>
                         <img id="loading" src="{{ asset('assets/common/img/input-spinner.gif') }}" style="display:none;"/>
                     <?php } ?>
                     @endif
@@ -142,7 +142,7 @@ foreach ($user_permission as $permission) {
             success: function (data) {
                 console.log(data);
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.tenants.import') }}</span>", function () {
+                    bootbox.alert("<span style='color:green;'>Tenant imported successfully!</span>", function () {
                         window.location = '{{URL::action("AgmController@tenant") }}';
                     });
                 }

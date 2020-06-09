@@ -4,9 +4,9 @@ $prefix = 'sum_';
 
 <div class="row">
     <div class="col-lg-12">
-
-        <h6>{{ trans("app.forms.summary") }}</h6>
-
+        
+        <h6>Summary</h6>
+        
             <div class="row">
                 <table class="table table-sm" style="font-size: 12px;">
                     <tbody>
@@ -28,7 +28,7 @@ $prefix = 'sum_';
                             <th><input type="number" step="0.01" class="form-control form-control-sm text-right" id="{{ $prefix }}jumlah_pembelanjaan" value="{{ $total_all }}" readonly=""></th>
                         </tr>
                     </tbody>
-                </table>
+                </table>    
             </div>
     </div>
 </div>

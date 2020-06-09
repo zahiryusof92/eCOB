@@ -20,53 +20,53 @@ foreach ($user_permission as $permission) {
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <h6>{{ trans('app.forms.file_no') }}: {{$file->file_no}}</h6>
+                    <h6>File No: {{$file->file_no}}</h6>
                     <div id="update_files_lists">
                         <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active">{{ trans('app.forms.housing_scheme') }}</a>
+                                <a class="nav-link active">Housing Scheme</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@strata', $file->id)}}">{{ trans('app.forms.developed_area') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@strata', $file->id)}}">Developed Area (STRATA)</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@management', $file->id)}}">{{ trans('app.forms.management') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@management', $file->id)}}">Management</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@monitoring', $file->id)}}">{{ trans('app.forms.monitoring') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@monitoring', $file->id)}}">Monitoring</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@others', $file->id)}}">{{ trans('app.forms.others') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@others', $file->id)}}">Others</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@scoring', $file->id)}}">{{ trans('app.forms.scoring_component_value') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@scoring', $file->id)}}">Scoring Component Value</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@buyer', $file->id)}}">{{ trans('app.forms.buyer_list') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@buyer', $file->id)}}">Buyer List</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@document', $file->id)}}">{{ trans('app.forms.document') }}</a>
-                            </li>
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $file->id)}}">Document</a>
+                            </li> 
                         </ul>
                         <div class="tab-content padding-vertical-20">
                             <div class="tab-pane active" id="house_scheme" role="tabpanel">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h4>{{ trans('app.forms.detail') }}</h4>
+                                        <h4>Detail</h4>
                                         <!-- House Form -->
                                         <form id="house">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
+                                                        <label style="color: red; font-style: italic;">* Mandatory Fields</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label><span style="color: red;">*</span> {{ trans('app.forms.name') }}</label>
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="name" value="{{$house_scheme->name}}">
+                                                        <label><span style="color: red;">*</span> Name</label>
+                                                        <input type="text" class="form-control" placeholder="Name" id="name" value="{{$house_scheme->name}}">
                                                         <div id="name_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
@@ -74,9 +74,9 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.developer') }}</label>
+                                                        <label>Developer</label>
                                                         <select class="form-control" id="developer">
-                                                            <option value="">{{ trans('app.forms.please_select') }}</option>
+                                                            <option value="">Please Select</option>
                                                             @foreach ($developer as $developers)
                                                             <option value="{{$developers->id}}" {{($house_scheme->developer == $developers->id ? " selected" : "")}}>{{$developers->name}}</option>
                                                             @endforeach
@@ -84,33 +84,33 @@ foreach ($user_permission as $permission) {
                                                         <div id="developer_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.address') }}</label>
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.address') }}" id="address1" value="{{$house_scheme->address1}}">
+                                                        <label>Address</label>
+                                                        <input type="text" class="form-control" placeholder="Address 1" id="address1" value="{{$house_scheme->address1}}">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.address2') }}" id="address2" value="{{$house_scheme->address2}}">
+                                                        <input type="text" class="form-control" placeholder="Address 2" id="address2" value="{{$house_scheme->address2}}">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.address3') }}" id="address3" value="{{$house_scheme->address3}}">
+                                                        <input type="text" class="form-control" placeholder="Address 3" id="address3" value="{{$house_scheme->address3}}">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.address4') }}" id="address4" value="{{$house_scheme->address4}}">
+                                                        <input type="text" class="form-control" placeholder="Address 4" id="address4" value="{{$house_scheme->address4}}">
                                                         <div id="address_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
@@ -118,9 +118,9 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.city') }}</label>
+                                                        <label>City</label>
                                                         <select class="form-control" id="city">
-                                                            <option value="">{{ trans('app.forms.please_select') }}</option>
+                                                            <option value="">Please Select</option>
                                                             @foreach ($city as $cities)
                                                             <option value="{{$cities->id}}" {{($house_scheme->city == $cities->id ? " selected" : "")}}>{{$cities->description}}</option>
                                                             @endforeach
@@ -130,18 +130,18 @@ foreach ($user_permission as $permission) {
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.postcode') }}</label>
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.postcode') }}" id="poscode" value="{{$house_scheme->poscode}}">
+                                                        <label>Postcode</label>
+                                                        <input type="text" class="form-control" placeholder="Postcode" id="poscode" value="{{$house_scheme->poscode}}">
                                                         <div id="poscode_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.state') }}</label>
+                                                        <label>State</label>
                                                         <select class="form-control" id="state">
-                                                            <option value="">{{ trans('app.forms.please_select') }}</option>
+                                                            <option value="">Please Select</option>
                                                             @foreach ($state as $states)
                                                             <option value="{{$states->id}}" {{($house_scheme->state == $states->id ? " selected" : "")}}>{{$states->name}}</option>
                                                             @endforeach
@@ -151,9 +151,9 @@ foreach ($user_permission as $permission) {
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.country') }}</label>
+                                                        <label>Country</label>
                                                         <select class="form-control" id="country">
-                                                            <option value="">{{ trans('app.forms.please_select') }}</option>
+                                                            <option value="">Please Select</option>
                                                             @foreach ($country as $countries)
                                                             <option value="{{$countries->id}}" {{($house_scheme->country == $countries->id ? " selected" : "")}}>{{$countries->name}}</option>
                                                             @endforeach
@@ -161,32 +161,32 @@ foreach ($user_permission as $permission) {
                                                         <div id="country_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>        
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.phone_number') }}</label>
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="phone_no" value="{{$house_scheme->phone_no}}">
+                                                        <label>Phone Number</label>
+                                                        <input type="text" class="form-control" placeholder="Phone Number" id="phone_no" value="{{$house_scheme->phone_no}}">
                                                         <div id="phone_no_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.fax_number') }}</label>
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.fax_number') }}" id="fax_no" value="{{$house_scheme->fax_no}}">
+                                                        <label>Fax Number</label>
+                                                        <input type="text" class="form-control" placeholder="Fax Number" id="fax_no" value="{{$house_scheme->fax_no}}">
                                                         <div id="fax_no_error" style="display:none;"></div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label><span style="color: red;">*</span> {{ trans('app.forms.admin_status') }}</label>
+                                                        <label><span style="color: red;">*</span> Status</label>
                                                         <select id="is_active" class="form-control">
-                                                            <option value="">{{ trans('app.forms.please_select') }}</option>
-                                                            <option value="1" {{($file->is_active == '1' ? " selected" : "")}}>{{ trans('app.forms.active') }}</option>
-                                                            <option value="0" {{($file->is_active == '0' ? " selected" : "")}}>{{ trans('app.forms.inactive') }}</option>
-                                                            <option value="2" {{($file->is_active == '2' ? " selected" : "")}}>{{ trans('app.forms.before_vp') }}</option>
+                                                            <option value="">Please Select</option>
+                                                            <option value="1" {{($file->is_active == '1' ? " selected" : "")}}>Active</option>
+                                                            <option value="0" {{($file->is_active == '0' ? " selected" : "")}}>Inactive</option>
+                                                            <option value="2" {{($file->is_active == '2' ? " selected" : "")}}>Before VP</option>
                                                         </select>
                                                         <div id="is_active_error" style="display:none;"></div>
                                                     </div>
@@ -195,30 +195,30 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.remarks') }}</label>
+                                                        <label>Remarks</label>
                                                         <textarea class="form-control" rows="3" id="remarks">{{$house_scheme->remarks}}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-actions">
                                                 <?php if ($update_permission == 1) { ?>
-                                                    <button type="button" class="btn btn-primary" id="submit_button" onclick="updateHouseScheme()">{{ trans('app.forms.submit') }}</button>
+                                                    <button type="button" class="btn btn-primary" id="submit_button" onclick="updateHouseScheme()">Submit</button>
                                                 <?php } ?>
-
+                                                    
                                                 @if ($file->is_active != 2)
-                                                <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">{{ trans('app.forms.cancel') }}</button>
+                                                <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileList')}}'">Cancel</button>
                                                 @else
-                                                <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileListBeforeVP')}}'">{{ trans('app.forms.cancel') }}</button>
+                                                <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@fileListBeforeVP')}}'">Cancel</button>
                                                 @endif
                                             </div>
                                         </form>
                                         <!-- End House Form -->
                                     </div>
                                 </div>
-                            </div>
+                            </div>                            
                         </div>
                     </div>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -234,7 +234,7 @@ foreach ($user_permission as $permission) {
 
     $(window).on('beforeunload', function () {
         if (changes) {
-            return "{{ trans('app.confirmation.want_to_leave') }}";
+            return "Data you have entered may not be saved, do you really want to leave?";
         }
     });
 
@@ -260,13 +260,13 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (name.trim() == "") {
-            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Name"]) }}</span>');
+            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter name</span>');
             $("#name_error").css("display", "block");
             error = 1;
         }
 
         if (is_active.trim() == "") {
-            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Status"]) }}</span>');
+            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select status</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
@@ -298,7 +298,7 @@ foreach ($user_permission as $permission) {
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
                         }, {
                             type: 'success',
                             placement: {
@@ -307,7 +307,7 @@ foreach ($user_permission as $permission) {
                         });
                         window.location = "{{URL::action('AdminController@strata', $file->id)}}";
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

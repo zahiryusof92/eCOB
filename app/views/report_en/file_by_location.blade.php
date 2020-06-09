@@ -19,7 +19,7 @@ $company = Company::find(Auth::user()->company_id);
                             <td class="text-center">
                                 <h4 class="margin-bottom-0">
                                     <img src="{{asset($company->image_url)}}" height="100px;" alt="">
-                                </h4>
+                                </h4> 
                             </td>
                             <td>
                                 <h5 class="margin-bottom-10">
@@ -36,7 +36,7 @@ $company = Company::find(Auth::user()->company_id);
                             </td>
                         </tr>
                     </table>
-                </div>
+                </div>  
                 <hr/>
                 <div class="row">
                     <div class="col-lg-12">
@@ -44,11 +44,11 @@ $company = Company::find(Auth::user()->company_id);
                         <table class="table" id="file_location_list" width="100%" style="font-size: 12px;">
                             <thead>
                                 <tr>
-                                    <th style="width:20%; text-align: center !important;">{{ trans('app.forms.parliament') }}</th>
-                                    <th style="width:20%; text-align: center !important;">{{ trans('app.forms.dun') }}</th>
-                                    <th style="width:20%; text-align: center !important;">{{ trans('app.forms.park') }}</th>
-                                    <th style="width:20%; text-align: center !important;">{{ trans('app.forms.file_no') }}.</th>
-                                    <th style="width:20%; text-align: center !important;">{{ trans('app.forms.development_area') }}</th>
+                                    <th style="width:20%; text-align: center !important;">Parliament</th>
+                                    <th style="width:20%; text-align: center !important;">DUN</th>
+                                    <th style="width:20%; text-align: center !important;">Park</th>
+                                    <th style="width:20%; text-align: center !important;">File No.</th>
+                                    <th style="width:20%; text-align: center !important;">Development Area</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,9 +57,9 @@ $company = Company::find(Auth::user()->company_id);
                         </table>
                     </div>
                 </div>
-            </div>
+            </div>           
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 
@@ -72,8 +72,8 @@ $company = Company::find(Auth::user()->company_id);
             "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
             "pageLength": 50,
             "order": [[0, "asc"]],
-            "scrollX": false,
-            "fixedColumns": true
+            "scrollX": true,
+            "responsive": false
         });
     });
 

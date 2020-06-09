@@ -37,19 +37,19 @@ $finance_file_id = $financefiledata->id;
                     <table class="table table-bordered">
                         <tbody>
                             <tr>
-                                <td>{{ trans("app.forms.finance_management") }}</td>
+                                <td>Finance Management</td>
                                 <td>{{ $financefiledata->file->file_no }}</td>
-                                <td>{{ trans("app.forms.finance_management_id") }}</td>
+                                <td>Finance ManagementID</td>
                                 <td>{{ $financefiledata->id }}</td>
                             </tr>
                             <tr>
-                                <td>{{ trans("app.forms.year") }}</td>
+                                <td>Year</td>
                                 <td>{{ $financefiledata->year }}</td>
-                                <td>{{ trans("app.forms.month") }}</td>
+                                <td>Month</td>
                                 <td>{{ $financefiledata->month }}</td>
                             </tr>
                             <tr>
-                                <td>{{ trans("app.forms.strata") }}</td>
+                                <td>Strata</td>
                                 <td colspan="3">{{ $financefiledata->file->strata->strataName() }}</td>
                             </tr>
                         </tbody>
@@ -65,43 +65,43 @@ $finance_file_id = $financefiledata->id;
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
+                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
                                 </div>
                             </div>
                         </div>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">{{ trans("app.forms.check") }}</a>
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Check</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="summary-tab" data-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="false">{{ trans("app.forms.summary") }}</a>
+                                <a class="nav-link" id="summary-tab" data-toggle="tab" href="#summary" role="tab" aria-controls="summary" aria-selected="false">Summary</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="mfreport-tab" data-toggle="tab" href="#mfreport" role="tab" aria-controls="mfreport" aria-selected="false">{{ trans("app.forms.mf_report") }}</a>
+                                <a class="nav-link" id="mfreport-tab" data-toggle="tab" href="#mfreport" role="tab" aria-controls="mfreport" aria-selected="false">MF Report</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="sfreport-tab" data-toggle="tab" href="#sfreport" role="tab" aria-controls="sfreport" aria-selected="false">{{ trans("app.forms.sf_report") }}</a>
+                                <a class="nav-link" id="sfreport-tab" data-toggle="tab" href="#sfreport" role="tab" aria-controls="sfreport" aria-selected="false">SF Report</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="income-tab" data-toggle="tab" href="#income" role="tab" aria-controls="income" aria-selected="false">{{ trans("app.forms.income") }}</a>
+                                <a class="nav-link" id="income-tab" data-toggle="tab" href="#income" role="tab" aria-controls="income" aria-selected="false">Income</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="utility-tab" data-toggle="tab" href="#utility" role="tab" aria-controls="utility" aria-selected="false">{{ trans("app.forms.utility") }}</a>
+                                <a class="nav-link" id="utility-tab" data-toggle="tab" href="#utility" role="tab" aria-controls="utility" aria-selected="false">Utility</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="contractexp-tab" data-toggle="tab" href="#contractexp" role="tab" aria-controls="contractexp" aria-selected="false">{{ trans("app.forms.contract_expire") }}</a>
+                                <a class="nav-link" id="contractexp-tab" data-toggle="tab" href="#contractexp" role="tab" aria-controls="contractexp" aria-selected="false">Contract Exp.</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="repair-tab" data-toggle="tab" href="#repair" role="tab" aria-controls="repair" aria-selected="false">{{ trans("app.forms.repair") }}</a>
+                                <a class="nav-link" id="repair-tab" data-toggle="tab" href="#repair" role="tab" aria-controls="repair" aria-selected="false">Repair</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="vandalisme-tab" data-toggle="tab" href="#vandalisme" role="tab" aria-controls="vandalisme" aria-selected="false">{{ trans("app.forms.vandalism") }}</a>
+                                <a class="nav-link" id="vandalisme-tab" data-toggle="tab" href="#vandalisme" role="tab" aria-controls="vandalisme" aria-selected="false">Vandalisme</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="staff-tab" data-toggle="tab" href="#staff" role="tab" aria-controls="staff" aria-selected="false">{{ trans("app.forms.staff") }}</a>
+                                <a class="nav-link" id="staff-tab" data-toggle="tab" href="#staff" role="tab" aria-controls="staff" aria-selected="false">Staff</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false">{{ trans("app.forms.admin") }}</a>
+                                <a class="nav-link" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false">Admin</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20" id="myTabContent">
@@ -138,13 +138,13 @@ $finance_file_id = $financefiledata->id;
                             <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
                                 @include('finance_en.edit_finance_file.form_admin')
                             </div>
-                        </div>
+                        </div>                
                     </div>
                 </div>
                 <?php if ($update_permission == 1) { ?>
-                    <div class="form-actions">
+                    <div class="form-actions">                
                         <input type="hidden" name="finance_file_id" value="{{ $finance_file_id }}">
-                        <input type="submit" value="{{ trans("app.forms.submit") }}" class="btn btn-primary" id="submit_button">
+                        <input type="submit" value="Submit" class="btn btn-primary" id="submit_button">
                         <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                     </div>
                 <?php } ?>
@@ -163,7 +163,7 @@ $finance_file_id = $financefiledata->id;
 
     $(window).on('beforeunload', function () {
         if (changes) {
-            return "{{ trans('app.confirmation.want_to_leave') }}";
+            return "Data you have entered may not be saved, do you really want to leave?";
         }
     });
 
@@ -181,25 +181,25 @@ $finance_file_id = $financefiledata->id;
         var error = 0;
 
         if ($("#name").val().trim() == "") {
-            $("#name_err").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Name"]) }}</span>');
+            $("#name_err").html('<span style="color:red;font-style:italic;font-size:13px;">Please Input Name</span>');
             $("#name_err").css("display", "block");
             error = 1;
         }
 
         if ($("#mirror_date").val().trim() == "") {
-            $("#date_err").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Date"]) }}</span>');
+            $("#date_err").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Date</span>');
             $("#date_err").css("display", "block");
             error = 1;
         }
 
         if ($("#position").val().trim() == "") {
-            $("#position_err").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Position"]) }}</span>');
+            $("#position_err").html('<span style="color:red;font-style:italic;font-size:13px;">Please input Position</span>');
             $("#position_err").css("display", "block");
             error = 1;
         }
 
         if ($("#is_active").val().trim() == "") {
-            $("#is_active_err").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Status"]) }}</span>');
+            $("#is_active_err").html('<span style="color:red;font-style:italic;font-size:13px;">Please input Status</span>');
             $("#is_active_err").css("display", "block");
             error = 1;
         }
@@ -215,7 +215,7 @@ $finance_file_id = $financefiledata->id;
 
                     if (response.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
                         }, {
                             type: 'success',
                             placement: {
@@ -224,7 +224,7 @@ $finance_file_id = $financefiledata->id;
                         });
                         location = '{{URL::action("FinanceController@editFinanceFileList", $finance_file_id) }}';
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

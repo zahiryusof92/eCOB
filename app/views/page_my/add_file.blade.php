@@ -34,12 +34,12 @@ foreach ($user_permission as $permission) {
                             @if (Auth::user()->getAdmin())
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> {{ trans('app.forms.cob') }}</label>
+                                    <label><span style="color: red;">*</span> COB</label>
                                     <select id="company" class="form-control select2">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($cob as $companies)
                                         <option value="{{ $companies->id }}">{{ $companies->name }} ({{ $companies->short_name }})</option>
-                                        @endforeach
+                                        @endforeach                                    
                                     </select>
                                     <div id="company_error" style="display:none;"></div>
                                 </div>
@@ -49,12 +49,12 @@ foreach ($user_permission as $permission) {
                             @endif
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> {{ trans('app.forms.no') }} Fail</label>
+                                    <label><span style="color: red;">*</span> No Fail</label>
                                     <select id="file_no" class="form-control">
                                         <option value="">Sila pilih</option>
                                         @foreach ($file_no as $files)
                                         <option value="{{$files->description}}">{{$files->description}}</option>
-                                        @endforeach
+                                        @endforeach                                    
                                     </select>
                                     <div id="file_no_error" style="display:none;"></div>
                                 </div>
@@ -66,7 +66,7 @@ foreach ($user_permission as $permission) {
                                     <div id="description_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div>                                                
                         <div class="row">
                             <div class="col-md-4">
                                 <div id="file_already_exists_error" style="display: none;"></div>
@@ -80,7 +80,7 @@ foreach ($user_permission as $permission) {
                             <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -103,7 +103,7 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (company_id.trim() == "") {
-            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"COB"]) }}</span>');
+            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select COB</span>');
             $("#company_error").css("display", "block");
             error = 1;
         }

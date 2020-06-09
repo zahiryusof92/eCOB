@@ -6,7 +6,7 @@ $prefix = 'income_';
     <div class="col-lg-12">
 
         <h6>3. LAPORAN PENDAPATAN</h6>
-
+              
             <div class="row">
                 <table class="table table-sm" id="dynamic_form_income" style="font-size: 12px;">
                     <thead>
@@ -17,7 +17,7 @@ $prefix = 'income_';
                             <th width="10%" style="text-align: center;">SEMASA<br/>A</th>
                             <th width="10%" style="text-align: center;">ADVANCED<br/>C</th>
                             <th width="10%" style="text-align: center;">JUMLAH<br/>A + B + C</th>
-                            <td width="5%" style="text-align: center;">&nbsp;</td>
+                            <td width="5%" style="text-align: center;">&nbsp;</td> 
                         </tr>
                     </thead>
                     <tbody>
@@ -45,7 +45,7 @@ $prefix = 'income_';
                             <td><input type="number" step="any" oninput="calculateIncome('{{ $count }}')" id="{{ $prefix . 'hadapan_' . $count }}" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="{{ $incomeFiles['hadapan'] }}"></td>
                             <td><input type="number" step="any" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
                             @if ($incomeFiles['is_custom'])
-                            <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowIncome('income_row<?php echo $count ?>')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td>
+                            <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowIncome('income_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                             @else
                             <td>&nbsp;</td>
                             @endif
@@ -53,7 +53,7 @@ $prefix = 'income_';
                         @endforeach
 
                         <tr>
-                            <td class="padding-table text-right" colspan="7"><a href="javascript:void(0);" onclick="addRowIncome()" class="btn btn-success btn-xs">{{ trans("app.forms.add_more") }}</a></td>
+                            <td class="padding-table text-right" colspan="7"><a href="javascript:void(0);" onclick="addRowIncome()" class="btn btn-success btn-xs">Add More</a></td>
                         </tr>
 
                         <tr>
@@ -63,7 +63,7 @@ $prefix = 'income_';
                             <th><input type="number" step="any" id="{{ $prefix . 'total_semasa' }}" class="form-control form-control-sm text-right" value="{{ $total_semasa }}" readonly=""></th>
                             <th><input type="number" step="any" id="{{ $prefix . 'total_hadapan' }}" class="form-control form-control-sm text-right" value="{{ $total_hadapan }}" readonly=""></th>
                             <th><input type="number" step="any" id="{{ $prefix . 'total_all' }}" class="form-control form-control-sm text-right" value="{{ $total_all }}" readonly=""></th>
-                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>                          
                         </tr>
                     </tbody>
                 </table>
@@ -129,14 +129,14 @@ $prefix = 'income_';
             $('#' + income_total_income[i].id).val(parseFloat(income_total_income[i].value).toFixed(2));
         }
 
-        var income_sum_total_all = parseFloat(income_sum_total_tunggakan) + parseFloat(income_sum_total_semasa) + parseFloat(income_sum_total_hadapan); // JUMLAH SEMUA A + B + C
-        $('#{{ $prefix }}total_all').val(parseFloat(income_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
+        var income_sum_total_all = parseFloat(income_sum_total_tunggakan) + parseFloat(income_sum_total_semasa) + parseFloat(income_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
+        $('#{{ $prefix }}total_all').val(parseFloat(income_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
     }
 
     function addRowIncome() {
         var rowIncomeNo = $("#dynamic_form_income tr").length;
         rowIncomeNo = rowIncomeNo - 2;
-        $("#dynamic_form_income tr:last").prev().prev().after('<tr id="income_row' + rowIncomeNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowIncomeNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}tunggakan_' + rowIncomeNo + '"  name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}semasa_' + rowIncomeNo + '"  name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}hadapan_' + rowIncomeNo + '"  name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowIncomeNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td class="padding-table"><a href="javascript:void(0);" onclick="deleteRowIncome(\'income_row' + rowIncomeNo + '\')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td></tr>');
+        $("#dynamic_form_income tr:last").prev().prev().after('<tr id="income_row' + rowIncomeNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowIncomeNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}tunggakan_' + rowIncomeNo + '"  name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}semasa_' + rowIncomeNo + '"  name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateIncome(\'' + rowIncomeNo + '\')" id="{{ $prefix }}hadapan_' + rowIncomeNo + '"  name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowIncomeNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td class="padding-table"><a href="javascript:void(0);" onclick="deleteRowIncome(\'income_row' + rowIncomeNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
 
         calculateIncomeTotal();
     }

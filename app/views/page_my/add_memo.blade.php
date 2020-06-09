@@ -106,7 +106,7 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red; font-style: italic;">* </span>{{ trans('app.forms.admin_status') }}</label>
+                                    <label><span style="color: red; font-style: italic;">* </span>Status</label>
                                     <select id="is_active" class="form-control">
                                         <option value="">Sila pilih</option>
                                         <option value="1">Aktif</option>
@@ -132,7 +132,7 @@ foreach ($user_permission as $permission) {
                         </div>
                     </form>
                     <!-- End Vertical Form -->
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -186,9 +186,9 @@ foreach ($user_permission as $permission) {
     function addMemo() {
         $("#loading").css("display", "inline-block");
 
-        var memo_type = $("#memo_type").val(),
-                memo_date = $("#memo_date").val(),
-                publish_date = $("#publish_date").val(),
+        var memo_type = $("#memo_type").val(), 
+                memo_date = $("#memo_date").val(),                
+                publish_date = $("#publish_date").val(), 
                 expired_date = $("#expired_date").val(),
                 subject = $("#subject").val(),
                 description = $("#description").val(),
@@ -211,7 +211,7 @@ foreach ($user_permission as $permission) {
             $("#publish_date_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Tarikh Papar</span>');
             $("#publish_date_error").css("display", "block");
             error = 1;
-        }
+        }    
         if (subject.trim() == "") {
             $("#subject_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Subjek</span>');
             $("#subject_error").css("display", "block");
@@ -229,7 +229,7 @@ foreach ($user_permission as $permission) {
         }
 
         if (error == 0) {
-
+            
             $.ajax({
                 url: "{{ URL::action('AdminController@submitMemo') }}",
                 type: "POST",

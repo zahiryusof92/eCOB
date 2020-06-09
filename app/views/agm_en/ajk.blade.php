@@ -27,50 +27,50 @@ foreach ($user_permission as $permission) {
                             @if (Auth::user()->getAdmin())
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.cob') }}</label>
+                                    <label>COB</label>
                                     <select id="company" class="form-control select2">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($cob as $companies)
                                         <option value="{{ $companies->short_name }}">{{ $companies->name }} ({{ $companies->short_name }})</option>
-                                        @endforeach
+                                        @endforeach                                    
                                     </select>
                                 </div>
                             </div>
                             @endif
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.file_no') }}</label>
+                                    <label>File No</label>
                                     <select id="file_no" class="form-control select2">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($files as $files_no)
                                         <option value="{{ $files_no->file_no }}">{{ $files_no->file_no }}</option>
-                                        @endforeach
+                                        @endforeach                                    
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.month') }}</label>
+                                    <label>Month</label>
                                     <select id="month" class="form-control select2">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($month as $months)
                                         <option value="{{ $months }}">{{ $months }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                            </div>
+                            </div>  
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.year') }}</label>
+                                    <label>Year</label>
                                     <select id="year" class="form-control select2">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @for ($i = 2012; $i <= date('Y'); $i++)
                                         <option value="{{ $i }}">{{ $i}}</option>
                                         @endfor
                                     </select>
                                 </div>
-                            </div>
-                        </div>
+                            </div>                            
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -78,34 +78,34 @@ foreach ($user_permission as $permission) {
             <hr/>
 
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12">  
                     <div class="table-responsive">
                         <?php if ($insert_permission == 1) { ?>
                             <button type="button" class="btn btn-primary margin-bottom-25" onclick="window.location = '{{ URL::action('AgmController@addAJK') }}'" >
-                                {{ trans('app.buttons.add_designation') }}
+                                Add Designation 
                             </button>
                         <?php } ?>
                         <table class="table table-hover nowrap" id="ajk_details_list" width="100%">
                             <thead>
                                 <tr>
-                                    <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
-                                    <th style="width:20%;">{{ trans('app.forms.file_no') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.designation') }}</th>
-                                    <th style="width:20%;">{{ trans('app.forms.name') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.phone_number') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.month') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.year') }}</th>
+                                    <th style="width:10%;">COB</th> 
+                                    <th style="width:20%;">File No</th>
+                                    <th style="width:10%;">Designation</th>
+                                    <th style="width:20%;">Name</th>
+                                    <th style="width:10%;">Phone No</th>
+                                    <th style="width:10%;">Month</th>
+                                    <th style="width:10%;">Year</th>
                                     <?php if ($update_permission == 1) { ?>
-                                        <th style="width:10%;">{{ trans('app.forms.action') }}</th>
+                                        <th style="width:10%;">Action</th>
                                         <?php } ?>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody>                                                    
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     </section>
     <!-- End -->
@@ -144,8 +144,8 @@ foreach ($user_permission as $permission) {
 
     function deleteAJKDetails(id) {
         swal({
-            title: "{{ trans('app.confirmation.are_you_sure') }}",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            title: "Are you sure?",
+            text: "Your will not be able to recover this file!",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -162,7 +162,7 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.deleted_successfully") }}</p>'
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Deleted Successfully</p>'
                         }, {
                             type: 'success',
                             placement: {
@@ -171,7 +171,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

@@ -76,7 +76,7 @@ $count = 0;
                         <td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value="{{ $reportSFs['name'] }}" readonly=""></td>
                         <td><input type="number" step="any" id="{{ $prefix . $reportSFs['report_key'] }}" name="{{ $prefix }}amount[]" class="form-control form-control-sm text-right" value="{{ $reportSFs['amount'] }}" readonly=""></td>
                         @if ($reportSFs['is_custom'])
-                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowSFR('sfr_row<?php echo $count ?>')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td>
+                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowSFR('sfr_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                         @else
                         <td>&nbsp;</td>
                         @endif
@@ -84,7 +84,7 @@ $count = 0;
                     @endforeach
 
                     <tr>
-                        <td class="padding-table text-right" colspan="5"><a href="javascript:void(0);" onclick="addRowSFR()" class="btn btn-success btn-xs">{{ trans("app.forms.add_more") }}</a></td>
+                        <td class="padding-table text-right" colspan="5"><a href="javascript:void(0);" onclick="addRowSFR()" class="btn btn-success btn-xs">Add More</a></td>
                     </tr>
 
                     <tr>
@@ -108,17 +108,17 @@ $count = 0;
                 <tbody>
                     <tr>
                         <td class="padding-table" width="20%">
-                            <span style="color: red;">*</span> {{ trans('app.forms.no') }} AKAUN
+                            <span style="color: red;">*</span> NO AKAUN
                         </td>
                         <td width="35%">
                             <input id="{{ $prefix }}no_akaun" name="{{ $prefix }}no_akaun" class="form-control form-control-sm" type="text" value="{{ $sfreport['no_akaun'] }}">
                             <small id="{{ $prefix }}no_akaun_err" style="display: none;"></small>
                         </td>
                         <td width="5%">&nbsp;</td>
-                        <td class="padding-table" width="25%">
+                        <td class="padding-table" width="25%">  
                             <span style="color: red;">*</span> BAKI BANK (AWAL)
                         </td>
-                        <td width="15%">
+                        <td width="15%">  
                             <input type="number" step="any" name="{{ $prefix }}baki_bank_awal" class="form-control form-control-sm text-right" value="{{ $sfreport['baki_bank_awal'] }}">
                         </td>
                     </tr>
@@ -177,7 +177,7 @@ $count = 0;
     function addRowSFR() {
         var rowSFRNo = $("#dynamic_form_sfr tr").length;
         rowSFRNo = rowSFRNo - 3;
-        $("#dynamic_form_sfr tr:last").prev().prev().prev().after('<tr id="sfr_row' + rowSFRNo + '"><td><input type="hidden" name="{{ $prefix }}is_custom[]" value="1"><input type="hidden" name="{{ $prefix }}report_key[]" value="custom' + rowSFRNo + '">&nbsp;</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateSFR()" id="{{ $prefix }}amount_' + rowSFRNo + '" name="{{ $prefix }}amount[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowSFR(\'sfr_row' + rowSFRNo + '\')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td></tr>');
+        $("#dynamic_form_sfr tr:last").prev().prev().prev().after('<tr id="sfr_row' + rowSFRNo + '"><td><input type="hidden" name="{{ $prefix }}is_custom[]" value="1"><input type="hidden" name="{{ $prefix }}report_key[]" value="custom' + rowSFRNo + '">&nbsp;</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateSFR()" id="{{ $prefix }}amount_' + rowSFRNo + '" name="{{ $prefix }}amount[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowSFR(\'sfr_row' + rowSFRNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
 
         calculateSFR();
     }

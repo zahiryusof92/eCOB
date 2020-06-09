@@ -31,17 +31,17 @@ foreach ($user_permission as $permission) {
                     <table class="table table-hover nowrap" id="rating" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:30%;">{{ trans('app.forms.file_no') }}</th>
-                                <th style="width:15%;">{{ trans('app.forms.date') }}</th>
+                                <th style="width:30%;">File No</th>
+                                <th style="width:15%;">Date</th>
                                 <th style="width:5%;">A (%)</th>
                                 <th style="width:5%;">B (%)</th>
                                 <th style="width:5%;">C (%)</th>
                                 <th style="width:5%;">D (%)</th>
                                 <th style="width:5%;">E (%)</th>
-                                <th style="width:10%;">{{ trans('app.forms.score') }} (%)</th>
-                                <th style="width:10%;">{{ trans('app.forms.rating') }}</th>
+                                <th style="width:10%;">Score (%)</th>
+                                <th style="width:10%;">Rating</th>
                                 <?php if ($update_permission == 1) { ?>
-                                    <th style="width:10%;">{{ trans('app.forms.action') }}</th>
+                                    <th style="width:10%;">Action</th>
                                     <?php } ?>
                             </tr>
                         </thead>
@@ -49,9 +49,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>            
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 
@@ -75,8 +75,8 @@ foreach ($user_permission as $permission) {
 
     function deleteRating(id) {
         swal({
-            title: "{{ trans('app.confirmation.are_you_sure') }}",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            title: "Are you sure?",
+            text: "Your will not be able to recover this file!",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -93,15 +93,15 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "{{ trans('app.successes.deleted_title') }}",
-                            text: "{{ trans('app.successes.deleted_text_file') }}",
+                            title: "Deleted!",
+                            text: "File has been deleted",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });
