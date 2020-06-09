@@ -48,7 +48,7 @@ foreach ($user_permission as $permission) {
                                 <a class="nav-link" href="{{URL::action('AdminController@fileApproval', $file->id)}}">Pengesahan</a>
                             </li>
                         </ul>
-                        <div class="tab-content padding-vertical-20">
+                        <div class="tab-content padding-vertical-20">                            
                             <div class="tab-pane active" id="others_tab" role="tabpanel">
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -84,7 +84,7 @@ foreach ($user_permission as $permission) {
                                                     <div class="form-group">
                                                         <div id="others_image_output">
                                                             <a href="{{asset($other_details->image_url)}}" target="_blank"><img src="{{asset($other_details->image_url)}}" style="width:50%; cursor: pointer;"/></a>
-
+                                                            
                                                         </div>
                                                         <div id="validation-errors"></div>
                                                     </div>
@@ -96,7 +96,7 @@ foreach ($user_permission as $permission) {
                                                     <div class="form-group">
                                                         <div id="others_image_output">
                                                             <span>Tiada gambar</span>
-                                                        </div>
+                                                        </div>                                                        
                                                         <div id="validation-errors"></div>
                                                     </div>
                                                 </div>
@@ -147,7 +147,7 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <a href="https://www.google.com.my/maps/preview?q={{$other_details->latitude}},{{$other_details->longitude}}" target="_blank">
-                                                            <button type="button" class="btn btn-success">
+                                                            <button type="button" class="btn btn-success">                                                                
                                                                 <i class="fa fa-map-marker"> Lihat Peta</i>
                                                             </button>
                                                         </a>
@@ -169,7 +169,7 @@ foreach ($user_permission as $permission) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -187,7 +187,7 @@ foreach ($user_permission as $permission) {
                 var imagefile = file.type;
                 var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
                 if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
-                    $("#validation-errors").html("<span id='error'>{{ trans('app.forms.please_select_valid_image') }}</span><br/>" + "<span id='error_message'>{{ trans('app.forms.only_image_allowed') }}</span>");
+                    $("#validation-errors").html("<span id='error'>Please Select a valid Image File</span><br/>" + "<span id='error_message'>Only .jpeg, .jpg, .png and .gif images type allowed</span>");
                     $("#validation-errors").css("color", "red");
                     return false;
                 }
@@ -205,8 +205,8 @@ foreach ($user_permission as $permission) {
             $('#others_image_output').css("display", "block");
             $("#others_image_output").html("<img id='previewing' style='width: 50%;'/>");
             $('#previewing').attr('src', e.target.result);
-        };
-
+        };        
+        
         //upload
         var options = {
             beforeSubmit: showRequest,
@@ -237,26 +237,26 @@ foreach ($user_permission as $permission) {
             $("#validation-errors").show();
             $("#image").css("color", "red");
         } else {
-            $("#others_image_url").val(response.file);
+            $("#others_image_url").val(response.file);           
         }
     }
-
+    
     function updateOtherDetails(){
         $("#loading").css("display", "inline-block");
-
+        
         var other_details_name = $("#other_details_name").val(),
                 others_image_url = $("#others_image_url").val(),
                 latitude = $("#latitude").val(),
                 longitude = $("#longitude").val(),
                 other_details_description = $("#other_details_description").val();
 
-        var error = 0;
+        var error = 0;        
 
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@submitUpdateOtherDetails') }}",
                 type: "POST",
-                data: {
+                data: { 
                     other_details_name: other_details_name,
                     others_image_url: others_image_url,
                     latitude: latitude,
@@ -267,24 +267,24 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     $("#loading").css("display", "none");
                     $("#submit_button").removeAttr("disabled");
-                    if (data.trim() == "true") {
+                    if (data.trim() == "true") {                        
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
                         },{
                             type: 'success',
                             placement: {
                                 align: "center"
                             }
-                        });
-                        window.location = "{{URL::action('AdminController@scoring', $file->id)}}";
+                        }); 
+                        window.location = "{{URL::action('AdminController@scoring', $file->id)}}";  
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });
         }
     }
-
+    
     function clearImage() {
         $("#image").val("");
         $("#others_image_url").val("");
@@ -293,13 +293,13 @@ foreach ($user_permission as $permission) {
         $("#validation-errors").hide();
         $("#others_image_output").css('display', 'none');
     }
-
+    
     function deleteImageOthers(id){
         swal({
-            title: "{{ trans('app.confirmation.are_you_sure') }}",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            title: "Are you sure?",
+            text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,
+            showCancelButton: true,            
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -315,21 +315,21 @@ foreach ($user_permission as $permission) {
                 success: function(data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "{{ trans('app.successes.deleted_title') }}",
-                            text: "{{ trans('app.successes.deleted_text_file') }}",
+                            title: "Deleted!",
+                            text: "File has been deleted",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });
         });
     }
-
+    
     $(function () {
         $("[data-toggle=tooltip]").tooltip();
     });

@@ -21,7 +21,7 @@ $prefix = 'staff_';
                         <th width="10%" style="text-align: center;">BULAN HADAPAN<br/>E</th>
                         <th width="10%" style="text-align: center;">JUMLAH<br/>C + D + E</th>
                         <th width="10%" style="text-align: center;">JUMLAH<br/>BAKI BAYARAN MASIH TERTUNGGAK<br/>(BELUM BAYAR)</th>
-                        <td width="5%" style="text-align: center;">&nbsp;</td>
+                        <td width="5%" style="text-align: center;">&nbsp;</td> 
                     </tr>
                 </thead>
                 <tbody>
@@ -59,7 +59,7 @@ $prefix = 'staff_';
                         <td><input type="number" step="any" id="{{ $prefix . 'total_income_' . $count }}" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="{{ $total_income }}" readonly=""></td>
                         <td><input type="number" step="any" oninput="calculateStaffTotal('{{ $count }}')" id="{{ $prefix . 'tertunggak_' . $count }}" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="{{ $staffFiles['tertunggak'] }}"></td>
                         @if ($staffFiles['is_custom'])
-                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowStaff('staff_row<?php echo $count ?>')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td>
+                        <td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowStaff('staff_row<?php echo $count ?>')" class="btn btn-danger btn-xs">Remove</a></td>
                         @else
                         <td>&nbsp;</td>
                         @endif
@@ -67,7 +67,7 @@ $prefix = 'staff_';
                     @endforeach
 
                     <tr>
-                        <td class="padding-table text-right" colspan="11"><a href="javascript:void(0);" onclick="addRowStaff()" class="btn btn-success btn-xs">{{ trans("app.forms.add_more") }}</a></td>
+                        <td class="padding-table text-right" colspan="11"><a href="javascript:void(0);" onclick="addRowStaff()" class="btn btn-success btn-xs">Add More</a></td>
                     </tr>
 
                     <tr>
@@ -82,7 +82,7 @@ $prefix = 'staff_';
                         <td>&nbsp;</td>
                     </tr>
                 </tbody>
-            </table>
+            </table>    
         </div>
     </div>
 </div>
@@ -176,14 +176,14 @@ $prefix = 'staff_';
         }
         $('#staff_total_tertunggak').val(parseFloat(staff_sum_total_tertunggak).toFixed(2)); // UPDATE JUMLAH TERTUNGGAK
 
-        var staff_sum_total_all = parseFloat(staff_sum_total_tunggakan) + parseFloat(staff_sum_total_semasa) + parseFloat(staff_sum_total_hadapan); // JUMLAH SEMUA A + B + C
-        $('#staff_total_all').val(parseFloat(staff_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C
+        var staff_sum_total_all = parseFloat(staff_sum_total_tunggakan) + parseFloat(staff_sum_total_semasa) + parseFloat(staff_sum_total_hadapan); // JUMLAH SEMUA A + B + C 
+        $('#staff_total_all').val(parseFloat(staff_sum_total_all).toFixed(2)); // UPDATE JUMLAH SEMUA A + B + C 
     }
 
     function addRowStaff() {
         var rowStaffNo = $("#dynamic_form_staff tr").length;
         rowStaffNo = rowStaffNo - 2;
-        $("#dynamic_form_staff tr:last").prev().prev().after('<tr id="staff_row' + rowStaffNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowStaffNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateStaff(\'' + rowStaffNo + '\')" id="{{ $prefix }}gaji_per_orang_' + rowStaffNo + '" name="{{ $prefix }}gaji_per_orang[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateStaff(\'' + rowStaffNo + '\')" id="{{ $prefix }}bil_pekerja_' + rowStaffNo + '" name="{{ $prefix }}bil_pekerja[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_gaji_' + rowStaffNo + '" name="{{ $prefix }}total_gaji[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateStaff(\'' + rowStaffNo + '\')" id="{{ $prefix }}tunggakan_' + rowStaffNo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateStaff(\'' + rowStaffNo + '\')" id="{{ $prefix }}semasa_' + rowStaffNo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateStaff(\'' + rowStaffNo + '\')" id="{{ $prefix }}hadapan_' + rowStaffNo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowStaffNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateStaffTotal(\'' + rowStaffNo + '\')" id="{{ $prefix }}tertunggak_' + rowStaffNo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowStaff(\'staff_row' + rowStaffNo + '\')" class="btn btn-danger btn-xs">{{ trans("app.forms.remove") }}</a></td></tr>');
+        $("#dynamic_form_staff tr:last").prev().prev().after('<tr id="staff_row' + rowStaffNo + '"><td class="text-center padding-table"><input type="hidden" name="{{ $prefix }}is_custom[]" value="1">' + rowStaffNo + '</td><td><input type="text" name="{{ $prefix }}name[]" class="form-control form-control-sm" value=""></td><td><input type="number" step="any" oninput="calculateStaff(\'' + rowStaffNo + '\')" id="{{ $prefix }}gaji_per_orang_' + rowStaffNo + '" name="{{ $prefix }}gaji_per_orang[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateStaff(\'' + rowStaffNo + '\')" id="{{ $prefix }}bil_pekerja_' + rowStaffNo + '" name="{{ $prefix }}bil_pekerja[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_gaji_' + rowStaffNo + '" name="{{ $prefix }}total_gaji[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateStaff(\'' + rowStaffNo + '\')" id="{{ $prefix }}tunggakan_' + rowStaffNo + '" name="{{ $prefix }}tunggakan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateStaff(\'' + rowStaffNo + '\')" id="{{ $prefix }}semasa_' + rowStaffNo + '" name="{{ $prefix }}semasa[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" oninput="calculateStaff(\'' + rowStaffNo + '\')" id="{{ $prefix }}hadapan_' + rowStaffNo + '" name="{{ $prefix }}hadapan[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td><input type="number" step="any" id="{{ $prefix }}total_income_' + rowStaffNo + '" name="{{ $prefix }}total_income[]" class="form-control form-control-sm text-right numeric-only" value="0" readonly=""></td><td><input type="number" step="any" oninput="calculateStaffTotal(\'' + rowStaffNo + '\')" id="{{ $prefix }}tertunggak_' + rowStaffNo + '" name="{{ $prefix }}tertunggak[]" class="form-control form-control-sm text-right numeric-only" value="0"></td><td class="padding-table text-right"><a href="javascript:void(0);" onclick="deleteRowStaff(\'staff_row' + rowStaffNo + '\')" class="btn btn-danger btn-xs">Remove</a></td></tr>');
 
         calculateStaffTotal();
     }

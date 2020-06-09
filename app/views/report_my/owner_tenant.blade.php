@@ -32,16 +32,16 @@ $facilities = [
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
+                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.file_no') }}</label>
+                                    <label>File No</label>
                                     <select class="form-control select2" id="file_no" name="file_no">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($files as $file)
                                         <option value="{{$file->id}}">{{$file->file_no}}</option>
                                         @endforeach
@@ -56,7 +56,7 @@ $facilities = [
                                 <div class="form-group">
                                     <label>Type</label>
                                     <select class="form-control select2" id="type" name="type">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         <option value="owner">Owner</option>
                                         <option value="tenant">Tenant</option>
                                     </select>
@@ -68,9 +68,9 @@ $facilities = [
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.race') }}</label>
+                                    <label>Race</label>
                                     <select class="form-control select2" id="race" name="race">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($race as $races)
                                         <option value="{{$races->id}}">{{$races->name}}</option>
                                         @endforeach
@@ -93,12 +93,12 @@ $facilities = [
                         </div>
 
                         <div class="form-actions">
-<!--                            <button type="button" class="btn btn-primary" id="submit_button">{{ trans('app.forms.submit') }}</button>-->
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="location.reload();">{{ trans('app.forms.cancel') }}</button>
+<!--                            <button type="button" class="btn btn-primary" id="submit_button">Submit</button>-->
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="location.reload();">Cancel</button>
                             <img id="loading" style="display: none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -120,7 +120,7 @@ $facilities = [
         var error = 0;
 
         if (file_no.trim() === '') {
-            $("#file_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"File No"]) }}</span>');
+            $("#file_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File No</span>');
             $("#file_no_error").css("display", "block");
             error = 1;
         }
@@ -130,7 +130,7 @@ $facilities = [
             error = 1;
         }
         if (race.trim() === '') {
-            $("#race_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Race"]) }}</span>');
+            $("#race_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Race</span>');
             $("#race_error").css("display", "block");
             error = 1;
         }
@@ -151,7 +151,7 @@ $facilities = [
                             location.reload();
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

@@ -19,7 +19,7 @@ $company = Company::find(Auth::user()->company_id);
                             <td class="text-center">
                                 <h4 class="margin-bottom-0">
                                     <img src="{{asset($company->image_url)}}" height="100px;" alt="">
-                                </h4>
+                                </h4> 
                             </td>
                             <td>
                                 <h5 class="margin-bottom-10">
@@ -36,7 +36,7 @@ $company = Company::find(Auth::user()->company_id);
                             </td>
                         </tr>
                     </table>
-                </div>
+                </div>  
                 <hr/>
                 <div class="row">
                     <div class="col-lg-12">
@@ -45,7 +45,7 @@ $company = Company::find(Auth::user()->company_id);
                             <thead>
                                 <tr>
                                     <th style="width:20%; text-align: center !important;">Parlimen</th>
-                                    <th style="width:20%; text-align: center !important;">{{ trans('app.forms.dun') }}</th>
+                                    <th style="width:20%; text-align: center !important;">DUN</th>
                                     <th style="width:20%; text-align: center !important;">Taman</th>
                                     <th style="width:20%; text-align: center !important;">No. Fail</th>
                                     <th style="width:20%; text-align: center !important;">Kawasan Pemajuan</th>
@@ -57,9 +57,9 @@ $company = Company::find(Auth::user()->company_id);
                         </table>
                     </div>
                 </div>
-            </div>
+            </div>           
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 

@@ -17,7 +17,7 @@
                             <td class="text-center">
                                 <h4 class="margin-bottom-0">
                                     <img src="{{asset($company->image_url)}}" height="100px;" alt="">
-                                </h4>
+                                </h4> 
                             </td>
                             <td>
                                 <h5 class="margin-bottom-10">
@@ -43,9 +43,9 @@
                         <form action="{{ url('/reporting/ownerTenant') }}" method="GET" class="form-horizontal">
                             <div class="row">
                                 <div class="col-md-5">
-                                    <div class="form-group">
+                                    <div class="form-group">                                        
                                         <select class="form-control select2" id="file_id" name="file_id" required="">
-                                            <option value="">{{ trans('app.forms.file_no') }}</option>
+                                            <option value="">File No</option>
                                             @foreach ($files as $file)
                                             <option value="{{$file->id}}" {{ ($file->id == $file_id ? 'selected' : '') }}>{{$file->file_no}}</option>
                                             @endforeach
@@ -53,8 +53,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="submit" class="btn btn-primary" id="submit_button">{{ trans('app.forms.submit') }}</button>
-                                    <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("ReportController@ownerTenant") }}'"">{{ trans('app.forms.cancel') }}</button>
+                                    <button type="submit" class="btn btn-primary" id="submit_button">Submit</button>
+                                    <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("ReportController@ownerTenant") }}'"">Cancel</button>
                                     <img id="loading" style="display: none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                                 </div>
                             </div>
@@ -81,17 +81,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr>                                    
                                     <?php $total_all_owner = Buyer::where('file_id', $file->id)->where('is_deleted', 0)->count(); ?>
 
-                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>                               
                                     @foreach ($race as $rc)
                                     <?php $total_owner = Buyer::where('file_id', $file->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
                                     <?php $percentage_owner = 0; ?>
                                     <?php if ($total_owner > 0) { ?>
                                         <?php $percentage_owner = ($total_owner / $total_all_owner) * 100; ?>
                                     <?php } ?>
-                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $percentage_owner }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $percentage_owner }}</td>                                    
 
                                     <?php
                                     $ownerData[] = array(
@@ -169,7 +169,7 @@
                                 <tr>
                                     <?php $total_all_tenant = Buyer::where('file_id', $file->id)->where('is_deleted', 0)->count(); ?>
 
-                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>
+                                    <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>                               
                                     @foreach ($race as $rc)
                                     <?php $total_tenant = Tenant::where('file_id', $file->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
                                     <?php $percentage_tenant = 0; ?>
@@ -188,7 +188,7 @@
                                 </tr>
                             </tbody>
                         </table>
-
+                        
                         <div id="tenant_chart"></div>
                         <script>
                             Highcharts.chart('tenant_chart', {
@@ -233,9 +233,9 @@
                 @endif
                 @endif
 
-            </div>
+            </div>           
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 

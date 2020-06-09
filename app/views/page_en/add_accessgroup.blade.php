@@ -24,15 +24,15 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
+                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.name') }}</label>
-                                    <input id="description" class="form-control" placeholder="{{ trans('app.forms.name') }}" type="text">
+                                    <label class="form-label"><span style="color: red; font-style: italic;">*</span> Name</label>                            
+                                    <input id="description" class="form-control" placeholder="Name" type="text">
                                     <div id="description_error" style="display:none;"></div>
                                 </div>
                             </div>
@@ -42,10 +42,10 @@ foreach ($user_permission as $permission) {
                                 <table class="table margin-bottom-0" border="0">
                                     <thead>
                                         <tr>
-                                            <th style="width:70%;text-align: center !important;">{{ trans('app.forms.page') }}</th>
-                                            <th style="width:10%;text-align: center !important;">{{ trans('app.forms.access') }}</th>
-                                            <th style="width:10%;text-align: center !important;">{{ trans('app.forms.insert') }}</th>
-                                            <th style="width:10%;text-align: center !important;">{{ trans('app.forms.update') }}</th>
+                                            <th style="width:70%;text-align: center !important;">Page</th>
+                                            <th style="width:10%;text-align: center !important;">Access</th>
+                                            <th style="width:10%;text-align: center !important;">Insert</th>
+                                            <th style="width:10%;text-align: center !important;">Update</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -107,17 +107,17 @@ foreach ($user_permission as $permission) {
                                         @endforeach
                                     </tbody>
                                 </table>
-                            </div>
+                            </div>                            
                         </div>
                         <hr/>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> {{ trans('app.forms.admin_status') }}</label>
+                                    <label><span style="color: red;">*</span> Admin Status</label>
                                     <select id="is_admin" class="form-control">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
-                                        <option value="1">{{ trans("app.forms.yes") }}</option>
-                                        <option value="0">{{ trans("app.forms.no") }}</option>
+                                        <option value="">Please Select</option>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
                                     </select>
                                     <div id="is_admin_error" style="display:none;"></div>
                                 </div>
@@ -126,33 +126,33 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> {{ trans('app.forms.admin_status') }}</label>
+                                    <label><span style="color: red;">*</span> Status</label>
                                     <select id="is_active" class="form-control">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
-                                        <option value="1">{{ trans('app.forms.active') }}</option>
-                                        <option value="0">{{ trans('app.forms.inactive') }}</option>
+                                        <option value="">Please Select</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
                                     </select>
                                     <div id="is_active_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div>   
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.remarks') }}</label>
+                                    <label>Remarks</label>
                                     <textarea class="form-control" rows="3" id="remarks"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="form-actions">
                             <?php if ($insert_permission == 1) { ?>
-                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addAccessGroup()">{{ trans('app.forms.submit') }}</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addAccessGroup()">Submit</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AdminController@accessGroups") }}'">{{ trans('app.forms.cancel') }}</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AdminController@accessGroups") }}'">Cancel</button>
                             <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -174,19 +174,19 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (description.trim() == "") {
-            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Name"]) }}</span>');
+            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter name</span>');
             $("#description_error").css("display", "block");
             error = 1;
         }
 
         if (is_admin.trim() == "") {
-            $("#is_admin_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Admin status"]) }}</span>');
+            $("#is_admin_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Admin status</span>');
             $("#is_admin_error").css("display", "block");
             error = 1;
         }
 
         if (is_active.trim() == "") {
-            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Status"]) }}</span>');
+            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select status</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
@@ -210,11 +210,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.access_group.store') }}</span>", function () {
+                        bootbox.alert("<span style='color:green;'>Access Group added successfully!</span>", function () {
                             window.location = '{{URL::action("AdminController@accessGroups") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

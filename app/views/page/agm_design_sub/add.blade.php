@@ -32,7 +32,7 @@ foreach ($user_permission as $permission) {
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('agm_design_sub.form.file') }}</label>
                                     <select id="form_type" class="form-control" name="file_id">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($file as $f)
                                         <option value="{{$f->id}}">{{$f->file_no}}</option>
                                         @endforeach
@@ -47,7 +47,7 @@ foreach ($user_permission as $permission) {
                                 <div class="form-group">
                                     <label><span style="color: red;">*</span> {{ trans('agm_design_sub.form.designation') }}</label>
                                     <select id="design_id" class="form-control" name="design_id">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($design as $f)
                                         <option value="{{$f->id}}">{{$f->description}}</option>
                                         @endforeach
@@ -106,15 +106,15 @@ foreach ($user_permission as $permission) {
                                 <div id="remark_error" style="display:none;"></div>
                             </div>
                         </div>
-
+                        
                         <div class="form-actions">
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AgmController@agmDesignSub") }}'">{{ trans('app.forms.cancel') }}</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AgmController@agmDesignSub") }}'">Cancel</button>
                             <?php if ($insert_permission == 1) { ?>
                                 <input type="submit" value="{{ trans('general.label_save') }}" class="btn btn-primary">
                             <?php } ?>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -126,7 +126,7 @@ foreach ($user_permission as $permission) {
     $("#formSubmit").submit(function(e){
         e.preventDefault();
         $("#loading").css("display", "inline-block");
-
+        
         let error = 0;
 
         if (error == 0) {
@@ -139,11 +139,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.agm_design.submit') }}</span>", function () {
+                        bootbox.alert("<span style='color:green;'>Agm Design Submistted successfully!</span>", function () {
                             window.location = '{{URL::action("AgmController@agmDesignSub") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

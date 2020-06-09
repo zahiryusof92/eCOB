@@ -27,39 +27,39 @@ foreach ($user_permission as $permission) {
                             @if (Auth::user()->getAdmin())
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.cob') }}</label>
+                                    <label>COB</label>
                                     <select id="company" class="form-control select2">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($cob as $companies)
                                         <option value="{{ $companies->short_name }}">{{ $companies->name }} ({{ $companies->short_name }})</option>
-                                        @endforeach
+                                        @endforeach                                    
                                     </select>
                                 </div>
                             </div>
                             @endif
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.file_no') }}</label>
+                                    <label>File No</label>
                                     <select id="file_no" class="form-control select2">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @foreach ($file_no as $files_no)
                                         <option value="{{ $files_no->file_no }}">{{ $files_no->file_no }}</option>
-                                        @endforeach
+                                        @endforeach                                    
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>{{ trans('app.forms.year') }}</label>
+                                    <label>Year</label>
                                     <select id="year" class="form-control select2">
-                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="">Please Select</option>
                                         @for ($i = 2012; $i <= date('Y'); $i++)
                                         <option value="{{ $i }}">{{ $i}}</option>
                                         @endfor
                                     </select>
                                 </div>
-                            </div>
-                        </div>
+                            </div>                            
+                        </div>  
                     </form>
                 </div>
             </div>
@@ -67,33 +67,33 @@ foreach ($user_permission as $permission) {
             <hr/>
 
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12">  
                     <div class="table-responsive">
                         <?php if ($insert_permission == 1) { ?>
                             <button type="button" class="btn btn-primary margin-bottom-25" onclick="addAJKDetails()">
-                                {{ trans('app.forms.add') }}
-                                                </button>
+                                Add
+                            </button>
                         <?php } ?>
                         <table class="table table-hover nowrap" id="ajk_details_list" width="100%">
                             <thead>
                                 <tr>
-                                    <th style="width:20%;">{{ trans('app.forms.file_no') }}</th>
-                                    <th style="width:20%;">{{ trans('app.forms.designation') }}</th>
-                                    <th style="width:20%;">{{ trans('app.forms.name') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.phone_number') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.cob') }}</th>
-                                    <th style="width:10%;">{{ trans('app.forms.year') }}</th>
+                                    <th style="width:20%;">File No</th>
+                                    <th style="width:20%;">Designation</th>
+                                    <th style="width:20%;">Name</th>
+                                    <th style="width:10%;">Phone No</th>
+                                    <th style="width:10%;">COB</th>                                    
+                                    <th style="width:10%;">Year</th>
                                     <?php if ($update_permission == 1) { ?>
-                                        <th style="width:10%;">{{ trans('app.forms.action') }}</th>
+                                        <th style="width:10%;">Action</th>
                                     <?php } ?>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody>                                                    
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     </section>
     <!-- End -->
@@ -106,23 +106,23 @@ foreach ($user_permission as $permission) {
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">{{ trans('app.buttons.add_ajk_details') }}</h4>
+                <h4 class="modal-title" id="myModalLabel">Add AJK Details</h4>
             </div>
             <form id="add_ajk">
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="col-md-12">
-                            <label class="form-control-label" style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
+                            <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields.</label>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.file_no') }}</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> File No</label>
                         </div>
                         <div class="col-md-8">
                             <select id="file_id" class="form-control">
-                                <option value="">{{ trans('app.forms.please_select') }}</option>
-                                @foreach ($files as $file)
+                                <option value="">Please select</option>
+                                @foreach ($files as $file) 
                                 <option value="{{$file->id}}">{{$file->file_no}}</option>
                                 @endforeach
                             </select>
@@ -131,12 +131,12 @@ foreach ($user_permission as $permission) {
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.designation') }}</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Designation</label>
                         </div>
                         <div class="col-md-8">
                             <select id="ajk_designation" class="form-control">
-                                <option value="">{{ trans('app.forms.please_select') }}</option>
-                                @foreach ($designation as $designations)
+                                <option value="">Please select</option>
+                                @foreach ($designation as $designations) 
                                 <option value="{{$designations->id}}">{{$designations->description}}</option>
                                 @endforeach
                             </select>
@@ -145,50 +145,50 @@ foreach ($user_permission as $permission) {
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.name') }}</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Name</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="ajk_name"/>
+                            <input type="text" class="form-control" placeholder="Name" id="ajk_name"/>
                             <div id="ajk_name_error" style="display:none;"></div>
-                        </div>
-                    </div>
+                        </div>                    
+                    </div> 
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.phone_number') }}</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Phone Number</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="ajk_phone_no"/>
+                            <input type="text" class="form-control" placeholder="Phone Number" id="ajk_phone_no"/>
                             <div id="ajk_phone_no_error" style="display:none;"></div>
                             <div id="ajk_phone_no_invalid_error" style="display:none;"></div>
-                        </div>
-                    </div>
+                        </div>                    
+                    </div> 
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.year') }}</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Year</label>
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.year') }}" id="ajk_year"/>
+                            <input type="text" class="form-control" placeholder="Year" id="ajk_year"/>
                             <div id="ajk_year_error" style="display:none;"></div>
                             <div id="ajk_year_invalid_error" style="display:none;"></div>
-                        </div>
+                        </div>                    
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label">{{ trans('app.forms.remarks') }}</label>
+                            <label class="form-control-label">Remarks</label>
                         </div>
                         <div class="col-md-8">
-                            <textarea class="form-control" placeholder="{{ trans('app.forms.remarks') }}" id="ajk_remarks" rows="5"></textarea>
-                        </div>
-                    </div>
-                </div>
+                            <textarea class="form-control" placeholder="Remarks" id="ajk_remarks" rows="5"></textarea>
+                        </div>                    
+                    </div> 
+                </div>                
                 <div class="modal-footer">
                     <button type="button" class="btn" data-dismiss="modal">
-                        {{ trans('app.forms.close') }}
+                        Close
                     </button>
                     <?php if ($insert_permission == 1) { ?>
                         <button id="submit_button" onclick="addAJKDetail()" type="button" class="btn btn-primary">
-                            {{ trans('app.forms.submit') }}
-                                </button>
+                            Submit
+                        </button>
                     <?php } ?>
                 </div>
             </form>
@@ -203,23 +203,23 @@ foreach ($user_permission as $permission) {
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">{{ trans('app.buttons.edit_ajk_details') }}</h4>
+                <h4 class="modal-title" id="myModalLabel">Edit AJK Details</h4>
             </div>
             <form id="edit_ajk">
                 <div class="modal-body">
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label" style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
+                            <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields.</label>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.file_no') }}</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> File No</label>
                         </div>
                         <div class="col-md-8">
                             <select id="file_id_edit" class="form-control">
-                                <option value="">{{ trans('app.forms.please_select') }}</option>
-                                @foreach ($files as $file)
+                                <option value="">Please select</option>
+                                @foreach ($files as $file) 
                                 <option value="{{$file->id}}">{{$file->file_no}}</option>
                                 @endforeach
                             </select>
@@ -228,12 +228,12 @@ foreach ($user_permission as $permission) {
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.designation') }}</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Designation</label>
                         </div>
                         <div class="col-md-8">
                             <select id="ajk_designation_edit" class="form-control">
-                                <option value="">{{ trans('app.forms.please_select') }}</option>
-                                @foreach ($designation as $designations)
+                                <option value="">Please select</option>
+                                @foreach ($designation as $designations) 
                                 <option value="{{$designations->id}}">{{$designations->description}}</option>
                                 @endforeach
                             </select>
@@ -242,46 +242,46 @@ foreach ($user_permission as $permission) {
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.name') }}</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Name</label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="ajk_name_edit"/>
-                        </div>
-                    </div>
+                            <input type="text" class="form-control" placeholder="Name" id="ajk_name_edit"/>
+                        </div>                    
+                    </div> 
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.phone_number') }}</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Phone Number</label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.phone_number') }}" id="ajk_phone_no_edit"/>
+                            <input type="text" class="form-control" placeholder="Phone Number" id="ajk_phone_no_edit"/>
+                        </div>                    
+                    </div> 
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Year</label>
                         </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" placeholder="Year" id="ajk_year_edit"/>
+                        </div>                    
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.year') }}</label>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" placeholder="{{ trans('app.forms.year') }}" id="ajk_year_edit"/>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-4">
-                            <label class="form-control-label">{{ trans('app.forms.remarks') }}</label>
+                            <label class="form-control-label">Remarks</label>
                         </div>
                         <div class="col-md-8">
-                            <textarea class="form-control" placeholder="{{ trans('app.forms.remarks') }}" id="ajk_remarks" rows="5"></textarea>
-                        </div>
+                            <textarea class="form-control" placeholder="Remarks" id="ajk_remarks" rows="5"></textarea>
+                        </div>                    
                     </div>
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="ajk_id_edit"/>
                     <button type="button" class="btn" data-dismiss="modal">
-                        {{ trans('app.forms.close') }}
+                        Close
                     </button>
                     <?php if ($update_permission == 1) { ?>
                         <button id="submit_button" onclick="editAJK()" type="button" class="btn btn-primary">
-                            {{ trans('app.forms.submit') }}
-                                </button>
+                            Submit
+                        </button>
                     <?php } ?>
                 </div>
             </form>
@@ -359,46 +359,46 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (file_id.trim() == "") {
-            $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"File No"]) }}</span>');
+            $("#file_id_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select File No</span>');
             $("#file_id_error").css("display", "block");
             error = 1;
         }
 
         if (ajk_designation.trim() == "") {
-            $("#ajk_designation_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Designation"]) }}</span>');
+            $("#ajk_designation_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Designation</span>');
             $("#ajk_designation_error").css("display", "block");
             error = 1;
         }
 
         if (ajk_name.trim() == "") {
-            $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Name"]) }}</span>');
+            $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Name</span>');
             $("#ajk_name_error").css("display", "block");
             error = 1;
         }
 
         if (ajk_phone_no.trim() == "") {
-            $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Phone Number"]) }}</span>');
+            $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Phone Number</span>');
             $("#ajk_phone_no_error").css("display", "block");
             $("#ajk_phone_no_invalid_error").css("display", "none");
             error = 1;
         }
 
         if (isNaN(ajk_phone_no)) {
-            $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required_valid", ["attribute"=>"Phone Number"]) }}</span>');
+            $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Phone Number</span>');
             $("#ajk_phone_no_invalid_error").css("display", "block");
             $("#ajk_phone_no_error").css("display", "none");
             error = 1;
         }
 
         if (ajk_year.trim() == "") {
-            $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Year"]) }}</span>');
+            $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Year</span>');
             $("#ajk_year_error").css("display", "block");
             $("#ajk_year_invalid_error").css("display", "none");
             error = 1;
         }
 
         if (isNaN(ajk_year)) {
-            $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required_valid", ["attribute"=>"Year"]) }}</span>');
+            $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Year</span>');
             $("#ajk_year_invalid_error").css("display", "block");
             $("#ajk_year_error").css("display", "none");
             error = 1;
@@ -421,7 +421,7 @@ foreach ($user_permission as $permission) {
                     $('#add_ajk_details').modal('hide');
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
                         }, {
                             type: 'success',
                             placement: {
@@ -430,7 +430,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });
@@ -449,40 +449,40 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (ajk_designation.trim() == "") {
-            $("#ajk_designation_edit_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Designation"]) }}</span>');
+            $("#ajk_designation_edit_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Designation</span>');
             $("#ajk_designation_edit_error").css("display", "block");
             error = 1;
         }
 
         if (ajk_name.trim() == "") {
-            $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Name"]) }}</span>');
+            $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Name</span>');
             $("#ajk_name_error").css("display", "block");
             error = 1;
         }
 
         if (ajk_phone_no.trim() == "") {
-            $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Phone Number"]) }}</span>');
+            $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Phone Number</span>');
             $("#ajk_phone_no_error").css("display", "block");
             $("#ajk_phone_no_invalid_error").css("display", "none");
             error = 1;
         }
 
         if (isNaN(ajk_phone_no)) {
-            $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required_valid", ["attribute"=>"Phone Number"]) }}</span>');
+            $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Phone Number</span>');
             $("#ajk_phone_no_invalid_error").css("display", "block");
             $("#ajk_phone_no_error").css("display", "none");
             error = 1;
         }
 
         if (ajk_year.trim() == "") {
-            $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Year"]) }}</span>');
+            $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Year</span>');
             $("#ajk_year_error").css("display", "block");
             $("#ajk_year_invalid_error").css("display", "none");
             error = 1;
         }
 
         if (isNaN(ajk_year)) {
-            $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required_valid", ["attribute"=>"Year"]) }}</span>');
+            $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter valid Year</span>');
             $("#ajk_year_invalid_error").css("display", "block");
             $("#ajk_year_error").css("display", "none");
             error = 1;
@@ -505,7 +505,7 @@ foreach ($user_permission as $permission) {
                     $('#edit_ajk_details').modal('hide');
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
                         }, {
                             type: 'success',
                             placement: {
@@ -514,7 +514,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });
@@ -523,8 +523,8 @@ foreach ($user_permission as $permission) {
 
     function deleteAJKDetails(id) {
         swal({
-            title: "{{ trans('app.confirmation.are_you_sure') }}",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            title: "Are you sure?",
+            text: "Your will not be able to recover this file!",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -541,7 +541,7 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.deleted_successfully") }}</p>'
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Deleted Successfully</p>'
                         }, {
                             type: 'success',
                             placement: {
@@ -550,7 +550,7 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

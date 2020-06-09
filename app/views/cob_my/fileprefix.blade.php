@@ -32,7 +32,7 @@ foreach ($user_permission as $permission) {
                         <thead>
                             <tr>
                                 <th style="width:70%;">Penerangan</th>
-                                <th style="width:30%;">{{ trans('app.forms.status') }}</th>
+                                <th style="width:30%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
                                 <th style="width:10%;">Aksi</th>
                                 <?php } ?>
@@ -42,9 +42,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>            
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 
@@ -64,8 +64,8 @@ foreach ($user_permission as $permission) {
                 }
             ]
         });
-    });
-
+    }); 
+    
     function inactiveFilePrefix(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@inactiveFilePrefix') }}",
@@ -103,13 +103,13 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-
+    
     function deleteFilePrefix (id) {
         swal({
             title: "Anda pasti?",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,
+            showCancelButton: true,            
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",

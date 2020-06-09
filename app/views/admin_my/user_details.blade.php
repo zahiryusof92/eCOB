@@ -35,7 +35,7 @@ foreach ($user_permission as $permission) {
                 @endif
 
                 @if ($user->status == 0)
-                <dt>{{ trans('app.forms.status') }}</dt>
+                <dt>Status</dt>
                 <dd>
                     <div class="row">
                         <div class="col-md-4">
@@ -69,10 +69,10 @@ foreach ($user_permission as $permission) {
                         <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@user')}}'">Batal</button>
                     </dd>
                 </div>
-                @else
+                @else      
                 <?php $admin = User::find($user->approved_by); ?>
                 @if ($user->status == 1)
-                <dt>{{ trans('app.forms.status') }}</dt>
+                <dt>Status</dt>
                 <dd>Diterima</dd>
                 <dt>Diterima Oleh</dt>
                 <dd>{{($admin->full_name != "" ? $admin->full_name : "-")}}</dd>
@@ -81,7 +81,7 @@ foreach ($user_permission as $permission) {
                 <dt>Catatan</dt>
                 <dd>{{($user->remarks != "" ? $user->remarks : "-")}}</dd>
                 @else
-                <dt>{{ trans('app.forms.status') }}</dt>
+                <dt>Status</dt>
                 <dd>Ditolak</dd>
                 <dt>Ditolak Oleh</dt>
                 <dd>{{($admin->full_name != "" ? $admin->full_name : "-")}}</dd>
@@ -97,7 +97,7 @@ foreach ($user_permission as $permission) {
                     </dd>
                 </div>
                 @endif
-            </dl>
+            </dl>            
         </div>
     </section>
     <!-- End -->
@@ -109,12 +109,12 @@ foreach ($user_permission as $permission) {
     function approvedUser() {
         $("#loading").css("display", "inline-block");
         $("#status_error").css("display", "none");
-
+        
         var status = $("#status").val(),
                 remarks = $("#remarks").val();
-
+        
         var error = 0;
-
+        
         if (status.trim() === "") {
             $("#status_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila pilih Status</span>');
             $("#status_error").css("display", "block");

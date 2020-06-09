@@ -23,52 +23,52 @@ foreach ($user_permission as $permission) {
                     <form id="form_race" class="form-horizontal" name="add_fileprefix">
                         <div class="form-group row">
                             <div class="col-md-2">
-                                <label class="form-control-label" style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
+                                <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields</label>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.race_name') }}</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Race Name</label>
                             </div>
                             <div class="col-md-4">
-                                <input id="name" class="form-control" placeholder="{{ trans('app.forms.race_name') }}" type="text">
+                                <input id="name" class="form-control" placeholder="Race" type="text">
                                 <div id="name_error" style="display:none;"></div>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.sort_no') }}</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Sort No</label>
                             </div>
                             <div class="col-md-4">
-                                <input id="sort_no" class="form-control" placeholder="{{ trans('app.forms.sort_no') }}" type="text">
+                                <input id="sort_no" class="form-control" placeholder="Sort No" type="text">
                                 <div id="sort_no_error" style="display:none;"></div>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.admin_status') }}</label>
-                            </div>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Status</label>
+                            </div>    
                             <div class="col-md-4">
                                 <select id="is_active" class="form-control">
-                                    <option value="">{{ trans('app.forms.please_select') }}</option>
-                                    <option value="1">{{ trans('app.forms.active') }}</option>
-                                    <option value="0">{{ trans('app.forms.inactive') }}</option>
+                                    <option value="">Please Select</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Not Active</option>
                                 </select>
                                 <div id="is_active_error" style="display:none;"></div>
-                            </div>
-                        </div>
+                            </div>                            
+                        </div>          
 
                         <div class="form-actions">
                             <?php if ($insert_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="submitRace()">{{ trans('app.forms.save') }}</button>
+                            <button type="button" class="btn btn-primary" id="submit_button" onclick="submitRace()">Save</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("SettingController@race") }}'">{{ trans('app.forms.cancel') }}</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("SettingController@race") }}'">Cancel</button>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -85,25 +85,25 @@ foreach ($user_permission as $permission) {
             is_active = $("#is_active").val();
 
         var error = 0;
-
+        
         if (name.trim() == "") {
-            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Race name"]) }}</span>');
+            $("#name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Race Name</span>');
             $("#name_error").css("display", "block");
             error = 1;
         }
 
         if (sort_no.trim() == "") {
-            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Sort No"]) }}</span>');
+            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Sort No</span>');
             $("#sort_no_error").css("display", "block");
             error = 1;
         }
-
+        
         if (is_active.trim() == "") {
-            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Status"]) }}</span>');
+            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Status</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
-
+        
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('SettingController@submitRace') }}",
@@ -119,11 +119,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.races.store') }}</span>", function () {
+                        bootbox.alert("<span style='color:green;'>Race added successfully!</span>", function () {
                             window.location = '{{URL::action("SettingController@race") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

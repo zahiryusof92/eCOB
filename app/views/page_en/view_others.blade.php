@@ -20,46 +20,46 @@ foreach ($user_permission as $permission) {
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <h6>{{ trans('app.forms.file_no') }}: {{$file->file_no}}</h6>
+                    <h6>File No: {{$file->file_no}}</h6>
                     <div id="update_files_lists">
                         <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewHouse', $file->id)}}">{{ trans('app.forms.housing_scheme') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewHouse', $file->id)}}">Housing Scheme</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewStrata', $file->id)}}">{{ trans('app.forms.developed_area') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewStrata', $file->id)}}">Developed Area (STRATA)</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewManagement', $file->id)}}">{{ trans('app.forms.management') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewManagement', $file->id)}}">Management</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewMonitoring', $file->id)}}">{{ trans('app.forms.monitoring') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewMonitoring', $file->id)}}">Monitoring</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active">{{ trans('app.forms.others') }}</a>
+                                <a class="nav-link active">Others</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewScoring', $file->id)}}">{{ trans('app.forms.scoring_component_value') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewScoring', $file->id)}}">Scoring Component Value</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewBuyer', $file->id)}}">{{ trans('app.forms.buyer_list') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewBuyer', $file->id)}}">Buyer List</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@fileApproval', $file->id)}}">{{ trans('app.forms.approval') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@fileApproval', $file->id)}}">Approval</a>
                             </li>
                         </ul>
-                        <div class="tab-content padding-vertical-20">
+                        <div class="tab-content padding-vertical-20">                            
                             <div class="tab-pane active" id="others_tab" role="tabpanel">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <h4>{{ trans('app.forms.detail') }}</h4>
+                                        <h4>Detail</h4>
                                         <!-- Form -->
                                         <form id="others">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.name') }}</label>
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.name') }}" id="other_details_name" value="{{$other_details->name}}" readonly="">
+                                                        <label>Name</label>
+                                                        <input type="text" class="form-control" placeholder="Name" id="other_details_name" value="{{$other_details->name}}" readonly="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -68,7 +68,7 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-8">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.photo') }}</label>
+                                                        <label>Photo</label>
                                                         <br />
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                                                         <button type="button" id="clear_image" data-toggle="tooltip" data-placement="top" title="Clear" class="btn btn-xs btn-danger" onclick="clearImage()" style="display: none;"><i class="fa fa-times"></i></button>
@@ -84,7 +84,7 @@ foreach ($user_permission as $permission) {
                                                     <div class="form-group">
                                                         <div id="others_image_output">
                                                             <a href="{{asset($other_details->image_url)}}" target="_blank"><img src="{{asset($other_details->image_url)}}" style="width:50%; cursor: pointer;"/></a>
-
+                                                            
                                                         </div>
                                                         <div id="validation-errors"></div>
                                                     </div>
@@ -95,8 +95,8 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-8">
                                                     <div class="form-group">
                                                         <div id="others_image_output">
-                                                            <span>{{ trans('app.forms.no_photo') }}</span>
-                                                        </div>
+                                                            <span>No photo</span>
+                                                        </div>                                                        
                                                         <div id="validation-errors"></div>
                                                     </div>
                                                 </div>
@@ -108,8 +108,8 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.latitude') }} </label>
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.latitude') }} " id="latitude" readonly="">
+                                                        <label>Latitude </label>
+                                                        <input type="text" class="form-control" placeholder="Latitude " id="latitude" readonly="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -117,8 +117,8 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.latitude') }} </label>
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.latitude') }} " id="latitude" value="{{$other_details->latitude}}"  readonly="">
+                                                        <label>Latitude </label>
+                                                        <input type="text" class="form-control" placeholder="Latitude " id="latitude" value="{{$other_details->latitude}}"  readonly="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -127,8 +127,8 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.longitude') }} </label>
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.longitude') }} " id="longitude" readonly="">
+                                                        <label>Longitude </label>
+                                                        <input type="text" class="form-control" placeholder="Longitude " id="longitude" readonly="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -136,8 +136,8 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.longitude') }} </label>
-                                                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.longitude') }} " id="longitude" value="{{$other_details->longitude}}" readonly="">
+                                                        <label>Longitude </label>
+                                                        <input type="text" class="form-control" placeholder="Longitude " id="longitude" value="{{$other_details->longitude}}" readonly="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -147,8 +147,8 @@ foreach ($user_permission as $permission) {
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <a href="https://www.google.com.my/maps/preview?q={{$other_details->latitude}},{{$other_details->longitude}}" target="_blank">
-                                                            <button type="button" class="btn btn-success">
-                                                                <i class="fa fa-map-marker"> {{ trans('app.forms.view_map') }}</i>
+                                                            <button type="button" class="btn btn-success">                                                                
+                                                                <i class="fa fa-map-marker"> View Map</i>
                                                             </button>
                                                         </a>
                                                     </div>
@@ -158,8 +158,8 @@ foreach ($user_permission as $permission) {
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>{{ trans('app.forms.description') }}</label>
-                                                        <textarea class="form-control" rows="3" id="other_details_description" placeholder="{{ trans('app.forms.description') }}" readonly="">{{$other_details->description}}</textarea>
+                                                        <label>Description</label>
+                                                        <textarea class="form-control" rows="3" id="other_details_description" placeholder="Description" readonly="">{{$other_details->description}}</textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,7 +169,7 @@ foreach ($user_permission as $permission) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -187,7 +187,7 @@ foreach ($user_permission as $permission) {
                 var imagefile = file.type;
                 var match = ["image/jpeg", "image/png", "image/jpg", "image/gif"];
                 if (!((imagefile == match[0]) || (imagefile == match[1]) || (imagefile == match[2]) || (imagefile == match[3]))) {
-                    $("#validation-errors").html("<span id='error'>{{ trans('app.forms.please_select_valid_image') }}</span><br/>" + "<span id='error_message'>{{ trans('app.forms.only_image_allowed') }}</span>");
+                    $("#validation-errors").html("<span id='error'>Please Select a valid Image File</span><br/>" + "<span id='error_message'>Only .jpeg, .jpg, .png and .gif images type allowed</span>");
                     $("#validation-errors").css("color", "red");
                     return false;
                 }
@@ -205,8 +205,8 @@ foreach ($user_permission as $permission) {
             $('#others_image_output').css("display", "block");
             $("#others_image_output").html("<img id='previewing' style='width: 50%;'/>");
             $('#previewing').attr('src', e.target.result);
-        };
-
+        };        
+        
         //upload
         var options = {
             beforeSubmit: showRequest,
@@ -237,26 +237,26 @@ foreach ($user_permission as $permission) {
             $("#validation-errors").show();
             $("#image").css("color", "red");
         } else {
-            $("#others_image_url").val(response.file);
+            $("#others_image_url").val(response.file);           
         }
     }
-
+    
     function updateOtherDetails(){
         $("#loading").css("display", "inline-block");
-
+        
         var other_details_name = $("#other_details_name").val(),
                 others_image_url = $("#others_image_url").val(),
                 latitude = $("#latitude").val(),
                 longitude = $("#longitude").val(),
                 other_details_description = $("#other_details_description").val();
 
-        var error = 0;
+        var error = 0;        
 
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@submitUpdateOtherDetails') }}",
                 type: "POST",
-                data: {
+                data: { 
                     other_details_name: other_details_name,
                     others_image_url: others_image_url,
                     latitude: latitude,
@@ -267,24 +267,24 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     $("#loading").css("display", "none");
                     $("#submit_button").removeAttr("disabled");
-                    if (data.trim() == "true") {
+                    if (data.trim() == "true") {                        
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>',
+                            message: '<p style="text-align: center; margin-bottom: 0px;">Successfully saved</p>',
                         },{
                             type: 'success',
                             placement: {
                                 align: "center"
                             }
-                        });
-                        window.location = "{{URL::action('AdminController@scoring', $file->id)}}";
+                        }); 
+                        window.location = "{{URL::action('AdminController@scoring', $file->id)}}";  
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });
         }
     }
-
+    
     function clearImage() {
         $("#image").val("");
         $("#others_image_url").val("");
@@ -293,13 +293,13 @@ foreach ($user_permission as $permission) {
         $("#validation-errors").hide();
         $("#others_image_output").css('display', 'none');
     }
-
+    
     function deleteImageOthers(id){
         swal({
-            title: "{{ trans('app.confirmation.are_you_sure') }}",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            title: "Are you sure?",
+            text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,
+            showCancelButton: true,            
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -315,21 +315,21 @@ foreach ($user_permission as $permission) {
                 success: function(data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "{{ trans('app.successes.deleted_title') }}",
-                            text: "{{ trans('app.successes.deleted_text_file') }}",
+                            title: "Deleted!",
+                            text: "File has been deleted",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });
         });
     }
-
+    
     $(function () {
         $("[data-toggle=tooltip]").tooltip();
     });
