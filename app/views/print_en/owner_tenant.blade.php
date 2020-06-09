@@ -14,7 +14,7 @@ $company = Company::find(Auth::user()->company_id);
                     <td class="text-center">
                         <h4 class="margin-bottom-0">
                             <img src="{{ asset($company->image_url) }}" height="100px;" alt="">
-                        </h4> 
+                        </h4>
                     </td>
                     <td>
                         <h5 class="margin-bottom-10">
@@ -23,7 +23,7 @@ $company = Company::find(Auth::user()->company_id);
                         <h6 class="margin-bottom-0">
                             {{ $title }}
                         </h6>
-                    </td>                            
+                    </td>
                 </tr>
             </table>
 
@@ -45,17 +45,17 @@ $company = Company::find(Auth::user()->company_id);
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>                                    
+                    <tr>
                         <?php $total_all_owner = Buyer::where('file_id', $file->id)->where('is_deleted', 0)->count(); ?>
 
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>                               
+                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>
                         @foreach ($race as $rc)
                         <?php $total_owner = Buyer::where('file_id', $file->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
                         <?php $percentage_owner = 0; ?>
                         <?php if ($total_owner > 0) { ?>
                             <?php $percentage_owner = ($total_owner / $total_all_owner) * 100; ?>
                         <?php } ?>
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $percentage_owner }}</td>                                    
+                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $percentage_owner }}</td>
 
                         <?php
                         $ownerData[] = array(
@@ -128,7 +128,7 @@ $company = Company::find(Auth::user()->company_id);
                     <tr>
                         <?php $total_all_tenant = Buyer::where('file_id', $file->id)->where('is_deleted', 0)->count(); ?>
 
-                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>                               
+                        <td style="text-align: center !important; vertical-align:middle !important;">{{ $file->file_no }}</td>
                         @foreach ($race as $rc)
                         <?php $total_tenant = Tenant::where('file_id', $file->id)->where('race_id', $rc->id)->where('is_deleted', 0)->count(); ?>
                         <?php $percentage_tenant = 0; ?>
@@ -195,10 +195,10 @@ $company = Company::find(Auth::user()->company_id);
             <table width="100%">
                 <tr>
                     <td>
-                        <p><b>CONFIDENTIAL</b></p>
+                        <p><b>{{ trans('app.forms.confidential') }}</b></p>
                     </td>
                     <td class="pull-right">
-                        <p>Print On: {{date('d/m/Y h:i:s A', strtotime("now"))}}</p>
+                        <p>{{ trans('app.forms.print_on', ['print'=>date('d/m/Y h:i:s A', strtotime("now"))]) }}</p>
                     </td>
                 </tr>
             </table>

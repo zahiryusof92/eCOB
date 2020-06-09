@@ -23,48 +23,48 @@ foreach ($user_permission as $permission) {
                     <form id="add_fileprefix" class="form-horizontal" name="add_fileprefix">
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                <label class="form-control-label" style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                             </div>
-                        </div>   
+                        </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Description</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.description') }}</label>
                             </div>
                             <div class="col-md-4">
-                                <input id="description" class="form-control" placeholder="Description" type="text" value="{{$prefix->description}}">
+                                <input id="description" class="form-control" placeholder="{{ trans('app.forms.description') }}" type="text" value="{{$prefix->description}}">
                                 <div id="description_error" style="display:none;"></div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Sort No</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.sort_no') }}</label>
                             </div>
                             <div class="col-md-2">
-                                <input id="sort_no" class="form-control" placeholder="Sort No" type="number" value="{{$prefix->sort_no}}">
+                                <input id="sort_no" class="form-control" placeholder="{{ trans('app.forms.sort_no') }}" type="number" value="{{$prefix->sort_no}}">
                                 <div id="sort_no_error" style="display:none;"></div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Status</label>
-                            </div>    
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.admin_status') }}</label>
+                            </div>
                             <div class="col-md-4">
                                 <select id="is_active" class="form-control">
-                                    <option value="">Please Select</option>
-                                    <option value="1" {{($prefix->is_active == 1 ? " selected" : "")}}>Active</option>
-                                    <option value="0" {{($prefix->is_active == 0 ? " selected" : "")}}>Inactive</option>
+                                    <option value="">{{ trans('app.forms.please_select') }}</option>
+                                    <option value="1" {{($prefix->is_active == 1 ? " selected" : "")}}>{{ trans('app.forms.active') }}</option>
+                                    <option value="0" {{($prefix->is_active == 0 ? " selected" : "")}}>{{ trans('app.forms.inactive') }}</option>
                                 </select>
                                 <div id="is_active_error" style="display:none;"></div>
-                            </div>                            
-                        </div>                                               
+                            </div>
+                        </div>
                         <div class="form-actions">
                             <?php if ($update_permission == 1) { ?>
-                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addFilePrefix()">Submit</button>
+                                <button type="button" class="btn btn-primary" id="submit_button" onclick="addFilePrefix()">{{ trans('app.forms.submit') }}</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@filePrefix')}}'">Cancel</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@filePrefix')}}'">{{ trans('app.forms.cancel') }}</button>
                         </div>
                     </form>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -87,19 +87,19 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (description.trim() == "") {
-            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Description</span>');
+            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Description"]) }}</span>');
             $("#description_error").css("display", "block");
             error = 1;
         }
 
         if (sort_no.trim() <= 0) {
-            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Sort No</span>');
+            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Sort No"]) }}</span>');
             $("#sort_no_error").css("display", "block");
             error = 1;
         }
 
         if (is_active.trim() == "") {
-            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Status</span>');
+            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Status"]) }}</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
@@ -119,11 +119,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>COB File Prefix updated successfully!</span>", function () {
+                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.cob_file_prefix.update') }}</span>", function () {
                             window.location = '{{URL::action("AdminController@filePrefix") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

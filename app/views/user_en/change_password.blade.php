@@ -12,18 +12,18 @@
             <div class="row">
                 <div class="col-lg-12">
                     <!-- Horizontal Form -->
-                    <form id="change_password">                        
+                    <form id="change_password">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                    <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Username</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.username') }}</label>
                                     <input type="text" class="form-control" value="{{$user->username}}" disabled=""/>
                                 </div>
                             </div>
@@ -31,35 +31,35 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Old Password</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.old_password') }}</label>
                                     <input type="password" id="old_password" class="form-control"/>
-                                    <span id="error_old_password" style="color:red;font-style:italic;font-size:13px;display:none">Please enter Old Password</span>
-                                    <span id="error_old_password_mismatch" style="color:red;font-style:italic;font-size:13px;display:none">Wrong Old Password</span>                            
+                                    <span id="error_old_password" style="color:red;font-style:italic;font-size:13px;display:none">{{ trans('app.forms.please_enter_old_password') }}</span>
+                                    <span id="error_old_password_mismatch" style="color:red;font-style:italic;font-size:13px;display:none">{{ trans('app.forms.wrong_old_password') }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> New Password</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.new_password') }}</label>
                                     <input type="password" id="new_password" class="form-control"/>
-                                    <span id="error_new_password" style="color:red;font-style:italic;font-size:13px;display:none">Please enter New Password</span>                          
+                                    <span id="error_new_password" style="color:red;font-style:italic;font-size:13px;display:none">{{ trans('app.forms.please_enter_new_password') }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Re-type Password</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.retype_password') }}</label>
                                     <input type="password" id="retype_password" class="form-control"/>
-                                    <span id="error_retype_password" style="color:red;font-style:italic;font-size:13px;display:none">Please enter Re-type Password</span>
-                                    <span id="error_password_mismatch" style="color:red;font-style:italic;font-size:13px;display:none">New Password & Re-type Password does not match</span>                  
+                                    <span id="error_retype_password" style="color:red;font-style:italic;font-size:13px;display:none">{{ trans('app.forms.please_enter_retype_password') }}</span>
+                                    <span id="error_password_mismatch" style="color:red;font-style:italic;font-size:13px;display:none">{{ trans('app.forms.retype_does_not_match') }}</span>
                                 </div>
                             </div>
-                        </div>  
+                        </div>
                         <div class="form-actions">
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="submitChangePassword()">Submit</button>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@home')}}'">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="submit_button" onclick="submitChangePassword()">{{ trans('app.forms.submit') }}</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@home')}}'">{{ trans('app.forms.cancel') }}</button>
                         </div>
                     </form>
                 </div>
@@ -145,11 +145,11 @@
                                 success: function (data) {
                                     $("#loading").css("display", "none");
                                     if (data.trim() == "true") {
-                                        bootbox.alert("<span style='color:green;'>Password changed successfully!</span>", function () {
+                                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.password_changed_successfully') }}</span>", function () {
                                             window.location = '{{ URL::action("AdminController@home") }}';
                                         });
                                     } else {
-                                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                                     }
                                 }
                             });

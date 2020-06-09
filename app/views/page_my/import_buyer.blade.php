@@ -45,7 +45,7 @@ foreach ($user_permission as $permission) {
                                 <a class="nav-link active" href="{{URL::action('AdminController@buyer', $files->id)}}">Senarai Pembeli</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@document', $files->id)}}">Document</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $files->id)}}">{{ trans('app.forms.document') }}</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
@@ -87,7 +87,7 @@ foreach ($user_permission as $permission) {
                                                 Fail CSV kosong
                                             </div>
                                         </div>
-                                        @else                                        
+                                        @else
                                         <br /><br/>
                                         <div class="table-responsive">
                                             <table class="table table-hover nowrap" id="buyerList">
@@ -133,10 +133,10 @@ foreach ($user_permission as $permission) {
                                         <!-- End Buyer Form -->
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -150,23 +150,23 @@ foreach ($user_permission as $permission) {
     $(function(){
         oTable = $('#buyerList').editableTableWidget();
     });
-            
+
     function submitUploadBuyer() {
         $("#upload_button").attr('disabled', 'disabled');
         $("#submit_buyer_button").attr('disabled', 'disabled');
         $("#loading").css('display', 'inline-block');
-        
-        
+
+
         var getAllBuyer = [];
         oTable.find('tr').each(function (rowIndex, r) {
             var cols = [];
             $(this).find('td').each(function (colIndex, c) {
                 cols.push(c.textContent);
             });
-            getAllBuyer.push(cols);            
-        });       
-        
-        
+            getAllBuyer.push(cols);
+        });
+
+
         $.ajax({
             url: "{{ URL::action('AdminController@submitUploadBuyer', $files->id) }}",
             type: "POST",
@@ -175,7 +175,7 @@ foreach ($user_permission as $permission) {
             },
             success: function (data) {
                 console.log(data);
-                if (data.trim() == "true") {                       
+                if (data.trim() == "true") {
                     $.notify({
                         message: '<p style="text-align: center; margin-bottom: 0px;">Disimpan</p>',
                     },{
@@ -183,7 +183,7 @@ foreach ($user_permission as $permission) {
                         placement: {
                             align: "center"
                         }
-                    }); 
+                    });
                     location = '{{ URL::action("AdminController@buyer", $files->id) }}';
                 }
             }

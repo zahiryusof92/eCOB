@@ -5,20 +5,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title id="">eCOB Management System</title>
-        
-        <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="{{asset('assets/common/img/favicon.57x57.png')}}">	
+
+        <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="{{asset('assets/common/img/favicon.57x57.png')}}">
         <link rel="apple-touch-icon" type="image/png" sizes="72x72" href="{{asset('assets/common/img/favicon.72x72.png')}}">
 	<link rel="apple-touch-icon" type="image/png" sizes="114x114" href="{{asset('assets/common/img/favicon.114x114.png')}}">
 	<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="{{asset('assets/common/img/favicon.144x144.png')}}">
-	<link rel="icon" type="image/png" href="{{asset('assets/common/img/favicon.png')}}">	
+	<link rel="icon" type="image/png" href="{{asset('assets/common/img/favicon.png')}}">
         <link href="{{ asset('assets/common/img/favicon.ico') }}" rel="shortcut icon">
-        
+
         <!-- Vendors Styles -->
         <!-- v1.0.0 -->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/jscrollpane/style/jquery.jscrollpane.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/ladda/dist/ladda-themeless.min.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/select2/dist/css/select2.min.css')}}">  
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/select2/dist/css/select2.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/fullcalendar/dist/fullcalendar.min.css')}}">
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/cleanhtmlaudioplayer/src/player.css')}}">
@@ -33,8 +33,8 @@
 
         <!-- Clean UI Styles -->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/common/css/source/main.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/common/css/source/materialize/materialize.css')}}"> 
-        
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/common/css/source/materialize/materialize.css')}}">
+
         <!--Rating Star-->
         <link rel="stylesheet" type="text/css" href="{{ asset('assets/common/css/source/ratingstar/rating.css')}}">
 
@@ -83,23 +83,23 @@
         <!-- Clean UI Scripts -->
         <script src="{{ asset('assets/common/js/common.js')}}"></script>
         <script src="{{ asset('assets/common/js/demo.temp.js')}}"></script>
-        
+
         <!-- Bootbox Scripts -->
         <script src="{{ asset('assets/common/js/bootbox/bootbox.min.js')}}"></script>
-        
-        <script src="{{ asset('assets/common/js/jQueryForm/form.js')}}"></script>   
-        
+
+        <script src="{{ asset('assets/common/js/jQueryForm/form.js')}}"></script>
+
         <!-- Highcharts -->
         <script src="{{ asset('assets/highcharts/highcharts.js')}}"></script>
         <script src="{{ asset('assets/highcharts/modules/exporting.js')}}"></script>
-        
+
         <!-- Dynamic Form -->
         <script src="{{ asset('assets/common/js/dynamic-form.js')}}"></script>
 
     </head>
-    
+
     <body id="" class="theme-default">
-        <!-- BEGIN SIDE NAVIGATION -->				
+        <!-- BEGIN SIDE NAVIGATION -->
         @include('layout.malay_layout.navigation')
         <!-- END SIDE NAVIGATION -->
 
@@ -107,14 +107,14 @@
         @include('layout.malay_layout.header')
         <!-- END TOP HEADER -->
 
-        <!-- BEGIN CONTENT -->        
-        <section class="page-content">            
+        <!-- BEGIN CONTENT -->
+        <section class="page-content">
             @yield('content')
         </section>
-        <!-- END CONTENT -->	
+        <!-- END CONTENT -->
 
         <div class="main-backdrop"><!-- --></div>
-        
+
         <script>
             $(document).ready(function () {
                 $(".numeric-only").on('keypress', function (e) {
@@ -125,7 +125,7 @@
                 });
 
                 $('.select2').select2();
-                
+
                 var changes = false;
                 $('input, textarea, select').on('keypress change input', function () {
                     changes = true;
@@ -133,7 +133,7 @@
 
                 $(window).on('beforeunload', function () {
                     if (changes) {
-                        return "Data you have entered may not be saved, do you really want to leave?";
+                        return "{{ trans('app.confirmation.want_to_leave') }}";
                     }
                 });
             });

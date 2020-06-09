@@ -20,32 +20,32 @@ foreach ($user_permission as $permission) {
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <h6>File No: {{$files->file_no}}</h6>
+                    <h6>{{ trans('app.forms.file_no') }}: {{$files->file_no}}</h6>
                     <div id="update_files_lists">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@house', $files->id)}}">Housing Scheme</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@house', $files->id)}}">{{ trans('app.forms.housing_scheme') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@strata', $files->id)}}">Developed Area (STRATA)</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@strata', $files->id)}}">{{ trans('app.forms.developed_area') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@management', $files->id)}}">Management</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@management', $files->id)}}">{{ trans('app.forms.management') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@monitoring', $files->id)}}">Monitoring</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@monitoring', $files->id)}}">{{ trans('app.forms.monitoring') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@others', $files->id)}}">Others</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@others', $files->id)}}">{{ trans('app.forms.others') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@scoring', $files->id)}}">Scoring Component Value</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@scoring', $files->id)}}">{{ trans('app.forms.scoring_component_value') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@buyer', $files->id)}}">Buyer List</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@buyer', $files->id)}}">{{ trans('app.forms.buyer_list') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active">Document</a>
+                                <a class="nav-link active">{{ trans('app.forms.document') }}</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
@@ -55,19 +55,19 @@ foreach ($user_permission as $permission) {
                                         <div class="table-responsive">
                                             <?php if ($update_permission == 1) { ?>
                                                 <button onclick="window.location = '{{ URL::action('AdminController@addDocument', $files->id) }}'" type="button" class="btn btn-primary">
-                                                    Add Document
+                                                    {{ trans('app.buttons.add_document') }}
                                                 </button>
                                                 <br/><br/>
                                             <?php } ?>
                                             <table class="table table-hover nowrap" id="document" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width:25%;">Document Type</th>
-                                                        <th style="width:45%;">Document Name</th>
-                                                        <th style="width:10%;">Hidden</th>
-                                                        <th style="width:10%;">Read Only</th>
+                                                        <th style="width:25%;">{{ trans('app.forms.document_type') }}</th>
+                                                        <th style="width:45%;">{{ trans('app.forms.document_name') }}</th>
+                                                        <th style="width:10%;">{{ trans('app.forms.hidden') }}</th>
+                                                        <th style="width:10%;">{{ trans('app.forms.read_only') }}</th>
                                                         <?php if ($update_permission == 1) { ?>
-                                                            <th style="width:10%;">Action</th>
+                                                            <th style="width:10%;">{{ trans('app.forms.action') }}</th>
                                                             <?php } ?>
                                                     </tr>
                                                 </thead>
@@ -81,9 +81,9 @@ foreach ($user_permission as $permission) {
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
-    </section>    
+    </section>
     <!-- End  -->
 </div>
 
@@ -107,8 +107,8 @@ foreach ($user_permission as $permission) {
 
     function deleteDocument(id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -125,15 +125,15 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "Deleted!",
-                            text: "File has been deleted",
+                            title: "{{ trans('app.successes.deleted_title') }}",
+                            text: "{{ trans('app.successes.deleted_text_file') }}",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

@@ -46,15 +46,15 @@ foreach ($user_permission as $permission) {
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{URL::action('AdminController@fileApproval', $files->id)}}">Pengesahan</a>
-                            </li>                            
+                            </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
                             <div class="tab-pane active" id="scoring" role="tabpanel">
                                 <div class="row">
-                                    <div class="col-lg-12">                                        
+                                    <div class="col-lg-12">
                                         <?php
                                             $scoring = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->count();
-                                        ?>                                           
+                                        ?>
                                         <div class="row">
                                             <table class="table table-hover nowrap" id="scoring_list" width="100%">
                                                 <thead>
@@ -66,7 +66,7 @@ foreach ($user_permission as $permission) {
                                                         <th style="width:10%;">D (%)</th>
                                                         <th style="width:10%;">E (%)</th>
                                                         <th style="width:10%;">Markah (%)</th>
-                                                        <th style="width:15%;">Rating</th>                                                       
+                                                        <th style="width:15%;">{{ trans('app.forms.rating') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -76,10 +76,10 @@ foreach ($user_permission as $permission) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -98,16 +98,16 @@ foreach ($user_permission as $permission) {
             "fixedColumns": true
         });
     });
-    
+
     function addSurveyForm(){
         var addsurvey = $("#add_survey").val();
         if (addsurvey.trim() == "strata_management") {
             $("#add_strata_management_quality").modal("show");
         } else {
-            bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
-        }      
+            bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+        }
     }
-    
+
     function addScoring() {
         $("#loading").css("display", "inline-block");
 
@@ -132,10 +132,10 @@ foreach ($user_permission as $permission) {
             score19 = $("#score19").val(),
             score20 = $("#score20").val(),
             score21 = $("#score21").val(),
-            survey = $("#add_survey").val();           
+            survey = $("#add_survey").val();
 
         var error = 0;
-        
+
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@addScoring') }}",
@@ -146,7 +146,7 @@ foreach ($user_permission as $permission) {
                     score3: score3,
                     score4: score4,
                     score5: score5,
-                    score6: score6,                    
+                    score6: score6,
                     score7: score7,
                     score8: score8,
                     score9: score9,
@@ -170,7 +170,7 @@ foreach ($user_permission as $permission) {
                     $('#add_strata_management_quality').modal('hide');
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Saved Successfully</p>'
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>'
                         }, {
                             type: 'success',
                             placement: {
@@ -179,22 +179,22 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
         }
     }
-    
+
     function editSurveyForm($survey){
         var editsurvey = $survey;
         if (editsurvey.trim() == "strata_management") {
             $("#edit_strata_management_quality").modal("show");
         } else {
-            bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
-        }       
+            bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+        }
     }
-    
+
     $(document).on("click", '.edit_survey', function (e) {
         var score1 = $(this).data('score1'),
             score2 = $(this).data('score2'),
@@ -218,7 +218,7 @@ foreach ($user_permission as $permission) {
             score20 = $(this).data('score20'),
             score21 = $(this).data('score21'),
             id = $(this).data('id');
-        
+
         $("#score1_edit").val(score1);
         $("#score2_edit").val(score2);
         $("#score3_edit").val(score3);
@@ -240,9 +240,9 @@ foreach ($user_permission as $permission) {
         $("#score19_edit").val(score19);
         $("#score20_edit").val(score20);
         $("#score21_edit").val(score21);
-        $("#scoring_id").val(id);        
+        $("#scoring_id").val(id);
     });
-    
+
     function editScoring() {
         $("#loading").css("display", "inline-block");
 
@@ -266,11 +266,11 @@ foreach ($user_permission as $permission) {
             score18 = $("#score18_edit").val(),
             score19 = $("#score19_edit").val(),
             score20 = $("#score20_edit").val(),
-            score21 = $("#score21_edit").val(), 
+            score21 = $("#score21_edit").val(),
             id = $("#scoring_id").val();
 
         var error = 0;
-        
+
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@editScoring') }}",
@@ -281,7 +281,7 @@ foreach ($user_permission as $permission) {
                     score3: score3,
                     score4: score4,
                     score5: score5,
-                    score6: score6,                    
+                    score6: score6,
                     score7: score7,
                     score8: score8,
                     score9: score9,
@@ -304,7 +304,7 @@ foreach ($user_permission as $permission) {
                     $('#edit_strata_management_quality').modal('hide');
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Updated Successfully</p>'
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.updated_successfully") }}</p>'
                         }, {
                             type: 'success',
                             placement: {
@@ -313,19 +313,19 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
         }
     }
-    
+
     function deleteScoring(id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -341,15 +341,15 @@ foreach ($user_permission as $permission) {
                 success: function(data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "Deleted!",
-                            text: "File has been deleted",
+                            title: "{{ trans('app.successes.deleted_title') }}",
+                            text: "{{ trans('app.successes.deleted_text_file') }}",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

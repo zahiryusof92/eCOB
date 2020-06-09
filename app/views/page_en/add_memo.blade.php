@@ -25,16 +25,16 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label style="color: red; font-style: italic;">* Mandatory Fields</label>
+                                    <label style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Memo Type</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.memo_type') }}</label>
                                     <select id="memo_type" class="form-control">
-                                        <option value="">Please Select</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
                                         @foreach ($memotype as $memotypes)
                                         <option value="{{$memotypes->id}}">{{$memotypes->description}}</option>
                                         @endforeach
@@ -46,9 +46,9 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Memo Date</label>
+                                    <label><span style="color: red;">*</span> {{ trans("app.forms.memo_date") }}</label>
                                     <label class="input-group datepicker-only-init">
-                                        <input type="text" class="form-control" placeholder="Memo Date" id="memo_date" />
+                                        <input type="text" class="form-control" placeholder="{{ trans("app.forms.memo_date") }}" id="memo_date" />
                                         <span class="input-group-addon">
                                             <i class="icmn-calendar"></i>
                                         </span>
@@ -60,9 +60,9 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Publish Date</label>
+                                    <label><span style="color: red;">*</span> {{ trans("app.forms.publish_date") }}</label>
                                     <label class="input-group datepicker-only-init">
-                                        <input type="text" class="form-control" placeholder="Publish Date" id="publish_date" />
+                                        <input type="text" class="form-control" placeholder="{{ trans("app.forms.publish_date") }}" id="publish_date" />
                                         <span class="input-group-addon">
                                             <i class="icmn-calendar"></i>
                                         </span>
@@ -74,9 +74,9 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Expired Date</label>
+                                    <label>{{ trans("app.forms.expired_date") }}</label>
                                     <label class="input-group datepicker-only-init">
-                                        <input type="text" class="form-control" placeholder="Expired Date" id="expired_date" />
+                                        <input type="text" class="form-control" placeholder="{{ trans("app.forms.expired_date") }}" id="expired_date" />
                                         <span class="input-group-addon">
                                             <i class="icmn-calendar"></i>
                                         </span>
@@ -87,8 +87,8 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Subject</label>
-                                    <input type="text" class="form-control" placeholder="Subject" id="subject">
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.subject') }}</label>
+                                    <input type="text" class="form-control" placeholder="{{ trans('app.forms.subject') }}" id="subject">
                                     <div id="subject_error" style="display:none;"></div>
                                 </div>
                             </div>
@@ -96,7 +96,7 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Description</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.description') }}</label>
                                     <textarea id="description"></textarea>
                                     <div id="description_error" style="display:none;"></div>
                                 </div>
@@ -105,11 +105,11 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Status</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.admin_status') }}</label>
                                     <select id="is_active" class="form-control">
-                                        <option value="">Please Select</option>
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="">{{ trans('app.forms.please_select') }}</option>
+                                        <option value="1">{{ trans('app.forms.active') }}</option>
+                                        <option value="0">{{ trans('app.forms.inactive') }}</option>
                                     </select>
                                     <div id="is_active_error" style="display:none;"></div>
                                 </div>
@@ -118,20 +118,20 @@ foreach ($user_permission as $permission) {
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>Remarks</label>
+                                    <label>{{ trans('app.forms.remarks') }}</label>
                                     <textarea class="form-control" rows="3" id="remarks"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="form-actions">
                             <?php if ($insert_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addMemo()">Submit</button>
+                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addMemo()">{{ trans('app.forms.submit') }}</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@memo')}}'">Cancel</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{URL::action('AdminController@memo')}}'">{{ trans('app.forms.cancel') }}</button>
                         </div>
                     </form>
                     <!-- End Vertical Form -->
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -185,9 +185,9 @@ foreach ($user_permission as $permission) {
     function addMemo() {
         $("#loading").css("display", "inline-block");
 
-        var memo_type = $("#memo_type").val(), 
-                memo_date = $("#memo_date").val(),                
-                publish_date = $("#publish_date").val(), 
+        var memo_type = $("#memo_type").val(),
+                memo_date = $("#memo_date").val(),
+                publish_date = $("#publish_date").val(),
                 expired_date = $("#expired_date").val(),
                 subject = $("#subject").val(),
                 description = $("#description").val(),
@@ -197,38 +197,38 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (memo_type.trim() == "") {
-            $("#memo_type_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Memo Type</span>');
+            $("#memo_type_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Memo Type"]) }}</span>');
             $("#memo_type_error").css("display", "block");
             error = 1;
         }
         if (memo_date.trim() == "") {
-            $("#memo_date_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Memo Date</span>');
+            $("#memo_date_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Memo Date"]) }}</span>');
             $("#memo_date_error").css("display", "block");
             error = 1;
         }
         if (publish_date.trim() == "") {
-            $("#publish_date_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Publish Date</span>');
+            $("#publish_date_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Publish Date"]) }}</span>');
             $("#publish_date_error").css("display", "block");
             error = 1;
-        }      
+        }
         if (subject.trim() == "") {
-            $("#subject_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Subject</span>');
+            $("#subject_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Subject"]) }}</span>');
             $("#subject_error").css("display", "block");
             error = 1;
         }
         if (description.trim() == "") {
-            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Description</span>');
+            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Description"]) }}</span>');
             $("#description_error").css("display", "block");
             error = 1;
         }
         if (is_active.trim() == "") {
-            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select Status</span>');
+            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Status"]) }}</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
 
         if (error == 0) {
-            
+
             $.ajax({
                 url: "{{ URL::action('AdminController@submitMemo') }}",
                 type: "POST",
@@ -247,11 +247,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>Memo added successfully!</span>", function () {
+                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.memos.store') }}</span>", function () {
                             window.location = '{{URL::action("AdminController@memo") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

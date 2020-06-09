@@ -81,7 +81,7 @@ foreach ($user_permission as $permission) {
                                     <div id="poscode_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -107,7 +107,7 @@ foreach ($user_permission as $permission) {
                                     <div id="country_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div>        
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
@@ -123,11 +123,11 @@ foreach ($user_permission as $permission) {
                                     <div id="fax_no_error" style="display:none;"></div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><span style="color: red;">*</span> Status</label>
+                                    <label><span style="color: red;">*</span> {{ trans('app.forms.admin_status') }}</label>
                                     <select id="is_active" class="form-control">
                                         <option value="">Sila pilih</option>
                                         <option value="1">Aktif</option>
@@ -153,7 +153,7 @@ foreach ($user_permission as $permission) {
                         </div>
                     </form>
                     <!-- End Vertical Form -->
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -166,7 +166,7 @@ foreach ($user_permission as $permission) {
     function addDeveloper() {
         $("#loading").css("display", "inline-block");
 
-        var name = $("#name").val(), 
+        var name = $("#name").val(),
                 address1 = $("#address1").val(),
                 address2 = $("#address2").val(),
                 address3 = $("#address3").val(),

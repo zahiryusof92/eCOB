@@ -20,53 +20,53 @@ foreach ($user_permission as $permission) {
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <h6>File No: {{$files->file_no}}</h6>
+                    <h6>{{ trans('app.forms.file_no') }}: {{$files->file_no}}</h6>
                     <div id="update_files_lists">
                         <ul class="nav nav-pills nav-justified" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewHouse', $files->id)}}">Housing Scheme</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewHouse', $files->id)}}">{{ trans('app.forms.housing_scheme') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewStrata', $files->id)}}">Developed Area (STRATA)</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewStrata', $files->id)}}">{{ trans('app.forms.developed_area') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewManagement', $files->id)}}">Management</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewManagement', $files->id)}}">{{ trans('app.forms.management') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewMonitoring', $files->id)}}">Monitoring</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewMonitoring', $files->id)}}">{{ trans('app.forms.monitoring') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewOthers', $files->id)}}">Others</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewOthers', $files->id)}}">{{ trans('app.forms.others') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active">Scoring Component Value</a>
+                                <a class="nav-link active">{{ trans('app.forms.scoring_component_value') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@viewBuyer', $files->id)}}">Buyer List</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@viewBuyer', $files->id)}}">{{ trans('app.forms.buyer_list') }}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@fileApproval', $files->id)}}">Approval</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@fileApproval', $files->id)}}">{{ trans('app.forms.approval') }}</a>
                             </li>
                         </ul>
                         <div class="tab-content padding-vertical-20">
                             <div class="tab-pane active" id="scoring" role="tabpanel">
                                 <div class="row">
-                                    <div class="col-lg-12">                                        
+                                    <div class="col-lg-12">
                                         <?php
                                             $scoring = Scoring::where('file_id', $files->id)->where('is_deleted', 0)->count();
-                                        ?>                                           
+                                        ?>
                                         <div class="row">
                                             <table class="table table-hover nowrap" id="scoring_list" width="100%">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width:15%;">Date</th>
+                                                        <th style="width:15%;">{{ trans('app.forms.date') }}</th>
                                                         <th style="width:10%;">A (%)</th>
                                                         <th style="width:10%;">B (%)</th>
                                                         <th style="width:10%;">C (%)</th>
                                                         <th style="width:10%;">D (%)</th>
                                                         <th style="width:10%;">E (%)</th>
-                                                        <th style="width:10%;">Score (%)</th>
-                                                        <th style="width:15%;">Rating</th>                                                       
+                                                        <th style="width:10%;">{{ trans('app.forms.score') }} (%)</th>
+                                                        <th style="width:15%;">{{ trans('app.forms.rating') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -76,10 +76,10 @@ foreach ($user_permission as $permission) {
                                         </div>
                                     </div>
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </section>
@@ -94,11 +94,11 @@ foreach ($user_permission as $permission) {
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">Borang Indeks Kualiti Pengurusan Bangunan Berstrata</h4>
-            </div>            
+            </div>
             <div class="modal-body">
                 <form>
                     <p><b>BAHAGIAN A (PENUBUHAN DAN PENGURUSAN) - Wajaran 25%</b></p>
-                    <p>Pegawai penilai dikehendaki memberikan penilaian berdasarkan penjelasan setiap kriteria seperti yang disenaraikan.</p>                    
+                    <p>Pegawai penilai dikehendaki memberikan penilaian berdasarkan penjelasan setiap kriteria seperti yang disenaraikan.</p>
                     <table class="table table-hover nowrap" id="quality_survey1" width="100%">
                         <thead>
                             <tr>
@@ -113,7 +113,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Mesyuarat Agung Pertama/Tahunan</b></p>
                                     <p>
-                                        0. &nbsp; Tidak rekod diadakan<br/>                                        
+                                        0. &nbsp; Tidak rekod diadakan<br/>
                                         1. &nbsp; Mesyuarat diadakan tidak setiap tahun<br/>
                                         2. &nbsp; Mesyuarat diadakan setiap tahun dan mematuhi (kurang daripada 3) peraturan asas<br/>
                                         3. &nbsp; Mesyuarat diadakan setiap tahun dan mematuhi sebahagian (sekurang-kurangnya 3) peraturan asas<br/>
@@ -128,7 +128,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Mesyuarat Ahli Jawatankuasa/Ahli Majlis</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Mesyuarat tidak pernah diadakan<br/>                                        
+                                        0. &nbsp;&nbsp; Mesyuarat tidak pernah diadakan<br/>
                                         1. &nbsp;&nbsp; Mesyuarat diadakan secara tidak berkala<br/>
                                         2. &nbsp;&nbsp; Mesyuarat diadakan secara berkala mematuhi semua (1) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Mesyuarat diadakan secara berkala mematuhi semua (2) peraturan asas<br/>
@@ -143,7 +143,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Pengurusan Rekod</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tidak rekod<br/>                                        
+                                        0. &nbsp;&nbsp; Tidak rekod<br/>
                                         1. &nbsp;&nbsp; Badan mempunyai sekurang-kurangnya (2) rekod<br/>
                                         2. &nbsp;&nbsp; Badan mempunyai sekurang-kurangnya (3) rekod<br/>
                                         3. &nbsp;&nbsp; Badan mempunyai sekurang-kurangnya (4) rekod<br/>
@@ -158,7 +158,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Pengurusan Rekod</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada minit mesyuarat<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada minit mesyuarat<br/>
                                         1. &nbsp;&nbsp; Minit Mesyuarat mematuhi semua (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Minit Mesyuarat mematuhi semua (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Minit Mesyuarat mematuhi semua (3) peraturan asas<br/>
@@ -173,7 +173,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Pemakluman By Laws kepada penghuni</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tidak mempunyai By Laws<br/>                                        
+                                        0. &nbsp;&nbsp; Tidak mempunyai By Laws<br/>
                                         1. &nbsp;&nbsp; By Laws mematuhi semua (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; By Laws mematuhi semua (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; By Laws mematuhi semua (3) peraturan asas<br/>
@@ -203,7 +203,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Penyata kewangan beraudit oleh Juruaudit Berlesen</b></p>
                                     <p>
-                                        0. &nbsp; Penyata Kewangan tidak disediakan<br/>                                        
+                                        0. &nbsp; Penyata Kewangan tidak disediakan<br/>
                                         1. &nbsp; Penyata kewangan disediakan dan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp; Penyata kewangan disediakan dan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp; Penyata kewangan disediakan dan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -218,7 +218,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Akaun penyengaraan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Akaun Penyengaraan tidak dibuka<br/>                                        
+                                        0. &nbsp;&nbsp; Akaun Penyengaraan tidak dibuka<br/>
                                         1. &nbsp;&nbsp; Akaun Penyengaraan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Akaun Penyengaraan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Akaun Penyengaraan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -233,7 +233,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Akaun Wang Penjelas</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Akaun Wang Penjelas tidak dibuka<br/>                                        
+                                        0. &nbsp;&nbsp; Akaun Wang Penjelas tidak dibuka<br/>
                                         1. &nbsp;&nbsp; Akaun Wang Penjelas mematuhi sekurang-kurangnya (1) peraturan<br/>
                                         2. &nbsp;&nbsp; Akaun Wang Penjelas mematuhi sekurang-kurangnya (2) peraturan<br/>
                                         3. &nbsp;&nbsp; Akaun Wang Penjelas mematuhi sekurang-kurangnya (3) peraturan<br/>
@@ -248,7 +248,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Rekod tunggakan pemilik petak</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada rekod<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada rekod<br/>
                                         1. &nbsp;&nbsp; Senarai rekod tunggakan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Senarai rekod tunggakan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Senarai rekod tunggakan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -263,7 +263,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Penguatkuasaan kepada pemilik yang mempunyai tunggakan(defaulters)</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada penguatkuasaan terhadap pemilik yang mempunyai tunggakan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada penguatkuasaan terhadap pemilik yang mempunyai tunggakan<br/>
                                         1. &nbsp;&nbsp; Penguatkuasaan terhadap pemilik yang mempunyai tunggakan sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Penguatkuasaan terhadap pemilik yang mempunyai tunggakan sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Penguatkuasaan terhadap pemilik yang mempunyai tunggakan sekurang-kurangnya (3) peraturan asas<br/>
@@ -272,7 +272,7 @@ foreach ($user_permission as $permission) {
                                     <p><b><i>*4 Peraturan Asas – Pengesahan Tunggakan di Mahkamah, Notis, Bicaraan Mahkamah, Perintah Mahkamah</i></b></p>
                                 </td>
                                 <td style="vertical-align:middle;"><input type="number" id="score10" class="form-control" placeholder="0" max="4"></td>
-                            </tr>                            
+                            </tr>
                         </tbody>
                     </table>
                     <hr/>
@@ -293,7 +293,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Jadual kerja penyengaraan</b></p>
                                     <p>
-                                        0. &nbsp; Tiada jadual kerja<br/>                                        
+                                        0. &nbsp; Tiada jadual kerja<br/>
                                         1. &nbsp; Ada jadual kerja berkala tetapi tidak dipatuhi<br/>
                                         2. &nbsp; Ada jadual kerja berkala dan dipatuhi<br/>
                                         3. &nbsp; Ada jadual kerja yang lengkap, dipatuhi dan sentiasa dipantau<br/>
@@ -308,7 +308,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Rekod Kos Penyengaraan (Pembaikkan Dan Penggantian)</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada rekod kos penyengaraan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada rekod kos penyengaraan<br/>
                                         1. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -323,7 +323,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Rekod Aduan Kerosakkan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada rekod Aduan Kerosakan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada rekod Aduan Kerosakan<br/>
                                         1. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -338,7 +338,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Kualiti Penyengaraan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Sangat tidak berpuas hati<br/>                                        
+                                        0. &nbsp;&nbsp; Sangat tidak berpuas hati<br/>
                                         1. &nbsp;&nbsp; Tidak berpuas hati<br/>
                                         2. &nbsp;&nbsp; Sederhana<br/>
                                         3. &nbsp;&nbsp; Berpuas Hati<br/>
@@ -346,7 +346,7 @@ foreach ($user_permission as $permission) {
                                     </p>
                                 </td>
                                 <td style="vertical-align:middle;"><input type="number" id="score14" class="form-control" placeholder="0" max="4"></td>
-                            </tr>                           
+                            </tr>
                         </tbody>
                     </table>
                     <hr/>
@@ -367,7 +367,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Aktiviti Kemasyarakatan di kawasan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada aktiviti Kemasyarakatan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada aktiviti Kemasyarakatan<br/>
                                         1. &nbsp;&nbsp; Aktiviti Kemasyarakatan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Aktiviti Kemasyarakatan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Aktiviti Kemasyarakatan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -382,7 +382,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Rasa Jati Diri Penduduk</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada rasa bangga terhadap kawasan kemajuan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada rasa bangga terhadap kawasan kemajuan<br/>
                                         1. &nbsp;&nbsp; Kurang rasa bangga dengan kawasan kemajuan<br/>
                                         2. &nbsp;&nbsp; Sederhana<br/>
                                         3. &nbsp;&nbsp; Berbangga dengan kawasan kemajuan<br/>
@@ -396,7 +396,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Rasa selamat dan dilindungi</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada rasa selamat dan dilindungi dalam kawasan kemajuan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada rasa selamat dan dilindungi dalam kawasan kemajuan<br/>
                                         1. &nbsp;&nbsp; Kurang rasa selamat dan dilindungi dalam kawasan kemajuan<br/>
                                         2. &nbsp;&nbsp; Sederhana<br/>
                                         3. &nbsp;&nbsp; Rasa selamat dan dilindungi dalam kawasan kemajuan<br/>
@@ -410,7 +410,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Semangat Kejiranan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada Semangat Kejiranan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada Semangat Kejiranan<br/>
                                         1. &nbsp;&nbsp; Kurang Semangat Kejiranan<br/>
                                         2. &nbsp;&nbsp; Sederhana<br/>
                                         3. &nbsp;&nbsp; Tinggi Semangat Kejiranan<br/>
@@ -418,7 +418,7 @@ foreach ($user_permission as $permission) {
                                     </p>
                                 </td>
                                 <td style="vertical-align:middle;"><input type="number" id="score18" class="form-control" placeholder="0" max="4"></td>
-                            </tr>                          
+                            </tr>
                         </tbody>
                     </table>
                     <hr/>
@@ -439,7 +439,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Perkhidmatan Keselamatan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada perkhidmatan keselamatan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada perkhidmatan keselamatan<br/>
                                         1. &nbsp;&nbsp; Perkhidmatan keselamatan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Perkhidmatan keselamatan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Perkhidmatan keselamatan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -454,7 +454,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Pengurusan pencegahan Pambakaran</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada pengurusan pencegahan kebakaran<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada pengurusan pencegahan kebakaran<br/>
                                         1. &nbsp;&nbsp; Pengurusan pencegahan kebakaran mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Pengurusan pencegahan kebakaran mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Pengurusan pencegahan kebakaran mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -469,7 +469,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Pengurusan Insuran</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada pengurusan insuran<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada pengurusan insuran<br/>
                                         1. &nbsp;&nbsp; Pengurusan insuran mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Pengurusan insuran mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Pengurusan insuran mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -478,18 +478,18 @@ foreach ($user_permission as $permission) {
                                     <p><b><i>*4 Peraturan Asas – Kebakaran, Public Liability, Error and omission. Lain-lain Insurance</i></b></p>
                                 </td>
                                 <td style="vertical-align:middle;"><input type="number" id="score21" class="form-control" placeholder="0" max="4"></td>
-                            </tr>                        
+                            </tr>
                         </tbody>
                     </table>
                 </form>
-            </div> 
+            </div>
             <div class="modal-footer">
                 <form>
                     <button type="button" id="cancel_button" class="btn" data-dismiss="modal">
-                        Close
+                        {{ trans('app.forms.close') }}
                     </button>
                     <button type="button" id="submit_button" class="btn btn-primary" onclick="addScoring()">
-                        Submit
+                        {{ trans('app.forms.submit') }}
                     </button>
                 </form>
             </div>
@@ -505,11 +505,11 @@ foreach ($user_permission as $permission) {
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">Borang Indeks Kualiti Pengurusan Bangunan Berstrata</h4>
-            </div>            
+            </div>
             <div class="modal-body">
                 <form>
                     <p><b>BAHAGIAN A (PENUBUHAN DAN PENGURUSAN) - Wajaran 25%</b></p>
-                    <p>Pegawai penilai dikehendaki memberikan penilaian berdasarkan penjelasan setiap kriteria seperti yang disenaraikan.</p>                    
+                    <p>Pegawai penilai dikehendaki memberikan penilaian berdasarkan penjelasan setiap kriteria seperti yang disenaraikan.</p>
                     <table class="table table-hover nowrap" id="quality_survey1" width="100%">
                         <thead>
                             <tr>
@@ -524,7 +524,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Mesyuarat Agung Pertama/Tahunan</b></p>
                                     <p>
-                                        0. &nbsp; Tidak rekod diadakan<br/>                                        
+                                        0. &nbsp; Tidak rekod diadakan<br/>
                                         1. &nbsp; Mesyuarat diadakan tidak setiap tahun<br/>
                                         2. &nbsp; Mesyuarat diadakan setiap tahun dan mematuhi (kurang daripada 3) peraturan asas<br/>
                                         3. &nbsp; Mesyuarat diadakan setiap tahun dan mematuhi sebahagian (sekurang-kurangnya 3) peraturan asas<br/>
@@ -539,7 +539,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Mesyuarat Ahli Jawatankuasa/Ahli Majlis</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Mesyuarat tidak pernah diadakan<br/>                                        
+                                        0. &nbsp;&nbsp; Mesyuarat tidak pernah diadakan<br/>
                                         1. &nbsp;&nbsp; Mesyuarat diadakan secara tidak berkala<br/>
                                         2. &nbsp;&nbsp; Mesyuarat diadakan secara berkala mematuhi semua (1) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Mesyuarat diadakan secara berkala mematuhi semua (2) peraturan asas<br/>
@@ -554,7 +554,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Pengurusan Rekod</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tidak rekod<br/>                                        
+                                        0. &nbsp;&nbsp; Tidak rekod<br/>
                                         1. &nbsp;&nbsp; Badan mempunyai sekurang-kurangnya (2) rekod<br/>
                                         2. &nbsp;&nbsp; Badan mempunyai sekurang-kurangnya (3) rekod<br/>
                                         3. &nbsp;&nbsp; Badan mempunyai sekurang-kurangnya (4) rekod<br/>
@@ -569,7 +569,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Pengurusan Rekod</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada minit mesyuarat<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada minit mesyuarat<br/>
                                         1. &nbsp;&nbsp; Minit Mesyuarat mematuhi semua (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Minit Mesyuarat mematuhi semua (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Minit Mesyuarat mematuhi semua (3) peraturan asas<br/>
@@ -584,7 +584,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Pemakluman By Laws kepada penghuni</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tidak mempunyai By Laws<br/>                                        
+                                        0. &nbsp;&nbsp; Tidak mempunyai By Laws<br/>
                                         1. &nbsp;&nbsp; By Laws mematuhi semua (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; By Laws mematuhi semua (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; By Laws mematuhi semua (3) peraturan asas<br/>
@@ -614,7 +614,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Penyata kewangan beraudit oleh Juruaudit Berlesen</b></p>
                                     <p>
-                                        0. &nbsp; Penyata Kewangan tidak disediakan<br/>                                        
+                                        0. &nbsp; Penyata Kewangan tidak disediakan<br/>
                                         1. &nbsp; Penyata kewangan disediakan dan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp; Penyata kewangan disediakan dan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp; Penyata kewangan disediakan dan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -629,7 +629,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Akaun penyengaraan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Akaun Penyengaraan tidak dibuka<br/>                                        
+                                        0. &nbsp;&nbsp; Akaun Penyengaraan tidak dibuka<br/>
                                         1. &nbsp;&nbsp; Akaun Penyengaraan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Akaun Penyengaraan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Akaun Penyengaraan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -644,7 +644,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Akaun Wang Penjelas</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Akaun Wang Penjelas tidak dibuka<br/>                                        
+                                        0. &nbsp;&nbsp; Akaun Wang Penjelas tidak dibuka<br/>
                                         1. &nbsp;&nbsp; Akaun Wang Penjelas mematuhi sekurang-kurangnya (1) peraturan<br/>
                                         2. &nbsp;&nbsp; Akaun Wang Penjelas mematuhi sekurang-kurangnya (2) peraturan<br/>
                                         3. &nbsp;&nbsp; Akaun Wang Penjelas mematuhi sekurang-kurangnya (3) peraturan<br/>
@@ -659,7 +659,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Rekod tunggakan pemilik petak</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada rekod<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada rekod<br/>
                                         1. &nbsp;&nbsp; Senarai rekod tunggakan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Senarai rekod tunggakan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Senarai rekod tunggakan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -674,7 +674,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Penguatkuasaan kepada pemilik yang mempunyai tunggakan(defaulters)</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada penguatkuasaan terhadap pemilik yang mempunyai tunggakan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada penguatkuasaan terhadap pemilik yang mempunyai tunggakan<br/>
                                         1. &nbsp;&nbsp; Penguatkuasaan terhadap pemilik yang mempunyai tunggakan sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Penguatkuasaan terhadap pemilik yang mempunyai tunggakan sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Penguatkuasaan terhadap pemilik yang mempunyai tunggakan sekurang-kurangnya (3) peraturan asas<br/>
@@ -683,7 +683,7 @@ foreach ($user_permission as $permission) {
                                     <p><b><i>*4 Peraturan Asas – Pengesahan Tunggakan di Mahkamah, Notis, Bicaraan Mahkamah, Perintah Mahkamah</i></b></p>
                                 </td>
                                 <td style="vertical-align:middle;"><input type="number" id="score10_edit" class="form-control" max="4"></td>
-                            </tr>                            
+                            </tr>
                         </tbody>
                     </table>
                     <hr/>
@@ -704,7 +704,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Jadual kerja penyengaraan</b></p>
                                     <p>
-                                        0. &nbsp; Tiada jadual kerja<br/>                                        
+                                        0. &nbsp; Tiada jadual kerja<br/>
                                         1. &nbsp; Ada jadual kerja berkala tetapi tidak dipatuhi<br/>
                                         2. &nbsp; Ada jadual kerja berkala dan dipatuhi<br/>
                                         3. &nbsp; Ada jadual kerja yang lengkap, dipatuhi dan sentiasa dipantau<br/>
@@ -719,7 +719,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Rekod Kos Penyengaraan (Pembaikkan Dan Penggantian)</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada rekod kos penyengaraan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada rekod kos penyengaraan<br/>
                                         1. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -734,7 +734,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Rekod Aduan Kerosakkan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada rekod Aduan Kerosakan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada rekod Aduan Kerosakan<br/>
                                         1. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Rekod kos Penyengaraan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -749,7 +749,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Kualiti Penyengaraan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Sangat tidak berpuas hati<br/>                                        
+                                        0. &nbsp;&nbsp; Sangat tidak berpuas hati<br/>
                                         1. &nbsp;&nbsp; Tidak berpuas hati<br/>
                                         2. &nbsp;&nbsp; Sederhana<br/>
                                         3. &nbsp;&nbsp; Berpuas Hati<br/>
@@ -757,7 +757,7 @@ foreach ($user_permission as $permission) {
                                     </p>
                                 </td>
                                 <td style="vertical-align:middle;"><input type="number" id="score14_edit" class="form-control" max="4"></td>
-                            </tr>                           
+                            </tr>
                         </tbody>
                     </table>
                     <hr/>
@@ -778,7 +778,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Aktiviti Kemasyarakatan di kawasan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada aktiviti Kemasyarakatan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada aktiviti Kemasyarakatan<br/>
                                         1. &nbsp;&nbsp; Aktiviti Kemasyarakatan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Aktiviti Kemasyarakatan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Aktiviti Kemasyarakatan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -793,7 +793,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Rasa Jati Diri Penduduk</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada rasa bangga terhadap kawasan kemajuan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada rasa bangga terhadap kawasan kemajuan<br/>
                                         1. &nbsp;&nbsp; Kurang rasa bangga dengan kawasan kemajuan<br/>
                                         2. &nbsp;&nbsp; Sederhana<br/>
                                         3. &nbsp;&nbsp; Berbangga dengan kawasan kemajuan<br/>
@@ -807,7 +807,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Rasa selamat dan dilindungi</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada rasa selamat dan dilindungi dalam kawasan kemajuan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada rasa selamat dan dilindungi dalam kawasan kemajuan<br/>
                                         1. &nbsp;&nbsp; Kurang rasa selamat dan dilindungi dalam kawasan kemajuan<br/>
                                         2. &nbsp;&nbsp; Sederhana<br/>
                                         3. &nbsp;&nbsp; Rasa selamat dan dilindungi dalam kawasan kemajuan<br/>
@@ -821,7 +821,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Semangat Kejiranan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada Semangat Kejiranan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada Semangat Kejiranan<br/>
                                         1. &nbsp;&nbsp; Kurang Semangat Kejiranan<br/>
                                         2. &nbsp;&nbsp; Sederhana<br/>
                                         3. &nbsp;&nbsp; Tinggi Semangat Kejiranan<br/>
@@ -829,7 +829,7 @@ foreach ($user_permission as $permission) {
                                     </p>
                                 </td>
                                 <td style="vertical-align:middle;"><input type="number" id="score18_edit" class="form-control" max="4"></td>
-                            </tr>                          
+                            </tr>
                         </tbody>
                     </table>
                     <hr/>
@@ -850,7 +850,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Perkhidmatan Keselamatan</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada perkhidmatan keselamatan<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada perkhidmatan keselamatan<br/>
                                         1. &nbsp;&nbsp; Perkhidmatan keselamatan mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Perkhidmatan keselamatan mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Perkhidmatan keselamatan mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -865,7 +865,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Pengurusan pencegahan Pambakaran</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada pengurusan pencegahan kebakaran<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada pengurusan pencegahan kebakaran<br/>
                                         1. &nbsp;&nbsp; Pengurusan pencegahan kebakaran mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Pengurusan pencegahan kebakaran mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Pengurusan pencegahan kebakaran mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -880,7 +880,7 @@ foreach ($user_permission as $permission) {
                                 <td>
                                     <p><b>Pengurusan Insuran</b></p>
                                     <p>
-                                        0. &nbsp;&nbsp; Tiada pengurusan insuran<br/>                                        
+                                        0. &nbsp;&nbsp; Tiada pengurusan insuran<br/>
                                         1. &nbsp;&nbsp; Pengurusan insuran mematuhi sekurang-kurangnya (1) peraturan asas<br/>
                                         2. &nbsp;&nbsp; Pengurusan insuran mematuhi sekurang-kurangnya (2) peraturan asas<br/>
                                         3. &nbsp;&nbsp; Pengurusan insuran mematuhi sekurang-kurangnya (3) peraturan asas<br/>
@@ -889,19 +889,19 @@ foreach ($user_permission as $permission) {
                                     <p><b><i>*4 Peraturan Asas – Kebakaran, Public Liability, Error and omission. Lain-lain Insurance</i></b></p>
                                 </td>
                                 <td style="vertical-align:middle;"><input type="number" id="score21_edit" class="form-control" max="4"></td>
-                            </tr>                        
+                            </tr>
                         </tbody>
                     </table>
                 </form>
-            </div> 
+            </div>
             <div class="modal-footer">
                 <form>
                     <input type="hidden" id="scoring_id"/>
                     <button type="button" id="cancel_button_edit" class="btn" data-dismiss="modal">
-                        Close
+                        {{ trans('app.forms.close') }}
                     </button>
                     <button type="button" id="submit_button_edit" class="btn btn-primary" onclick="editScoring()">
-                        Submit
+                        {{ trans('app.forms.submit') }}
                     </button>
                 </form>
             </div>
@@ -918,19 +918,19 @@ foreach ($user_permission as $permission) {
             "order": [[ 0, "desc" ]],
             "autoWidth": true,
             "scrollX": true,
-            "responsive": false
+            "fixedColumns": true
         });
     });
-    
+
     function addSurveyForm(){
         var addsurvey = $("#add_survey").val();
         if (addsurvey.trim() == "strata_management") {
             $("#add_strata_management_quality").modal("show");
         } else {
-            bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
-        }      
+            bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+        }
     }
-    
+
     function addScoring() {
         $("#loading").css("display", "inline-block");
 
@@ -955,10 +955,10 @@ foreach ($user_permission as $permission) {
             score19 = $("#score19").val(),
             score20 = $("#score20").val(),
             score21 = $("#score21").val(),
-            survey = $("#add_survey").val();           
+            survey = $("#add_survey").val();
 
         var error = 0;
-        
+
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@addScoring') }}",
@@ -969,7 +969,7 @@ foreach ($user_permission as $permission) {
                     score3: score3,
                     score4: score4,
                     score5: score5,
-                    score6: score6,                    
+                    score6: score6,
                     score7: score7,
                     score8: score8,
                     score9: score9,
@@ -993,7 +993,7 @@ foreach ($user_permission as $permission) {
                     $('#add_strata_management_quality').modal('hide');
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Saved Successfully</p>'
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.saved_successfully") }}</p>'
                         }, {
                             type: 'success',
                             placement: {
@@ -1002,22 +1002,22 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
         }
     }
-    
+
     function editSurveyForm($survey){
         var editsurvey = $survey;
         if (editsurvey.trim() == "strata_management") {
             $("#edit_strata_management_quality").modal("show");
         } else {
-            bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
-        }       
+            bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+        }
     }
-    
+
     $(document).on("click", '.edit_survey', function (e) {
         var score1 = $(this).data('score1'),
             score2 = $(this).data('score2'),
@@ -1041,7 +1041,7 @@ foreach ($user_permission as $permission) {
             score20 = $(this).data('score20'),
             score21 = $(this).data('score21'),
             id = $(this).data('id');
-        
+
         $("#score1_edit").val(score1);
         $("#score2_edit").val(score2);
         $("#score3_edit").val(score3);
@@ -1063,9 +1063,9 @@ foreach ($user_permission as $permission) {
         $("#score19_edit").val(score19);
         $("#score20_edit").val(score20);
         $("#score21_edit").val(score21);
-        $("#scoring_id").val(id);        
+        $("#scoring_id").val(id);
     });
-    
+
     function editScoring() {
         $("#loading").css("display", "inline-block");
 
@@ -1089,11 +1089,11 @@ foreach ($user_permission as $permission) {
             score18 = $("#score18_edit").val(),
             score19 = $("#score19_edit").val(),
             score20 = $("#score20_edit").val(),
-            score21 = $("#score21_edit").val(), 
+            score21 = $("#score21_edit").val(),
             id = $("#scoring_id").val();
 
         var error = 0;
-        
+
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@editScoring') }}",
@@ -1104,7 +1104,7 @@ foreach ($user_permission as $permission) {
                     score3: score3,
                     score4: score4,
                     score5: score5,
-                    score6: score6,                    
+                    score6: score6,
                     score7: score7,
                     score8: score8,
                     score9: score9,
@@ -1127,7 +1127,7 @@ foreach ($user_permission as $permission) {
                     $('#edit_strata_management_quality').modal('hide');
                     if (data.trim() == "true") {
                         $.notify({
-                            message: '<p style="text-align: center; margin-bottom: 0px;">Updated Successfully</p>'
+                            message: '<p style="text-align: center; margin-bottom: 0px;">{{ trans("app.successes.updated_successfully") }}</p>'
                         }, {
                             type: 'success',
                             placement: {
@@ -1136,19 +1136,19 @@ foreach ($user_permission as $permission) {
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
         }
     }
-    
+
     function deleteScoring(id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
-            showCancelButton: true,            
+            showCancelButton: true,
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -1164,15 +1164,15 @@ foreach ($user_permission as $permission) {
                 success: function(data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "Deleted!",
-                            text: "File has been deleted",
+                            title: "{{ trans('app.successes.deleted_title') }}",
+                            text: "{{ trans('app.successes.deleted_text_file') }}",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });

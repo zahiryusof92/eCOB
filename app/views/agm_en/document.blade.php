@@ -24,20 +24,20 @@ foreach ($user_permission as $permission) {
                 <div class="col-lg-12">
                     <?php if ($insert_permission == 1) { ?>
                         <button onclick="window.location = '{{ URL::action('AgmController@addDocument') }}'" type="button" class="btn btn-primary">
-                            Add Document
+                            {{ trans('app.buttons.add_document') }}
                         </button>
                         <br/><br/>
                     <?php } ?>
                     <table class="table table-hover nowrap" id="document" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:20%;">File No</th>
-                                <th style="width:15%;">Document Type</th>
-                                <th style="width:35%;">Document Name</th>
-                                <th style="width:10%;">Hidden</th>
-                                <th style="width:10%;">Read Only</th>
+                                <th style="width:20%;">{{ trans('app.forms.file_no') }}</th>
+                                <th style="width:15%;">{{ trans('app.forms.document_type') }}</th>
+                                <th style="width:35%;">{{ trans('app.forms.document_name') }}</th>
+                                <th style="width:10%;">{{ trans('app.forms.hidden') }}</th>
+                                <th style="width:10%;">{{ trans('app.forms.read_only') }}</th>
                                 <?php if ($update_permission == 1) { ?>
-                                    <th style="width:10%;">Action</th>
+                                    <th style="width:10%;">{{ trans('app.forms.action') }}</th>
                                     <?php } ?>
                             </tr>
                         </thead>
@@ -45,9 +45,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>            
+            </div>
         </div>
-    </section>    
+    </section>
     <!-- End  -->
 </div>
 
@@ -71,8 +71,8 @@ foreach ($user_permission as $permission) {
 
     function deleteDocument(id) {
         swal({
-            title: "Are you sure?",
-            text: "Your will not be able to recover this file!",
+            title: "{{ trans('app.confirmation.are_you_sure') }}",
+            text: "{{ trans('app.confirmation.no_recover_file') }}",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -89,15 +89,15 @@ foreach ($user_permission as $permission) {
                 success: function (data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "Deleted!",
-                            text: "File has been deleted",
+                            title: "{{ trans('app.successes.deleted_title') }}",
+                            text: "{{ trans('app.successes.deleted_text_file') }}",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
+                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
                     }
                 }
             });
