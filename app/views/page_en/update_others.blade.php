@@ -291,6 +291,22 @@ foreach ($user_permission as $permission) {
                                                 </div>
                                             </div>
                                             
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                        <label>Housing Scheme</label>
+                                                        <select id="house_scheme" class="form-control select2">
+                                                            <option value="">Please Select</option>
+                                                            @if ($users)
+                                                            @foreach ($users as $user)
+                                                            <option value="{{ $user->id }}" {{ ($other_details && $other_details->house_scheme == $user->id ? " selected" : "") }}>{{ $user->full_name }}</option>
+                                                            @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
                                             <div class="form-actions">
                                                 <input type="hidden" id="others_image_url" value="{{$other_details ? $other_details->image_url : ''}}"/>
                                                 <?php if ($update_permission == 1) { ?>
@@ -417,7 +433,8 @@ foreach ($user_permission as $permission) {
                 chinese_composition = $("#chinese_composition").val(),
                 indian_composition = $("#indian_composition").val(),
                 others_composition = $("#others_composition").val(),
-                foreigner_composition = $("#foreigner_composition").val();
+                foreigner_composition = $("#foreigner_composition").val(),
+                house_scheme = $("#house_scheme").val();
 
         var error = 0;        
 
@@ -443,6 +460,7 @@ foreach ($user_permission as $permission) {
                     indian_composition: indian_composition,
                     others_composition: others_composition,
                     foreigner_composition: foreigner_composition,
+                    house_scheme: house_scheme,
                     file_id : "{{ $file->id }}",
                     id: "{{$other_details ? $other_details->id : ''}}"
                 },

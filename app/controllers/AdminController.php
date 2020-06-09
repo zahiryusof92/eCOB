@@ -1993,6 +1993,7 @@ class AdminController extends BaseController {
             //mc
             $is_mc = $data['is_mc'];
             $mc_date_formed = $data['mc_date_formed'];
+            $mc_certificate_no = $data['mc_certificate_no'];
             $mc_first_agm = $data['mc_first_agm'];
             $mc_name = $data['mc_name'];
             $mc_address1 = $data['mc_address1'];
@@ -2087,6 +2088,7 @@ class AdminController extends BaseController {
                     $new_mc->file_id = $file_id;
                     $new_mc->management_id = $management->id;
                     $new_mc->date_formed = $mc_date_formed;
+                    $new_mc->certificate_no = $mc_certificate_no;
                     $new_mc->first_agm = $mc_first_agm;
                     $new_mc->name = $mc_name;
                     $new_mc->address1 = $mc_address1;
@@ -3285,6 +3287,7 @@ class AdminController extends BaseController {
         $file = Files::find($id);
         $other_details = OtherDetails::where('file_id', $file->id)->first();
         $image = OtherDetails::where('file_id', $file->id)->first();
+        $users = User::where('company_id', $file->company_id)->where('is_active', 1)->where('status', 1)->where('is_deleted', 0)->orderBy('full_name', 'asc')->get();
 
         if (Session::get('lang') == "en") {
             $viewData = array(
@@ -3294,6 +3297,7 @@ class AdminController extends BaseController {
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'file' => $file,
+                'users' => $users,
                 'other_details' => $other_details,
                 'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
@@ -3307,6 +3311,7 @@ class AdminController extends BaseController {
                 'sub_nav_active' => ($file->is_active == 2 ? 'cob_before_vp_list' : 'cob_list'),
                 'user_permission' => $user_permission,
                 'file' => $file,
+                'users' => $users,
                 'other_details' => $other_details,
                 'image' => (!empty($image->image_url) ? $image->image_url : '')
             );
@@ -3337,6 +3342,7 @@ class AdminController extends BaseController {
             $indian_composition = $data['indian_composition'];
             $others_composition = $data['others_composition'];
             $foreigner_composition = $data['foreigner_composition'];
+            $house_scheme = $data['house_scheme'];
 
             if (!empty($id)) {
                 $others = OtherDetails::find($id);
@@ -3363,6 +3369,7 @@ class AdminController extends BaseController {
                 $others->indian_composition = $indian_composition;
                 $others->others_composition = $others_composition;
                 $others->foreigner_composition = $foreigner_composition;
+                $others->house_scheme = $house_scheme;
                 $success = $others->save();
 
                 if ($success) {
