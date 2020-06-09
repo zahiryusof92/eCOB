@@ -1290,19 +1290,19 @@ class AgmController extends BaseController {
 
                 $data_raw = array(
                     $date_agm,
-                    trans('app.forms.annual_general_meeting').'<br/>'
-                    . trans('app.forms.extra_general_meeting').'<br/>'
-                    . trans('app.forms.meeting_minutes').'<br/>'
-                    . trans('app.forms.pledge_letter_of_integrity').'<br>'
+                    trans('app.forms.annual_general_meeting') . '<br/>'
+                    . trans('app.forms.extra_general_meeting') . '<br/>'
+                    . trans('app.forms.meeting_minutes') . '<br/>'
+                    . trans('app.forms.pledge_letter_of_integrity') . '<br>'
                     . trans('app.forms.declaration_letter_of_non_bankruptcy'),
                     $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
-                    trans('app.forms.jmc_spa_copy').'<br/>'
-                    . trans('app.forms.identity_card_list').'<br/>'
+                    trans('app.forms.jmc_spa_copy') . '<br/>'
+                    . trans('app.forms.identity_card_list') . '<br/>'
                     . trans('app.forms.attendance_list'),
                     $status6 . '<br/>' . $status7 . '<br/>' . $status8,
-                    trans('app.forms.audited_financial_report').'<br/>'
-                    . trans('app.forms.financial_audit_start_date').'<br/>'
-                    . trans('app.forms.financial_audit_end_date').'<br/>'
+                    trans('app.forms.audited_financial_report') . '<br/>'
+                    . trans('app.forms.financial_audit_start_date') . '<br/>'
+                    . trans('app.forms.financial_audit_end_date') . '<br/>'
                     . trans('app.forms.financial_audit_report'),
                     $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
                     $button
@@ -2321,4 +2321,5 @@ class AgmController extends BaseController {
             }
         }
     }
+
 }

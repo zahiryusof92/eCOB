@@ -27,7 +27,7 @@ class ImportController extends BaseController {
 
                 $path = $file->getRealPath();
                 $data = Excel::load($path, function($reader) {
-
+                            
                         })->get();
 
                 if (!empty($data) && $data->count()) {

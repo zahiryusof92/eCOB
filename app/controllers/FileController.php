@@ -479,4 +479,5 @@ class FileController extends BaseController {
             return Response::json(['success' => false, 'msg' => trans('app.errors.please_upload_valid_file')]);
         }
     }
+
 }
