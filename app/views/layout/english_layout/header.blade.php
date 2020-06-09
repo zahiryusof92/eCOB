@@ -8,7 +8,7 @@ if ($company->is_main != 1) {
     $cob_logout = '';
 }
 
-$swith_lang = true;
+$swith_lang = false;
 ?>
 
 <nav class="top-menu">
@@ -23,13 +23,13 @@ $swith_lang = true;
             <div class="dropdown">
                 <a href="javascript: void(0);" class="dropdown-toggle dropdown-inline-button" data-toggle="dropdown" aria-expanded="false">
                     <i class="dropdown-inline-button-icon fa fa-globe"></i>
-                    <span class="hidden-lg-down">{{ (app()->getLocale() == 'en') ? trans('app.language.en') : trans('app.language.my') }}</span>
+                    <span class="hidden-lg-down">English</span>
                     <span class="caret"></span>
-                </a>
+                </a>               
                 <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                    <a class="dropdown-item {{ (app()->getLocale() == 'ms') ? 'active' : '' }}" href="{{ url('/changeLanguage/ms') }}">{{ trans('app.language.my') }}</a>
-                    <a class="dropdown-item {{ (app()->getLocale() == 'en') ? 'active' : '' }}" href="{{ url('/changeLanguage/en') }}">{{ trans('app.language.en') }}</a>
-                </ul>
+                    <a class="dropdown-item" href="{{ url('/changeLanguage/ms') }}">Bahasa Melayu</a>
+                    <a class="dropdown-item active" href="{{ url('/changeLanguage/en') }}">English</a>                    
+                </ul>                
             </div>
             @endif
             <div class="menu-user-block">
@@ -40,15 +40,15 @@ $swith_lang = true;
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="" role="menu">
-                        <a class="dropdown-item" href="{{URL::action('AdminController@home')}}"><i class="dropdown-icon icmn-home2"></i> {{ trans('app.menus.home') }}</a>
+                        <a class="dropdown-item" href="{{URL::action('AdminController@home')}}"><i class="dropdown-icon icmn-home2"></i> Home</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{URL::action('UserController@editProfile')}}"><i class="dropdown-icon icmn-profile"></i> {{ trans('app.menus.edit_profile') }}</a>
-                        <a class="dropdown-item" href="{{URL::action('UserController@changePassword')}}"><i class="dropdown-icon fa fa-key"></i> {{ trans('app.menus.change_password') }}</a>
+                        <a class="dropdown-item" href="{{URL::action('UserController@editProfile')}}"><i class="dropdown-icon icmn-profile"></i> Edit Profile</a>
+                        <a class="dropdown-item" href="{{URL::action('UserController@changePassword')}}"><i class="dropdown-icon fa fa-key"></i> Change Password</a>
                         <div class="dropdown-divider"></div>
                         @if (!empty($cob_logout))
-                        <a class="dropdown-item" href="{{ url('/' . $cob_logout . '/logout') }}"><i class="dropdown-icon icmn-exit"></i> {{ trans('app.menus.logout') }}</a>
+                        <a class="dropdown-item" href="{{ url('/' . $cob_logout . '/logout') }}"><i class="dropdown-icon icmn-exit"></i> Logout</a>
                         @else
-                        <a class="dropdown-item" href="{{ url('/logout') }}"><i class="dropdown-icon icmn-exit"></i> {{ trans('app.menus.logout') }}</a>
+                        <a class="dropdown-item" href="{{ url('/logout') }}"><i class="dropdown-icon icmn-exit"></i> Logout</a>
                         @endif
                     </ul>
                 </div>
@@ -61,10 +61,10 @@ $swith_lang = true;
                                         <img src="{{$company->image_url}}" alt="" style="width: 40px;"/>
                                     </div>
                                 </div>          -->
-                <h6 class="margin-top-10">{{ trans('app.app_sub_title', ['title' => $company->name]) }}</h6>
+                <h6 class="margin-top-10">eCOB System - {{$company->name}}</h6>
             </div>
         </div>
-    </div>
+    </div>    
 </nav>
 <!-- END TOP NAVIGATION -->
 

@@ -24,35 +24,35 @@ foreach ($user_permission as $permission) {
                 <div class="col-lg-12">
                     <?php if ($insert_permission == 1) { ?>
                     <button onclick="window.location = '{{ URL::action('AdminController@addMemo') }}'" type="button" class="btn btn-primary">
-                        {{ trans('app.buttons.add_memo') }}
+                        Add Memo
                     </button>
                     <br/><br/>
                     <?php } ?>
                     <div class="row">
                         <div class="form-group">
-                            <label  class="col-md-offset-2 col-md-1 control-label">{{ trans('app.forms.memo_type') }}:</label>
+                            <label  class="col-md-offset-2 col-md-1 control-label">Memo Type:</label>
                             <div class="col-sm-3">
                                 <select id="memo_type" class="form-control">
-                                    <option value="">{{ trans('app.forms.all') }}</option>
-                                    @foreach ($memotype as $memotypes)
+                                    <option value="">All</option>
+                                    @foreach ($memotype as $memotypes) 
                                     <option value="{{$memotypes->description}}">{{$memotypes->description}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                    </div>
-
+                    </div> 
+                    
                     <table class="table table-hover nowrap" id="memo" width="100%">
                         <thead>
                             <tr>
-                                <th style="width:10%;">{{ trans('app.forms.memo_date') }}</th>
-                                <th style="width:20%;">{{ trans('app.forms.memo_type') }}</th>
-                                <th style="width:40%;">{{ trans('app.forms.subject') }}</th>
-                                <th style="width:10%;">{{ trans('app.forms.publish_date') }}</th>
-                                <th style="width:10%;">{{ trans('app.forms.expired_date') }}</th>
-                                <th style="width:10%;">{{ trans('app.forms.status') }}</th>
+                                <th style="width:10%;">Memo Date</th>
+                                <th style="width:20%;">Memo Type</th>
+                                <th style="width:40%;">Subject</th>
+                                <th style="width:10%;">Publish Date</th>
+                                <th style="width:10%;">Expired Date</th>
+                                <th style="width:10%;">Status</th>
                                 <?php if ($update_permission == 1) { ?>
-                                <th style="width:10%;">{{ trans('app.forms.action') }}</th>
+                                <th style="width:10%;">Action</th>
                                 <?php } ?>
                             </tr>
                         </thead>
@@ -60,9 +60,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>            
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 
@@ -82,12 +82,12 @@ foreach ($user_permission as $permission) {
                 }
             ]
         });
-    });
-
+    });  
+    
     $('#memo_type').on('change', function (){
         oTable.columns(1).search(this.value).draw();
     });
-
+    
     function inactiveMemo(id) {
         $.ajax({
             url: "{{ URL::action('AdminController@inactiveMemo') }}",
@@ -97,11 +97,11 @@ foreach ($user_permission as $permission) {
             },
             success: function(data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function() {
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
                         window.location = "{{URL::action('AdminController@memo')}}";
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                 }
             }
         });
@@ -116,22 +116,22 @@ foreach ($user_permission as $permission) {
             },
             success: function(data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function() {
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
                         window.location = "{{URL::action('AdminController@memo')}}";
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                 }
             }
         });
     }
-
+    
     function deleteMemo (id) {
         swal({
-            title: "{{ trans('app.confirmation.are_you_sure') }}",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            title: "Are you sure?",
+            text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,
+            showCancelButton: true,            
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -147,15 +147,15 @@ foreach ($user_permission as $permission) {
                 success: function(data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "{{ trans('app.successes.deleted_title') }}",
-                            text: "{{ trans('app.successes.deleted_text_file') }}",
+                            title: "Deleted!",
+                            text: "File has been deleted",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

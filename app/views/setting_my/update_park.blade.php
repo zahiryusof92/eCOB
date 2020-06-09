@@ -25,10 +25,10 @@ foreach ($user_permission as $permission) {
                             <div class="col-md-2">
                                 <label class="form-control-label" style="color: red; font-style: italic;">* Medan Wajib Diisi</label>
                             </div>
-                        </div>
+                        </div> 
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.dun') }}</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> DUN</label>
                             </div>
                             <div class="col-md-4">
                                 <select id="dun" class="form-control">
@@ -51,8 +51,8 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.admin_status') }}</label>
-                            </div>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Status</label>
+                            </div>    
                             <div class="col-md-4">
                                 <select id="is_active" class="form-control">
                                     <option value="">Sila pilih</option>
@@ -60,8 +60,8 @@ foreach ($user_permission as $permission) {
                                     <option value="0" {{($park->is_active==0 ? " selected" : "")}}>Tidak Aktif</option>
                                 </select>
                                 <div id="is_active_error" style="display:none;"></div>
-                            </div>
-                        </div>
+                            </div>                            
+                        </div>                                               
                         <div class="form-actions">
                             <?php if ($update_permission == 1) { ?>
                             <button type="button" class="btn btn-primary" id="submit_button" onclick="updatePark()">Simpan</button>
@@ -69,7 +69,7 @@ foreach ($user_permission as $permission) {
                             <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("AdminController@park") }}'">Batal</button>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -77,7 +77,7 @@ foreach ($user_permission as $permission) {
 </div>
 
 <!-- Page Scripts -->
-<script>
+<script>    
     function updatePark() {
         $("#loading").css("display", "inline-block");
 
@@ -86,25 +86,25 @@ foreach ($user_permission as $permission) {
                 is_active = $("#is_active").val();
 
         var error = 0;
-
+        
         if (dun.trim() == "") {
             $("#parliament_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila pilih DUN</span>');
             $("#parliament_error").css("display", "block");
             error = 1;
         }
-
+        
         if (description.trim() == "") {
             $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Taman</span>');
             $("#description_error").css("display", "block");
             error = 1;
         }
-
+        
         if (is_active.trim() == "") {
             $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila pilih Status</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
-
+        
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('AdminController@submitUpdatePark') }}",

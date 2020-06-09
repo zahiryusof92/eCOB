@@ -23,16 +23,16 @@ foreach ($user_permission as $permission) {
                     <form id="add_fileprefix" class="form-horizontal">
                         <div class="form-group row">
                             <div class="col-md-2">
-                                <label class="form-control-label" style="color: red; font-style: italic;">* {{ trans('app.forms.mandatory_fields') }}</label>
+                                <label class="form-control-label" style="color: red; font-style: italic;">* Mandatory Fields</label>
                             </div>
-                        </div>
+                        </div> 
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.parliament') }}</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Parliament</label>
                             </div>
                             <div class="col-md-4">
                                 <select id="parliament" class="form-control">
-                                    <option value="">{{ trans('app.forms.please_select') }}</option>
+                                    <option value="">Please Select</option>
                                     @foreach ($parliament as $parliaments)
                                     <option value="{{$parliaments->id}}">{{$parliaments->description}}</option>
                                     @endforeach
@@ -42,34 +42,34 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.dun') }}</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> DUN</label>
                             </div>
                             <div class="col-md-4">
-                                <input id="description" class="form-control" placeholder="{{ trans('app.forms.dun') }}" type="text">
+                                <input id="description" class="form-control" placeholder="DUN" type="text">
                                 <div id="description_error" style="display:none;"></div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.admin_status') }}</label>
-                            </div>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Status</label>
+                            </div>    
                             <div class="col-md-4">
                                 <select id="is_active" class="form-control">
-                                    <option value="">{{ trans('app.forms.please_select') }}</option>
-                                    <option value="1">{{ trans('app.forms.active') }}</option>
-                                    <option value="0">{{ trans('app.forms.inactive') }}</option>
+                                    <option value="">Please Select</option>
+                                    <option value="1">Active</option>
+                                    <option value="0">Inactive</option>
                                 </select>
                                 <div id="is_active_error" style="display:none;"></div>
-                            </div>
-                        </div>
+                            </div>                            
+                        </div>                                               
                         <div class="form-actions">
                             <?php if ($insert_permission == 1) { ?>
-                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addDun()">{{ trans('app.forms.save') }}</button>
+                            <button type="button" class="btn btn-primary" id="submit_button" onclick="addDun()">Save</button>
                             <?php } ?>
-                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("SettingController@dun") }}'">{{ trans('app.forms.cancel') }}</button>
+                            <button type="button" class="btn btn-default" id="cancel_button" onclick="window.location ='{{ URL::action("SettingController@dun") }}'">Cancel</button>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -78,7 +78,7 @@ foreach ($user_permission as $permission) {
 
 <!-- Page Scripts -->
 <script>
-
+    
     function addDun() {
         $("#loading").css("display", "inline-block");
 
@@ -87,25 +87,25 @@ foreach ($user_permission as $permission) {
                 is_active = $("#is_active").val();
 
         var error = 0;
-
+        
         if (parliament.trim() == "") {
-            $("#parliament_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Parliament"]) }}</span>');
+            $("#parliament_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select parliment</span>');
             $("#parliament_error").css("display", "block");
             error = 1;
         }
-
+        
         if (description.trim() == "") {
-            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"DUN"]) }}</span>');
+            $("#description_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter DUN</span>');
             $("#description_error").css("display", "block");
             error = 1;
         }
-
+        
         if (is_active.trim() == "") {
-            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"Status"]) }}</span>');
+            $("#is_active_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select status</span>');
             $("#is_active_error").css("display", "block");
             error = 1;
         }
-
+        
         if (error == 0) {
             $.ajax({
                 url: "{{ URL::action('SettingController@submitDun') }}",
@@ -121,11 +121,11 @@ foreach ($user_permission as $permission) {
                     $("#submit_button").removeAttr("disabled");
                     $("#cancel_button").removeAttr("disabled");
                     if (data.trim() == "true") {
-                        bootbox.alert("<span style='color:green;'>{{ trans('app.successes.dun.store') }}</span>", function () {
+                        bootbox.alert("<span style='color:green;'>DUN added successfully!</span>", function () {
                             window.location = '{{URL::action("SettingController@dun") }}';
                         });
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });

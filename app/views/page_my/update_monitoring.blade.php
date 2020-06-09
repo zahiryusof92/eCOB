@@ -45,11 +45,11 @@ foreach ($user_permission as $permission) {
                                 <a class="nav-link" href="{{URL::action('AdminController@buyer', $file->id)}}">Senarai Pembeli</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{URL::action('AdminController@document', $file->id)}}">{{ trans('app.forms.document') }}</a>
+                                <a class="nav-link" href="{{URL::action('AdminController@document', $file->id)}}">Document</a>
                             </li>
                         </ul>
-                        <div class="tab-content padding-vertical-20">
-                            <div class="tab-pane active" id="monitoring" role="tabpanel">
+                        <div class="tab-content padding-vertical-20">                            
+                            <div class="tab-pane active" id="monitoring" role="tabpanel">                                
                                 <form id="monitoring">
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -112,18 +112,18 @@ foreach ($user_permission as $permission) {
                                                             <option value="1">Januari</option>
                                                             <option value="2">Februari</option>
                                                             <option value="3">Mac</option>
-                                                            <option value="4">{{ trans('app.forms.april') }}</option>
+                                                            <option value="4">April</option>
                                                             <option value="5">Mei</option>
                                                             <option value="6">Jun</option>
                                                             <option value="7">Julai</option>
                                                             <option value="8">Ogos</option>
-                                                            <option value="9">{{ trans('app.forms.september') }}</option>
+                                                            <option value="9">September</option>
                                                             <option value="10">Oktober</option>
-                                                            <option value="11">{{ trans('app.forms.november') }}</option>
+                                                            <option value="11">November</option>
                                                             <option value="12">Disember</option>
                                                         </select>
                                                     </div>
-                                                </div>
+                                                </div>                                                 
                                                 <table class="table table-hover nowrap" id="financial_report_list" width="100%">
                                                     <thead>
                                                         <tr>
@@ -139,16 +139,16 @@ foreach ($user_permission as $permission) {
                                                             <?php } ?>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody>                                                    
                                                     </tbody>
                                                 </table>
-                                            </div>
+                                            </div>                                                                                      
                                         </div>
                                     </div>
                                     <hr/>
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <h6>Maklumat Tambahan</h6>
+                                            <h6>Maklumat Tambahan</h6>   
                                             <div class="table-responsive">
                                                 <?php if ($update_permission == 1) { ?>
                                                 <button type="button" class="btn btn-primary pull-right margin-bottom-25" onclick="addAJKDetails()">
@@ -168,7 +168,7 @@ foreach ($user_permission as $permission) {
                                                             <?php } ?>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody>                                                    
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -193,7 +193,7 @@ foreach ($user_permission as $permission) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -208,7 +208,7 @@ foreach ($user_permission as $permission) {
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">Tambah Maklumat AGM</h4>
-            </div>
+            </div>            
             <div class="modal-body">
                 <form>
                     <div class="form-group row">
@@ -300,17 +300,17 @@ foreach ($user_permission as $permission) {
                         <div class="col-md-2">
                             <input type="radio" id="audited_financial_report" name="audited_financial_report" value="0"> Tiada
                         </div>
-                    </div>
+                    </div>                    
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="form-control-label">Laporan Kewangan Audit </label>
                         </div>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Laporan Kewangan Audit " id="audit_report"/>
+                            <input type="text" class="form-control" placeholder="Laporan Kewangan Audit " id="audit_report"/>                            
                         </div>
                     </div>
                 </form>
-                <form id="upload_audit_report_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditReportFile') }}" autocomplete="off">
+                <form id="upload_audit_report_file" enctype="multipart/form-data" method="post" action="{{ url('uploadAuditReportFile') }}" autocomplete="off">  
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="form-control-label">&nbsp;</label>
@@ -323,7 +323,7 @@ foreach ($user_permission as $permission) {
                         </div>
                     </div>
                 </form>
-                <form id="upload_letter_integrity" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterIntegrity') }}" autocomplete="off">
+                <form id="upload_letter_integrity" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterIntegrity') }}" autocomplete="off">  
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="form-control-label">Surat ikrar integriti JMC</label>
@@ -336,7 +336,7 @@ foreach ($user_permission as $permission) {
                         </div>
                     </div>
                 </form>
-                <form id="upload_letter_bankruptcy" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterBankruptcy') }}" autocomplete="off">
+                <form id="upload_letter_bankruptcy" enctype="multipart/form-data" method="post" action="{{ url('uploadLetterBankruptcy') }}" autocomplete="off">  
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label class="form-control-label">Surat akuan tidak muflis</label>
@@ -377,7 +377,7 @@ foreach ($user_permission as $permission) {
                         </div>
                     </div>
                 </form>
-            </div>
+            </div> 
             <div class="modal-footer">
                 <form>
                     <input type="hidden" id="audit_report_file_url"/>
@@ -495,7 +495,7 @@ foreach ($user_permission as $permission) {
                         <div class="col-md-6">
                             <select id="ajk_designation" class="form-control">
                                 <option value="">Sila pilih</option>
-                                @foreach ($designation as $designations)
+                                @foreach ($designation as $designations) 
                                 <option value="{{$designations->id}}">{{$designations->description}}</option>
                                 @endforeach
                             </select>
@@ -509,18 +509,18 @@ foreach ($user_permission as $permission) {
                         <div class="col-md-8">
                             <input type="text" class="form-control" placeholder="Nama" id="ajk_name"/>
                             <div id="ajk_name_error" style="display:none;"></div>
-                        </div>
-                    </div>
+                        </div>                    
+                    </div> 
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.no') }}. Telefon</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> No. Telefon</label>
                         </div>
                         <div class="col-md-6">
                             <input type="text" class="form-control" placeholder="No. Telefon" id="ajk_phone_no"/>
                             <div id="ajk_phone_no_error" style="display:none;"></div>
                             <div id="ajk_phone_no_invalid_error" style="display:none;"></div>
-                        </div>
-                    </div>
+                        </div>                    
+                    </div> 
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Tahun</label>
@@ -529,9 +529,9 @@ foreach ($user_permission as $permission) {
                             <input type="text" class="form-control" placeholder="Tahun" id="ajk_year"/>
                             <div id="ajk_year_error" style="display:none;"></div>
                             <div id="ajk_year_invalid_error" style="display:none;"></div>
-                        </div>
-                    </div>
-                </div>
+                        </div>                    
+                    </div> 
+                </div>                
                 <div class="modal-footer">
                     <button type="button" class="btn" data-dismiss="modal">
                         Tutup
@@ -568,7 +568,7 @@ foreach ($user_permission as $permission) {
                         <div class="col-md-6">
                             <select id="ajk_designation_edit" class="form-control">
                                 <option value="">Sila pilih</option>
-                                @foreach ($designation as $designations)
+                                @foreach ($designation as $designations) 
                                 <option value="{{$designations->id}}">{{$designations->description}}</option>
                                 @endforeach
                             </select>
@@ -581,24 +581,24 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="col-md-8">
                             <input type="text" class="form-control" placeholder="Nama" id="ajk_name_edit"/>
-                        </div>
-                    </div>
+                        </div>                    
+                    </div> 
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.no') }}. Telefon</label>
+                            <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> No. Telefon</label>
                         </div>
                         <div class="col-md-6">
                             <input type="text" class="form-control" placeholder="No. Telefon" id="ajk_phone_no_edit"/>
-                        </div>
-                    </div>
+                        </div>                    
+                    </div> 
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label class="form-control-label"><span style="color: red; font-style: italic;">*</span> Tahun</label>
                         </div>
                         <div class="col-md-4">
                             <input type="text" class="form-control" placeholder="Tahun" id="ajk_year_edit"/>
-                        </div>
-                    </div>
+                        </div>                    
+                    </div> 
                 </div>
                 <div class="modal-footer">
                     <input type="hidden" id="ajk_id_edit"/>
@@ -629,7 +629,7 @@ foreach ($user_permission as $permission) {
             }
         });
     }
-
+    
     $(function () {
         $('#agm_date').datetimepicker({
             widgetPositioning: {
@@ -749,7 +749,7 @@ foreach ($user_permission as $permission) {
             success: showResponse3,
             dataType: 'json'
         };
-        //edit
+        //edit        
         var options4 = {
             beforeSubmit: showRequest4,
             success: showResponse4,
@@ -961,7 +961,7 @@ foreach ($user_permission as $permission) {
         var audit_end_date = $(this).data('audit_end_date');
         var audit_report_file_url = $(this).data('audit_report_file_url');
         var letter_integrity_url = $(this).data('letter_integrity_url');
-        var letter_bankruptcy_url = $(this).data('letter_bankruptcy_url');
+        var letter_bankruptcy_url = $(this).data('letter_bankruptcy_url');        
 
         $("#agm_id_edit").val(agm_id);
         if (agm_date == "0000-00-00 00:00:00") {
@@ -973,7 +973,7 @@ foreach ($user_permission as $permission) {
             $("#audit_start_edit").val("");
         } else {
             $("#audit_start_edit").val(audit_start_date);
-        }
+        } 
         if (audit_end_date == "0000-00-00 00:00:00") {
             $("#audit_end_edit").val("");
         } else {
@@ -1282,37 +1282,37 @@ foreach ($user_permission as $permission) {
             $("#ajk_designation_error").css("display", "block");
             error = 1;
         }
-
+        
         if (ajk_name.trim() == "") {
             $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Nama</span>');
             $("#ajk_name_error").css("display", "block");
             error = 1;
         }
-
+        
         if (ajk_phone_no.trim() == "") {
             $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan No. Telefon</span>');
             $("#ajk_phone_no_error").css("display", "block");
             $("#ajk_phone_no_invalid_error").css("display", "none");
             error = 1;
         }
-
+        
         if (isNaN(ajk_phone_no)) {
             $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan No. Telefon yang sah</span>');
-            $("#ajk_phone_no_invalid_error").css("display", "block");
+            $("#ajk_phone_no_invalid_error").css("display", "block");  
             $("#ajk_phone_no_error").css("display", "none");
             error = 1;
-        }
-
+        } 
+        
         if (ajk_year.trim() == "") {
             $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Tahun</span>');
             $("#ajk_year_error").css("display", "block");
-            $("#ajk_year_invalid_error").css("display", "none");
+            $("#ajk_year_invalid_error").css("display", "none"); 
             error = 1;
         }
-
+        
         if (isNaN(ajk_year)) {
             $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Tahun yang sah</span>');
-            $("#ajk_year_invalid_error").css("display", "block");
+            $("#ajk_year_invalid_error").css("display", "block");   
             $("#ajk_year_error").css("display", "none");
             error = 1;
         }
@@ -1366,37 +1366,37 @@ foreach ($user_permission as $permission) {
             $("#ajk_designation_edit_error").css("display", "block");
             error = 1;
         }
-
+        
         if (ajk_name.trim() == "") {
             $("#ajk_name_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Nama</span>');
             $("#ajk_name_error").css("display", "block");
             error = 1;
         }
-
+        
         if (ajk_phone_no.trim() == "") {
             $("#ajk_phone_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan No. Telefon</span>');
             $("#ajk_phone_no_error").css("display", "block");
             $("#ajk_phone_no_invalid_error").css("display", "none");
             error = 1;
         }
-
+        
         if (isNaN(ajk_phone_no)) {
             $("#ajk_phone_no_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan No. Telefon yang sah</span>');
-            $("#ajk_phone_no_invalid_error").css("display", "block");
+            $("#ajk_phone_no_invalid_error").css("display", "block");  
             $("#ajk_phone_no_error").css("display", "none");
             error = 1;
-        }
-
+        } 
+        
         if (ajk_year.trim() == "") {
             $("#ajk_year_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Tahun</span>');
             $("#ajk_year_error").css("display", "block");
-            $("#ajk_year_invalid_error").css("display", "none");
+            $("#ajk_year_invalid_error").css("display", "none"); 
             error = 1;
         }
-
+        
         if (isNaN(ajk_year)) {
             $("#ajk_year_invalid_error").html('<span style="color:red;font-style:italic;font-size:13px;">Sila masukkan Tahun yang sah</span>');
-            $("#ajk_year_invalid_error").css("display", "block");
+            $("#ajk_year_invalid_error").css("display", "block");   
             $("#ajk_year_error").css("display", "none");
             error = 1;
         }
@@ -1437,7 +1437,7 @@ foreach ($user_permission as $permission) {
     function deleteAGMDetails(id) {
         swal({
             title: "Anda pasti?",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            text: "Your will not be able to recover this file!",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -1475,7 +1475,7 @@ foreach ($user_permission as $permission) {
     function deleteAJKDetails(id) {
         swal({
             title: "Anda pasti?",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            text: "Your will not be able to recover this file!",
             type: "warning",
             showCancelButton: true,
             confirmButtonClass: "btn-warning",
@@ -1509,13 +1509,13 @@ foreach ($user_permission as $permission) {
             });
         });
     }
-
+    
     function deleteAuditReport(id) {
         swal({
             title: "Anda pasti?",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,
+            showCancelButton: true,            
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             cancelButtonText: "Batal",
@@ -1546,13 +1546,13 @@ foreach ($user_permission as $permission) {
             });
         });
     }
-
+    
     function deleteLetterIntegrity(id) {
         swal({
             title: "Anda pasti?",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,
+            showCancelButton: true,            
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             cancelButtonText: "Batal",
@@ -1583,13 +1583,13 @@ foreach ($user_permission as $permission) {
             });
         });
     }
-
+    
     function deleteLetterBankruptcy(id) {
         swal({
             title: "Anda pasti?",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,
+            showCancelButton: true,            
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             cancelButtonText: "Batal",
@@ -1620,15 +1620,15 @@ foreach ($user_permission as $permission) {
             });
         });
     }
-
+    
     function clearAuditFile() {
-        $("#audit_report_file").val("");
-        $("#audit_report_file_url").val("");
+        $("#audit_report_file").val(""); 
+        $("#audit_report_file_url").val(""); 
         $("#audit_report_file").css("color", "grey");
         $("#clear_audit_report_file").hide();
         $("#check_audit_report_file").hide();
     }
-
+    
     function clearLetterIntegrity() {
         $("#letter_integrity").val("");
         $("#letter_integrity_url").val("");
@@ -1636,33 +1636,33 @@ foreach ($user_permission as $permission) {
         $("#clear_letter_integrity").hide();
         $("#check_letter_integrity").hide();
     }
-
+    
     function clearLetterBankruptcy() {
-        $("#letter_bankruptcy").val("");
+        $("#letter_bankruptcy").val(""); 
         $("#letter_bankruptcy_url").val("");
         $("#letter_bankruptcy").css("color", "grey");
         $("#clear_letter_bankruptcy").hide();
         $("#check_letter_bankruptcy").hide();
     }
-    function clearAuditFileEdit() {
+    function clearAuditFileEdit() {        
         $("#audit_report_file_edit").val("");
-        $("#audit_report_file_url_edit").val("");
+        $("#audit_report_file_url_edit").val(""); 
         $("#audit_report_file_edit").css("color", "grey");
         $("#clear_audit_report_file_edit").hide();
         $("#check_audit_report_file_edit").hide();
     }
-
-    function clearLetterIntegrityEdit() {
-        $("#letter_integrity_edit").val("");
+    
+    function clearLetterIntegrityEdit() {        
+        $("#letter_integrity_edit").val(""); 
         $("#letter_integrity_url_edit").val("");
         $("#letter_integrity_edit").css("color", "grey");
         $("#clear_letter_integrity_edit").hide();
         $("#check_letter_integrity_edit").hide();
     }
-
-    function clearLetterBankruptcyEdit() {
-        $("#letter_bankruptcy_edit").val("");
-        $("#letter_bankruptcy_url_edit").val("");
+    
+    function clearLetterBankruptcyEdit() {        
+        $("#letter_bankruptcy_edit").val(""); 
+        $("#letter_bankruptcy_url_edit").val(""); 
         $("#letter_bankruptcy_edit").css("color", "grey");
         $("#clear_letter_bankruptcy_edit").hide();
         $("#check_letter_bankruptcy_edit").hide();

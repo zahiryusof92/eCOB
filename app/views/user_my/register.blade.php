@@ -17,7 +17,7 @@ $company = Company::orderBy('id')->first();
 
                 </a>
             </div>
-        </div>
+        </div>            
     </div>
 
 
@@ -27,7 +27,7 @@ $company = Company::orderBy('id')->first();
             <div class="single-page-block-form">
                 <div class="row">
                     <div class="col-md-3 text-center">
-                        <img src="{{asset($company->image_url)}}" style="width: 100px;" alt="" />
+                        <img src="{{asset($company->image_url)}}" style="width: 100px;" alt="" /> 
                     </div>
                     <div class="col-md-9">
                         <div class="vertical-align margin-top-20">
@@ -48,7 +48,7 @@ $company = Company::orderBy('id')->first();
                         <label style="color: red; font-style: italic;">* Medan Wajib Diisi</label>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="{{ trans('app.forms.username') }}" id="username">
+                        <input type="text" class="form-control" placeholder="Username *" id="username">
                         <div id="username_error" style="display:none;"></div>
                         <div id="username_in_use" style="display:none"></div>
                     </div>
@@ -91,7 +91,7 @@ $company = Company::orderBy('id')->first();
     </div>
     <div class="single-page-block-footer text-center">
 
-    </div>
+    </div>    
     <!-- End Login Page -->
 </div>
 
@@ -195,7 +195,7 @@ $company = Company::orderBy('id')->first();
             error = 1;
         }
         if (company.trim() === "") {
-            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"COB"]) }}</span>');
+            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select COB</span>');
             $("#company_error").css("display", "block");
             error = 1;
         }

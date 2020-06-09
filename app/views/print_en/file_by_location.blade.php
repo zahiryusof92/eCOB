@@ -14,7 +14,7 @@ $company = Company::find(Auth::user()->company_id);
                     <td class="text-center">
                         <h4 class="margin-bottom-0">
                             <img src="{{asset($company->image_url)}}" height="100px;" alt="">
-                        </h4>
+                        </h4> 
                     </td>
                     <td>
                         <h5 class="margin-bottom-10">
@@ -23,7 +23,7 @@ $company = Company::find(Auth::user()->company_id);
                         <h6 class="margin-bottom-0">
                             {{$title}}
                         </h6>
-                    </td>
+                    </td>                            
                 </tr>
             </table>
             <hr/>
@@ -31,7 +31,7 @@ $company = Company::find(Auth::user()->company_id);
                 <thead>
                     <tr>
                         <th style="width:20%; text-align: center !important;">Parlimen</th>
-                        <th style="width:20%; text-align: center !important;">{{ trans('app.forms.dun') }}</th>
+                        <th style="width:20%; text-align: center !important;">DUN</th>
                         <th style="width:20%; text-align: center !important;">Taman</th>
                         <th style="width:20%; text-align: center !important;">No. Fail</th>
                         <th style="width:20%; text-align: center !important;">Kawasan Pemajuan</th>
@@ -46,10 +46,10 @@ $company = Company::find(Auth::user()->company_id);
             <table width="100%">
                 <tr>
                     <td>
-                        <p><b>{{ trans('app.forms.confidential') }}</b></p>
+                        <p><b>CONFIDENTIAL</b></p>
                     </td>
                     <td class="pull-right">
-                        <p>{{ trans('app.forms.print_on', ['print'=>date('d/m/Y h:i:s A', strtotime("now"))]) }}</p>
+                        <p>Print On: {{date('d/m/Y h:i:s A', strtotime("now"))}}</p>
                     </td>
                 </tr>
             </table>

@@ -14,7 +14,7 @@
                         <?php $active = 'active'; ?>
                         <?php foreach ($formtype as $ft) { ?>
                             <li class="nav-item">
-                                <a class="nav-link <?php echo $active ?>" id="tab-{{ $ft->id }}" data-toggle="tab" href="#tab-pane{{ $ft->id }}" role="tab" aria-controls="{{ $ft->id }}" aria-selected="true">{{ $ft->name_en }}</a>
+                                <a class="nav-link <?php echo $active ?>" id="tab-{{ $ft->id }}" data-toggle="tab" href="#tab-pane{{ $ft->id }}" role="tab" aria-controls="{{ $ft->id }}" aria-selected="true">{{ (app()->getLocale() == 'en') ? $ft->name_en : $ft->name_my }}</a>
                             </li> 
                             <?php $active = ''; ?>
                         <?php } ?>

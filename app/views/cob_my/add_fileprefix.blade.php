@@ -29,14 +29,14 @@ foreach ($user_permission as $permission) {
                         @if (Auth::user()->getAdmin())
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.cob') }}</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> COB</label>
                             </div>
                             <div class="col-md-6">
                                 <select id="company" class="form-control select2">
-                                    <option value="">{{ trans('app.forms.please_select') }}</option>
+                                    <option value="">Please Select</option>
                                     @foreach ($cob as $companies)
                                     <option value="{{ $companies->id }}">{{ $companies->name }} ({{ $companies->short_name }})</option>
-                                    @endforeach
+                                    @endforeach                                    
                                 </select>
                                 <div id="company_error" style="display:none;"></div>
                             </div>
@@ -55,17 +55,17 @@ foreach ($user_permission as $permission) {
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.sort_no') }}</label>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Sort No</label>
                             </div>
                             <div class="col-md-2">
-                                <input id="sort_no" class="form-control" placeholder="{{ trans('app.forms.sort_no') }}" type="number">
+                                <input id="sort_no" class="form-control" placeholder="Sort No" type="number">
                                 <div id="sort_no_error" style="display:none;"></div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> {{ trans('app.forms.admin_status') }}</label>
-                            </div>
+                                <label class="form-label"><span style="color: red; font-style: italic;">*</span> Status</label>
+                            </div>    
                             <div class="col-md-4">
                                 <select id="is_active" class="form-control">
                                     <option value="">Sila pilih</option>
@@ -73,8 +73,8 @@ foreach ($user_permission as $permission) {
                                     <option value="0">Tidak Aktif</option>
                                 </select>
                                 <div id="is_active_error" style="display:none;"></div>
-                            </div>
-                        </div>
+                            </div>                            
+                        </div>                                               
                         <div class="form-actions">
                             <?php if ($insert_permission == 1) { ?>
                                 <button type="button" class="btn btn-primary" id="submit_button" onclick="addFilePrefix()">Hantar</button>
@@ -83,7 +83,7 @@ foreach ($user_permission as $permission) {
                              <img id="loading" style="display:none;" src="{{asset('assets/common/img/input-spinner.gif')}}"/>
                         </div>
                     </form>
-                </div>
+                </div>                
             </div>
         </div>
     </section>
@@ -107,7 +107,7 @@ foreach ($user_permission as $permission) {
         var error = 0;
 
         if (company_id.trim() == "") {
-            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.select", ["attribute"=>"COB"]) }}</span>');
+            $("#company_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please select COB</span>');
             $("#company_error").css("display", "block");
             error = 1;
         }
@@ -118,7 +118,7 @@ foreach ($user_permission as $permission) {
         }
 
         if (sort_no.trim() <= 0) {
-            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">{{ trans("app.errors.required", ["attribute"=>"Sort No"]) }}</span>');
+            $("#sort_no_error").html('<span style="color:red;font-style:italic;font-size:13px;">Please enter Sort No</span>');
             $("#sort_no_error").css("display", "block");
             error = 1;
         }

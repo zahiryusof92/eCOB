@@ -45,9 +45,9 @@ foreach ($user_permission as $permission) {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>            
         </div>
-    </section>
+    </section>    
     <!-- End  -->
 </div>
 
@@ -61,8 +61,8 @@ foreach ($user_permission as $permission) {
             "order": [[ 0, "asc" ]],
             responsive: true
         });
-    });
-
+    });    
+    
     function inactiveAgmDesignSub(id) {
         $.ajax({
             url: "{{ URL::action('AgmController@inactiveAgmDesignSub') }}",
@@ -72,11 +72,11 @@ foreach ($user_permission as $permission) {
             },
             success: function(data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function() {
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
                         window.location = "{{URL::action('AgmController@agmDesignSub')}}";
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                 }
             }
         });
@@ -91,22 +91,22 @@ foreach ($user_permission as $permission) {
             },
             success: function(data) {
                 if (data.trim() == "true") {
-                    bootbox.alert("<span style='color:green;'>{{ trans('app.successes.statuses.update') }}</span>", function() {
+                    bootbox.alert("<span style='color:green;'>Status update successfully!</span>", function() {
                         window.location = "{{URL::action('AgmController@agmDesignSub')}}";
                     });
                 } else {
-                    bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                    bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                 }
             }
         });
     }
-
+    
     function deleteAgmDesignSub (id) {
         swal({
-            title: "{{ trans('app.confirmation.are_you_sure') }}",
-            text: "{{ trans('app.confirmation.no_recover_file') }}",
+            title: "Are you sure?",
+            text: "Your will not be able to recover this file!",
             type: "warning",
-            showCancelButton: true,
+            showCancelButton: true,            
             confirmButtonClass: "btn-warning",
             cancelButtonClass: "btn-default",
             confirmButtonText: "Delete",
@@ -122,15 +122,15 @@ foreach ($user_permission as $permission) {
                 success: function(data) {
                     if (data.trim() == "true") {
                         swal({
-                            title: "{{ trans('app.successes.deleted_title') }}",
-                            text: "{{ trans('app.successes.deleted_text_file') }}",
+                            title: "Deleted!",
+                            text: "File has been deleted",
                             type: "success",
                             confirmButtonClass: "btn-success",
                             closeOnConfirm: false
                         });
                         location.reload();
                     } else {
-                        bootbox.alert("<span style='color:red;'>{{ trans('app.errors.occurred') }}</span>");
+                        bootbox.alert("<span style='color:red;'>An error occured while processing. Please try again.</span>");
                     }
                 }
             });
