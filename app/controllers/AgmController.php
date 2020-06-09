@@ -179,19 +179,35 @@ class AgmController extends BaseController {
             12 => 'DEC'
         ];
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.designation'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmdesignsub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'cob' => $cob,
-            'month' => $month,
-            'image' => ''
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.designation'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdesignsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'cob' => $cob,
+                'month' => $month,
+                'image' => ''
+            );
 
-        return View::make('agm_en.ajk', $viewData);
+            return View::make('agm_en.ajk', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.designation'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdesignsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'cob' => $cob,
+                'month' => $month,
+                'image' => ''
+            );
+
+            return View::make('agm_my.ajk', $viewData);
+        }
     }
 
     public function getAJK() {
@@ -273,19 +289,35 @@ class AgmController extends BaseController {
             12 => 'DEC'
         ];
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.add_designation'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmdesignsub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'designation' => $designation,
-            'month' => $month,
-            'image' => ''
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_designation'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdesignsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'designation' => $designation,
+                'month' => $month,
+                'image' => ''
+            );
 
-        return View::make('agm_en.add_ajk', $viewData);
+            return View::make('agm_en.add_ajk', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_designation'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdesignsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'designation' => $designation,
+                'month' => $month,
+                'image' => ''
+            );
+
+            return View::make('agm_my.add_ajk', $viewData);
+        }
     }
 
     public function submitAddAJK() {
@@ -363,20 +395,37 @@ class AgmController extends BaseController {
 
         $ajk_details = AJKDetails::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.edit_designation'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmdesignsub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'designation' => $designation,
-            'month' => $month,
-            'ajk_details' => $ajk_details,
-            'image' => ''
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.edit_designation'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdesignsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'designation' => $designation,
+                'month' => $month,
+                'ajk_details' => $ajk_details,
+                'image' => ''
+            );
 
-        return View::make('agm_en.edit_ajk', $viewData);
+            return View::make('agm_en.edit_ajk', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.edit_designation'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdesignsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'designation' => $designation,
+                'month' => $month,
+                'ajk_details' => $ajk_details,
+                'image' => ''
+            );
+
+            return View::make('agm_my.edit_ajk', $viewData);
+        }
     }
 
     public function submitEditAJK() {
@@ -458,19 +507,35 @@ class AgmController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.purchaser'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmpurchasesub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'Uploadmessage' => '',
-            'upload' => "true",
-            'image' => ''
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.purchaser'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmpurchasesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
 
-        return View::make('agm_en.purchaser', $viewData);
+            return View::make('agm_en.purchaser', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.purchaser'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmpurchasesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
+
+            return View::make('agm_my.purchaser', $viewData);
+        }
     }
 
     public function getPurchaser() {
@@ -523,19 +588,35 @@ class AgmController extends BaseController {
         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
         $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.add_purchaser'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmpurchasesub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'race' => $race,
-            'nationality' => $nationality,
-            'image' => ''
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_purchaser'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmpurchasesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'race' => $race,
+                'nationality' => $nationality,
+                'image' => ''
+            );
 
-        return View::make('agm_en.add_purchaser', $viewData);
+            return View::make('agm_en.add_purchaser', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_purchaser'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmpurchasesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'race' => $race,
+                'nationality' => $nationality,
+                'image' => ''
+            );
+
+            return View::make('agm_my.add_purchaser', $viewData);
+        }
     }
 
     public function submitPurchaser() {
@@ -599,20 +680,37 @@ class AgmController extends BaseController {
         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
         $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.edit_purchaser'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmpurchasesub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'buyer' => $buyer,
-            'race' => $race,
-            'nationality' => $nationality,
-            'image' => ''
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.edit_purchaser'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmpurchasesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'buyer' => $buyer,
+                'race' => $race,
+                'nationality' => $nationality,
+                'image' => ''
+            );
 
-        return View::make('agm_en.edit_purchaser', $viewData);
+            return View::make('agm_en.edit_purchaser', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.edit_purchaser'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmpurchasesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'buyer' => $buyer,
+                'race' => $race,
+                'nationality' => $nationality,
+                'image' => ''
+            );
+
+            return View::make('agm_my.edit_purchaser', $viewData);
+        }
     }
 
     public function submitEditPurchaser() {
@@ -703,18 +801,33 @@ class AgmController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.import_purchaser'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmpurchasesub_list',
-            'user_permission' => $user_permission,
-            'Uploadmessage' => '',
-            'upload' => "true",
-            'image' => ''
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.import_purchaser'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmpurchasesub_list',
+                'user_permission' => $user_permission,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
 
-        return View::make('agm_en.import_purchaser', $viewData);
+            return View::make('agm_en.import_purchaser', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.import_purchaser'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmpurchasesub_list',
+                'user_permission' => $user_permission,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
+
+            return View::make('agm_my.import_purchaser', $viewData);
+        }
     }
 
     public function submitUploadPurchaser() {
@@ -821,19 +934,35 @@ class AgmController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.tenant'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmtenantsub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'Uploadmessage' => '',
-            'upload' => "true",
-            'image' => ''
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.tenant'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
 
-        return View::make('agm_en.tenant', $viewData);
+            return View::make('agm_en.tenant', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.tenant'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
+
+            return View::make('agm_my.tenant', $viewData);
+        }
     }
 
     public function getTenant() {
@@ -885,19 +1014,35 @@ class AgmController extends BaseController {
         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
         $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.add_tenant'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmtenantsub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'race' => $race,
-            'nationality' => $nationality,
-            'image' => ''
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_tenant'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'race' => $race,
+                'nationality' => $nationality,
+                'image' => ''
+            );
 
-        return View::make('agm_en.add_tenant', $viewData);
+            return View::make('agm_en.add_tenant', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_tenant'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'race' => $race,
+                'nationality' => $nationality,
+                'image' => ''
+            );
+
+            return View::make('agm_my.add_tenant', $viewData);
+        }
     }
 
     public function submitTenant() {
@@ -959,20 +1104,37 @@ class AgmController extends BaseController {
         $race = Race::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
         $nationality = Nationality::where('is_active', 1)->where('is_deleted', 0)->orderBy('sort_no', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.add_tenant'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmtenantsub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'tenant' => $tenant,
-            'race' => $race,
-            'nationality' => $nationality,
-            'image' => ''
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_tenant'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'tenant' => $tenant,
+                'race' => $race,
+                'nationality' => $nationality,
+                'image' => ''
+            );
 
-        return View::make('agm_en.edit_tenant', $viewData);
+            return View::make('agm_en.edit_tenant', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_tenant'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'tenant' => $tenant,
+                'race' => $race,
+                'nationality' => $nationality,
+                'image' => ''
+            );
+
+            return View::make('agm_my.edit_tenant', $viewData);
+        }
     }
 
     public function submitEditTenant() {
@@ -1061,18 +1223,33 @@ class AgmController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.import_tenant'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmtenantsub_list',
-            'user_permission' => $user_permission,
-            'Uploadmessage' => '',
-            'upload' => "true",
-            'image' => ''
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.import_tenant'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
 
-        return View::make('agm_en.import_tenant', $viewData);
+            return View::make('agm_en.import_tenant', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.import_tenant'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmtenantsub_list',
+                'user_permission' => $user_permission,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => ''
+            );
+
+            return View::make('agm_my.import_tenant', $viewData);
+        }
     }
 
     public function submitUploadTenant() {
@@ -1175,19 +1352,35 @@ class AgmController extends BaseController {
         $files = Files::find($id);
         $image = OtherDetails::where('file_id', $files->id)->first();
 
-        $viewData = array(
-            'title' => trans('app.menus.cob.update_cob_file'),
-            'panel_nav_active' => 'cob_panel',
-            'main_nav_active' => 'cob_main',
-            'sub_nav_active' => 'cob_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'Uploadmessage' => '',
-            'upload' => "true",
-            'image' => (!empty($image->image_url) ? $image->image_url : '')
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.cob.update_cob_file'),
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
 
-        return View::make('page_en.view_buyer', $viewData);
+            return View::make('page_en.view_buyer', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.cob.update_cob_file'),
+                'panel_nav_active' => 'cob_panel',
+                'main_nav_active' => 'cob_main',
+                'sub_nav_active' => 'cob_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'Uploadmessage' => '',
+                'upload' => "true",
+                'image' => (!empty($image->image_url) ? $image->image_url : '')
+            );
+
+            return View::make('page_my.view_buyer', $viewData);
+        }
     }
 
     /*
@@ -1199,17 +1392,31 @@ class AgmController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.upload_of_minutes'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmminutesub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.upload_of_minutes'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
 
-        return View::make('agm_en.minutes', $viewData);
+            return View::make('agm_en.minutes', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.upload_of_minutes'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('agm_my.minutes', $viewData);
+        }
     }
 
     public function getMinutes() {
@@ -1288,25 +1495,47 @@ class AgmController extends BaseController {
                     $status10 = '<i class="icmn-checkmark"></i>';
                 }
 
-                $data_raw = array(
-                    $date_agm,
-                    trans('app.forms.annual_general_meeting').'<br/>'
-                    . trans('app.forms.extra_general_meeting').'<br/>'
-                    . trans('app.forms.meeting_minutes').'<br/>'
-                    . trans('app.forms.pledge_letter_of_integrity').'<br>'
-                    . trans('app.forms.declaration_letter_of_non_bankruptcy'),
-                    $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
-                    trans('app.forms.jmc_spa_copy').'<br/>'
-                    . trans('app.forms.identity_card_list').'<br/>'
-                    . trans('app.forms.attendance_list'),
-                    $status6 . '<br/>' . $status7 . '<br/>' . $status8,
-                    trans('app.forms.audited_financial_report').'<br/>'
-                    . trans('app.forms.financial_audit_start_date').'<br/>'
-                    . trans('app.forms.financial_audit_end_date').'<br/>'
-                    . trans('app.forms.financial_audit_report'),
-                    $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
-                    $button
-                );
+                if (Session::get('lang') == "en") {
+                    $data_raw = array(
+                        $date_agm,
+                        trans('app.forms.annual_general_meeting').'<br/>'
+                        . trans('app.forms.extra_general_meeting').'<br/>'
+                        . trans('app.forms.meeting_minutes').'<br/>'
+                        . trans('app.forms.pledge_letter_of_integrity').'<br>'
+                        . trans('app.forms.declaration_letter_of_non_bankruptcy'),
+                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
+                        trans('app.forms.jmc_spa_copy').'<br/>'
+                        . trans('app.forms.identity_card_list').'<br/>'
+                        . trans('app.forms.attendance_list'),
+                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
+                        trans('app.forms.audited_financial_report').'<br/>'
+                        . trans('app.forms.financial_audit_start_date').'<br/>'
+                        . trans('app.forms.financial_audit_end_date').'<br/>'
+                        . trans('app.forms.financial_audit_report'),
+                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
+                        $button
+                    );
+                } else {
+                    $data_raw = array(
+                        $date_agm,
+                        trans('app.forms.annual_general_meeting').'<br/>'
+                        . trans('app.forms.extra_general_meeting').'<br/>'
+                        . trans('app.forms.meeting_minutes').'<br/>'
+                        . trans('app.forms.pledge_letter_of_integrity').'<br>'
+                        . trans('app.forms.declaration_letter_of_non_bankruptcy'),
+                        $status1 . '<br/>' . $status2 . '<br/>' . $status3 . '<br/>' . $status4 . '<br/>' . $status5,
+                        trans('app.forms.jmc_spa_copy').'<br/>'
+                        . trans('app.forms.identity_card_list').'<br/>'
+                        . trans('app.forms.attendance_list'),
+                        $status6 . '<br/>' . $status7 . '<br/>' . $status8,
+                        trans('app.forms.audited_financial_report').'<br/>'
+                        . trans('app.forms.financial_audit_start_date').'<br/>'
+                        . trans('app.forms.financial_audit_end_date').'<br/>'
+                        . trans('app.forms.financial_audit_report'),
+                        $status9 . '<br/>' . $date_audit_start . '<br/>' . $date_audit_end . '<br/>' . $status10,
+                        $button
+                    );
+                }
 
                 array_push($data, $data_raw);
             }
@@ -1331,17 +1560,31 @@ class AgmController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.add_minutes'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmminutesub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_minutes'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
 
-        return View::make('agm_en.add_minutes', $viewData);
+            return View::make('agm_en.add_minutes', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_minutes'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmminutesub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'image' => ""
+            );
+
+            return View::make('agm_my.add_minutes', $viewData);
+        }
     }
 
     public function submitAddMinutes() {
@@ -1442,18 +1685,33 @@ class AgmController extends BaseController {
         if ($meeting_doc) {
             $files = Files::where('is_active', 1)->where('is_deleted', 0)->orderBy('year', 'desc')->get();
 
-            $viewData = array(
-                'title' => trans('app.menus.agm.edit_minutes'),
-                'panel_nav_active' => 'agm_panel',
-                'main_nav_active' => 'agm_main',
-                'sub_nav_active' => 'agmminutesub_list',
-                'user_permission' => $user_permission,
-                'meeting_doc' => $meeting_doc,
-                'files' => $files,
-                'image' => ""
-            );
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => trans('app.menus.agm.edit_minutes'),
+                    'panel_nav_active' => 'agm_panel',
+                    'main_nav_active' => 'agm_main',
+                    'sub_nav_active' => 'agmminutesub_list',
+                    'user_permission' => $user_permission,
+                    'meeting_doc' => $meeting_doc,
+                    'files' => $files,
+                    'image' => ""
+                );
 
-            return View::make('agm_en.edit_minutes', $viewData);
+                return View::make('agm_en.edit_minutes', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => trans('app.menus.agm.edit_minutes'),
+                    'panel_nav_active' => 'agm_panel',
+                    'main_nav_active' => 'agm_main',
+                    'sub_nav_active' => 'agmminutesub_list',
+                    'user_permission' => $user_permission,
+                    'meeting_doc' => $meeting_doc,
+                    'files' => $files,
+                    'image' => ""
+                );
+
+                return View::make('agm_my.edit_minutes', $viewData);
+            }
         }
     }
 
@@ -1586,17 +1844,31 @@ class AgmController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderby('sort_no', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.upload_document'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmdocumentsub_list',
-            'user_permission' => $user_permission,
-            'documentType' => $documentType,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.upload_document'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'documentType' => $documentType,
+                'image' => ""
+            );
 
-        return View::make('agm_en.document', $viewData);
+            return View::make('agm_en.document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.upload_document'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_my.document', $viewData);
+        }
     }
 
     public function getDocument() {
@@ -1725,18 +1997,33 @@ class AgmController extends BaseController {
         }
         $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->orderBy('name')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.add_document'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmdocumentsub_list',
-            'user_permission' => $user_permission,
-            'files' => $files,
-            'documentType' => $documentType,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_document'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
 
-        return View::make('agm_en.add_document', $viewData);
+            return View::make('agm_en.add_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.add_document'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_my.add_document', $viewData);
+        }
     }
 
     public function submitAddDocument() {
@@ -1788,19 +2075,35 @@ class AgmController extends BaseController {
         }
         $documentType = Documenttype::where('is_active', 1)->where('is_deleted', 0)->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.agm.edit_document'),
-            'panel_nav_active' => 'agm_panel',
-            'main_nav_active' => 'agm_main',
-            'sub_nav_active' => 'agmdocumentsub_list',
-            'user_permission' => $user_permission,
-            'document' => $document,
-            'files' => $files,
-            'documentType' => $documentType,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.agm.edit_document'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'document' => $document,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
 
-        return View::make('agm_en.edit_document', $viewData);
+            return View::make('agm_en.edit_document', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.agm.edit_document'),
+                'panel_nav_active' => 'agm_panel',
+                'main_nav_active' => 'agm_main',
+                'sub_nav_active' => 'agmdocumentsub_list',
+                'user_permission' => $user_permission,
+                'document' => $document,
+                'files' => $files,
+                'documentType' => $documentType,
+                'image' => ""
+            );
+
+            return View::make('agm_my.edit_document', $viewData);
+        }
     }
 
     public function submitUpdateDocument() {
@@ -2321,4 +2624,5 @@ class AgmController extends BaseController {
             }
         }
     }
+
 }

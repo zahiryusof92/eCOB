@@ -561,10 +561,10 @@ return array(
             "destroy" => "Finance file deleted successfully!"
         ),
         "agm_design" => array(
-            "store" => "Agm Designation added successfully!",
-            "update" => "Agm Designation updated successfully!",
-            "destroy" => "Agm Designation deleted successfully!",
-            "submit" => "Agm Designation submitted successfully!",
+            "store" => "Agm Design added successfully!",
+            "update" => "Agm Design updated successfully!",
+            "destroy" => "Agm Design deleted successfully!",
+            "submit" => "Agm Design submitted successfully!",
         ),
         "agm_purchaser" => array(
             "store" => "Agm Purchaser added successfully!",

@@ -6,14 +6,25 @@ class ImportController extends BaseController {
         if (View::exists($name)) {
             return View::make($name);
         } else {
-            $viewData = array(
-                'title' => trans('app.errors.page_not_found'),
-                'panel_nav_active' => '',
-                'main_nav_active' => '',
-                'sub_nav_active' => '',
-                'image' => ""
-            );
-            return View::make('404_en', $viewData);
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => trans('app.errors.page_not_found'),
+                    'panel_nav_active' => '',
+                    'main_nav_active' => '',
+                    'sub_nav_active' => '',
+                    'image' => ""
+                );
+                return View::make('404_en', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => trans('app.errors.page_not_found'),
+                    'panel_nav_active' => '',
+                    'main_nav_active' => '',
+                    'sub_nav_active' => '',
+                    'image' => ""
+                );
+                return View::make('404_my', $viewData);
+            }
         }
     }
 

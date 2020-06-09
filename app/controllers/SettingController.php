@@ -6,14 +6,25 @@ class SettingController extends BaseController {
         if (View::exists($name)) {
             return View::make($name);
         } else {
-            $viewData = array(
-                'title' => trans('app.errors.page_not_found'),
-                'panel_nav_active' => '',
-                'main_nav_active' => '',
-                'sub_nav_active' => '',
-                'image' => ""
-            );
-            return View::make('404_en', $viewData);
+            if (Session::get('lang') == "en") {
+                $viewData = array(
+                    'title' => trans('app.errors.page_not_found'),
+                    'panel_nav_active' => '',
+                    'main_nav_active' => '',
+                    'sub_nav_active' => '',
+                    'image' => ""
+                );
+                return View::make('404_en', $viewData);
+            } else {
+                $viewData = array(
+                    'title' => trans('app.errors.page_not_found'),
+                    'panel_nav_active' => '',
+                    'main_nav_active' => '',
+                    'sub_nav_active' => '',
+                    'image' => ""
+                );
+                return View::make('404_my', $viewData);
+            }
         }
     }
 
@@ -23,32 +34,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.area_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'area_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.area_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'area_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.area', $viewData);
+            return View::make('setting_en.area', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.area_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'area_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.area', $viewData);
+        }
     }
 
     public function addArea() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_area'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'area_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_area'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'area_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_area', $viewData);
+            return View::make('setting_en.add_area', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_area'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'area_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_area', $viewData);
+        }
     }
 
     public function submitArea() {
@@ -85,12 +122,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($area as $areas) {
                 $button = "";
-                if ($areas->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveArea(\'' . $areas->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($areas->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveArea(\'' . $areas->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeArea(\'' . $areas->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeArea(\'' . $areas->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($areas->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveArea(\'' . $areas->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeArea(\'' . $areas->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateArea', $areas->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteArea(\'' . $areas->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -199,17 +246,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $area = Area::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_area'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'area_list',
-            'user_permission' => $user_permission,
-            'area' => $area,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_area'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'area_list',
+                'user_permission' => $user_permission,
+                'area' => $area,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_area', $viewData);
+            return View::make('setting_en.update_area', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_area'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'area_list',
+                'user_permission' => $user_permission,
+                'area' => $area,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_area', $viewData);
+        }
     }
 
     public function submitUpdateArea() {
@@ -245,32 +306,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.city_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'city_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.city_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'city_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.city', $viewData);
+            return View::make('setting_en.city', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.city_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'city_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.city', $viewData);
+        }
     }
 
     public function addCity() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_city'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'city_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_city'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'city_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_city', $viewData);
+            return View::make('setting_en.add_city', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_city'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'city_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_city', $viewData);
+        }
     }
 
     public function submitCity() {
@@ -307,12 +394,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($city as $cities) {
                 $button = "";
-                if ($cities->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCity(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($cities->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCity(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCity(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCity(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($cities->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCity(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCity(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateCity', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteCity(\'' . $cities->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -421,17 +518,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $city = City::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_city'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'city_list',
-            'user_permission' => $user_permission,
-            'city' => $city,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_city'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'city_list',
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_city', $viewData);
+            return View::make('setting_en.update_city', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_city'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'city_list',
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_city', $viewData);
+        }
     }
 
     public function submitUpdateCity() {
@@ -467,32 +578,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.country_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'country_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.country_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.country', $viewData);
+            return View::make('setting_en.country', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.country_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.country', $viewData);
+        }
     }
 
     public function addCountry() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_country'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'country_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_country'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_country', $viewData);
+            return View::make('setting_en.add_country', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_country'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_country', $viewData);
+        }
     }
 
     public function submitCountry() {
@@ -529,12 +666,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($country as $cities) {
                 $button = "";
-                if ($cities->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCountry(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($cities->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCountry(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCountry(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCountry(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($cities->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCountry(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCountry(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateCountry', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteCountry(\'' . $cities->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -644,17 +791,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $country = Country::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_country'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'country_list',
-            'user_permission' => $user_permission,
-            'country' => $country,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_country'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'country' => $country,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_country', $viewData);
+            return View::make('setting_en.update_country', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_country'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'country_list',
+                'user_permission' => $user_permission,
+                'country' => $country,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_country', $viewData);
+        }
     }
 
     public function submitUpdateCountry() {
@@ -689,32 +850,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.form_type_master'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'formtype_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.form_type_master'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.formtype', $viewData);
+            return View::make('setting_en.formtype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.form_type_master'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.formtype', $viewData);
+        }
     }
 
     public function addFormType() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_form_type'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'formtype_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_form_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_formtype', $viewData);
+            return View::make('setting_en.add_formtype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_form_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_formtype', $viewData);
+        }
     }
 
     public function submitFormType() {
@@ -751,12 +938,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($formtype as $ft) {
                 $button = "";
-                if ($ft->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFormtype(\'' . $ft->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($ft->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFormtype(\'' . $ft->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFormtype(\'' . $ft->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFormtype(\'' . $ft->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($ft->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveFormtype(\'' . $ft->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeFormtype(\'' . $ft->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateFormtype', $ft->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteFormType(\'' . $ft->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -867,17 +1064,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $formtype = FormType::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_form_type'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'formtype_list',
-            'user_permission' => $user_permission,
-            'formtype' => $formtype,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_form_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'formtype' => $formtype,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_formtype', $viewData);
+            return View::make('setting_en.update_formtype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_form_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'formtype_list',
+                'user_permission' => $user_permission,
+                'formtype' => $formtype,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_formtype', $viewData);
+        }
     }
 
     public function submitUpdateFormType() {
@@ -913,32 +1124,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.state_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'state_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.state_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.state', $viewData);
+            return View::make('setting_en.state', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.state_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.state', $viewData);
+        }
     }
 
     public function addState() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_state'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'state_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_state'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_state', $viewData);
+            return View::make('setting_en.add_state', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_state'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_state', $viewData);
+        }
     }
 
     public function submitState() {
@@ -975,12 +1212,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($state as $states) {
                 $button = "";
-                if ($states->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $states->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($states->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $states->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $states->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $states->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($states->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveState(\'' . $states->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeState(\'' . $states->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateState', $states->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteState(\'' . $states->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -1090,17 +1337,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $state = State::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_state'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'state_list',
-            'user_permission' => $user_permission,
-            'state' => $state,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_state'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'state' => $state,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_state', $viewData);
+            return View::make('setting_en.update_state', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_state'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'state_list',
+                'user_permission' => $user_permission,
+                'state' => $state,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_state', $viewData);
+        }
     }
 
     public function submitUpdateState() {
@@ -1135,32 +1396,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.document_type_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'documenttype_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.document_type_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.documenttype', $viewData);
+            return View::make('setting_en.documenttype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.document_type_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.documenttype', $viewData);
+        }
     }
 
     public function addDocumenttype() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_document_type'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'documenttype_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_document_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_documenttype', $viewData);
+            return View::make('setting_en.add_documenttype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_document_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_documenttype', $viewData);
+        }
     }
 
     public function submitDocumenttype() {
@@ -1198,12 +1485,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($documenttype as $cities) {
                 $button = "";
-                if ($cities->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDocumenttype(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($cities->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDocumenttype(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDocumenttype(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDocumenttype(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($cities->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDocumenttype(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDocumenttype(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateDocumenttype', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteDocumenttype(\'' . $cities->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -1313,17 +1610,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $documenttype = Documenttype::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_document_type'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'documenttype_list',
-            'user_permission' => $user_permission,
-            'documenttype' => $documenttype,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_document_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'documenttype' => $documenttype,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_documenttype', $viewData);
+            return View::make('setting_en.update_documenttype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_document_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'documenttype_list',
+                'user_permission' => $user_permission,
+                'documenttype' => $documenttype,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_documenttype', $viewData);
+        }
     }
 
     public function submitUpdateDocumenttype() {
@@ -1358,32 +1669,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.category_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'category_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.category_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'category_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.category', $viewData);
+            return View::make('setting_en.category', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.category_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'category_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.category', $viewData);
+        }
     }
 
     public function addCategory() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_category'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'category_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_category'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'category_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_category', $viewData);
+            return View::make('setting_en.add_category', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_category'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'category_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_category', $viewData);
+        }
     }
 
     public function submitCategory() {
@@ -1420,12 +1757,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($category as $categories) {
                 $button = "";
-                if ($categories->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCategory(\'' . $categories->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($categories->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCategory(\'' . $categories->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCategory(\'' . $categories->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCategory(\'' . $categories->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($categories->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveCategory(\'' . $categories->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeCategory(\'' . $categories->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateCategory', $categories->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteCategory(\'' . $categories->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -1534,17 +1881,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $category = Category::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_category'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'category_list',
-            'user_permission' => $user_permission,
-            'category' => $category,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_category'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'category_list',
+                'user_permission' => $user_permission,
+                'category' => $category,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_category', $viewData);
+            return View::make('setting_en.update_category', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_category'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'category_list',
+                'user_permission' => $user_permission,
+                'category' => $category,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_category', $viewData);
+        }
     }
 
     public function submitUpdateCategory() {
@@ -1580,32 +1941,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.land_title_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'land_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.land_title_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'land_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.land', $viewData);
+            return View::make('setting_en.land', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.land_title_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'land_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.land', $viewData);
+        }
     }
 
     public function addLandTitle() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_land_title'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'land_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_land_title'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'land_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_land', $viewData);
+            return View::make('setting_en.add_land', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_land_title'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'land_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_land', $viewData);
+        }
     }
 
     public function submitLandTitle() {
@@ -1642,12 +2029,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($land as $lands) {
                 $button = "";
-                if ($lands->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveLandTitle(\'' . $lands->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($lands->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveLandTitle(\'' . $lands->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeLandTitle(\'' . $lands->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeLandTitle(\'' . $lands->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($lands->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveLandTitle(\'' . $lands->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeLandTitle(\'' . $lands->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateLandTitle', $lands->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteLandTitle(\'' . $lands->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -1756,17 +2153,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $land = LandTitle::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_land_title'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'land_list',
-            'user_permission' => $user_permission,
-            'land' => $land,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_land_title'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'land_list',
+                'user_permission' => $user_permission,
+                'land' => $land,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_land', $viewData);
+            return View::make('setting_en.update_land', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_land_title'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'land_list',
+                'user_permission' => $user_permission,
+                'land' => $land,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_land', $viewData);
+        }
     }
 
     public function submitUpdateLandTitle() {
@@ -1802,16 +2213,29 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.developer_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'developer_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.developer_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'developer_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.developer', $viewData);
+            return View::make('setting_en.developer', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.developer_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'developer_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.developer', $viewData);
+        }
     }
 
     public function addDeveloper() {
@@ -1821,19 +2245,35 @@ class SettingController extends BaseController {
         $country = Country::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
         $state = State::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_developer'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'developer_list',
-            'user_permission' => $user_permission,
-            'city' => $city,
-            'country' => $country,
-            'state' => $state,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_developer'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'developer_list',
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_developer', $viewData);
+            return View::make('setting_en.add_developer', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_developer'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'developer_list',
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_developer', $viewData);
+        }
     }
 
     public function submitDeveloper() {
@@ -1890,12 +2330,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($developer as $developers) {
                 $button = "";
-                if ($developers->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDeveloper(\'' . $developers->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($developers->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDeveloper(\'' . $developers->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDeveloper(\'' . $developers->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDeveloper(\'' . $developers->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($developers->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDeveloper(\'' . $developers->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDeveloper(\'' . $developers->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateDeveloper', $developers->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteDeveloper(\'' . $developers->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -2009,20 +2459,37 @@ class SettingController extends BaseController {
         $country = Country::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
         $state = State::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_developer'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'developer_list',
-            'user_permission' => $user_permission,
-            'developer' => $developer,
-            'city' => $city,
-            'country' => $country,
-            'state' => $state,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_developer'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'developer_list',
+                'user_permission' => $user_permission,
+                'developer' => $developer,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_developer', $viewData);
+            return View::make('setting_en.update_developer', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_developer'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'developer_list',
+                'user_permission' => $user_permission,
+                'developer' => $developer,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_developer', $viewData);
+        }
     }
 
     public function submitUpdateDeveloper() {
@@ -2078,16 +2545,29 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.agent_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'agent_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.agent_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'agent_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.agent', $viewData);
+            return View::make('setting_en.agent', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.agent_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'agent_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.agent', $viewData);
+        }
     }
 
     public function addAgent() {
@@ -2097,19 +2577,35 @@ class SettingController extends BaseController {
         $country = Country::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
         $state = State::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_agent'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'agent_list',
-            'user_permission' => $user_permission,
-            'city' => $city,
-            'country' => $country,
-            'state' => $state,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_agent'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'agent_list',
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_agent', $viewData);
+            return View::make('setting_en.add_agent', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_agent'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'agent_list',
+                'user_permission' => $user_permission,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_agent', $viewData);
+        }
     }
 
     public function submitAgent() {
@@ -2166,12 +2662,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($agent as $agents) {
                 $button = "";
-                if ($agents->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAgent(\'' . $agents->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($agents->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAgent(\'' . $agents->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAgent(\'' . $agents->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAgent(\'' . $agents->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($agents->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveAgent(\'' . $agents->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeAgent(\'' . $agents->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateAgent', $agents->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteAgent(\'' . $agents->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -2285,20 +2791,37 @@ class SettingController extends BaseController {
         $country = Country::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
         $state = State::where('is_active', 1)->where('is_deleted', 0)->orderBy('name', 'asc')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_agent'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'agent_list',
-            'user_permission' => $user_permission,
-            'agent' => $agent,
-            'city' => $city,
-            'country' => $country,
-            'state' => $state,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_agent'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'agent_list',
+                'user_permission' => $user_permission,
+                'agent' => $agent,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_agent', $viewData);
+            return View::make('setting_en.update_agent', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_agent'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'agent_list',
+                'user_permission' => $user_permission,
+                'agent' => $agent,
+                'city' => $city,
+                'country' => $country,
+                'state' => $state,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_agent', $viewData);
+        }
     }
 
     public function submitUpdateAgent() {
@@ -2354,32 +2877,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.parliament_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'parliament_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.parliament_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'parliament_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.parliment', $viewData);
+            return View::make('setting_en.parliment', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.parliament_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'parliament_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.parliment', $viewData);
+        }
     }
 
     public function addParliment() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_parliament'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'parliament_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_parliament'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'parliament_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_parliment', $viewData);
+            return View::make('setting_en.add_parliment', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_parliament'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'parliament_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_parliment', $viewData);
+        }
     }
 
     public function submitParliment() {
@@ -2416,12 +2965,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($parliment as $parliments) {
                 $button = "";
-                if ($parliments->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveParliment(\'' . $parliments->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($parliments->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveParliment(\'' . $parliments->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeParliment(\'' . $parliments->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeParliment(\'' . $parliments->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($parliments->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveParliment(\'' . $parliments->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeParliment(\'' . $parliments->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateParliment', $parliments->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteParliment(\'' . $parliments->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -2530,17 +3089,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $parliment = Parliment::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_parliament'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'parliament_list',
-            'user_permission' => $user_permission,
-            'parliment' => $parliment,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_parliament'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'parliament_list',
+                'user_permission' => $user_permission,
+                'parliment' => $parliment,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_parliment', $viewData);
+            return View::make('setting_en.update_parliment', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_parliament'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'parliament_list',
+                'user_permission' => $user_permission,
+                'parliment' => $parliment,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_parliment', $viewData);
+        }
     }
 
     public function submitUpdateParliment() {
@@ -2577,17 +3150,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $parliament = Parliment::where('is_active', 1)->where('is_deleted', 0)->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.master.dun_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'dun_list',
-            'user_permission' => $user_permission,
-            'parliament' => $parliament,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.dun_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'dun_list',
+                'user_permission' => $user_permission,
+                'parliament' => $parliament,
+                'image' => ""
+            );
 
-        return View::make('setting_en.dun', $viewData);
+            return View::make('setting_en.dun', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.dun_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'dun_list',
+                'user_permission' => $user_permission,
+                'parliament' => $parliament,
+                'image' => ""
+            );
+
+            return View::make('setting_my.dun', $viewData);
+        }
     }
 
     public function addDun() {
@@ -2595,17 +3182,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $parliament = Parliment::where('is_active', 1)->where('is_deleted', 0)->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_dun'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'dun_list',
-            'user_permission' => $user_permission,
-            'parliament' => $parliament,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_dun'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'dun_list',
+                'user_permission' => $user_permission,
+                'parliament' => $parliament,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_dun', $viewData);
+            return View::make('setting_en.add_dun', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_dun'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'dun_list',
+                'user_permission' => $user_permission,
+                'parliament' => $parliament,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_dun', $viewData);
+        }
     }
 
     public function submitDun() {
@@ -2645,12 +3246,22 @@ class SettingController extends BaseController {
             foreach ($dun as $duns) {
                 $parliament = Parliment::find($duns->parliament);
                 $button = "";
-                if ($duns->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDun(\'' . $duns->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($duns->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDun(\'' . $duns->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDun(\'' . $duns->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDun(\'' . $duns->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($duns->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDun(\'' . $duns->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDun(\'' . $duns->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
 
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateDun', $duns->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -2762,18 +3373,33 @@ class SettingController extends BaseController {
         $dun = Dun::find($id);
         $parliament = Parliment::where('is_active', 1)->where('is_deleted', 0)->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_dun'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'dun_list',
-            'user_permission' => $user_permission,
-            'dun' => $dun,
-            'parliament' => $parliament,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_dun'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'dun_list',
+                'user_permission' => $user_permission,
+                'dun' => $dun,
+                'parliament' => $parliament,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_dun', $viewData);
+            return View::make('setting_en.update_dun', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_dun'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'dun_list',
+                'user_permission' => $user_permission,
+                'dun' => $dun,
+                'parliament' => $parliament,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_dun', $viewData);
+        }
     }
 
     public function submitUpdateDun() {
@@ -2812,17 +3438,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $dun = Dun::where('is_active', 1)->where('is_deleted', 0)->orderBy('description')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.master.park_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'park_list',
-            'user_permission' => $user_permission,
-            'dun' => $dun,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.park_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'park_list',
+                'user_permission' => $user_permission,
+                'dun' => $dun,
+                'image' => ""
+            );
 
-        return View::make('setting_en.park', $viewData);
+            return View::make('setting_en.park', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.park_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'park_list',
+                'user_permission' => $user_permission,
+                'dun' => $dun,
+                'image' => ""
+            );
+
+            return View::make('setting_my.park', $viewData);
+        }
     }
 
     public function addPark() {
@@ -2830,17 +3470,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $dun = Dun::where('is_active', 1)->where('is_deleted', 0)->orderBy('description')->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_park'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'park_list',
-            'user_permission' => $user_permission,
-            'dun' => $dun,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_park'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'park_list',
+                'user_permission' => $user_permission,
+                'dun' => $dun,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_park', $viewData);
+            return View::make('setting_en.add_park', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_park'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'park_list',
+                'user_permission' => $user_permission,
+                'dun' => $dun,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_park', $viewData);
+        }
     }
 
     public function submitPark() {
@@ -2880,12 +3534,22 @@ class SettingController extends BaseController {
             foreach ($park as $parks) {
                 $dun = Dun::find($parks->dun);
                 $button = "";
-                if ($parks->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactivePark(\'' . $parks->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($parks->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactivePark(\'' . $parks->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activePark(\'' . $parks->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activePark(\'' . $parks->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($parks->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactivePark(\'' . $parks->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activePark(\'' . $parks->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
 
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updatePark', $parks->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
@@ -2997,18 +3661,33 @@ class SettingController extends BaseController {
         $park = Park::find($id);
         $dun = Dun::where('is_active', 1)->where('is_deleted', 0)->get();
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_park'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'park_list',
-            'user_permission' => $user_permission,
-            'park' => $park,
-            'dun' => $dun,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_park'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'park_list',
+                'user_permission' => $user_permission,
+                'park' => $park,
+                'dun' => $dun,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_park', $viewData);
+            return View::make('setting_en.update_park', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_park'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'park_list',
+                'user_permission' => $user_permission,
+                'park' => $park,
+                'dun' => $dun,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_park', $viewData);
+        }
     }
 
     public function submitUpdatePark() {
@@ -3046,32 +3725,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.memo_type_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'memo_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.memo_type_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'memo_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.memotype', $viewData);
+            return View::make('setting_en.memotype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.memo_type_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'memo_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.memotype', $viewData);
+        }
     }
 
     public function addMemoType() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_memo_type'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'memo_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_memo_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'memo_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_memotype', $viewData);
+            return View::make('setting_en.add_memotype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_memo_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'memo_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_memotype', $viewData);
+        }
     }
 
     public function submitMemoType() {
@@ -3108,12 +3813,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($memotype as $memotypes) {
                 $button = "";
-                if ($memotypes->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemoType(\'' . $memotypes->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($memotypes->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemoType(\'' . $memotypes->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemoType(\'' . $memotypes->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemoType(\'' . $memotypes->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($memotypes->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveMemoType(\'' . $memotypes->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeMemoType(\'' . $memotypes->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateMemoType', $memotypes->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteMemoType(\'' . $memotypes->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -3222,17 +3937,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $memoType = MemoType::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_memo_type'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'memo_list',
-            'user_permission' => $user_permission,
-            'memoType' => $memoType,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_memo_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'memo_list',
+                'user_permission' => $user_permission,
+                'memoType' => $memoType,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_memotype', $viewData);
+            return View::make('setting_en.update_memotype', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_memo_type'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'memo_list',
+                'user_permission' => $user_permission,
+                'memoType' => $memoType,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_memotype', $viewData);
+        }
     }
 
     public function submitUpdateMemoType() {
@@ -3268,32 +3997,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.designation_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'designation_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.designation_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'designation_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.designation', $viewData);
+            return View::make('setting_en.designation', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.designation_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'designation_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.designation', $viewData);
+        }
     }
 
     public function addDesignation() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_designation'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'designation_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_designation'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'designation_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_designation', $viewData);
+            return View::make('setting_en.add_designation', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_designation'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'designation_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_designation', $viewData);
+        }
     }
 
     public function submitDesignation() {
@@ -3330,12 +4085,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($designation as $designations) {
                 $button = "";
-                if ($designations->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDesignation(\'' . $designations->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($designations->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDesignation(\'' . $designations->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDesignation(\'' . $designations->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDesignation(\'' . $designations->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($designations->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveDesignation(\'' . $designations->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeDesignation(\'' . $designations->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateDesignation', $designations->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteDesignation(\'' . $designations->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -3444,17 +4209,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $designation = Designation::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_designation'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'designation_list',
-            'user_permission' => $user_permission,
-            'designation' => $designation,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_designation'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'designation_list',
+                'user_permission' => $user_permission,
+                'designation' => $designation,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_designation', $viewData);
+            return View::make('setting_en.update_designation', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_designation'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'designation_list',
+                'user_permission' => $user_permission,
+                'designation' => $designation,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_designation', $viewData);
+        }
     }
 
     public function submitUpdateDesignation() {
@@ -3490,32 +4269,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.unit_of_measure_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'unit_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.unit_of_measure_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'unit_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.unitmeasure', $viewData);
+            return View::make('setting_en.unitmeasure', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.unit_of_measure_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'unit_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.unitmeasure', $viewData);
+        }
     }
 
     public function addUnitMeasure() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_unit_of_measure'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'unit_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_unit_of_measure'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'unit_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_unitmeasure', $viewData);
+            return View::make('setting_en.add_unitmeasure', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_unit_of_measure'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'unit_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_unitmeasure', $viewData);
+        }
     }
 
     public function submitUnitMeasure() {
@@ -3552,12 +4357,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($unitmeasure as $unitmeasures) {
                 $button = "";
-                if ($unitmeasures->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUnitMeasure(\'' . $unitmeasures->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($unitmeasures->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUnitMeasure(\'' . $unitmeasures->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUnitMeasure(\'' . $unitmeasures->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUnitMeasure(\'' . $unitmeasures->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($unitmeasures->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveUnitMeasure(\'' . $unitmeasures->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeUnitMeasure(\'' . $unitmeasures->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateUnitMeasure', $unitmeasures->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteUnitMeasure(\'' . $unitmeasures->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -3669,17 +4484,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $unitmeasure = UnitMeasure::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_unit_of_measure'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'unit_list',
-            'user_permission' => $user_permission,
-            'unitmeasure' => $unitmeasure,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_unit_of_measure'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'unit_list',
+                'user_permission' => $user_permission,
+                'unitmeasure' => $unitmeasure,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_unitmeasure', $viewData);
+            return View::make('setting_en.update_unitmeasure', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_unit_of_measure'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'unit_list',
+                'user_permission' => $user_permission,
+                'unitmeasure' => $unitmeasure,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_unitmeasure', $viewData);
+        }
     }
 
     public function submitUpdateUnitMeasure() {
@@ -3715,32 +4544,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.race_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'race_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.race_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'race_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.race', $viewData);
+            return View::make('setting_en.race', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.race_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'race_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.race', $viewData);
+        }
     }
 
     public function addRace() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_race'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'race_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_race'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'race_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_race', $viewData);
+            return View::make('setting_en.add_race', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_race'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'race_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_race', $viewData);
+        }
     }
 
     public function submitRace() {
@@ -3777,12 +4632,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($race as $cities) {
                 $button = "";
-                if ($cities->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveRace(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($cities->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveRace(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeRace(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeRace(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($cities->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveRace(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeRace(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateRace', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteRace(\'' . $cities->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -3892,17 +4757,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $race = Race::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_race'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'race_list',
-            'user_permission' => $user_permission,
-            'race' => $race,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_race'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'race_list',
+                'user_permission' => $user_permission,
+                'race' => $race,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_race', $viewData);
+            return View::make('setting_en.update_race', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_race'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'race_list',
+                'user_permission' => $user_permission,
+                'race' => $race,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_race', $viewData);
+        }
     }
 
     public function submitUpdateRace() {
@@ -3937,32 +4816,58 @@ class SettingController extends BaseController {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.nationality_maintenance'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'nationality_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.nationality_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.nationality', $viewData);
+            return View::make('setting_en.nationality', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.nationality_maintenance'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.nationality', $viewData);
+        }
     }
 
     public function addNationality() {
         //get user permission
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.add_nationality'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'nationality_list',
-            'user_permission' => $user_permission,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_nationality'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
 
-        return View::make('setting_en.add_nationality', $viewData);
+            return View::make('setting_en.add_nationality', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.add_nationality'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'image' => ""
+            );
+
+            return View::make('setting_my.add_nationality', $viewData);
+        }
     }
 
     public function submitNationality() {
@@ -3999,12 +4904,22 @@ class SettingController extends BaseController {
             $data = Array();
             foreach ($nationality as $cities) {
                 $button = "";
-                if ($cities->is_active == 1) {
-                    $status = trans('app.forms.active');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveNationality(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                if (Session::get('lang') == "en") {
+                    if ($cities->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveNationality(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeNationality(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 } else {
-                    $status = trans('app.forms.inactive');
-                    $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeNationality(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    if ($cities->is_active == 1) {
+                        $status = trans('app.forms.active');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="inactiveNationality(\'' . $cities->id . '\')">'.trans('app.forms.inactive').'</button>&nbsp;';
+                    } else {
+                        $status = trans('app.forms.inactive');
+                        $button .= '<button type="button" class="btn btn-xs btn-primary" onclick="activeNationality(\'' . $cities->id . '\')">'.trans('app.forms.active').'</button>&nbsp;';
+                    }
                 }
                 $button .= '<button type="button" class="btn btn-xs btn-success" onclick="window.location=\'' . URL::action('SettingController@updateNationality', $cities->id) . '\'"><i class="fa fa-pencil"></i></button>&nbsp;';
                 $button .= '<button class="btn btn-xs btn-danger" onclick="deleteNationality(\'' . $cities->id . '\')"><i class="fa fa-trash"></i></button>';
@@ -4114,17 +5029,31 @@ class SettingController extends BaseController {
         $user_permission = AccessGroup::getAccessPermission(Auth::user()->id);
         $nationality = Nationality::find($id);
 
-        $viewData = array(
-            'title' => trans('app.menus.master.edit_nationality'),
-            'panel_nav_active' => 'master_panel',
-            'main_nav_active' => 'master_main',
-            'sub_nav_active' => 'nationality_list',
-            'user_permission' => $user_permission,
-            'nationality' => $nationality,
-            'image' => ""
-        );
+        if (Session::get('lang') == "en") {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_nationality'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'nationality' => $nationality,
+                'image' => ""
+            );
 
-        return View::make('setting_en.update_nationality', $viewData);
+            return View::make('setting_en.update_nationality', $viewData);
+        } else {
+            $viewData = array(
+                'title' => trans('app.menus.master.edit_nationality'),
+                'panel_nav_active' => 'master_panel',
+                'main_nav_active' => 'master_main',
+                'sub_nav_active' => 'nationality_list',
+                'user_permission' => $user_permission,
+                'nationality' => $nationality,
+                'image' => ""
+            );
+
+            return View::make('setting_my.update_nationality', $viewData);
+        }
     }
 
     public function submitUpdateNationality() {
