@@ -8,3 +8,4 @@ composer.lock
 Thumbs.db
 /nbproject
 /nbproject/private/
+nbproject/project.xml
